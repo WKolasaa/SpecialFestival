@@ -1,15 +1,15 @@
 {
+    "name": "Group6/FestivalProject",
+    "description": "Festival Project",
+    "require": {},
     "autoload": {
         "psr-4": {
-          "Routers\\": "routers",
-          "Controllers\\": "controllers",
-          "Services\\": "services",
-          "Models\\": "models",
-          "Repositories\\": "repositories"
+            "App\\": ".",
+            "App\\Controllers\\": "./controllers",
+            "App\\Models\\": "./models",
+            "App\\Services\\": "./services",
+            "App\\Repositories\\": "./repositories",
+            "App\\Views\\": "./views"            
         }
-    },
-    "require": {
-        "bramus/router": "~1.6",
-        "firebase/php-jwt": "^6.0"
     }
 }

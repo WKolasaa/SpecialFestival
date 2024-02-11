@@ -16,10 +16,10 @@ services:
     mysql:
         image: mariadb:latest
         environment:
-            MYSQL_ROOT_PASSWORD: 'secret123'
+            MYSQL_ROOT_PASSWORD: 'festival123'
             MYSQL_USER: 'developer'
-            MYSQL_PASSWORD: 'secret123'
-            MYSQL_DATABASE: 'developmentdb'
+            MYSQL_PASSWORD: 'festival123'
+            MYSQL_DATABASE: 'HaarlemFestivaldb'
         volumes:
             - mysqldata:/var/lib/mysql
             - ./sql:/docker-entrypoint-initdb.d

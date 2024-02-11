@@ -4,66 +4,39 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09
+class ComposerStaticInitb6b4a60635f694d2ca184b5340f42dac
 {
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'A' => 
         array (
-            'Services\\' => 9,
-        ),
-        'R' => 
-        array (
-            'Routers\\' => 8,
-            'Repositories\\' => 13,
-        ),
-        'M' => 
-        array (
-            'Models\\' => 7,
-        ),
-        'F' => 
-        array (
-            'Firebase\\JWT\\' => 13,
-        ),
-        'C' => 
-        array (
-            'Controllers\\' => 12,
+            'Abdelrahmanghonim\\SpecialFestival\\' => 34,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Services\\' => 
+        'App\\Views\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/views',
+        ),
+        'App\\Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/services',
         ),
-        'Routers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/routers',
-        ),
-        'Repositories\\' => 
+        'App\\Repositories\\' => 
         array (
             0 => __DIR__ . '/../..' . '/repositories',
         ),
-        'Models\\' => 
+        'App\\Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/models',
         ),
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
-        ),
-        'Controllers\\' => 
+        'App\\Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/controllers',
         ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'B' => 
+        'App\\' => 
         array (
-            'Bramus' => 
-            array (
-                0 => __DIR__ . '/..' . '/bramus/router/src',
-            ),
+            0 => __DIR__ . '/../..' . '/',
         ),
     );
 
@@ -74,10 +47,9 @@ class ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb6b4a60635f694d2ca184b5340f42dac::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb6b4a60635f694d2ca184b5340f42dac::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb6b4a60635f694d2ca184b5340f42dac::$classMap;
 
         }, null, ClassLoader::class);
     }
