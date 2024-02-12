@@ -40,7 +40,7 @@ h2{
     width: 100%;
   }
 
-  /* Header starts here */
+  /* navbar starts here */
   #header{
     display: flex;
     align-items: center;
@@ -57,8 +57,7 @@ h2{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 120vh;
-;
+    padding-left: 35%;
   }
   
   /* Logo */
