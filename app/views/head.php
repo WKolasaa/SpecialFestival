@@ -20,10 +20,13 @@
 
         //Adjust CSS file based on the current page
         switch ($currentPage) {
-    //     //     case '':
-    //     //         $cssFile = 'Home.css';
-    //     //       //  echo 'Using home.css for the home page.';
-    //     //         break;
+            case '':
+                $cssFile = 'Home.css';
+              //  echo 'Using home.css for the home page.';
+                break;
+                 case 'manageuser':
+                $cssFile = 'manageuser.css';
+                break;
             default:
                 $cssFile = $defaultCssFile;
                 break;

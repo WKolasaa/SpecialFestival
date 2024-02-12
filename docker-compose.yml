@@ -13,13 +13,13 @@ services:
             dockerfile: PHP.Dockerfile
         volumes:
             - ./app:/app
-    mysql:
+    mysql: 
         image: mariadb:latest
         environment:
             MYSQL_ROOT_PASSWORD: 'festival123'
             MYSQL_USER: 'developer'
             MYSQL_PASSWORD: 'festival123'
-            MYSQL_DATABASE: 'HaarlemFestivaldb'
+            MYSQL_DATABASE: 'developmentdb'
         volumes:
             - mysqldata:/var/lib/mysql
             - ./sql:/docker-entrypoint-initdb.d

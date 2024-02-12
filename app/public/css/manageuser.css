@@ -1,0 +1,49 @@
+/*Side bar */
+ .sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 45px;
+  left: 0;
+  background-color: #333;
+  padding-top: 15vh;
+}
+.sidebar a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 10px 20px;
+  top: 100px;
+  
+}
+.sidebar a:hover {
+  background-color: #555;
+}
+
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+.content input[type=text] {
+  width: 30%;
+  padding: 12px 20px;
+  float: right;
+  margin: 8px 40px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+

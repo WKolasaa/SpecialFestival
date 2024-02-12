@@ -45,20 +45,20 @@ h2{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 80px;
+    padding: 20px 100px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
     z-index: 999;
     position:sticky;
     top: 0;
     left: 0;
+    ;
     
   }
-  #navbar{
+    #navbar{
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-left: 35%;
-  }
+    justify-content: right;
+    }
   
   /* Logo */
   .navbar-brand{ 

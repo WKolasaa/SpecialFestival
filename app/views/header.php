@@ -10,7 +10,7 @@ include 'head.php';
   <div  class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDance" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,8 +48,8 @@ include 'head.php';
             <i class="far fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-            <a class="dropdown-item" href="#">Login</a>
-            <a class="dropdown-item" href="#">Signup</a>
+            <a class="dropdown-item" href="/login">Login</a>
+            <a class="dropdown-item" href="/manageuser">Signup</a>
             </div>
         </li>
         </ul>
@@ -57,7 +57,6 @@ include 'head.php';
 </nav>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 
 

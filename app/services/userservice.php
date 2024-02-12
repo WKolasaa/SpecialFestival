@@ -1,19 +1,20 @@
 <?php
-namespace Services;
+namespace App\Services;
 
-use Repositories\UserRepository;
+use App\Repositories\UserRepository;
 
 class UserService {
 
-    private $repository;
+    private $userrepository;
 
     function __construct()
     {
-        $this->repository = new UserRepository();
+        $this->userrepository = new UserRepository();
     }
 
-    public function checkUsernamePassword($username, $password) {
-        return $this->repository->checkUsernamePassword($username, $password);
+    public function getAll()
+    {
+        return $this->userrepository->getAll();
     }
 }
 

@@ -1,48 +1,54 @@
 <?php
-
-namespace Repositories;
+namespace App\Repositories;
+use App\Models\User;
 
 use PDO;
-use PDOException;
-use Repositories\Repository;
 
-class UserRepository extends Repository
-{
-    function checkUsernamePassword($username, $password)
+class UserRepository extends Repository{
+
+  public function getAll(){
+
+
+    $sql= "SELECT id, userName, password, userRole FROM user";
+    $rows=$this->executeQuery($sql);
+
+    if (!$rows) {
+      echo "No users found.";
+      return [];
+    }
+   // echo "query works successfully";
+    return $this->mapToUserObjects($rows);
+
+  }
+
+  private function mapToUserObjects($rows)
     {
-        try {
-            // retrieve the user with the given username
-            $stmt = $this->connection->prepare("SELECT id, username, password, email FROM user WHERE username = :username");
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
+        $users = [];
 
-            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
-            $user = $stmt->fetch();
-
-            // verify if the password matches the hash in the database
-            $result = $this->verifyPassword($password, $user->password);
-
-            if (!$result)
-                return false;
-
-            // do not pass the password hash to the caller
-            $user->password = "";
-
-            return $user;
-        } catch (PDOException $e) {
-            echo $e;
+        foreach ($rows as $row) {
+            $user = new User();
+            $user->setId($row['id']);
+            $user->setUsername($row['userName']);
+            $user->setPassword($row['password']);
+            $user->setUserRole( $row['userRole']);
+    
+            $users[] = $user;
         }
+
+        return $users;
     }
 
-    // hash the password (currently uses bcrypt)
-    function hashPassword($password)
-    {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
+  private function executeQuery($sql)
+  {
+      try {
+          $statement = $this->connection->prepare($sql);
+          $statement->execute();
+          return $statement->fetchAll(PDO::FETCH_ASSOC);
+      } catch (\PDOException $e) {
+          throw new \PDOException("Query execution failed: " . $e->getMessage());
+      }
+  }
 
-    // verify the password hash
-    function verifyPassword($input, $hash)
-    {
-        return password_verify($input, $hash);
-    }
+
+
 }
