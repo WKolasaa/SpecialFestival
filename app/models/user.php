@@ -3,12 +3,22 @@ namespace App\Models;
 
 use App\Models\UserRolesEnum;
 
-class User {
+class User implements \JsonSerializable{
 
     private  $id;
     private  $username;
     private  $password;
     private  $userRole;
+
+    public function __construct( $id, $username, $password,$userRole,$registratedDate){
+    
+        $this->id = $id;
+        $this->username = $username;
+        $this->password = $password;
+        $this->userRole = $userRole;
+        $this->$registratedDate = $registrationDate;
+    }
+
     private $resgisteredDate; //dateTime
     private $firstName;
     private $lastName;
@@ -54,8 +64,8 @@ class User {
     {
         // Convert database role string to UserRolesEnum constant
         switch ($role) {
-            case 'VISITOR':
-                $this->userRole = UserRolesEnum::Visitor;
+            case 'EMPLOYEE':
+                $this->userRole = UserRolesEnum::Employee;
                 break;
             case 'CUSTOMER':
                 $this->userRole = UserRolesEnum::Customer;
@@ -66,11 +76,16 @@ class User {
             default:
                 // Handle unknown role
                 // For example, you could set it to a default role or throw an exception
-                $this->userRole = UserRolesEnum::Visitor;
+                $this->userRole = UserRolesEnum::Customer;
                 break;
         }
     }
-
+  
+       public function jsonSerialize():mixed
+        {
+            $vars=get_object_vars($this);
+            return $vars;
+        }
     public function getResgisteredDate() {
         return $this->resgisteredDate;
     }

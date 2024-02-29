@@ -5,17 +5,16 @@
   position: fixed;
   top: 45px;
   left: 0;
-  background-color: #333;
-  padding-top: 15vh;
+  background-color: #000000;
+  padding-top: 22vh;
 }
 .sidebar a {
   text-decoration: none;
   color: white;
   display: block;
-  padding: 10px 20px;
-  top: 100px;
-  
+  padding: 20px 20px;
 }
+
 .sidebar a:hover {
   background-color: #555;
 }
@@ -28,22 +27,69 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  
+ 
 }
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  text-align: center;
 }
 th {
   background-color: #f2f2f2;
+  width: 25%; /* Equal width for all columns */
+
 }
+
+
 .content input[type=text] {
   width: 30%;
   padding: 12px 20px;
   float: right;
-  margin: 8px 40px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 10px;
 }
+
+.button-column {
+  border: none;
+  text-align: left;
+}
+.id-column {
+  width: 50px;
+}
+.combo-box{
+  width:200px; 
+}
+.sortBy{
+    padding: 20px 0;
+    display: flex;
+    align-items:center;
+    justify-content: left; 
+    padding-right: 15%; 
+    top: 40px;
+}
+
+.sort-label{
+  margin: 0 10px ;
+  width: 60px;
+}
+
+.input-group{
+  justify-content: right; 
+  padding-right: 5%;
+}
+#searchInput{
+  width: 50%;
+}
+
+
+.searchUser{
+  display: flex;
+  align-items:center;
+   justify-content: space-between;
+ 
+}
+
+
 
