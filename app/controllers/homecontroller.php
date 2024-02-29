@@ -15,7 +15,7 @@ private $userService;
     public function index()
     {
       include '../views/home.php';
-    $this->userService->getAll();  
+    //$this->userService->getAll();
       
     }
     
