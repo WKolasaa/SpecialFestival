@@ -10,6 +10,15 @@ class User {
     private  $password;
     private  $userRole;
     private $resgisteredDate; //dateTime
+    private $firstName;
+    private $lastName;
+    private $email;
+    private $photo;
+
+    public function __construct()
+    {
+
+    }
 
     public function getId() {
         return $this->id;
@@ -62,12 +71,44 @@ class User {
         }
     }
 
-    public function getRegisteredDate() {
+    public function getResgisteredDate() {
         return $this->resgisteredDate;
     }
-    public function setRegisteredDate($resgisteredDate) {
+    public function setResgisteredDate($resgisteredDate) {
         $this->resgisteredDate = $resgisteredDate;
     }
+
+    public function getFirstName() {
+        return $this->firstName;
+    }
+    public function setFirstName($firstName) {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName() {
+        return $this->lastName;
+    }
+
+    public function setLastName($lastName) {
+        $this->lastName = $lastName;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function getPhoto() {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo) {
+        $this->photo = $photo;
+    }
+
 
 
 }
