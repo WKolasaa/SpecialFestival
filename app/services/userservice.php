@@ -21,33 +21,33 @@ class UserService {
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
     {
-        $this->userrepository->addUser($userName, $firstName, $lastName, $email, $password, $photo);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $password, $photo);
     }
 
     public function loginByEmail($email, $password)
     {
-        return $this->userrepository->loginByEmail($email, $password);
+        return $this->userRepository->loginByEmail($email, $password);
     }
 
     public function loginByUserName($userName, $password)
     {
-        return $this->userrepository->loginByUserName($userName, $password);
+        return $this->userRepository->loginByUserName($userName, $password);
     }
 
     public function getUserByEmail($email)
     {
-        return $this->userrepository->getUserByEmail($email);
+        return $this->userRepository->getUserByEmail($email);
     }
 
     public function checkForUserName($userName)
     {
-        return $this->userrepository->checkForUserName($userName);
+        return $this->userRepository->checkForUserName($userName);
     }
 
     public function checkForEmail($email){
-        return $this->userrepository->checkForEmail($email);
+        return $this->userRepository->checkForEmail($email);
     }
-}
+
 
     public function updateUserByAdmin(array $userData)
     {
@@ -96,7 +96,6 @@ class UserService {
     }
     
 
-// TODO: is that a good apprach to convert the array to user object and apply the OOP
     private function convertArrayToUser(array $userData): User
     {
         // Ensure that all required keys are present in the array
@@ -110,19 +109,32 @@ class UserService {
          // Check if password is provided
         $password = isset($userData['password']) ? $userData['password'] : null;
         $id = isset($userData['id']) ? $userData['id'] : null;
+        $firstName = isset($userData['firstName']) ? $userData['firstName'] : null;
+        $lastName = isset($userData['lastName']) ? $userData['lastName'] : null;
+        $email = isset($userData['email']) ? $userData['email'] : null;
+        $photo = isset($userData['photo']) ? $userData['photo'] : null;
 
+
+//    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo){
 
         // Create a User instance and set additional properties
         $user = new User(
             // $userData['id'],
             $id,
             $userData['username'],
-            $password, // Password is not being updated, so set it to null
+             $password, // Password is not being updated, so set it to null
             $userData['userRole'],
-            null // Registration date is not being updated, so set it to null
+            null, // Registration date is not being updated, so set it to null
+             $userData['firstName'],
+             $userData['lastName'],
+             $userData['email'],
+             $userData['photo']
+            
         );
 
         return $user;
+      
+
     }
 
 }

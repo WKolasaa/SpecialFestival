@@ -10,7 +10,8 @@
         <a href="#" onclick="filterUsers('administrator')">Admin Users</a>
         <a href="#" onclick="filterUsers('customer')">Customer Users</a>
         <a href="#" onclick="filterUsers('Employee')">Employee Users</a>
-        <button onclick="AddUser()">Add User</button>
+        <button type="button" onclick="AddUser()" class="btn btn-dark" style="width: 150px;">Add User</button>
+        <!-- <button onclick="AddUser()">Add User</button> -->
 
     </div>
     <div class="content">
@@ -36,7 +37,7 @@
             <thead id="tableHead">
                 <tr>
                     <th class="id-column">ID</th>
-                    <th>Username</th>
+                    <th class="userName-column">Username</th>
                     <th>Role</th>
                     <th class="registrationDate-column">Registration Date</th>
                 </tr>
