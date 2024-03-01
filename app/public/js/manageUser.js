@@ -27,7 +27,7 @@ function displayUsers(users) {
             <td class="id-column">${user.id}</td>
             <td class="username-column">${user.username}</td>
             <td class="role-column">${user.userRole}</td>
-            <td class="registrationDate-column">${user.registrationDate}</td>
+            <td class="registrationDate-column">${user.registeredDate}</td>
             <td class="button-column">
             <button type="button" class="btn btn-secondary edit-button" style="--bs-btn-padding-y: .75rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem; margin-right: 5px; border-radius: 10px;">
             <i class="fas fa-edit"></i> 
@@ -324,7 +324,10 @@ function AddUser() {
     // Remove the existing table header
 
     const userList = document.getElementById('userList');
-     
+     const idHeader = document.querySelector('.id-column');
+     const usernameHeader = document.querySelector('.userName-column');
+     idHeader.innerHTML = 'Username';
+     usernameHeader.innerHTML = 'Password';
     userList.innerHTML = '';
 
     // Display form fields for adding a new user

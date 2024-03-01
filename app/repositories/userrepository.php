@@ -7,8 +7,9 @@ use PDO;
 class UserRepository extends Repository{
 
   public function getAll(){
+    
 
-    $sql= "SELECT id, userName, password, userRole, registrationDate FROM user";
+    $sql= "SELECT id, userName, password, userRole, registrationDate,firstName,lastName,email,photo FROM user";
     $rows=$this->executeQuery($sql);
 
     if (!$rows) {
@@ -16,7 +17,6 @@ class UserRepository extends Repository{
       return [];
     }
     
-  //  echo "query works successfully";
     return $this->mapToUserObjects($rows);
   }
 
@@ -75,35 +75,37 @@ public function deleteUserByAdmin(User $user){
 }
 
 public function createUserByAdmin(User $user){
-    try {
-      // Prepare the SQL statement
-      $stmt = $this->connection->prepare("
-          INSERT INTO user (username, password, userRole)
-          VALUES (:username, :password, :userRole)
-      ");
+        try {
+        // Prepare the SQL statement
+        $stmt = $this->connection->prepare("
+            INSERT INTO user (username, password, userRole)
+            VALUES (:username, :password, :userRole)
+        ");
+        $username = $user->getUsername();
+        $password = $user->getPassword();
+        $userRole = $user->getUserRole();
+        
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':userRole', $userRole);
 
-      // Bind parameters
-      $stmt->bindParam(':username', $user->getUsername());
-      $stmt->bindParam(':password', $user->getPassword());
-      $stmt->bindParam(':userRole', $user->getUserRole());
+        // Execute the statement
+        $stmt->execute();
 
-      // Execute the statement
-      $stmt->execute();
+        // Check if any rows were affected
+        $rowCount = $stmt->rowCount();
 
-      // Check if any rows were affected
-      $rowCount = $stmt->rowCount();
-
-      if ($rowCount > 0) {
-          // User information updated successfully
-          return true;
-      } else {
-          // No rows were affected, possibly because the user ID was not found
-          return false;
-      }
-  } catch (\PDOException $e) {
-      // Handle the exception (log, show an error message, etc.)
-      throw new \PDOException('Error creating user: ' . $e->getMessage());
-  }
+        if ($rowCount > 0) {
+            // User information updated successfully
+            return true;
+        } else {
+            // No rows were affected, possibly because the user ID was not found
+            return false;
+        }
+    } catch (\PDOException $e) {
+        // Handle the exception (log, show an error message, etc.)
+        throw new \PDOException('Error creating user: ' . $e->getMessage());
+    }
 }
 
   
@@ -117,9 +119,14 @@ public function createUserByAdmin(User $user){
           $username = $row['userName'];
           $password = $row['password'];
           $userRole = $row['userRole'];
-          $registrationDate = $row['registrationDate'];
+          $registeredDate = $row['registrationDate'];
+          $email = $row['email'];
+          $firstName = $row['firstName'];
+          $lastName = $row['lastName'];
+          $photo = $row['photo'];
 
-            $user = new User($id, $username, $password, $userRole, $registrationDate);
+
+            $user = new User( $id, $username, $password, $userRole,$registeredDate, $firstName, $lastName,$email, $photo);
 
             $users[] = $user;
         }
@@ -151,14 +158,14 @@ public function createUserByAdmin(User $user){
       $statement->bindParam(':photo', $photo);
       try{
           $statement->execute();
-      }catch (PDOException $e) {
+      }catch (\PDOException $e) {
           echo "Error: " . $e->getMessage();
       }
   }
 
     public function loginByEmail($email, $password)
     {
-        $sql = "SELECT id, userName, password, userRole FROM user WHERE email = :email";
+        $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
@@ -167,11 +174,8 @@ public function createUserByAdmin(User $user){
             return null;
         }
         if (password_verify($password, $row['password'])) {
-            $user = new User();
-            $user->setId($row['id']);
-            $user->setUsername($row['userName']);
-            $user->setPassword($row['password']);
-            $user->setUserRole($row['userRole']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
+           
             return $user;
         }
         return null;
@@ -188,16 +192,7 @@ public function createUserByAdmin(User $user){
             return null;
         }
         if (password_verify($password, $row['password'])) {
-            $user = new User();
-            $user->setId($row['id']);
-            $user->setUsername($row['userName']);
-            $user->setPassword($row['password']);
-            $user->setUserRole($row['userRole']);
-            $user->setResgisteredDate($row['registrationDate']);
-            $user->setEmail($row['email']);
-            $user->setFirstName($row['firstName']);
-            $user->setLastName($row['lastName']);
-            $user->setPhoto($row['photo']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
             return $user;
         }
         return null;
@@ -213,16 +208,7 @@ public function createUserByAdmin(User $user){
         if (!$row) {
             return null;
         }
-        $user = new User();
-        $user->setId($row['id']);
-        $user->setUsername($row['userName']);
-        $user->setPassword($row['password']);
-        $user->setUserRole($row['userRole']);
-        $user->setResgisteredDate($row['registrationDate']);
-        $user->setEmail($row['email']);
-        $user->setFirstName($row['firstName']);
-        $user->setLastName($row['lastName']);
-        $user->setPhoto($row['photo']);
+        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
         return $user;
     }
 

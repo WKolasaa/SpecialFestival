@@ -8,6 +8,5 @@
 
 
 <?php
-var_dump($_SESSION['user']);
 include __DIR__ . '/footer.php';
     ?>

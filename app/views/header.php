@@ -7,13 +7,14 @@ include 'head.php';
     <span class="navbar-toggler-icon"></span>
   </button>
 
+  <!-- TODO: we need to add a session here that checks whether the user is admin or not and based on that it will navigate to another direction. This will reduce creating another header only or the admin :) -->
   <div  class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDance" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownDance" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Dance
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
@@ -21,7 +22,18 @@ include 'head.php';
             <a class="dropdown-item" href="#">Agenda</a>
             <a class="dropdown-item" href="#">Tickets</a>
             </div>
+        </li> -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownDance" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dance
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
+                <a class="dropdown-item" href="/danceevent">Artists</a>
+                <a class="dropdown-item" href="#">Agenda</a>
+                <a class="dropdown-item" href="#">Tickets</a>
+            </div>
         </li>
+
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownYummy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Yummy
@@ -68,15 +80,16 @@ include 'head.php';
 </nav>
 
 <script>
-    const isLoggedIn = <?php echo isset($_SESSION['user']); ?>;
+    const isLoggedIn = <?php echo isset($_SESSION['user']) ? 'true' : 'false'; ?>;
     const userRole = <?php echo isset($_SESSION['user']) ? json_encode($_SESSION['user']->getUserRole()) : 'null'; ?>;
+
 
     // Conditional rendering
     const loggedOutContent = document.getElementById('loggedOutContent');
     const loggedInContent = document.getElementById('loggedInContent');
     const crudDropdownContainer = document.getElementById('crudDropdownContainer');
 
-    admin.style.display='none'
+    admin.style.display='none';
 
     if (isLoggedIn) {
         loggedOutContent.style.display = 'none';
@@ -89,6 +102,8 @@ include 'head.php';
         loggedInContent.style.display = 'none';
     }
 </script>
+
+
 
 
 

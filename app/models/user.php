@@ -9,26 +9,24 @@ class User implements \JsonSerializable{
     private  $username;
     private  $password;
     private  $userRole;
-
-    public function __construct( $id, $username, $password,$userRole,$registratedDate){
-    
-        $this->id = $id;
-        $this->username = $username;
-        $this->password = $password;
-        $this->userRole = $userRole;
-        $this->$registratedDate = $registrationDate;
-    }
-
-    private $resgisteredDate; //dateTime
+    private $registeredDate; //dateTime
     private $firstName;
     private $lastName;
     private $email;
     private $photo;
 
-    public function __construct()
-    {
-
+    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo){
+        $this->id = $id;
+        $this->username = $username;
+        $this->password = $password;
+        $this->userRole = $userRole;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->registeredDate = $registeredDate;
+        $this->email = $email;
+        $this->photo = $photo;
     }
+
 
     public function getId() {
         return $this->id;
@@ -86,11 +84,11 @@ class User implements \JsonSerializable{
             $vars=get_object_vars($this);
             return $vars;
         }
-    public function getResgisteredDate() {
-        return $this->resgisteredDate;
+    public function getRegisteredDate() {
+        return $this->registeredDate;
     }
-    public function setResgisteredDate($resgisteredDate) {
-        $this->resgisteredDate = $resgisteredDate;
+    public function setRegisteredDate($registeredDate) {
+        $this->registeredDate = $registeredDate;
     }
 
     public function getFirstName() {
