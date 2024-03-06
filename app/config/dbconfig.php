@@ -1,6 +1,6 @@
 <?php
-$type = "mysql"; //type of database 
-$servername = "mysql"; // Remote SQL server hostname
-$username = "developer";  //username for mysql
-$password = "festival123"; //passwords for mysql
-$database = "developmentdb"; // Remote SQL server database name
+$type = "mysql"; // This is the database type
+$servername = "152.70.59.83"; // This is the name of the service defined in Docker Compose
+$username = "developer"; // This is the username for MySQL
+$password = "festival123"; // This is the password for MySQL
+$database = "developmentdb";

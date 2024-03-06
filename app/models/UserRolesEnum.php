@@ -3,7 +3,7 @@
 
  class UserRolesEnum
  {
-    const Visitor = "VISITOR";
     const Customer = "CUSTOMER";
+    const Employee = "EMPLOYEE";
     const Administrator = "ADMINISTRATOR";
 }

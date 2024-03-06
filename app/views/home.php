@@ -34,4 +34,6 @@
   </section>
 </main>
 
-<?php include __DIR__ . '/footer.php'; ?>
+<?php
+include __DIR__ . '/footer.php';
+    ?>

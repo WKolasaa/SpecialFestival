@@ -18,6 +18,7 @@ class PatternRouter
         if (str_starts_with($uri, "api/")) {
             $uri = substr($uri, 4);
             $api = true;
+
         }
 
         // set default controller/method
@@ -47,11 +48,13 @@ class PatternRouter
         }
         if (file_exists($filename)) {
             require $filename;
+            
+         
         } else {
             http_response_code(404);
             die();
         }
-
+  
         // dynamically call relevant controller method
         if (!class_exists($controllerName)) {
             echo "Controller class does not exist: $controllerName";
@@ -59,10 +62,12 @@ class PatternRouter
             http_response_code(404);
             die();
         }
+      
 
         try {
             $controllerObj = new $controllerName();
             $controllerObj->{$methodName}();
+
        
         } catch (\Exception $e) {
             // Log or handle the error more gracefully
@@ -71,6 +76,23 @@ class PatternRouter
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
