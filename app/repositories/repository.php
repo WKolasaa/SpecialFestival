@@ -22,5 +22,16 @@ class Repository {
             echo "Connection failed: " . $e->getMessage();
             
           }
-    }       
+    }
+
+    protected function executeQuery($sql)
+    {
+        try {
+            $statement = $this->connection->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException("Query execution failed: " . $e->getMessage());
+        }
+    }
 }

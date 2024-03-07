@@ -18,36 +18,9 @@
     </div>
 </div>
 
+<script src="js/restorePassword.js"></script>
+
 <?php
     include __DIR__ . '/footer.php';
 ?>
 
-
-<script>
-    function submitForm() {
-        var email = document.getElementById('email').value;
-
-        // Validate email (you can add more robust validation)
-        if (!isValidEmail(email)) {
-            document.getElementById('message').innerHTML = '<div class="alert alert-danger">Please enter a valid email address.</div>';
-            return;
-        }
-
-        // Send email and action to PHP for further processing
-        $.ajax({
-            type: 'POST',
-            url: 'controllers/restorepasswordcontroller.php',
-            data: { action: 'handleForgotPassword', email: email },
-            success: function(response) {
-                // Display response message
-                document.getElementById('message').innerHTML = '<div class="alert alert-info">' + response + '</div>';
-            }
-        });
-    }
-
-    function isValidEmail(email) {
-        // Implement a simple email validation logic
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-</script>

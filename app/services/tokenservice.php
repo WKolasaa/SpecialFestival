@@ -6,9 +6,12 @@ use App\Repositories\tokenrepository;
 
 class tokenservice
 {
-    public function updateResetToken($userId, $token) {
+    public function storeOrUpdateToken($email, $tokenString) {
         $tokenrepository = new tokenrepository();
-        $hashedToken = password_hash($token, PASSWORD_DEFAULT);  // Hash the token for security
-        $tokenrepository->updateResetToken($userId, $hashedToken);
+        $tokenrepository->storeOrUpdateToken($email, $tokenString);
+    }
+
+    public function generateRandomToken(){
+        return bin2hex(random_bytes(16));
     }
 }
