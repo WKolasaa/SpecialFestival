@@ -33,8 +33,8 @@
                  case 'manageuser':
                 $cssFile = 'manageuser.css';
                 break;
-                case 'homeadmin':
-                    $cssFile = 'adminView.css';
+                case 'danceadmin':
+                    $cssFile = 'admin/danceAdminEvent.css';
                     break;
             default:
                 $cssFile = $defaultCssFile;

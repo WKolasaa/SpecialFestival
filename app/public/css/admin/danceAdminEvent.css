@@ -1,0 +1,43 @@
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 150px;
+  top: 45px;
+  left: 0;
+  background-color: #f5f5f5;
+  padding-top: 22vh;
+}
+.sidebar a {
+  text-decoration: none;
+  color: rgb(163, 56, 185);
+  display: block;
+  padding: 20px 20px;
+}
+
+.sidebar a:hover {
+  background-color: #d5d4d6;
+}
+
+.parent-container {
+  display: flex;
+}
+
+.sidebar {
+  flex: 0 0 auto; /* Don't grow and shrink, but base size on content */
+}
+
+.main-container {
+  flex: 1; /* Grow to take up remaining space */
+  margin-left: 150px; 
+  margin-top: 20px;
+}
+
+h2 {
+  color: rgb(233, 15, 15);
+  margin-left: 20px;
+}
+
+.btn{
+  margin-left: 80%;
+}
+

@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-class HomeAdminController{
+class DanceAdminController{
  
     public function index()
     {
-      include '../views/adminViews/homeAdmin.php';
+      include '../views/adminViews/danceEventadmin.php';
 
 
       
