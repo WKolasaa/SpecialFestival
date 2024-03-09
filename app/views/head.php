@@ -20,9 +20,6 @@
 
     // loadTime is way faster
     if (!str_starts_with($currentPage, 'api/')) {
-            // Set default CSS file
-            $defaultCssFile = 'festival.css';
-
             //Adjust CSS file based on the current page
             switch ($currentPage) {
                 case '':
@@ -33,10 +30,13 @@
                     break;
                     case 'DanceMain':
                         $cssFile = 'DanceMain.css';
-                        break;
+                    break;
+                    case 'danceadmin':
+                        $cssFile = 'admin/danceAdminEvent.css';
+                    break;
                     case 'HistoryMain':
                         $cssFile = 'HistoryMain.css';
-                        break;
+                    break;
                 default:
                     $cssFile = $defaultCssFile;
                     break;

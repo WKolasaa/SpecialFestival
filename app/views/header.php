@@ -96,6 +96,8 @@ include 'head.php';
         loggedInContent.style.display = 'block';
         if(userRole=="ADMINISTRATOR"){
             admin.style.display = 'block';
+            // link to admin page
+            
         }
     } else {
         loggedOutContent.style.display = 'block';
