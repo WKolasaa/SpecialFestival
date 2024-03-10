@@ -22,11 +22,12 @@ class LoginController{
     public function login(){
         $loginInput = $_POST['username'];
         $password = $_POST['password'];
+        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         $userService = new UserService();
         if(filter_var($loginInput, FILTER_VALIDATE_EMAIL)){
-            $user = $userService->loginByEmail($loginInput, $password);
+            $user = $userService->loginByEmail($loginInput, $hashPassword);
         }else{
-            $user = $userService->loginByUserName($loginInput, $password);
+            $user = $userService->loginByUserName($loginInput, $hashPassword);
         }
 
         if($user){
@@ -36,6 +37,7 @@ class LoginController{
             header('Location: /');
         }else{
             echo "Wrong username or password";
+            var_dump($user);
         }
     }
 }

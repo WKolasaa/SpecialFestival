@@ -191,11 +191,11 @@ public function createUserByAdmin(User $user){
         if (!$row) {
             return null;
         }
-        if (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
             $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
             return $user;
         }
-        return null;
+        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
     }
 
     public function getUserByEmail($email)

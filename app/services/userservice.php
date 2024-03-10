@@ -21,7 +21,8 @@ class UserService {
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
     {
-        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $password, $photo);
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo);
     }
 
     public function loginByEmail($email, $password)

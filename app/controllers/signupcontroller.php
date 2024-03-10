@@ -58,7 +58,6 @@ class signupcontroller
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $photo = "";
 
         $userService = new UserService();
@@ -72,14 +71,14 @@ class signupcontroller
                 return "Email already exists";
             }
             else{
-                $userService->addUser($userName, $firstName, $lastName, $email, $hashedPassword, $photo);
+                $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo);
             }
         }catch (PDOException $e) {
             echo '<div class="alert alert-danger">An error occurred during registration.</div>';
             return "An error occurred during registration";
         }
-
-        $_SESSION['user'] = $userService->loginByUserName($userName, $hashedPassword);
+        session_start();
+        $_SESSION['user'] = $userService->loginByUserName($userName, $password);
         header('Location: /');
     }
 }
