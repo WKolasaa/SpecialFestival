@@ -95,16 +95,10 @@ include 'head.php';
         if(userRole=="ADMINISTRATOR"){
             admin.style.display = 'block';
             festPlan.style.display = 'none';
+            // link to admin page
         }
     } else {
         loggedOutContent.style.display = 'block';
         loggedInContent.style.display = 'none';
     }
 </script>
-
-
-
-
-
-
-
