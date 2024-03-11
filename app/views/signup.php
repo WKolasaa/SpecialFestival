@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/header.php';
+require __DIR__ . '/../config/captchaconfig.php';
 ?>
 
 <head>
@@ -16,7 +17,7 @@ include __DIR__ . '/header.php';
                 <div class="card-body">
                     <!-- Registration Form -->
                     <div id="message" class="alert alert-light"></div>
-                    <form action="signup/captcha" method="POST">
+                    <form id="signupForm">
                         <div class="form-group">
                             <label for="userName">Username:</label>
                             <input type="text" class="form-control" id="userName" name="userName" required>
@@ -43,9 +44,9 @@ include __DIR__ . '/header.php';
                         </div>
                         <p></p>
 
-                        <div class="g-recaptcha" data-sitekey="6LdMtIEpAAAAAItp4USCkfo9OHBPXjlxo1mz-hVI"></div>
+                        <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
-                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <input class="btn btn-primary" type="submit" value="Submit" onclick="submitForm()">
                     </form>
                 </div>
             </div>
@@ -54,13 +55,7 @@ include __DIR__ . '/header.php';
 </div>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<script>
-    function onSubmit() {
-        // Add a JavaScript function to show the server-side error message
-        document.getElementById('message').innerHTML = '<div class="alert alert-danger">Username or email is already in use. Please choose a different one.</div>';
-    }
-</script>
+<scrip src="js/signup.js"></scrip>
 
 <?php
     include __DIR__ . '/footer.php';
