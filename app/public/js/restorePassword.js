@@ -25,7 +25,7 @@ function checkEmailExists(email) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                showMessage('Email exists. Proceed to restore password.', 'alert-success');
+                showMessage('Email has been sent!', 'alert-success');
                 // Add code to initiate the password restoration process
             } else {
                 showMessage('Email does not exist. Please check your email address.', 'alert-danger');

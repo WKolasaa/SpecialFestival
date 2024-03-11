@@ -89,6 +89,8 @@ class UserService {
         try {
             $user = $this->convertArrayToUser($userData);
             // var_dump($user);
+            $hashpassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $user->setPassword($hashpassword);
             $this->userRepository->createUserByAdmin($user);
         } catch (\Exception $e) {
             // Handle the exception (log, show an error message, etc.)

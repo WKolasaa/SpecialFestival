@@ -14,4 +14,9 @@ class tokenservice
     public function generateRandomToken(){
         return bin2hex(random_bytes(16));
     }
+
+    public function checkToken($email, $token){
+        $tokenrepository = new tokenrepository();
+        return $tokenrepository->checkToken($email, $token);
+    }
 }

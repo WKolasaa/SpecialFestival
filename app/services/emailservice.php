@@ -2,30 +2,19 @@
 
 namespace App\Services;
 
+use Resend;
+
 class emailservice
 {
     public function sendResetTokenEmail($userEmail, $token)
     {
-        $to = $userEmail;
-        $subject = 'Password Reset Token';
-        $message = "Your password reset token is: $token";
+        $resend = Resend::client('re_DF4R1gUB_CFNiNU9FrxGhNdDUCFxaK6NN');
 
-        // TODO Change that!
-        $headers = "From: localhost.com" . "\r\n" .
-            "Reply-To: localhost.com" . "\r\n" .
-            "X-Mailer: PHP/" . phpversion();
-
-        echo $to;
-        echo $subject;
-        echo $message;
-        echo $headers;
-
-        if (mail($userEmail, $subject, $message, $headers)) {
-            return true;
-        } else {
-            $error = error_get_last();
-            echo "Error sending email: " . $error;
-            return false;
-        }
+        $resend->emails->send([
+            'from' => 'onboarding@resend.dev',
+            'to' => '695344@student.inholland.nl',
+            'subject' => 'Token reset',
+            'html' => '<p>Your token is: <a href="http://localhost/changepassword?email=' . $userEmail . '&token=' . $token . '">Reset Password</a></p>'
+        ]);
     }
 }

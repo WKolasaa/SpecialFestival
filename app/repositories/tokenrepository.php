@@ -64,4 +64,29 @@ class tokenrepository extends Repository
             echo "Error: " . $e->getMessage();
         }
     }
+
+    public function checkToken($user_email, $token){
+        try{
+            $sql = "SELECT id, user_email, token, created_at, expires_at FROM reset_tokens WHERE user_email = :user_email AND token = :token";
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':user_email', $user_email);
+            $statement->bindParam(':token', $token);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($row) {
+                if($row['expires_at'] > date('Y-m-d H:i:s')){
+                    return "Token is valid";
+                }
+                else{
+                    return "Token has expired";
+                }
+            }
+            else{
+                return "Token is invalid";
+            }
+        }catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 }

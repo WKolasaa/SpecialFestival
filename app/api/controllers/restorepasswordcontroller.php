@@ -33,10 +33,7 @@ class RestorePasswordController
                         $tokenService->storeOrUpdateToken($email, $token);
 
                         // Send an email with the reset token
-                        if($emailService->sendResetTokenEmail($email, $token))
-                            echo "Works";
-                        else
-                            echo "Doesn't work";
+                        $emailService->sendResetTokenEmail($email, $token);
                         // Return a JSON response indicating success
                         echo json_encode(['success' => true]);
                         return [ 'success' => true ];
