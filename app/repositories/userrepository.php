@@ -238,4 +238,12 @@ public function createUserByAdmin(User $user){
         return true;
     }
 
+    public function updatePassword($new_password, $email){
+        $sql = "UPDATE user SET password = :password WHERE email = :email";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':password', $new_password);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+    }
+
 }

@@ -33,7 +33,6 @@ class LoginController{
         if($user){
             session_start();
             $_SESSION['user'] = $user;
-            $_SESSION['userClass'] = null; // TODO: Get user class from database
             header('Location: /');
         }else{
             echo "Wrong username or password";

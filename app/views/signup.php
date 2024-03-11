@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/header.php';
+require __DIR__ . '/../config/captchaconfig.php';
 ?>
 
 <head>
@@ -43,7 +44,7 @@ include __DIR__ . '/header.php';
                         </div>
                         <p></p>
 
-                        <div class="g-recaptcha" data-sitekey="6LdMtIEpAAAAAItp4USCkfo9OHBPXjlxo1mz-hVI"></div>
+                        <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
                         <input class="btn btn-primary" type="submit" value="Submit" onclick="submitForm()">
                     </form>

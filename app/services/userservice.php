@@ -140,4 +140,9 @@ class UserService {
 
     }
 
+    public function updatePassword($password, $email){
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->updatePassword($hashpassword, $email);
+    }
+
 }

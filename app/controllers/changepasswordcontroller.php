@@ -7,16 +7,17 @@ use App\Services\tokenservice;
 class changepasswordcontroller
 {
     public function index(){
-        include '../views/changepassword.php';
+        $this->checkToken();
     }
 
-    public function checkToken(){
+    private function checkToken(){
         $token = $_GET['token'];
         $email = $_GET['email'];
 
         $tokenService = new tokenservice();
         $response = $tokenService->checkToken($email, $token);
         if($response == "Token is valid"){
+            $_SESSION['email'] = $email;
             include '../views/changepassword.php';
         }
         else if($response == "Token has expired") {

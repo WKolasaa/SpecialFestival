@@ -53,10 +53,8 @@ include 'head.php';
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">FestPlan</a>
-        </li>
-        <li class="nav-item">
             <a id="admin"class="nav-link" href="manageuser">Admin</a>
+            <a id="festPlan" class="nav-link" href="#">FestPlan</a>
         </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,6 +94,7 @@ include 'head.php';
         loggedInContent.style.display = 'block';
         if(userRole=="ADMINISTRATOR"){
             admin.style.display = 'block';
+            festPlan.style.display = 'none';
         }
     } else {
         loggedOutContent.style.display = 'block';
