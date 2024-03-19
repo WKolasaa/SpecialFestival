@@ -35,7 +35,7 @@ include 'head.php';
         </li>
 
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownYummy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="/yummy" id="navbarDropdownYummy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Yummy
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownYummy">

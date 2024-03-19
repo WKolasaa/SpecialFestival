@@ -1,0 +1,197 @@
+.YummyBody{
+    background-color: #1A1A1A;
+}
+
+.hero-section {
+    background: url('/img/Yummy/YummyEvent.jpg') no-repeat center center;
+    background-size: cover;
+    height: 50vh; /* Adjust the height as needed */
+
+}
+  
+.hero-section .overlay {
+    /*background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
+    padding: 100px;
+}
+  
+  /* Custom styles for your headings */
+.hero-section h1 {
+    font-size: 3rem; /* Adjust the size as needed */
+    margin-bottom: 0.5rem;
+    color: white;
+}
+  
+.hero-section h2 {
+    font-size: 4rem; /* Adjust the size as needed */
+    font-weight: bold;
+    color: white; /* Pick color to match the design */
+}
+
+.header-section {
+    position: relative;
+    color: #fff;
+    padding: 40px; /* Example padding */
+}
+
+.header-content {
+    max-width: 1140px; /* Assuming Bootstrap's container max-width */
+    margin: auto;
+    color: #fff;
+    text-align: center;
+}
+
+.date-range {
+    font-size: 8rem; /* Example font-size */
+    font-weight: bold;
+    color: rgba(117, 115, 115, 1);
+    margin-bottom: 50px;
+}
+
+.header-content h1 {
+    font-size: 3rem; /* Larger font-size for the main title */
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.festival-description {
+    font-size: 1.25rem; /* Slightly larger font-size for description */
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.section-title {
+    color: #333;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+}
+
+.restaurant-section {
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
+
+/* cards part */
+.card{
+    background-color: #1A1A1A;
+    border: none;
+}
+
+
+.card-body{
+    background-color: #0E0E0E;
+    color: white;
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.5rem; /* Adjust size as needed */
+}
+
+.card-text {
+    font-size: 1rem; /* Adjust size as needed */
+}
+
+.checked {
+    color: orange;
+}
+
+/* Custom star styling if you're not using a library like Font Awesome */
+.fa-star {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Ensure to style the rest of the card and other elements as needed */
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+    color: white;
+}
+
+.carousel-item {
+    padding: 0px; /* Add padding if needed */
+}
+
+
+.btn-primary {
+    background-color: #521900; /* Customize the color */
+    border: none; /* Removes the default border */
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #521900; /* Darker shade for hover state */
+}
+
+/* contact form */
+.contact-section {
+    color: #fff; /* White text */
+    padding: 40px; /* Some padding */
+}
+
+.contact-section h2 {
+    color: #fff; /* White text */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-form .form-control {
+    background-color: #555; /* Lighter background for inputs */
+    border: none;
+    color: #fff; /* White text */
+    margin-bottom: 20px;
+}
+
+.contact-form .form-control::placeholder {
+    color: #fff; /* White placeholder text */
+}
+
+.contact-form .btn-send {
+    background-color: #521900; /* Orange background for the button */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem; /* Bigger font size */
+    border-radius: 20px; /* Rounded borders */
+    width: 100%; /* Full width */
+    cursor: pointer; /* Cursor pointer on hover */
+}
+
+.contact-form .btn-send:hover {
+    background-color: #521900; /* Slightly lighter orange on hover */
+}
+
+/* restaurant card TODO: change that to different css file */
+.custom-border {
+    border-color: #521900; /* Custom color */
+    border-width: 2px; /* Custom width */
+    border-style: solid; /* Custom style */
+}
+
+.custom-border h2 {
+    color: white;
+}
+
+.custom-border p{
+    color: white;
+}
+
+.btn-reserve{
+    background-color: #521900; /* Custom color */
+    border: none; /* Removes the default border */
+    color: white;
+    margin-bottom: 10px;
+    padding-right: 200px;
+    padding-left: 200px;
+}

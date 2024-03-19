@@ -37,8 +37,11 @@
                     case 'HistoryMain':
                         $cssFile = 'HistoryMain.css';
                     break;
+                    case 'YummyMain':
+                        $cssFile = 'YummyMain.css';
+                        break;
                 default:
-                    $cssFile = $defaultCssFile;
+                    $cssFile = 'festival.css';
                     break;
             }
             echo '<link rel="stylesheet" href="css/' . $cssFile . '">';
