@@ -21,7 +21,8 @@ class UserService {
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
     {
-        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $password, $photo);
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo);
     }
 
     public function loginByEmail($email, $password)
@@ -93,6 +94,8 @@ class UserService {
         try {
             $user = $this->convertArrayToUser($userData);
             // var_dump($user);
+            $hashpassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $user->setPassword($hashpassword);
             $this->userRepository->createUserByAdmin($user);
         } catch (\Exception $e) {
             // Handle the exception (log, show an error message, etc.)
@@ -130,6 +133,11 @@ class UserService {
              $userData['photo']
         );
         return $user;
+    }
+
+    public function updatePassword($password, $email){
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->updatePassword($hashpassword, $email);
     }
 
 }
