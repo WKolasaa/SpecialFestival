@@ -2,13 +2,13 @@
 namespace App\Repositories;
 use App\Models\Artist;
 use App\Models\Agenda;
-use App\Models\Ticket;
+use App\Models\Session;
 
 use PDO;
 
 class DanceEventRepository extends Repository{
     public function getAllArtists(){
-        $sql = "SELECT artistId, artistName, style, participationDate FROM artist";
+        $sql = "SELECT artistId, artistName, style,description,title, participationDate,imageName FROM artist";
 
         $rows = $this->executeQuery($sql);
         if (!$rows) {
@@ -19,7 +19,7 @@ class DanceEventRepository extends Repository{
     }
 
     public function getAllAgendas(){
-        $sql = "SELECT agendaId, artistName, eventDay, eventDate, eventTime, durationMinutes, ticketPrice, ticketsAvailable, venueAddress FROM agenda";
+        $sql = "SELECT agendaId, artistName, eventDay, eventDate, eventTime, durationMinutes, sessionPrice, sessionsAvailable, venueAddress FROM agenda";
 
         $rows = $this->executeQuery($sql);
         if (!$rows) {
@@ -29,37 +29,32 @@ class DanceEventRepository extends Repository{
             return $this->mapToAgendaObjects($rows);
     }
 
-    public function getAllTickets(){
-        $sql = "SELECT ticketId, artistName, sessionTime, sessionDate, venue, ticketPrice FROM tickets";
+    public function getAllSessions(){
+        $sql = "SELECT sessionId, artistName, startSession, sessionDate, venue, sessionPrice, sessionType, endSession FROM session";
 
         $rows = $this->executeQuery($sql);
         if (!$rows) {
-            echo "No tickets found.";
+            echo "No sessions found.";
             return [];
           }
-            return $this->mapToTicketObjects($rows);
+            return $this->mapToSessionObjects($rows);
     }
-
-
-
-
-
-    private function mapToTicketObjects($rows){
-        $tickets = [];
+    private function mapToSessionObjects($rows){
+        $sessions = [];
         foreach ($rows as $row) {
-            $ticketId=$row['ticketId'];
+            $sessionId=$row['sessionId'];
             $artistName=$row['artistName'];
-            $sessionTime=$row['sessionTime'];
+            $startSession=$row['startSession'];
             $sessionDate=$row['sessionDate'];
             $venue=$row['venue'];
-            $ticketPrice=$row['ticketPrice'];
-            $ticket = new Ticket($ticketId,$artistName,$sessionTime,$sessionDate,$venue,$ticketPrice);
-            $tickets[] = $ticket;
+            $sessionPrice=$row['sessionPrice'];
+            $sessionType=$row['sessionType'];
+            $endSession=$row['endSession'];
+            $session = new Session($sessionId,$artistName,$startSession,$sessionDate,$venue,$sessionPrice,$sessionType,$endSession);
+            $sessions[] = $session;
         }
-        return $tickets;
+        return $sessions;
     }
-
-
 
     private function mapToAgendaObjects($rows){
 
@@ -71,10 +66,10 @@ class DanceEventRepository extends Repository{
             $eventDate=$row['eventDate'];
             $eventTime=$row['eventTime'];
             $durationMinutes=$row['durationMinutes'];
-            $ticketPrice=$row['ticketPrice'];
-            $ticketsAvailable=$row['ticketsAvailable'];
+            $sessionPrice=$row['sessionPrice'];
+            $sessionsAvailable=$row['sessionsAvailable'];
             $venueAddress=$row['venueAddress'];
-            $agenda = new Agenda($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $ticketPrice, $ticketsAvailable, $venueAddress);
+            $agenda = new Agenda($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $sessionPrice, $sessionsAvailable, $venueAddress);
             $agendas[] = $agenda;
         }
         return $agendas;
@@ -87,8 +82,11 @@ class DanceEventRepository extends Repository{
             $artistId=$row['artistId'];
             $artistName=$row['artistName'];
             $style=$row['style'];
+            $description=$row['description'];
+            $title=$row['title'];
             $participationDate=$row['participationDate'];
-            $artist = new Artist($artistId, $artistName, $style, $participationDate);
+            $imageName=$row['imageName'];
+            $artist = new Artist($artistId, $artistName, $style,$description,$title, $participationDate,$imageName);
             $artists[] = $artist;
         }
         return $artists;
@@ -106,47 +104,48 @@ class DanceEventRepository extends Repository{
     }
 ///////////////////////////update///////////////////////////
     public function updateArtist(Artist $artist) {
-        // var_dump($artist);
-        // Prepare the SQL statement with placeholders
-        $sql = "UPDATE artist SET artistName = :artistName, style = :style, participationDate = :participationDate WHERE artistId = :artistId";
+        
+        try{
+        $sql = "UPDATE artist SET artistName = :artistName, style = :style, description= :description, title= :title, participationDate = :participationDate, imageName= :imageName WHERE artistId = :artistId";
     
         // Get values from the artist object
         $artistId = $artist->getArtistId();
         $artistName = $artist->getArtistName();
         $style = $artist->getStyle();
+        $description = $artist->getDescription();
+        $title = $artist->getTitle();
         $participationDate = $artist->getParticipationDate();
+        $imageName = $artist->getImageName();
     
         // Manually construct a debug SQL string
-        $debugSql = "UPDATE artist SET artistName = '{$artistName}', style = '{$style}', participationDate = '{$participationDate}' WHERE artistId = {$artistId}";
-    
-        // Echo the debug SQL string
-        echo "Debug SQL: " . $debugSql . "\n";
-    
+        // $debugSql = "UPDATE artist SET artistName = '{$artistName}', style = '{$style}', description= '{$description}' participationDate = '{$participationDate}' WHERE artistId = {$artistId}";
+        // echo "Debug SQL: " . $debugSql . "\n";
+    //   var_dump($sql);  
         // Proceed with the actual prepared statement execution
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
         $statement->bindParam(':artistName', $artistName, PDO::PARAM_STR);
         $statement->bindParam(':style', $style, PDO::PARAM_STR);
+        $statement->bindParam(':description', $description, PDO::PARAM_STR);
+        $statement->bindParam(':title', $title, PDO::PARAM_STR);
         $statement->bindParam(':participationDate', $participationDate, PDO::PARAM_STR);
+        $statement->bindParam(':imageName', $imageName, PDO::PARAM_STR);
     
-        if ($statement->execute()) {
-            echo "Statement executed successfully.\n";
-            if ($statement->rowCount() > 0) {
-                echo "Artist information updated successfully.\n";
-            } else {
-                echo "No rows were affected, possibly because the artist ID was not found.\n";
-            }
-        } else {
-            echo "Statement execution failed.\n";
-            var_dump($statement->errorInfo());
+         $statement->execute();
+       
+            
+        }catch (\PDOException $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new \PDOException('Error updating artist: ' . $e->getMessage());
         }
+            
     }
 
     public function updateAgenda(Agenda $agenda) {
         // Prepare your SQL statement with placeholders to prevent SQL injection
         $sql = "UPDATE agenda SET artistName = :artistName, eventDay = :eventDay, eventDate = :eventDate, 
-                eventTime = :eventTime, durationMinutes = :durationMinutes, ticketPrice = :ticketPrice, 
-                ticketsAvailable = :ticketsAvailable, venueAddress = :venueAddress 
+                eventTime = :eventTime, durationMinutes = :durationMinutes, sessionPrice = :sessionPrice, 
+                sessionsAvailable = :sessionsAvailable, venueAddress = :venueAddress 
                 WHERE agendaId = :agendaId";
     
         try {
@@ -160,8 +159,8 @@ class DanceEventRepository extends Repository{
             $statement->bindParam(':eventDate', $agenda->getEventDate(), PDO::PARAM_STR);
             $statement->bindParam(':eventTime', $agenda->getEventTime(), PDO::PARAM_STR);
             $statement->bindParam(':durationMinutes', $agenda->getDurationMinutes(), PDO::PARAM_INT);
-            $statement->bindParam(':ticketPrice', $agenda->getTicketPrice(), PDO::PARAM_STR); // Use STR for prices that can have decimals
-            $statement->bindParam(':ticketsAvailable', $agenda->getTicketsAvailable(), PDO::PARAM_INT);
+            $statement->bindParam(':sessionPrice', $agenda->getSessionPrice(), PDO::PARAM_STR); // Use STR for prices that can have decimals
+            $statement->bindParam(':sessionsAvailable', $agenda->getSessionsAvailable(), PDO::PARAM_INT);
             $statement->bindParam(':venueAddress', $agenda->getVenueAddress(), PDO::PARAM_STR);
     
             // Execute the statement and check if it was successful
@@ -182,39 +181,35 @@ class DanceEventRepository extends Repository{
         }
     }
     
-    public function updateTicket(Ticket $ticket){
-        // Prepare the SQL statement with placeholders
-        $sql = "UPDATE tickets SET artistName = :artistName, sessionTime = :sessionTime, sessionDate = :sessionDate, venue = :venue, ticketPrice = :ticketPrice WHERE ticketId = :ticketId";
+    public function updateSession(Session $session){
+       
+        $sql = "UPDATE session SET artistName = :artistName, startSession = :startSession, sessionDate = :sessionDate, venue = :venue, sessionPrice = :sessionPrice, sessionType= :sessionType, endSession= :endSession WHERE sessionId = :sessionId";
     
-        // Get values from the ticket object
-        $ticketId = $ticket->getTicketId();
-        $artistName = $ticket->getArtistName();
-        $sessionTime = $ticket->getSessionTime();
-        $sessionDate = $ticket->getSessionDate();
-        $venue = $ticket->getVenue();
-        $ticketPrice = $ticket->getTicketPrice();
-    
-        // Manually construct a debug SQL string
-        $debugSql = "UPDATE tickets SET artistName = '{$artistName}', sessionTime = '{$sessionTime}', sessionDate = '{$sessionDate}', venue = '{$venue}', ticketPrice = '{$ticketPrice}' WHERE ticketId = {$ticketId}";
-    
-        // Echo the debug SQL string
-        echo "Debug SQL: " . $debugSql . "\n";
-    
-        // Proceed with the actual prepared statement execution
+        $sessionId = $session->getSessionId();
+        $artistName = $session->getArtistName();
+        $startSession = $session->getStartSession();
+        $sessionDate = $session->getSessionDate();
+        $venue = $session->getVenue();
+        $sessionPrice = $session->getSessionPrice();
+        $sessionType = $session->getSessionType();
+        $endSession = $session->getEndSession();
+
         $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+        $statement->bindParam(':sessionId', $sessionId, PDO::PARAM_INT);
         $statement->bindParam(':artistName', $artistName, PDO::PARAM_STR);
-        $statement->bindParam(':sessionTime', $sessionTime, PDO::PARAM_STR);
+        $statement->bindParam(':startSession', $startSession, PDO::PARAM_STR);
         $statement->bindParam(':sessionDate', $sessionDate, PDO::PARAM_STR);
         $statement->bindParam(':venue', $venue, PDO::PARAM_STR);
-        $statement->bindParam(':ticketPrice', $ticketPrice, PDO::PARAM_INT);
+        $statement->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
+        $statement->bindParam(':sessionType', $sessionType, PDO::PARAM_STR);
+        $statement->bindParam(':endSession', $endSession, PDO::PARAM_STR);
     
         if ($statement->execute()){
             echo "Statement executed successfully.\n";
             if ($statement->rowCount() > 0) {
-                echo "Ticket information updated successfully.\n";
+                echo "session information updated successfully.\n";
             } else {
-                echo "No rows were affected, possibly because the ticket ID was not found.\n";
+                echo "No rows were affected, possibly because the session ID was not found.\n";
             }
         } else {
             echo "Statement execution failed.\n";
@@ -223,19 +218,38 @@ class DanceEventRepository extends Repository{
     }
 
     ///////////////delete/////////////////////
-    public function deleteArtist(Artist $artist){
+    public function deleteArtist($artistId){
         try {
             // Use a prepared statement to delete the artist by artistId
             $stmt = $this->connection->prepare("DELETE FROM artist WHERE artistId = :artistId");
-            $artistId = $artist->getArtistId();
             $stmt->bindParam(':artistId', $artistId, PDO::PARAM_INT);
             $stmt->execute();
     
-            return true; // Return true if deletion is successful
+            if($stmt->rowCount() > 0){
+                echo "Artist information deleted successfully.\n";
+                return true; // Return true if deletion is successful
+            } else {
+                echo "No rows were affected, possibly because the artist ID was not found.\n";
+                return false; // Return false if no rows were affected
+            }
         } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
             throw new \PDOException('Error deleting artist: ' . $e->getMessage());
         }
+    }
+
+    public function getArtistById($artistId){
+        $sql = "SELECT artistId, artistName, style, participationDate, imageName FROM artist WHERE artistId = :artistId";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+         $artist= new Artist($row['artistId'], $row['artistName'], $row['style'], $row['description'],$row['title'], $row['participationDate'], $row['imageName']);
+        if (!$row) {
+            echo "No artist found with the given ID.\n";
+            return null;
+        }
+        return $artist;
     }
 
     public function deleteAgenda(Agenda $agenda){
@@ -253,18 +267,17 @@ class DanceEventRepository extends Repository{
         }
     }
         
-    public function deleteTicket(Ticket $ticket){
+    public function deleteSession(Session $session){
         try {
-            // Use a prepared statement to delete the ticket by ticketId
-            $stmt = $this->connection->prepare("DELETE FROM tickets WHERE ticketId = :ticketId");
-            $ticketId = $ticket->getTicketId();
-            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+            $stmt = $this->connection->prepare("DELETE FROM session WHERE sessionId = :sessionId");
+            $sessionId = $session->getSessionId();
+            $stmt->bindParam(':sessionId', $sessionId, PDO::PARAM_INT);
             $stmt->execute();
     
             return true; // Return true if deletion is successful
         } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new \PDOException('Error deleting ticket: ' . $e->getMessage());
+            throw new \PDOException('Error deleting session: ' . $e->getMessage());
         }
     }
 
@@ -273,15 +286,22 @@ class DanceEventRepository extends Repository{
     public function addArtist(Artist $artist){
         try {
             // Use a prepared statement to insert the artist into the database
-            $stmt = $this->connection->prepare("INSERT INTO artist (artistName, style, participationDate) VALUES (:artistName, :style, :participationDate)");
+            $stmt = $this->connection->prepare("INSERT INTO artist (artistName, style,description,title, participationDate, imageName) VALUES (:artistName, :style, :description, :title, :participationDate, :imageName)");
             $artistName = $artist->getArtistName();
             $style = $artist->getStyle();
+            $description = $artist->getDescription();
+            $title = $artist->getTitle();
+            $imageName = $artist->getImageName();
             $participationDate = $artist->getParticipationDate();
+
             $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
             $stmt->bindParam(':style', $style, PDO::PARAM_STR);
+            $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+            $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':participationDate', $participationDate, PDO::PARAM_STR);
+            $stmt->bindParam(':imageName', $imageName, PDO::PARAM_STR);
+            
             $stmt->execute();
-    
             return true; // Return true if insertion is successful
         } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
@@ -292,22 +312,22 @@ class DanceEventRepository extends Repository{
     public function addEvent(Agenda $agenda){
         try {
             // Use a prepared statement to insert the agenda into the database
-            $stmt = $this->connection->prepare("INSERT INTO agenda (artistName, eventDay, eventDate, eventTime, durationMinutes, ticketPrice, ticketsAvailable, venueAddress) VALUES (:artistName, :eventDay, :eventDate, :eventTime, :durationMinutes, :ticketPrice, :ticketsAvailable, :venueAddress)");
+            $stmt = $this->connection->prepare("INSERT INTO agenda (artistName, eventDay, eventDate, eventTime, durationMinutes, sessionPrice, sessionsAvailable, venueAddress) VALUES (:artistName, :eventDay, :eventDate, :eventTime, :durationMinutes, :sessionPrice, :sessionsAvailable, :venueAddress)");
             $artistName = $agenda->getArtistName();
             $eventDay = $agenda->getEventDay();
             $eventDate = $agenda->getEventDate();
             $eventTime = $agenda->getEventTime();
             $durationMinutes = $agenda->getDurationMinutes();
-            $ticketPrice = $agenda->getTicketPrice();
-            $ticketsAvailable = $agenda->getTicketsAvailable();
+            $sessionPrice = $agenda->getSessionPrice();
+            $sessionsAvailable = $agenda->getSessionsAvailable();
             $venueAddress = $agenda->getVenueAddress();
             $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
             $stmt->bindParam(':eventDay', $eventDay, PDO::PARAM_STR);
             $stmt->bindParam(':eventDate', $eventDate, PDO::PARAM_STR);
             $stmt->bindParam(':eventTime', $eventTime, PDO::PARAM_STR);
             $stmt->bindParam(':durationMinutes', $durationMinutes, PDO::PARAM_INT);
-            $stmt->bindParam(':ticketPrice', $ticketPrice, PDO::PARAM_STR);
-            $stmt->bindParam(':ticketsAvailable', $ticketsAvailable, PDO::PARAM_INT);
+            $stmt->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
+            $stmt->bindParam(':sessionsAvailable', $sessionsAvailable, PDO::PARAM_INT);
             $stmt->bindParam(':venueAddress', $venueAddress, PDO::PARAM_STR);
             $stmt->execute();
     
@@ -318,26 +338,30 @@ class DanceEventRepository extends Repository{
         }
     }
 
-    public function addTicket(Ticket $ticket){
+    public function addSession(Session $session){
         try {
-            // Use a prepared statement to insert the ticket into the database
-            $stmt = $this->connection->prepare("INSERT INTO tickets (artistName, sessionTime, sessionDate, venue, ticketPrice) VALUES (:artistName, :sessionTime, :sessionDate, :venue, :ticketPrice)");
-            $artistName = $ticket->getArtistName();
-            $sessionTime = $ticket->getSessionTime();
-            $sessionDate = $ticket->getSessionDate();
-            $venue = $ticket->getVenue();
-            $ticketPrice = $ticket->getTicketPrice();
+            
+            $stmt = $this->connection->prepare("INSERT INTO session (artistName, startSession, sessionDate, venue, sessionPrice, sessionType, endSession) VALUES (:artistName, :startSession, :sessionDate, :venue, :sessionPrice, :sessionType, :endSession)");
+            $artistName = $session->getArtistName();
+            $startSession = $session->getStartSession();
+            $sessionDate = $session->getSessionDate();
+            $venue = $session->getVenue();
+            $sessionPrice = $session->getSessionPrice();
+            $sessionType = $session->getSessionType();
+            $endSession = $session->getEndSession();
             $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
-            $stmt->bindParam(':sessionTime', $sessionTime, PDO::PARAM_STR);
+            $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
             $stmt->bindParam(':sessionDate', $sessionDate, PDO::PARAM_STR);
             $stmt->bindParam(':venue', $venue, PDO::PARAM_STR);
-            $stmt->bindParam(':ticketPrice', $ticketPrice, PDO::PARAM_INT);
+            $stmt->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
+            $stmt->bindParam(':sessionType', $sessionType, PDO::PARAM_STR);
+            $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
             $stmt->execute();
     
             return true; // Return true if insertion is successful
         } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new \PDOException('Error adding ticket: ' . $e->getMessage());
+            throw new \PDOException('Error adding session: ' . $e->getMessage());
         }
     }
 }
