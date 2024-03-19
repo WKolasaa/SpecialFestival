@@ -29,8 +29,8 @@ include 'head.php';
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
                 <a class="dropdown-item" href="/danceevent">Artists</a>
-                <a class="dropdown-item" href="#">Agenda</a>
-                <a class="dropdown-item" href="#">Tickets</a>
+                <a class="dropdown-item" href="/danceevent/agenda">Agenda</a>
+                <a class="dropdown-item" href="/danceevent/session">Tickets</a>
             </div>
         </li>
 
@@ -53,10 +53,8 @@ include 'head.php';
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">FestPlan</a>
-        </li>
-        <li class="nav-item">
             <a id="admin"class="nav-link" href="manageuser">Admin</a>
+            <a id="festPlan" class="nav-link" href="#">FestPlan</a>
         </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -96,18 +94,11 @@ include 'head.php';
         loggedInContent.style.display = 'block';
         if(userRole=="ADMINISTRATOR"){
             admin.style.display = 'block';
+            festPlan.style.display = 'none';
             // link to admin page
-            
         }
     } else {
         loggedOutContent.style.display = 'block';
         loggedInContent.style.display = 'none';
     }
 </script>
-
-
-
-
-
-
-

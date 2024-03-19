@@ -1,0 +1,7 @@
+<?php
+namespace App\Models;
+
+class UserTicket {
+  public Ticket $ticket;
+  public int $quantity;
+}

@@ -5,11 +5,9 @@ namespace App\Controllers;
 class DanceAdminController{
  
     public function index()
-    {
-      include '../views/adminViews/danceEventadmin.php';
+    {            //ADMIN CONTROLLER
+            include '../views/adminViews/danceEventadmin.php';
 
-
-      
     }
     
 }

@@ -72,7 +72,10 @@ class signupcontroller
                 return "Email already exists";
             }
             else{
+                // TODO: we can to have a user session so when the user logged in the navbar will show 
                 $userService->addUser($userName, $firstName, $lastName, $email, $hashedPassword, $photo);
+               
+
             }
         }catch (PDOException $e) {
             echo '<div class="alert alert-danger">An error occurred during registration.</div>';

@@ -1,59 +1,29 @@
 <?php
 namespace App\Models;
 
-class Ticket implements \JsonSerializable{
+use DateTime;
 
-  private $ticketId;
-  private $artistName;
-  private $sessionTime;
-  private $sessionDate;
-  private $venue;
-  private $ticketPrice;
+class Ticket implements \JsonSerializable {
 
-  public function __construct($ticketId, $artistName, $sessionTime, $sessionDate, $venue, $ticketPrice) {
-      $this->ticketId = $ticketId;
-      $this->artistName = $artistName;
-      $this->sessionTime = $sessionTime;
-      $this->sessionDate = $sessionDate;
-      $this->venue = $venue;
-      $this->ticketPrice = $ticketPrice;
-  }
+  public int $id;
+  public string $event_name;
+  public TicketType $ticketType; 
+  public string $ticket_name;
+  public string $location;
+  public int $price;
+  public DateTime $start_date;
+  public DateTime $end_date;
 
-  public function getTicketId(){
-    return $this->ticketId;
-  }
-  public function getArtistName(){
-    return $this->artistName;
-  }
-  public function getSessionTime(){
-    return $this->sessionTime;
-  }
-  public function getSessionDate(){
-    return $this->sessionDate;
-  }
-  public function getVenue(){
-    return $this->venue;
-  }
-  public function getTicketPrice(){
-    return $this->ticketPrice;
-  }
-  public function setTicketId($ticketId){
-    $this->ticketId = $ticketId;
-  }
-  public function setArtistName($artistName){
-    $this->artistName = $artistName;
-  }
-  public function setSessionTime($sessionTime){
-    $this->sessionTime = $sessionTime;
-  }
-  public function setSessionDate($sessionDate){
-    $this->sessionDate = $sessionDate;
-  }
-  public function setVenue($venue){
-    $this->venue = $venue;
-  }
-  public function setTicketPrice($ticketPrice){
-    $this->ticketPrice = $ticketPrice;
+  public function __construct(int $id, string $event_name, TicketType $ticketType, string $ticket_name, string $location, int $price, DateTime $start_date, DateTime $end_date)
+  {
+    $this->id = $id;
+    $this->event_name = $event_name;
+    $this->ticketType = $ticketType;
+    $this->ticket_name = $ticket_name;
+    $this->location = $location;
+    $this->price = $price;
+    $this->start_date = $start_date;
+    $this->end_date = $end_date;
   }
 
   public function jsonSerialize():mixed
@@ -61,6 +31,4 @@ class Ticket implements \JsonSerializable{
     $vars=get_object_vars($this);
             return $vars;
   }
-
-
 }
