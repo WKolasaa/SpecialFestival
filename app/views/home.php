@@ -28,7 +28,7 @@
       <h2 class="event-title">Yummy Event</h2>
     </a>
     <a href="/HistoryMain" class="event"> 
-      <img src="img/HistoryEvent.jpg" alt="History Event" class="event-image">
+      <img src="img/History/HistoryEvent.jpg" alt="History Event" class="event-image">
       <h2 class="event-title">History Event</h2>
     </a>
   </section>

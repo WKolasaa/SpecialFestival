@@ -191,10 +191,15 @@ public function createUserByAdmin(User $user){
         if (!$row) {
             return null;
         }
-        if (password_verify($password, $row['password'])) {
+        
+        if ($password == $row['password']) {
             $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
             return $user;
         }
+        // if (password_verify($password, $row['password'])) {
+        //     $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
+        //     return $user;
+        // }
         return null;
     }
 

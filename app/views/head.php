@@ -35,7 +35,13 @@
                         $cssFile = 'DanceMain.css';
                         break;
                     case 'HistoryMain':
-                        $cssFile = 'HistoryMain.css';
+                        $cssFile = 'History/HistoryMain.css';
+                        break;
+                    case 'HistoryPort':
+                        $cssFile = 'History/HistoryPort.css';
+                        break;
+                    case 'HistoryWindmill':
+                        $cssFile = 'History/HistoryWindmill.css';
                         break;
                 default:
                     $cssFile = $defaultCssFile;

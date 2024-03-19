@@ -5,7 +5,7 @@ body, html {
     height: 100%;
     font-family: 'Helvetica Neue', Arial, sans-serif; /* A more modern font */
     overflow-x: hidden; /* Prevents horizontal scrolling */
-}
+}   
 
 .festival-banner {
     background-size: cover;
