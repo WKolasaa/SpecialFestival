@@ -42,9 +42,17 @@
         <div class="locations-container">
             <!-- Adriaan Windmill -->
             <a href="/HistoryWindmill" class="location-item">
-                <div class="location-image-container">
-                    <img src="img/History/AdriaanWindmill.png" alt="Adriaan Windmill" class="location-image">
-                </div>
+            <div class="location-image-container">
+                <?php
+                // Assuming $service is an instance of HistoryAdminService initialized earlier
+                $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
+                if($adriaanWindmillImagePath == "<null>") {
+                    // Provide a default image path or handle the absence of an image
+                    $adriaanWindmillImagePath = "img/History/AdriaanWindmill.png";
+                }
+                ?>
+                <img src="<?= htmlspecialchars($adriaanWindmillImagePath) ?>" alt="Adriaan Windmill" class="location-image">
+            </div>
                 <h3 class="location-name"><?= $service->getContent("History Main", "Seventh Location Name") ?></h3>
                 <p class="location-description"><?= $service->getContent("History Main", "Seventh Location Description") ?></p>
             </a>
