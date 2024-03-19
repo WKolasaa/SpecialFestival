@@ -121,7 +121,7 @@ foreach ($entries as $entry) {
         <hr />
     <?php endforeach; ?>
 
-    <form action="/HistoryAdmin/addEntry" method="POST" class="add-entry-form">
+    <form action="/HistoryAdmin/addEntry" method="POST" class="add-entry-form" enctype="multipart/form-data">
         <label>
             Page:
             <select name="page_name">
@@ -146,7 +146,9 @@ foreach ($entries as $entry) {
 
         <label>
             Entry Content:
-            <input name="content" value="" />
+            <input type="text" name="content" id="contentInput" value="" /> <!-- For text entries -->
+            OR
+            <input type="file" name="image" id="imageInput" accept="image/*"> <!-- For image uploads -->
         </label>
 
         <button type="submit">Add Entry</button>
@@ -200,5 +202,22 @@ foreach ($entries as $entry) {
           })
     }
 </script>
+
+<script>
+document.getElementById('imageInput').addEventListener('change', function() {
+    var fileInput = this;
+    var contentInput = document.getElementById('contentInput');
+
+    if (fileInput.files && fileInput.files[0]) {
+        // Specify the directory path where the file will be stored
+    var directoryPath = 'img/History/';
+    // Extract the file name
+    var fileName = this.files[0].name;
+        // Update the content input with the file name
+        contentInput.value = directoryPath + fileName;
+    }
+});
+</script>
+
 
 <?php include __DIR__ . '/../footer.php'; ?>

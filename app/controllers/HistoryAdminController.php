@@ -29,5 +29,21 @@ class HistoryAdminController{
       $this->historyAdminService->addEntry($page_name, $entry_name, $entry_type, $content);
       header("Location: /HistoryAdmin");
     }
+
+    if ($entry_type == HistoryEntryTypeEnum::Image) {
+      if (isset($_FILES['image']['name']) && $_FILES['image']['error'] == 0) {
+          // Define the path to the upload directory
+          $targetDirectory = $_SERVER['DOCUMENT_ROOT'] . '/img/History/';
+          $targetFile = $targetDirectory . basename($_FILES['image']['name']);
+          // Move the uploaded file to your directory
+          if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+              // File is successfully uploaded
+              // You can now save the $targetFile (or a relative path) in your database
+              $content = $targetFile; // Assuming you want to save the absolute path
+          } else {
+              echo "Sorry, there was an error uploading your file.";
+          }
+      }
+    }
   }
 }
