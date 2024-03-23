@@ -1,6 +1,10 @@
 <?php
 require __DIR__ . '/../header.php';
 use App\Models\Restaurant;
+$events = $restaurant->getEvents();
+foreach ($events as $event) {
+    var_dump($event);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +23,7 @@ use App\Models\Restaurant;
         <div class="overlay">
             <h1 class="display-4">Check our participating</h1>
             <h2 class="display-2 font-weight-bold">Restaurants</h2>
+            <p id="restaurant" style="display: none" ><?php echo $restaurant->getId(); ?></p>
         </div>
     </section>
 
@@ -105,11 +110,69 @@ use App\Models\Restaurant;
             </div>
 
             <!--form-->
-            <form action="" method="">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-left"> </div>
+                <div class="col-md-8 text-left">
+                    <div id="message" class="alert alert-api"></div>
+                    <form action="submitReservation.php" method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="daySelect">Choose a Day:</label>
+                            <select id="daySelect" name="daySelect" class="form-control" onchange="updateSessions(this.value)" required>
+                                <option value="">Select a Day</option>
+                                <?php foreach ($events as $event): ?>
+                                    <option value="<?php echo htmlspecialchars($event['event_day']); ?>">
+                                        <?php echo htmlspecialchars($event['event_day']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <p></p>
+
+                        <div class="form-group" id="sessionPicker" style="display: block;">
+                            <label for="sessionSelect">Choose a Session:</label>
+                            <select id="sessionSelect" name="sessionSelect" class="form-control" required>
+                            </select>
+                        </div>
+
+                        <p></p>
+
+                        <div class="row">
+                            <div class="col-md-6 text-left">
+                                <div class="form-group">
+                                    <label for="regularTickets">Regular Tickets:</label>
+                                    <input type="number" id="regularTickets" name="regularTickets" class="form-control" min="1" value="1" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="form-group">
+                                    <label for="reducedTickets">Reduced Tickets:</label>
+                                    <input type="number" id="reducedTickets" name="reducedTickets" class="form-control" min="0" value="0" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p></p>
+
+                        <div class="mb-3">
+                            <label for="specialRequests" class="form-label">Special requests:</label>
+                            <textarea class="form-control" id="specialRequests" rows="3"></textarea>
+                        </div>
+
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-reserve">Reserve</button>
+                            </div>
+                        </div>
 
 
-            </form>
+                    </form>
+                </div>
+                <div class="col-md-2 text-right"> </div>
+            </div>
 
         </div>
     </div>
+
+    <script src="js/Yummy/reservation.js"></script>
 </body>

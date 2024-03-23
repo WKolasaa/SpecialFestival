@@ -195,3 +195,14 @@
     padding-right: 200px;
     padding-left: 200px;
 }
+
+
+/* Reservation part */
+.custom-border label {
+    color: white;
+}
+
+.alert-api{
+    background-color: #1A1A1A;
+    color: white;
+}

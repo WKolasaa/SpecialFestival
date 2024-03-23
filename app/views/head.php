@@ -40,6 +40,9 @@
                     case 'YummyMain':
                         $cssFile = 'YummyMain.css';
                         break;
+                    case 'yummyadmin':
+                        $cssFile = 'admin/danceAdminEvent.css';
+                        break;
                 default:
                     $cssFile = 'festival.css';
                     break;

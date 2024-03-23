@@ -79,11 +79,11 @@
                     </div>
                 </div>
 
-
                 <div class="row justify-content-center mt-4">
                     <div class="col-auto">
-                        <a href="reservation.php?restaurantId=<?php echo $restaurant->getId(); ?>" class="btn btn-reserve">Reserve</a>
+                        <a href="/restaurantreservation?restaurantId=<?php echo $restaurant->getId(); ?>" class="btn btn-reserve">Reserve</a>
                     </div>
                 </div>
             </div>
         </div>
+</div>

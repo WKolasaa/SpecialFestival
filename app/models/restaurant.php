@@ -1,6 +1,6 @@
 <?php
 namespace App\Models;
-class Restaurant {
+class Restaurant implements \JsonSerializable {
     private $id;
     private $name;
     private $address;
@@ -17,19 +17,7 @@ class Restaurant {
         'chef' => '',
         'gallery' => []
     ];
-    private $events = [
-        'event_date' => [
-            'event_day' => 'day_of_week',
-            'sessions' => [
-                [
-                    'event_time_start' => 'start_time',
-                    'event_time_end' => 'end_time',
-                    'seats_total' => 'total_seats',
-                    'seats_left' => 'seats_available'
-                ],
-            ]
-        ],
-    ];
+    private $events = [];
 
     public function __construct() {
 
@@ -139,11 +127,36 @@ class Restaurant {
         }
     }
 
-    public function setEvent($event) {
-        $this->events[] = $event;
+    public function addEvent($eventDate, $eventDay, $eventTimeStart, $eventTimeEnd, $seatsTotal, $seatsLeft) {
+        // Create the session array
+        $session = [
+            'event_time_start' => $eventTimeStart,
+            'event_time_end' => $eventTimeEnd,
+            'seats_total' => $seatsTotal,
+            'seats_left' => $seatsLeft
+        ];
+
+        // Check if the event date already exists
+        if (!isset($this->events[$eventDate])) {
+            // If not, initialize it with the event day and an empty sessions array
+            $this->events[$eventDate] = [
+                'event_day' => $eventDay,
+                'sessions' => []
+            ];
+        }
+
+        // Add the session to the sessions array for the event date
+        $this->events[$eventDate]['sessions'][] = $session;
     }
 
     public function getEvents() {
         return $this->events;
     }
+
+    public function jsonSerialize():mixed
+    {
+        $vars = get_object_vars($this);
+        return $vars;
+    }
+
 }

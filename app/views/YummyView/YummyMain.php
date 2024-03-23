@@ -67,7 +67,7 @@
             <span class="sr-only">Next</span>
         </a>
         <div class="text-center my-4">
-            <button type="button" class="btn btn-primary btn-lg">Check restaurants</button>
+            <a href="/restaurants" class="btn btn-primary btn-lg">Check restaurants</a>
         </div>
     </div>
 

@@ -81,7 +81,7 @@ function showAddTicketForm() {
 
 let allArtists = [];
 function loadArtists() {
-  fetch("http://localhost/api/danceevent/Artists")
+    fetch("http://localhost/api/danceevent/Artists")
       .then(response => response.json())
       .then(data => {
           allArtists = data; // Store all users in the array

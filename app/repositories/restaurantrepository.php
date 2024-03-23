@@ -7,7 +7,7 @@ use App\Models\restaurant;
 class RestaurantRepository extends Repository
 {
     public function getRestaurants(){
-        $sql = "SELECT id, name, address, type, price, reduced, firstSession, duration, sessions, stars, phoneNumber, email, website, chef, seats FROM restaurants";
+        $sql = "SELECT id, name, address, type, price, reduced, stars, phoneNumber, email, website, chef FROM restaurants";
         $statement = $this->connection->prepare($sql);
         $statement->execute();
         $rows = $statement->fetchAll();
@@ -16,7 +16,27 @@ class RestaurantRepository extends Repository
 
         $restaurants = $this->setImages($restaurants);
 
+        $restaurants = $this->setEvents($restaurants);
+
         return $restaurants;
+    }
+
+    public function getRestaurantByID($restaurantID){
+        $sql = "SELECT id, name, address, type, price, reduced, stars, phoneNumber, email, website, chef FROM restaurants WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([$restaurantID]);
+        $rows = $statement->fetchAll();
+
+        $restaurants = $this->mapToRestaurants($rows);
+
+        $restaurants = $this->setImages($restaurants);
+
+        $restaurants = $this->setEvents($restaurants);
+
+        $restaurant = new Restaurant();
+        $restaurant = $restaurants[0];
+
+        return $restaurant;
     }
 
     private function mapToRestaurants($rows){
@@ -29,15 +49,11 @@ class RestaurantRepository extends Repository
             $restaurant->setType($row['type']);
             $restaurant->setPrice($row['price']);
             $restaurant->setReduced($row['reduced']);
-            $restaurant->setFirstSession($row['firstSession']);
-            $restaurant->setDuration($row['duration']);
-            $restaurant->setSessions($row['sessions']);
             $restaurant->setStars($row['stars']);
             $restaurant->setPhoneNumber($row['phoneNumber']);
             $restaurant->setEmail($row['email']);
             $restaurant->setWebsite($row['website']);
             $restaurant->setChef($row['chef']);
-            $restaurant->setSeats($row['seats']);
 
             array_push($restaurants, $restaurant);
         }
@@ -68,36 +84,9 @@ class RestaurantRepository extends Repository
             $eventStmt->execute([$restaurant->getId()]);
             $eventRows = $eventStmt->fetchAll();
 
-            $events = []; // Initialize an empty array to hold the event data
+            $events = [];
             foreach ($eventRows as $eventRow) {
-                // Format the event date as a key for grouping events by date
-                $eventDate = $eventRow['event_date'];
-
-                // Create an associative array for each session
-                $session = [
-                    'event_time_start' => $eventRow['event_time_start'],
-                    'event_time_end' => $eventRow['event_time_end'],
-                    'seats_total' => $eventRow['seats_total'],
-                    'seats_left' => $eventRow['seats_left']
-                ];
-
-                // Group sessions by event date
-                if (!isset($events[$eventDate])) {
-                    $events[$eventDate] = [
-                        'event_day' => $eventRow['event_day'],
-                        'sessions' => []
-                    ];
-                }
-
-                // Append the session to the sessions array for the corresponding date
-                $events[$eventDate]['sessions'][] = $session;
-            }
-
-            // Add the events array to the restaurant object
-            if (!empty($events)) {
-                foreach ($events as $eventDate => $eventData) {
-                    $restaurant->addEvent($eventDate, $eventData['event_day'], $eventData['sessions']);
-                }
+                $restaurant->addEvent($eventRow['event_date'], $eventRow['event_day'], $eventRow['event_time_start'], $eventRow['event_time_end'], $eventRow['seats_total'], $eventRow['seats_left']);
             }
         }
 
