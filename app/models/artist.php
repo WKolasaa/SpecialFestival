@@ -5,13 +5,20 @@ class Artist implements \JsonSerializable{
   private $artistId;
   private $artistName;
   private $style;
+  private $description;
+  private $title;
   private $participationDate;
+  private $imageName;
 
-  public function __construct($artistId, $artistName, $style, $participationDate) {
+  public function __construct($artistId, $artistName, $style,$description,$title, $participationDate,$imageName) {
       $this->artistId = $artistId;
       $this->artistName = $artistName;
       $this->style = $style;
+      $this->description = $description;
+      $this->title = $title;
       $this->participationDate = $participationDate;
+      $this->imageName = $imageName;
+      
   }
 
   public function getArtistId(){
@@ -35,8 +42,26 @@ class Artist implements \JsonSerializable{
   public function setStyle($style){
     $this->style = $style;
   }
+  public function getDescription(){
+    return $this->description;
+  }
+  public function setDescription($description){
+    $this->description = $description;
+  }
+  public function getTitle(){
+    return $this->title;
+  }
+  public function setTitle($title){
+    $this->title = $title;
+  }
   public function setParticipationDate($participationDate){
     $this->participationDate = $participationDate;
+  }
+  public function getImageName(){// New line
+    return $this->imageName;// New line
+  }
+  public function setImageName($imageName){// New line
+    $this->imageName = $imageName;// New line
   }
 
   public function jsonSerialize():mixed

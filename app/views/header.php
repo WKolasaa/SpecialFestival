@@ -29,8 +29,8 @@ include 'head.php';
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
                 <a class="dropdown-item" href="/danceevent">Artists</a>
-                <a class="dropdown-item" href="#">Agenda</a>
-                <a class="dropdown-item" href="#">Tickets</a>
+                <a class="dropdown-item" href="/danceevent/agenda">Agenda</a>
+                <a class="dropdown-item" href="/danceevent/session">Tickets</a>
             </div>
         </li>
 

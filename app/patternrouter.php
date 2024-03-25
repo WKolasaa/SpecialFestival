@@ -13,12 +13,12 @@ class PatternRouter
 
     public function route($uri)
     {     
+
         // check if we are requesting an api route
         $api = false;
         if (str_starts_with($uri, "api/")) {
             $uri = substr($uri, 4);
             $api = true;
-
         }
 
         // set default controller/method
@@ -67,6 +67,7 @@ class PatternRouter
         try {
             $controllerObj = new $controllerName();
             $controllerObj->{$methodName}();
+           
 
        
         } catch (\Exception $e) {
@@ -76,23 +77,3 @@ class PatternRouter
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

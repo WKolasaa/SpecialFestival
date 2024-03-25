@@ -8,19 +8,19 @@ class Agenda implements \JsonSerializable{
   private $eventDate;
   private $eventTime;
   private$durationMinutes;
-  private $ticketPrice;
-  private $ticketsAvailable;
+  private $sessionPrice;
+  private $sessionsAvailable;
   private $venueAddress;
 
-  public function __construct($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $ticketPrice, $ticketsAvailable, $venueAddress) {
+  public function __construct($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $sessionPrice, $sessionsAvailable, $venueAddress) {
       $this->agendaId = $agendaId;
       $this->artistName = $artistName;
       $this->eventDay = $eventDay;
       $this->eventDate = $eventDate;
       $this->eventTime = $eventTime;
       $this->durationMinutes = $durationMinutes;
-      $this->ticketPrice = $ticketPrice;
-      $this->ticketsAvailable = $ticketsAvailable;
+      $this->sessionPrice = $sessionPrice;
+      $this->sessionsAvailable = $sessionsAvailable;
       $this->venueAddress = $venueAddress;
   }
 
@@ -43,11 +43,11 @@ class Agenda implements \JsonSerializable{
   public function getDurationMinutes(){
     return $this->durationMinutes;
   }
-  public function getTicketPrice(){
-    return $this->ticketPrice;
+  public function getSessionPrice(){
+    return $this->sessionPrice;
   }
-  public function getTicketsAvailable(){
-    return $this->ticketsAvailable;
+  public function getSessionsAvailable(){
+    return $this->sessionsAvailable;
   }
   public function getVenueAddress(){
     return $this->venueAddress;
@@ -72,11 +72,11 @@ class Agenda implements \JsonSerializable{
     $this->durationMinutes = $durationMinutes;
   }
 
-  public function setTicketPrice($ticketPrice){
-    $this->ticketPrice = $ticketPrice;
+  public function setSessionPrice($sessionPrice){
+    $this->sessionPrice = $sessionPrice;
   }
-  public function setTicketsAvailable($ticketsAvailable){
-    $this->ticketsAvailable = $ticketsAvailable;
+  public function setSessionsAvailable($sessionsAvailable){
+    $this->sessionsAvailable = $sessionsAvailable;
   }
   public function setVenueAddress($venueAddress){
     $this->venueAddress = $venueAddress;

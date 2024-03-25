@@ -1,6 +1,8 @@
+//Ticket means session
+// TODO: change the naming to make it more clear and aligned with the database
 ////////////sidebar/////////////////////
 function showArtists() {
-  document.getElementById('artists-container').style.display = 'block';
+  document.getElementById('artists-container').style.display = 'flex';
   document.getElementById('agenda-container').style.display = 'none';
   document.getElementById('tickets-container').style.display = 'none';
   const addButton=document.getElementById('add-btn');
@@ -45,6 +47,10 @@ function showAddArtistForm() {
   document.getElementById('add-artist-form').style.display = 'block';
   document.getElementById('add-agenda-form').style.display = 'none';
   document.getElementById('add-ticket-form').style.display = 'none';
+  document.getElementById('artists-container').style.display = 'none';
+  document.getElementById('add-btn').style.display = 'none';
+
+
 
 
 }
@@ -61,20 +67,12 @@ function showAddTicketForm() {
   document.getElementById('add-ticket-form').style.display = 'block';
 }
 
-// const addButton = document.getElementById('add-btn');
-// // When showing artists
-// addButton.onclick = showAddArtistForm;
-// addButton.innerText = 'Add Artist';
 
-// // When showing agenda/events
-// addButton.onclick = showAddAgendaForm;
-// addButton.innerText = 'Add Event';
-
-// // When showing tickets
-// addButton.onclick = showAddTicketForm;
-// addButton.innerText = 'Add Ticket';
-
-
+document.getElementById('artistForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from being submitted normally
+  addArtist(); // Replace this with your function to add the artist
+  loadArtists(); // Reload the artists
+});
 
 
 //////////////////////fetch data///////////////////////
@@ -112,7 +110,7 @@ function loadAgenda() {
 
 let allTickets = [];
 function loadTickets() {
-  fetch("http://localhost/api/danceevent/Tickets")
+  fetch("http://localhost/api/danceevent/sessions")
       .then(response => response.json())
       .then(data => {
           allTickets = data; // Store all users in the array
@@ -133,47 +131,135 @@ function loadTickets() {
 function displayArtists(artists) {
   const artistContainer = document.getElementById('artists-container');
   artistContainer.innerHTML = ''; // Clear existing content
+  artistContainer.className = 'row'; // Add Bootstrap row class
 
   const heading = document.createElement('h2');
   heading.textContent = 'Artists'; // Set the heading text
   artistContainer.appendChild(heading);
-  const artistList = document.createElement('ul');
 
   artists.forEach(artist => {
-    const artistItem = document.createElement('li');
-    artistItem.innerHTML = `
-      Name: <span contenteditable="true" id="artist-name-${artist.artistId}">${artist.artistName}</span>, 
-      Style: <span contenteditable="true" id="artist-style-${artist.artistId}">${artist.style}</span>, 
-      Participation Date: <span contenteditable="true" id="artist-date-${artist.artistId}">${artist.participationDate}</span>
-      <button onclick="saveArtist(${artist.artistId})">Save</button>
-      <button onclick="deleteArtist(${artist.artistId})">Delete</button>
-    `;
-    artistList.appendChild(artistItem);
-  });
+    const artistCard = document.createElement('div');
+    artistCard.className = 'artist-card col-sm-4'; // Add Bootstrap column class
+    
+    const artistImageInput = document.createElement('input');
+    artistImageInput.type = 'file';
+    artistImageInput.id = `artist-image-${artist.artistId}`;
+    artistImageInput.style.display = 'none';
+    artistCard.appendChild(artistImageInput);
 
-  artistContainer.appendChild(artistList);
+    const artistImage = document.createElement('img');
+    artistImage.src = `../../img/DanceEvent/${artist.imageName}`; // Set the image source
+    artistImage.onclick=()=>artistImageInput.click();
+    artistCard.appendChild(artistImage);
+
+  const artistNameLabel = document.createElement('span');
+  artistNameLabel.textContent = 'Name: ';
+  artistCard.appendChild(artistNameLabel);
+
+  const artistName = document.createElement('span');
+  artistName.contentEditable = 'true';
+  artistName.id = `artist-name-${artist.artistId}`;
+  artistName.textContent = artist.artistName;
+  artistNameLabel.appendChild(artistName);
+
+  const artistStyleLabel = document.createElement('span');
+  artistStyleLabel.textContent = 'Style: ';
+  artistCard.appendChild(artistStyleLabel);
+
+  const artistStyle = document.createElement('span');
+  artistStyle.contentEditable = 'true';
+  artistStyle.id = `artist-style-${artist.artistId}`;
+  artistStyle.textContent = artist.style;
+  artistStyleLabel.appendChild(artistStyle);
+
+
+  const artistDescriptionLabel = document.createElement('span');
+  artistDescriptionLabel.textContent = 'Description: ';
+  artistCard.appendChild(artistDescriptionLabel);
+
+  const artistDescription = document.createElement('span');
+  artistDescription.contentEditable = 'true';
+  artistDescription.id = `artist-description-${artist.artistId}`;
+  artistDescription.textContent = artist.description;
+  artistDescriptionLabel.appendChild(artistDescription);
+
+  const artistTitleLabel = document.createElement('span');
+  artistTitleLabel.textContent = 'Title: ';
+  artistCard.appendChild(artistTitleLabel);
+
+  const artistTitle = document.createElement('span');
+  artistTitle.contentEditable = 'true';
+  artistTitle.id = `artist-title-${artist.artistId}`;
+  artistTitle.textContent = artist.title;
+  artistTitleLabel.appendChild(artistTitle);
+
+  const artistDateLabel = document.createElement('span');
+  artistDateLabel.textContent = 'Participation Date: ';
+  artistCard.appendChild(artistDateLabel);
+
+  const artistDate = document.createElement('span');
+  artistDate.contentEditable = 'true';
+  artistDate.id = `artist-date-${artist.artistId}`;
+  artistDate.textContent = artist.participationDate;
+  artistDateLabel.appendChild(artistDate);
+
+  const saveButton = document.createElement('button');
+  saveButton.className = 'btn btn-success buttons'; // Apply Bootstrap button styling
+  saveButton.onclick = () => saveArtist(artist.artistId);
+  saveButton.textContent = 'Save';
+  artistCard.appendChild(saveButton);
+  
+  const deleteButton = document.createElement('button');
+  deleteButton.className = 'btn btn-danger buttons'; // Apply Bootstrap button styling for a delete button
+  deleteButton.onclick = () => deleteArtist(artist.artistId);
+  deleteButton.textContent = 'Delete';
+  artistCard.appendChild(deleteButton);
+
+    artistContainer.appendChild(artistCard);
+  });
 }
 
 function saveArtist(artistId) {
   // Collect the updated artist details from the content-editable elements
   const artistNameElement = document.getElementById(`artist-name-${artistId}`);
   const artistStyleElement = document.getElementById(`artist-style-${artistId}`);
+  const artistDescriptionElement = document.getElementById(`artist-description-${artistId}`);
+  const artistTitleElement = document.getElementById(`artist-title-${artistId}`);
   const artistDateElement = document.getElementById(`artist-date-${artistId}`);
+  const artistImageElement = document.getElementById(`artist-image-${artistId}`);
 
   const updatedArtist = {
     artistId: artistId,
     artistName: artistNameElement.textContent,
     style: artistStyleElement.textContent,
+    description: artistDescriptionElement.textContent,
+    title: artistTitleElement.textContent,
     participationDate: artistDateElement.textContent,
+    image: artistImageElement.files[0],
   };
+  console.log(artistImageElement);
+console.log(artistImageElement.files[0]);
+console.log("testing: "+ updatedArtist.artistId + updatedArtist.artistName + updatedArtist.style + updatedArtist.description + updatedArtist.title + updatedArtist.participationDate + updatedArtist.image);
 
+  // Create a FormData object to hold the updated artist details
+ 
+   // Initialize FormData with the text content
+   const formData = new FormData();
+   formData.append('artistId', artistId);
+   formData.append('artistName', artistNameElement.textContent);
+   formData.append('style', artistStyleElement.textContent);
+    formData.append('description', artistDescriptionElement.textContent);
+    formData.append('title', artistTitleElement.textContent);
+   formData.append('participationDate', artistDateElement.textContent);
+ 
+   // Only add the image to the FormData if a new image has been selected
+   if (artistImageElement.files.length > 0) {
+     formData.append('image', artistImageElement.files[0]);
+   }
   // Send POST request with the updated content of the updatedArtist
   fetch('http://localhost/api/danceevent/updateArtist', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedArtist),
+    body: formData,
   })
   .then(response => {
     if (response.ok) {
@@ -186,17 +272,11 @@ function saveArtist(artistId) {
     console.error('Error updating artist:', error);
   });
 }
+
+
 function deleteArtist(artistId) {
-
-  const artistNameElement = document.getElementById(`artist-name-${artistId}`);
-  const artistStyleElement = document.getElementById(`artist-style-${artistId}`);
-  const artistDateElement = document.getElementById(`artist-date-${artistId}`);
-
   const DeletedArtist = {
     artistId: artistId,
-    artistName: artistNameElement.textContent,
-    style: artistStyleElement.textContent,
-    participationDate: artistDateElement.textContent,
   };
   fetch(`http://localhost/api/danceevent/deleteArtist`, {
     method: 'DELETE',
@@ -208,7 +288,7 @@ function deleteArtist(artistId) {
   .then(response => {
     if (response.ok) {
       console.log('Artist deleted successfully');
-      loadArtists(); // Reload artists to reflect changes
+      // loadArtists(); // Reload artists to reflect changes
     } else {
       throw new Error('Failed to delete artist');
     }
@@ -216,70 +296,95 @@ function deleteArtist(artistId) {
   .catch(error => console.error('Error deleting artist:', error));
 }
 
-function addArtist() {
-  const artistName = document.getElementById('new-artist-name').value;
-  const artistStyle = document.getElementById('new-artist-style').value;
-  const participationDate = document.getElementById('new-artist-date').value;
 
-  const artistData = {
-    artistName: artistName,
-    style: artistStyle,
-    participationDate: participationDate,
-  };
 
-  fetch('http://localhost/api/danceevent/addArtist', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(artistData),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Artist added successfully:', data);
-    showArtists(); // Reload artists list
-  })
-  .catch(error => {
-    console.error('Error adding artist:', error);
-  });
+async function addArtist(event) {
+  event.preventDefault(); // Prevent the default form submission behavior
+  const formData = new FormData(document.getElementById('artistForm'));
+
+  // Debugging: Log FormData contents
+  console.log("FormData contents:");
+  for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+  }
+
+  try {
+      console.log("Sending request to add artist");
+      const response = await fetch('http://localhost/api/danceevent/addArtist', {
+          method: 'POST',
+          body: formData,
+      });
+      console.log("Received response", response);
+
+      if (!response.ok) {
+          throw new Error('Failed to add artist');
+      }
+      console.log("Received response", response);
+      const responseText = await response.text();
+      console.log("Response text:", responseText);
+      const data = JSON.parse(responseText); // Parse JSON response
+
+      // const data = await response.json(); // Parse JSON response
+      console.log("Parsed JSON response", data); // Debugging: Log parsed JSON
+
+      if (data.success) {
+          alert(data.message); // Show success message
+      } else {
+          throw new Error(data.error || 'Unknown error occurred');
+      }
+
+      document.getElementById('artistForm').reset(); // Reset the form only on success
+  } catch (error) {
+      console.error('Error adding artist:', error);
+      alert(error.message); // Show error message to the user
+  }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('artistForm').addEventListener('submit', addArtist);
+});
+
+
+
 
 
 
 //////////////////////////Agenda//////////////////////////
 
-
 function displayAgenda(agendas) {
   const agendaContainer = document.getElementById('agenda-container');
   agendaContainer.innerHTML = ''; // Clear existing content
+  agendaContainer.classList.add('container'); // Add Bootstrap container class
 
   const heading = document.createElement('h2');
   heading.textContent = 'Agendas'; // Set the heading text
+  heading.classList.add('my-3'); // Add Bootstrap margin class
   agendaContainer.appendChild(heading);
-  const agendaList = document.createElement('ul');
 
   agendas.forEach(agenda => {
-    const agendaItem = document.createElement('li');
+    const agendaItem = document.createElement('div');
+    agendaItem.classList.add('cardTicket', 'mb-3'); // Use the same custom class as for tickets
+
     agendaItem.innerHTML = `
-    Artist: <span contenteditable="true" id="agenda-Artist-${agenda.agendaId}">${agenda.artistName}</span>, 
-
-      Event Day: <span contenteditable="true" id="agenda-day-${agenda.agendaId}">${agenda.eventDay}</span>, 
-      Date: <span contenteditable="true" id="agenda-date-${agenda.agendaId}">${agenda.eventDate}</span>, 
-      Time: <span contenteditable="true" id="agenda-time-${agenda.agendaId}">${agenda.eventTime}</span>,
-      Duration: <span contenteditable="true" id="agenda-duration-${agenda.agendaId}">${agenda.durationMinutes} min</span>, 
-      Price: €<span contenteditable="true" id="agenda-price-${agenda.agendaId}">${agenda.ticketPrice}</span>, 
-      Tickets Available: <span contenteditable="true" id="agenda-tickets-${agenda.agendaId}">${agenda.ticketsAvailable}</span>, 
-      Venue: <span contenteditable="true" id="agenda-venue-${agenda.agendaId}">${agenda.venueAddress}</span>
-      <button onclick="saveAgenda(${agenda.agendaId})">Save</button>
-      <button onclick="deleteAgenda(${agenda.agendaId})">Delete</button>
-
+      <div class="card-body">
+        <h5 class="card-title"><span contenteditable="true" id="agenda-Artist-${agenda.agendaId}">${agenda.artistName}</span></h5>
+        <p class="card-text">
+          Event Day: <span contenteditable="true" id="agenda-day-${agenda.agendaId}">${agenda.eventDay}</span>
+          Date: <span contenteditable="true" id="agenda-date-${agenda.agendaId}">${agenda.eventDate}</span>
+          Time: <span contenteditable="true" id="agenda-time-${agenda.agendaId}">${agenda.eventTime}</span>
+          Duration: <span contenteditable="true" id="agenda-duration-${agenda.agendaId}">${agenda.durationMinutes} min</span>
+          Price: €<span contenteditable="true" id="agenda-price-${agenda.agendaId}">${agenda.sessionPrice}</span> 
+          Tickets Available: <span contenteditable="true" id="agenda-tickets-${agenda.agendaId}">${agenda.sessionsAvailable}</span><br>
+          Venue: <span contenteditable="true" id="agenda-venue-${agenda.agendaId}">${agenda.venueAddress}</span>
+        </p>
+        <button class="btn btn-success btnTicket" onclick="saveAgenda(${agenda.agendaId})">Save</button>
+        <button class="btn btn-danger btnTicket" onclick="deleteAgenda(${agenda.agendaId})">Delete</button>
+      </div>
     `;
-    agendaList.appendChild(agendaItem);
+
+    agendaContainer.appendChild(agendaItem);
   });
-
-  agendaContainer.appendChild(agendaList);
 }
-
 function saveAgenda(agendaId) {
   const updatedAgenda = {
     agendaId: agendaId,
@@ -288,8 +393,8 @@ function saveAgenda(agendaId) {
     eventDate: document.getElementById(`agenda-date-${agendaId}`).textContent,
     eventTime: document.getElementById(`agenda-time-${agendaId}`).textContent,
     durationMinutes: document.getElementById(`agenda-duration-${agendaId}`).textContent.replace(' min', ''),
-    ticketPrice: document.getElementById(`agenda-price-${agendaId}`).textContent,
-    ticketsAvailable: document.getElementById(`agenda-tickets-${agendaId}`).textContent,
+    sessionPrice: document.getElementById(`agenda-price-${agendaId}`).textContent,
+    sessionsAvailable: document.getElementById(`agenda-tickets-${agendaId}`).textContent,
     venueAddress: document.getElementById(`agenda-venue-${agendaId}`).textContent,
   };
 
@@ -320,8 +425,8 @@ function deleteAgenda(agendaId) {
     eventDate: document.getElementById(`agenda-date-${agendaId}`).textContent,
     eventTime: document.getElementById(`agenda-time-${agendaId}`).textContent,
     durationMinutes: document.getElementById(`agenda-duration-${agendaId}`).textContent.replace(' min', ''),
-    ticketPrice: document.getElementById(`agenda-price-${agendaId}`).textContent,
-    ticketsAvailable: document.getElementById(`agenda-tickets-${agendaId}`).textContent,
+    sessionPrice: document.getElementById(`agenda-price-${agendaId}`).textContent,
+    sessionsAvailable: document.getElementById(`agenda-tickets-${agendaId}`).textContent,
     venueAddress: document.getElementById(`agenda-venue-${agendaId}`).textContent,
   };
   fetch(`http://localhost/api/danceevent/deleteAgenda`, {
@@ -351,8 +456,8 @@ function addEvent() {
     eventDate: document.getElementById('new-event-date').value,
     eventTime: document.getElementById('new-event-time').value,
     durationMinutes: document.getElementById('new-event-duration').value,
-    ticketPrice: document.getElementById('new-event-ticketPrice').value,
-    ticketsAvailable: document.getElementById('new-event-ticketsAvailable').value,
+    sessionPrice: document.getElementById('new-event-ticketPrice').value,
+    sessionsAvailable: document.getElementById('new-event-ticketsAvailable').value,
     venueAddress: document.getElementById('new-event-venueAddress').value,
   };
 
@@ -366,6 +471,7 @@ function addEvent() {
   .then(response => response.json())
   .then(data => {
     console.log('Event added successfully:', data);
+    alert('Event added successfully');
     showAgenda(); // Reload events list
   })
   .catch(error => console.error('Error adding event:', error));
@@ -375,48 +481,58 @@ function addEvent() {
 
 //////////////////////////Tickets//////////////////////////
 
-
-
-
 function displayTickets(tickets) {
   const ticketContainer = document.getElementById('tickets-container');
   ticketContainer.innerHTML = ''; // Clear existing content
+  ticketContainer.classList.add('container'); // Add Bootstrap container class
 
   const heading = document.createElement('h2');
-  heading.textContent = 'Tickets'; // Set the heading text
+  heading.textContent = 'Sessions'; // Set the heading text
+  heading.classList.add('my-3'); // Add Bootstrap margin class
   ticketContainer.appendChild(heading);
-  const ticketList = document.createElement('ul');
 
   tickets.forEach(ticket => {
-    const ticketItem = document.createElement('li');
+    const ticketItem = document.createElement('div');
+    ticketItem.classList.add('cardTicket', 'mb-3'); // Add Bootstrap card and margin classes
+
     ticketItem.innerHTML = `
-    Artist Name: <span contenteditable="true" id="ticket-artistName-${ticket.ticketId}">${ticket.artistName}</span>,
-      Session Time: <span contenteditable="true" id="ticket-time-${ticket.ticketId}">${ticket.sessionTime}</span>,
-      Date: <span contenteditable="true" id="ticket-date-${ticket.ticketId}">${ticket.sessionDate}</span>, 
-      Venue: <span contenteditable="true" id="ticket-venue-${ticket.ticketId}">${ticket.venue}</span>, 
-      Price: €<span contenteditable="true" id="ticket-price-${ticket.ticketId}">${ticket.ticketPrice}</span>
-      <button onclick="saveTicket(${ticket.ticketId})">Save</button>
-      <button onclick="deleteTicket(${ticket.ticketId})">Delete</button>
-
+      <div class="card-body">
+        <h5 class="card-title"><span contenteditable="true" id="ticket-artistName-${ticket.sessionId}">${ticket.artistName}</span></h5>
+        <p class="card-text">
+          Start Session: <input type="time" id="ticket-startSession-${ticket.sessionId}" value="${ticket.startSession}">
+          End Session: <input type="time" id="ticket-endSession-${ticket.sessionId}" value="${ticket.endSession}">
+          Date: <span contenteditable="true" id="ticket-date-${ticket.sessionId}">${ticket.sessionDate}</span>
+          Venue: <span contenteditable="true" id="ticket-venue-${ticket.sessionId}">${ticket.venue}</span>
+          Price: €<span contenteditable="true" id="ticket-price-${ticket.sessionId}">${ticket.sessionPrice}</span>
+          Session Type: <span contenteditable="true" id="ticket-sessionType-${ticket.sessionId}">${ticket.sessionType}</span>
+        </p>
+        <button class="btn btn-success btnTicket" onclick="saveTicket(${ticket.sessionId})">Save</button>
+        <button class="btn btn-danger btnTicket" onclick="deleteTicket(${ticket.sessionId})">Delete</button>
+      </div>
     `;
-    ticketList.appendChild(ticketItem);
-  });
 
-  ticketContainer.appendChild(ticketList);
+    ticketContainer.appendChild(ticketItem);
+  });
 }
 
-function saveTicket(ticketId) {
+function saveTicket(sessionId) {
+  // console.log('saveTicket called: ', ticketId);
   const updatedTicket = {
-    ticketId: ticketId,
-    artistName: document.getElementById(`ticket-artistName-${ticketId}`).textContent,
-    sessionTime: document.getElementById(`ticket-time-${ticketId}`).textContent,
-    sessionDate: document.getElementById(`ticket-date-${ticketId}`).textContent,
-    venue: document.getElementById(`ticket-venue-${ticketId}`).textContent,
-    ticketPrice: document.getElementById(`ticket-price-${ticketId}`).textContent,
+    sessionId: sessionId,
+    artistName: document.getElementById(`ticket-artistName-${sessionId}`).textContent,
+    startSession: document.getElementById(`ticket-startSession-${sessionId}`).value,// change
+    sessionDate: document.getElementById(`ticket-date-${sessionId}`).textContent,
+    venue: document.getElementById(`ticket-venue-${sessionId}`).textContent,
+    sessionPrice: document.getElementById(`ticket-price-${sessionId}`).textContent,
+    // sessionPrice: parseFloat(document.getElementById(`ticket-price-${ticketId}`).textContent.replace('€', '')),
+    // sessionPrice: parseFloat(document.getElementById(`ticket-price-${ticketId}`).textContent.replace('€', '')),
+     sessionType: document.getElementById(`ticket-sessionType-${sessionId}`).textContent,
+    endSession: document.getElementById(`ticket-endSession-${sessionId}`).value,//change
+
   };
 
   // Send POST request with the updated content of the updatedTicket
-  fetch('http://localhost/api/danceevent/updateTicket', {
+  fetch('http://localhost/api/danceevent/updateSession', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -435,17 +551,19 @@ function saveTicket(ticketId) {
   });
 }
 
-function deleteTicket(ticketId)
+function deleteTicket(sessionId)
 {
   const DeleteTicket = {
-    ticketId: ticketId,
-    artistName: document.getElementById(`ticket-artistName-${ticketId}`).textContent,
-    sessionTime: document.getElementById(`ticket-time-${ticketId}`).textContent,
-    sessionDate: document.getElementById(`ticket-date-${ticketId}`).textContent,
-    venue: document.getElementById(`ticket-venue-${ticketId}`).textContent,
-    ticketPrice: document.getElementById(`ticket-price-${ticketId}`).textContent,
+    sessionId: sessionId,
+    artistName: document.getElementById(`ticket-artistName-${sessionId}`).textContent,
+    startSession: document.getElementById(`ticket-startSession-${sessionId}`).textContent,
+    sessionDate: document.getElementById(`ticket-date-${sessionId}`).textContent,
+    venue: document.getElementById(`ticket-venue-${sessionId}`).textContent,
+    sessionPrice: document.getElementById(`ticket-price-${sessionId}`).textContent,
+    sessionType: document.getElementById(`ticket-sessionType-${sessionId}`).textContent,
+    endSession: document.getElementById(`ticket-endSession-${sessionId}`).textContent,
   };
-  fetch(`http://localhost/api/danceevent/deleteTicket`, {
+  fetch(`http://localhost/api/danceevent/deleteSession`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -468,14 +586,17 @@ function deleteTicket(ticketId)
 function addTicket() {
   const ticketData = {
     artistName: document.getElementById('new-ticket-artistName').value,
-    sessionTime: document.getElementById('new-ticket-sessionTime').value,
+    startSession: document.getElementById('new-ticket-startSession').value,
     sessionDate: document.getElementById('new-ticket-sessionDate').value,
     venue: document.getElementById('new-ticket-venue').value,
-    ticketPrice: document.getElementById('new-ticket-price').value,
+    sessionPrice: document.getElementById('new-ticket-price').value,
+    sessionType: document.getElementById('new-ticket-sessionType').value,
+    endSession: document.getElementById('new-ticket-endSession').value,
   };
+  console.log('Ticket data:', ticketData);
 
 
-  fetch('http://localhost/api/danceevent/addTicket', {
+  fetch('http://localhost/api/danceevent/addSession', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -485,7 +606,7 @@ function addTicket() {
   .then(response => response.json())
   .then(data => {
     console.log('Ticket added successfully:', data);
-    showTickets(); // Reload tickets list
+ //   showTickets(); // Reload tickets list
   })
   .catch(error => console.error('Error adding ticket:', error));
 }

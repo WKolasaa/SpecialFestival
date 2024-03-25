@@ -72,6 +72,7 @@ class signupcontroller
                 return "Email already exists";
             }
             else{
+
                 $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo);
             }
         }catch (PDOException $e) {
