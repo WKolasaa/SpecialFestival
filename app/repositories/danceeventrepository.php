@@ -92,7 +92,7 @@ class DanceEventRepository extends Repository{
         return $artists;
     }
 
-    private function executeQuery($sql)
+    protected function executeQuery($sql)
     {
         try {
             $statement = $this->connection->prepare($sql);
