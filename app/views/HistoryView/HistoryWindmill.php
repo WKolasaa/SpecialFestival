@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
-    <div class="festival-banner" style="background-image: url('img/History/AdriaanWindmill.png');">
+    <div class="festival-banner" style="background-image: url('../img/History/AdriaanWindmill.png');">
             <div class="festival-info">
                 <h1 class="festival-title">Amsterdam Port</h1>
             </div>
@@ -24,7 +24,7 @@
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Adriaan_Windmill_Pic_01.jpg" alt="Amsterdamse Poort History">
+            <img src="../img/History/Adriaan_Windmill_Pic_01.jpg" alt="Amsterdamse Poort History">
         </div>
     </div>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Adriaan_Windmill_Pic_02.jpg" alt="Amsterdamse Poort Industrial Heritage">
+            <img src="../img/History/Adriaan_Windmill_Pic_02.jpg" alt="Amsterdamse Poort Industrial Heritage">
         </div>
     </div>
     <div class="heritage-section">
@@ -45,7 +45,7 @@
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Adriaan_Windmill_Pic_03.jpg" alt="Amsterdamse Poort History">
+            <img src="../img/History/Adriaan_Windmill_Pic_03.jpg" alt="Amsterdamse Poort History">
         </div>
     </div>
 
@@ -56,7 +56,7 @@
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Adriaan_Windmill_Pic_04.jpg" alt="Amsterdamse Poort Industrial Heritage">
+            <img src="../img/History/Adriaan_Windmill_Pic_04.jpg" alt="Amsterdamse Poort Industrial Heritage">
         </div>
     </div>
 
@@ -65,7 +65,7 @@
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <img src="img/History/Map_Adriaan_Windmill.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
+                <img src="../img/History/Map_Adriaan_Windmill.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
                 <!-- <div class="map-points"> -->
                     <!-- You can use absolute positioning to place your points based on the background image -->
                     <!-- <div class="map-point" style="top: 20%; left: 30%;">1</div> -->

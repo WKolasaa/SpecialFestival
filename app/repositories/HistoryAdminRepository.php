@@ -108,4 +108,19 @@ class HistoryAdminRepository extends Repository
         echo "Error: " . $e->getMessage();
     }
   }
+
+  public function getEntryContent($entry_id) {
+    $sql = "SELECT content FROM history_contents WHERE id = :entry_id";
+    $statement = $this->connection->prepare($sql);
+    $statement->bindParam(":entry_id", $entry_id, PDO::PARAM_INT);
+    try {
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        return $row ? $row["content"] : null;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return null;
+    }
+}
+
 }

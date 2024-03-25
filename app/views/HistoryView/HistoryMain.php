@@ -21,14 +21,14 @@
         $service = new HistoryAdminService();
     ?>
 
-    <div class="festival-banner" style="background-image: url('img/History/HistoryEvent.jpg');">
+    <div class="festival-banner" style="background-image: url('../img/History/HistoryEvent.jpg');">
             <div class="festival-info">
                 <h1 class="festival-title"><?= $service->getContent("History Main", "Title") ?></h1>
             </div>
     </div>
 
     <video autoplay muted loop class="history-video">
-        <source src="img/History/MainPageVideo.mp4" type="video/mp4">
+        <source src="../img/History/MainPageVideo.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -41,14 +41,14 @@
 
         <div class="locations-container">
             <!-- Adriaan Windmill -->
-            <a href="/HistoryWindmill" class="location-item">
+            <a href="historymain/windmill" class="location-item">
             <div class="location-image-container">
                 <?php
                 // Assuming $service is an instance of HistoryAdminService initialized earlier
                 $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
                 if($adriaanWindmillImagePath == "<null>") {
                     // Provide a default image path or handle the absence of an image
-                    $adriaanWindmillImagePath = "img/History/AdriaanWindmill.png";
+                    $adriaanWindmillImagePath = "../img/History/AdriaanWindmill.png";
                 }
                 ?>
                 <img src="<?= htmlspecialchars($adriaanWindmillImagePath) ?>" alt="Adriaan Windmill" class="location-image">
@@ -58,14 +58,14 @@
             </a>
 
             <!-- Amsterdam Port -->
-            <a href="/HistoryPort" class="location-item">
+            <a href="historymain/port" class="location-item">
                 <div class="location-image-container">
                 <?php
                     // Assuming $service is an instance of HistoryAdminService initialized earlier
                     $amsterdamPortImagePath = $service->getContent("History Main", "Amsterdam Port Image");
                     if($amsterdamPortImagePath == "<null>") {
                         // Provide a default image path or handle the absence of an image
-                        $amsterdamPortImagePath = "img/History/AmsterdamPort.png";
+                        $amsterdamPortImagePath = "../img/History/AmsterdamPort.png";
                     }
                     ?>
                     <img src="<?= htmlspecialchars($amsterdamPortImagePath) ?>" alt="Amsterdam Port" class="location-image">
@@ -81,7 +81,7 @@
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <img src="img/History/Map_Route.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
+                <img src="../img/History/Map_Route.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
                 <!-- <div class="map-points"> -->
                     <!-- You can use absolute positioning to place your points based on the background image -->
                     <!-- <div class="map-point" style="top: 20%; left: 30%;">1</div> -->
@@ -112,7 +112,7 @@
             <div class="ticket">
                 <div class="ticket-icon">
                     <!-- Replace with your own image file -->
-                    <img src="img/History/man.png" alt="Regular Ticket Icon">
+                    <img src="../img/History/man.png" alt="Regular Ticket Icon">
                 </div>
                 <div class="ticket-info">
                     <h3 class="ticket-type">Regular Ticket:</h3>
@@ -193,10 +193,10 @@
     <div class="start-location-section">
         <h2 class="start-location-title">Start location</h2>
         <div class="start-location-image-container">
-            <img src="img/History/Start_Location_Grote_Markt.jpg" alt="Start Location" class="start-location-image">
+            <img src="../img/History/Start_Location_Grote_Markt.jpg" alt="Start Location" class="start-location-image">
             <!-- Marker Icon Here -->
             <div class="start-location-marker">
-                <img src="img/History/location-mark.png" alt="Marker" class="marker-icon">
+                <img src="../img/History/location-mark.png" alt="Marker" class="marker-icon">
             </div>
         </div>
         <div class="start-location-address">

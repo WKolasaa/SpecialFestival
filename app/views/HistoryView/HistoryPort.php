@@ -5,7 +5,7 @@ use App\Services\HistoryAdminService;
 $service = new HistoryAdminService();
 ?>
 
-    <div class="festival-banner" style="background-image: url('img/History/AmsterdamPort.png');">
+    <div class="festival-banner" style="background-image: url('../img/History/AmsterdamPort.png');">
             <div class="festival-info">
                 <h1 class="festival-title"><?= $service->getContent("History Port", "Title") ?></h1>
             </div>
@@ -29,7 +29,7 @@ $service = new HistoryAdminService();
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Amsterdam_Port_Pic_01.jpg" alt="Amsterdamse Poort History">
+            <img src="../img/History/Amsterdam_Port_Pic_01.jpg" alt="Amsterdamse Poort History">
         </div>
     </div>
 
@@ -40,7 +40,7 @@ $service = new HistoryAdminService();
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Amsterdam_Port_Pic_02.jpg" alt="Amsterdamse Poort Industrial Heritage">
+            <img src="../img/History/Amsterdam_Port_Pic_02.jpg" alt="Amsterdamse Poort Industrial Heritage">
         </div>
     </div>
     <div class="heritage-section">
@@ -50,7 +50,7 @@ $service = new HistoryAdminService();
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Amsterdam_Port_Pic_03.jpg" alt="Amsterdamse Poort History">
+            <img src="../img/History/Amsterdam_Port_Pic_03.jpg" alt="Amsterdamse Poort History">
         </div>
     </div>
 
@@ -61,7 +61,7 @@ $service = new HistoryAdminService();
         </div>
         <div class="heritage-image">
             <!-- Replace 'path_to_image.jpg' with the actual path to your image file -->
-            <img src="img/History/Amsterdam_Port_Pic_04.jpg" alt="Amsterdamse Poort Industrial Heritage">
+            <img src="../img/History/Amsterdam_Port_Pic_04.jpg" alt="Amsterdamse Poort Industrial Heritage">
         </div>
     </div>
 
@@ -70,7 +70,7 @@ $service = new HistoryAdminService();
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <img src="img/History/Map_Amsterdam_Port.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
+                <img src="../img/History/Map_Amsterdam_Port.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
                 <!-- <div class="map-points"> -->
                     <!-- You can use absolute positioning to place your points based on the background image -->
                     <!-- <div class="map-point" style="top: 20%; left: 30%;">1</div> -->

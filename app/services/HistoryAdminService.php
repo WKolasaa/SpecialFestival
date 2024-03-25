@@ -32,4 +32,8 @@ private $historyAdminRepository;
     $this->historyAdminRepository->deleteEntry($entry_id);
   }
   
+  public function getEntryContent($entry_id) {
+    return $this->historyAdminRepository->getEntryContent($entry_id);
+}
+
 }
