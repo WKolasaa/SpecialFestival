@@ -15,8 +15,7 @@ class YummyAdminController
             header("Content-Type: application/json");
 
             $restaurantService = new RestaurantService();
-            $restaurants = $restaurantService->getAllRestaurants();
-            var_dump($restaurants);
+            $restaurants = $restaurantService->getRestaurants();
             echo json_encode($restaurants);
         }catch (Exception $e){
             echo json_encode(['error' => $e->getMessage()]);

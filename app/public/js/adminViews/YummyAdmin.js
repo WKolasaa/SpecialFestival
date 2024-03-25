@@ -1,6 +1,6 @@
 // Function to fetch restaurant data from the server
 function fetchRestaurants() {
-    fetch('http://localhost/api/danceevent/getAllRestaurants')
+    fetch('http://localhost/api/yummyadmin/getAllRestaurants')
         .then(response => response.json())
         .then(data => {
             // Clear previous data
@@ -52,3 +52,12 @@ function deleteRestaurant(restaurantId) {
 
 // Initial fetch of restaurant data when the page loads
 window.onload = fetchRestaurants;
+
+function showRestaurants(){
+    document.getElementById('restaurantsTable').style.display = "block";
+    fetchRestaurants();
+}
+
+function showSessions(){
+    document.getElementById('restaurantsTable').style.display = "none";
+}

@@ -4,15 +4,16 @@
 
 <div class="parent-container">
     <div class="sidebar">
-        <a href="#" onclick="showArtists()">Restaurants</a>
-        <a href="#" onclick="showAgenda()">Sessions</a>
+        <a href="#" onclick="showRestaurants()">Restaurants</a>
+        <a href="#" onclick="showSessions()">Sessions</a>
+        <a href="#" onclick="showImages()">Images</a>
     </div>
 
     <div class="container mt-5">
         <h1 class="text-center mb-4">Restaurant CRUD</h1>
 
         <!-- Restaurant List -->
-        <div class="card">
+        <div class="card" id="restaurantsTable" style="display: block">
             <div class="card-header">Restaurant List</div>
             <div class="card-body">
                 <table class="table">
