@@ -10,11 +10,12 @@ class Ticket implements \JsonSerializable {
   public TicketType $ticketType; 
   public string $ticket_name;
   public string $location;
+  public string $description;
   public int $price;
   public DateTime $start_date;
   public DateTime $end_date;
 
-  public function __construct(int $id, string $event_name, TicketType $ticketType, string $ticket_name, string $location, int $price, DateTime $start_date, DateTime $end_date)
+  public function __construct(int $id, string $event_name, TicketType $ticketType, string $ticket_name, string $location, string $description, int $price, DateTime $start_date, DateTime $end_date)
   {
     $this->id = $id;
     $this->event_name = $event_name;
