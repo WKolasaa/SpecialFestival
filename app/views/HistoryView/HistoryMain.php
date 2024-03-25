@@ -60,7 +60,15 @@
             <!-- Amsterdam Port -->
             <a href="/HistoryPort" class="location-item">
                 <div class="location-image-container">
-                    <img src="img/History/AmsterdamPort.png" alt="Amsterdam Port" class="location-image">
+                <?php
+                    // Assuming $service is an instance of HistoryAdminService initialized earlier
+                    $amsterdamPortImagePath = $service->getContent("History Main", "Amsterdam Port Image");
+                    if($amsterdamPortImagePath == "<null>") {
+                        // Provide a default image path or handle the absence of an image
+                        $amsterdamPortImagePath = "img/History/AmsterdamPort.png";
+                    }
+                    ?>
+                    <img src="<?= htmlspecialchars($amsterdamPortImagePath) ?>" alt="Amsterdam Port" class="location-image">
                 </div>
                 <h3 class="location-name"><?= $service->getContent("History Main", "Eighth Location Name") ?></h3>
                 <p class="location-description"><?= $service->getContent("History Main", "Eighth Location Description") ?></p>

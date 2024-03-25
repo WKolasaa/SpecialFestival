@@ -103,9 +103,9 @@ foreach ($entries as $entry) {
             </thead>
             <tbody>
                 <?php foreach ($pageEntries as $entry): ?>
-                    <tr id="entry-<?= $entry->id ?>">
+                    <tr id="entry-<?= $entry->id ?>" data-entry-type="<?= $entry->entry_type ?>">
                         <td><?= $entry->entry_name ?></td>
-                        <td><?= $entry->entry_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
+                        <td id="entry-<?= $entry->id ?>-type"><?= $entry->entry_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
                         <td class="editable-content">
                             <div><?= $entry->content ?></div>
                             <textarea style="display: none;"><?= $entry->content ?></textarea>
@@ -156,14 +156,53 @@ foreach ($entries as $entry) {
 </div>
 
 <script>
-    function editEntry(entryId) {
+     function editEntry(entryId) {
         let entryRow = document.getElementById('entry-' + entryId);
+        let entryType = entryRow.getAttribute('data-entry-type');
         let contentCell = entryRow.querySelector('.editable-content');
         let contentContainer = contentCell.querySelector('div');
         let contentTextarea = contentCell.querySelector('textarea');
         let editButton = entryRow.querySelector('.action-buttons button:nth-of-type(1)');
 
-        if (editButton.innerText === 'Edit') { //if buttons text is "Edit", clicking it will switch the view to edit mode 
+        // Handle image entries
+        if(entryType === 'IMAGE') {
+            if(editButton.innerText === 'Edit') {
+                // Replace content div with file input
+                let fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                contentContainer.style.display = 'none';
+                contentCell.appendChild(fileInput);
+                editButton.innerText = 'Save';
+            } else {
+                // Save changes and replace the file input with content div
+                let fileInput = contentCell.querySelector('input[type="file"]');
+                if(fileInput.files.length > 0) {
+                    // Handle file upload
+                    let formData = new FormData();
+                    formData.append('entry_id', entryId);
+                    formData.append('image', fileInput.files[0]);
+
+                    fetch('/api/historyadmin/updateImage', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => {
+                        if(response.ok) {
+                            // Refresh the page or update the image display dynamically
+                            console.log('Image updated successfully');
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        alert("Failed to update entry!")
+                    });
+                }
+                fileInput.remove();
+                contentContainer.style.display = 'inline-block';
+                editButton.innerText = 'Edit';
+            }
+        } else {
+            // logic to handle text entries
+            if (editButton.innerText === 'Edit') { //if buttons text is "Edit", clicking it will switch the view to edit mode 
             // Switch to edit mode
             contentContainer.style.display = 'none';
             contentTextarea.style.display = 'block'; //shows block around editable area
@@ -189,6 +228,7 @@ foreach ($entries as $entry) {
                 console.error('Error:', error);
                 alert("Failed to update entry!")
             });
+        }
         }
     }
 
