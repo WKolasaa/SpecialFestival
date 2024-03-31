@@ -44,6 +44,9 @@ session_start();
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
                 break;
+                case 'danceevent/artist':
+                    $cssFile = 'Dance/artist.css';
+                    break;
             default:
                 $defaultCssFile = 'festival.css';
                 $cssFile = $defaultCssFile;
