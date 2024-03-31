@@ -76,6 +76,31 @@ include 'head.php';
                 </li>
             <?php endif; ?>
 
+<<<<<<< HEAD
+=======
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/yummy" id="navbarDropdownYummy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Yummy
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownYummy">
+            <a class="dropdown-item" href="#">Restaurants</a>
+            <a class="dropdown-item" href="#">Menu</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHistory" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            History
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownHistory">
+            <a class="dropdown-item" href="#">Historic Events</a>
+            <a class="dropdown-item" href="#">Locations</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a id="admin"class="nav-link" href="manageuser">Admin</a>
+            <a id="festPlan" class="nav-link" href="#">FestPlan</a>
+        </li>
+>>>>>>> development
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">

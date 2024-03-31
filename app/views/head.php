@@ -40,19 +40,28 @@ session_start();
             case 'danceevent/agenda':
                 $cssFile = 'Dance/agenda.css';
                 break;
-
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
                 break;
+<<<<<<< HEAD
                 case 'danceevent/artist':
                     $cssFile = 'Dance/artist.css';
                     break;
+=======
+            case 'YummyMain':
+                $cssFile = 'YummyMain.css';
+                break;
+            case 'yummyadmin':
+                $cssFile = 'admin/danceAdminEvent.css';
+                break;
+>>>>>>> development
             default:
                 $defaultCssFile = 'festival.css';
                 $cssFile = $defaultCssFile;
                 break;
         }
         echo '<link rel="stylesheet" href="/css/' . $cssFile . '">';
+
 
 
     }
