@@ -1,0 +1,90 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #161A30; /* Ensure the background covers the whole screen */
+    color: white;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.ticket-selection-container {
+    min-height: 100vh; /* Ensures minimum height of the viewport */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ticket-title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.days-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.day-column {
+    margin-right: 20px;
+}
+
+.day-name {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.timeslot {
+    background: lightblue; /* Placeholder color */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0044cc;
+    color: white;
+    cursor: pointer;
+}
+
+.options-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.language-selector {
+    margin: 20px 0;
+}
+
+.tickets-options {
+    display: flex;
+    justify-content: space-around;
+}
+
+.regular-ticket-option, .family-ticket-option {
+    background: #2C2F5B;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.regular-ticket-option img, .family-ticket-option img {
+    display: block;
+    margin: auto;
+}
+
+.language-dropdown {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+/* Further styling as per the attached image */
