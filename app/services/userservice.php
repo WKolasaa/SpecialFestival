@@ -21,7 +21,8 @@ class UserService {
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
     {
-        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $password, $photo);
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo);
     }
 
     public function loginByEmail($email, $password)
@@ -48,6 +49,11 @@ class UserService {
         return $this->userRepository->checkForEmail($email);
     }
 
+
+
+
+    
+    ///////////////////////////ADMIN////////////////////////
 
     public function updateUserByAdmin(array $userData)
     {
@@ -88,6 +94,8 @@ class UserService {
         try {
             $user = $this->convertArrayToUser($userData);
             // var_dump($user);
+            $hashpassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $user->setPassword($hashpassword);
             $this->userRepository->createUserByAdmin($user);
         } catch (\Exception $e) {
             // Handle the exception (log, show an error message, etc.)
@@ -98,8 +106,6 @@ class UserService {
 
     private function convertArrayToUser(array $userData): User
     {
-        // Ensure that all required keys are present in the array
-        // $requiredKeys = ['id', 'username', 'userRole'];
         $requiredKeys = [ 'username', 'userRole'];
         foreach ($requiredKeys as $key) {
             if (!array_key_exists($key, $userData)) {
@@ -109,32 +115,29 @@ class UserService {
          // Check if password is provided
         $password = isset($userData['password']) ? $userData['password'] : null;
         $id = isset($userData['id']) ? $userData['id'] : null;
+        //add the registration date
         $firstName = isset($userData['firstName']) ? $userData['firstName'] : null;
         $lastName = isset($userData['lastName']) ? $userData['lastName'] : null;
         $email = isset($userData['email']) ? $userData['email'] : null;
         $photo = isset($userData['photo']) ? $userData['photo'] : null;
 
-
-//    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo){
-
-        // Create a User instance and set additional properties
         $user = new User(
-            // $userData['id'],
             $id,
             $userData['username'],
              $password, // Password is not being updated, so set it to null
             $userData['userRole'],
-            null, // Registration date is not being updated, so set it to null
+             null, // Registration date is not being updated, so set it to null
              $userData['firstName'],
              $userData['lastName'],
              $userData['email'],
              $userData['photo']
-            
         );
-
         return $user;
-      
+    }
 
+    public function updatePassword($password, $email){
+        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->updatePassword($hashpassword, $email);
     }
 
 }

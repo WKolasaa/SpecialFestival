@@ -134,16 +134,16 @@ public function createUserByAdmin(User $user){
         return $users;
     }
 
-  private function executeQuery($sql)
-  {
-      try {
-          $statement = $this->connection->prepare($sql);
-          $statement->execute();
-          return $statement->fetchAll(PDO::FETCH_ASSOC);
-      } catch (\PDOException $e) {
-          throw new \PDOException("Query execution failed: " . $e->getMessage());
-      }
-  }
+ private function executeQuery($sql)
+ {
+     try {
+         $statement = $this->connection->prepare($sql);
+         $statement->execute();
+         return $statement->fetchAll(PDO::FETCH_ASSOC);
+     } catch (\PDOException $e) {
+         throw new \PDOException("Query execution failed: " . $e->getMessage());
+     }
+ }
 
 
   public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
@@ -191,16 +191,11 @@ public function createUserByAdmin(User $user){
         if (!$row) {
             return null;
         }
-        
-        if ($password == $row['password']) {
+        if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
             $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
             return $user;
         }
-        // if (password_verify($password, $row['password'])) {
-        //     $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);           
-        //     return $user;
-        // }
-        return null;
+        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'],$row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
     }
 
     public function getUserByEmail($email)
@@ -241,6 +236,14 @@ public function createUserByAdmin(User $user){
             return false;
         }
         return true;
+    }
+
+    public function updatePassword($new_password, $email){
+        $sql = "UPDATE user SET password = :password WHERE email = :email";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':password', $new_password);
+        $statement->bindParam(':email', $email);
+        $statement->execute();
     }
 
 }

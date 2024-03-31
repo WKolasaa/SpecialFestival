@@ -10,17 +10,6 @@
         }
     </style>
 
-    <?php 
-        use App\Models\UserRolesEnum;
-        use App\Services\HistoryAdminService;
-
-        if(isset($_SESSION['user']) && $_SESSION['user']->getUserRole() == UserRolesEnum::Administrator) {
-            echo "<a id=\"edit-link\" href=\"/HistoryAdmin\">Edit</a>";
-        }
-
-        $service = new HistoryAdminService();
-    ?>
-
     <div class="festival-banner" style="background-image: url('../img/History/HistoryEvent.jpg');">
             <div class="festival-info">
                 <h1 class="festival-title"><?= $service->getContent("History Main", "Title") ?></h1>
@@ -46,10 +35,9 @@
                 <?php
                 // Assuming $service is an instance of HistoryAdminService initialized earlier
                 $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
-                if($adriaanWindmillImagePath == "<null>") {
-                    // Provide a default image path or handle the absence of an image
-                    $adriaanWindmillImagePath = "../img/History/AdriaanWindmill.png";
-                }
+                // if($adriaanWindmillImagePath == "<null>") {
+                //     $adriaanWindmillImagePath = "../img/History/AdriaanWindmill.png";
+                // }
                 ?>
                 <img src="<?= htmlspecialchars($adriaanWindmillImagePath) ?>" alt="Adriaan Windmill" class="location-image">
             </div>
@@ -63,10 +51,9 @@
                 <?php
                     // Assuming $service is an instance of HistoryAdminService initialized earlier
                     $amsterdamPortImagePath = $service->getContent("History Main", "Amsterdam Port Image");
-                    if($amsterdamPortImagePath == "<null>") {
-                        // Provide a default image path or handle the absence of an image
-                        $amsterdamPortImagePath = "../img/History/AmsterdamPort.png";
-                    }
+                    // if($amsterdamPortImagePath == "<null>") {
+                    //     $amsterdamPortImagePath = "../img/History/AmsterdamPort.png";
+                    // }
                     ?>
                     <img src="<?= htmlspecialchars($amsterdamPortImagePath) ?>" alt="Amsterdam Port" class="location-image">
                 </div>
@@ -81,13 +68,14 @@
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <img src="../img/History/Map_Route.png" alt="Map" class="map-image"> <!-- Replace with your map picture -->
-                <!-- <div class="map-points"> -->
-                    <!-- You can use absolute positioning to place your points based on the background image -->
-                    <!-- <div class="map-point" style="top: 20%; left: 30%;">1</div> -->
-                                                                                <!-- Replace top and left values with actual position -->
-                    <!-- Repeat for other points -->
-                <!-- </div> -->
+                <!-- <img src="../img/History/Map_Route.png" alt="Map" class="map-image"> -->
+                <?php
+                $homeMapImagePath = $service->getContent("History Main", "Route Image");
+                if($homeMapImagePath == "<null>") {
+                    $homeMapImagePath = "../img/History/Map_Route.png";
+                }
+                ?>
+                <img src="<?= htmlspecialchars($homeMapImagePath) ?>" alt="Map image" class="map-image">
             </div>
             <div class="map-legend">
                 <ul class="map-legend-list">
@@ -111,7 +99,6 @@
         <div class="ticket-container">
             <div class="ticket">
                 <div class="ticket-icon">
-                    <!-- Replace with your own image file -->
                     <img src="../img/History/man.png" alt="Regular Ticket Icon">
                 </div>
                 <div class="ticket-info">
@@ -122,7 +109,6 @@
             </div>
             <div class="ticket">
                 <div class="ticket-icon">
-                    <!-- Replace with your own image file -->
                     <img src="img/History/family.png" alt="Family Ticket Icon">
                 </div>
                 <div class="ticket-info">
@@ -184,7 +170,7 @@
         </div>
 
         <div class="buy-tickets-button-container">
-            <a href="#" class="buy-tickets-button">BUY TICKETS</a>
+        <a href="/historymain/cart" class="buy-tickets-button">BUY TICKETS</a>
         </div>
 
     </div>
@@ -193,8 +179,14 @@
     <div class="start-location-section">
         <h2 class="start-location-title">Start location</h2>
         <div class="start-location-image-container">
-            <img src="../img/History/Start_Location_Grote_Markt.jpg" alt="Start Location" class="start-location-image">
-            <!-- Marker Icon Here -->
+            <!-- <img src="../img/History/Start_Location_Grote_Markt.jpg" alt="Start Location" class="start-location-image"> -->
+            <?php
+                $startLocationImagePath = $service->getContent("History Main", "Start Location Image");
+                if($startLocationImagePath == "<null>") {
+                    $startLocationImagePath = "../img/History/Start_Location_Grote_Markt.jpg";
+                }
+                ?>
+                <img src="<?= htmlspecialchars($startLocationImagePath) ?>" alt="Start Location" class="start-location-image">
             <div class="start-location-marker">
                 <img src="../img/History/location-mark.png" alt="Marker" class="marker-icon">
             </div>

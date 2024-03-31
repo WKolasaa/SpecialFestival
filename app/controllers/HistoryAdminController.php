@@ -13,6 +13,7 @@ class HistoryAdminController{
 
   public function index()
   {
+    $entries = $this->historyAdminService->getAll();
     include '../views/HistoryView/HistoryAdmin.php';
   }
 

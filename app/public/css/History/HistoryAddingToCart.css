@@ -1,0 +1,47 @@
+body, html {
+    background: #161A30;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.adding-to-cart-banner {
+    background-image: none !important;
+}
+
+.adding-to-cart-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.adding-info {
+    padding: 20px;
+}
+
+.adding-title {
+    font-size: 4em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    color: #ffffff;
+}
+
+.adding-description {
+    color: white;
+    text-align: center;
+    padding: 60px;
+}
+
+.item-selection-section {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+/* Additional CSS for item cards and layout adjustments as needed */

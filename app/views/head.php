@@ -13,6 +13,7 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/festival.css">
 
+
     <?php
     $currentPage = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
     $currentPage = trim($_SERVER["REQUEST_URI"], '/');
@@ -38,16 +39,20 @@ session_start();
                 $cssFile = 'History/HistoryMain.css';
                 break;
             case 'historymain/port':
-                echo'poooort';
                 $cssFile = 'History/HistoryPort.css';
                 break;
             case 'historymain/windmill':
                 $cssFile = 'History/HistoryWindmill.css';
                 break;
+            case 'HistoryAdmin':
+                $cssFile = 'admin/historyAdmin.css';
+                break;
+            case 'historymain/cart':
+                $cssFile = 'History/HistoryAddingToCart.css';
+                break;
             case 'danceevent/agenda':
                 $cssFile = 'Dance/agenda.css';
                 break;
-
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
                 break;
@@ -59,9 +64,11 @@ session_start();
         }
         echo '<link rel="stylesheet" href="/css/' . $cssFile . '">';
 
-
     }
     ?>
+    
+    <script src="/js/adminViews/historyAdminActions.js" defer></script>
+
 </head>
 
 <body>
