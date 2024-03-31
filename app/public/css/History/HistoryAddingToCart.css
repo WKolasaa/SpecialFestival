@@ -1,47 +1,90 @@
 body, html {
-    background: #161A30;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    overflow-x: hidden;
-}
-
-.adding-to-cart-banner {
-    background-image: none !important;
-}
-
-.adding-to-cart-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.adding-info {
-    padding: 20px;
-}
-
-.adding-title {
-    font-size: 4em;
-    font-weight: bold;
-    text-transform: uppercase;
     margin: 0;
-    color: #ffffff;
-}
-
-.adding-description {
+    padding: 0;
+    height: 100%;
+    background: #161A30; /* Ensure the background covers the whole screen */
     color: white;
-    text-align: center;
-    padding: 60px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-.item-selection-section {
-    margin: 20px;
+.ticket-selection-container {
+    min-height: 100vh; /* Ensures minimum height of the viewport */
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Additional CSS for item cards and layout adjustments as needed */
+.ticket-title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.days-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.day-column {
+    margin-right: 20px;
+}
+
+.day-name {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.timeslot {
+    background: lightblue; /* Placeholder color */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0044cc;
+    color: white;
+    cursor: pointer;
+}
+
+.options-container {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.language-selector {
+    margin: 20px 0;
+}
+
+.tickets-options {
+    display: flex;
+    justify-content: space-around;
+}
+
+.regular-ticket-option, .family-ticket-option {
+    background: #2C2F5B;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.regular-ticket-option img, .family-ticket-option img {
+    display: block;
+    margin: auto;
+}
+
+.language-dropdown {
+    display: block;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+/* Further styling as per the attached image */

@@ -13,7 +13,6 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/festival.css">
 
-
     <?php
     $currentPage = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
     $currentPage = trim($_SERVER["REQUEST_URI"], '/');
@@ -56,7 +55,15 @@ session_start();
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
                 break;
-
+            case 'danceevent/artist':
+                $cssFile = 'Dance/artist.css';
+                break;
+            case 'YummyMain':
+                $cssFile = 'YummyMain.css';
+                break;
+            case 'yummyadmin':
+                $cssFile = 'admin/danceAdminEvent.css';
+                break;
             default:
                 $defaultCssFile = 'festival.css';
                 $cssFile = $defaultCssFile;
@@ -66,9 +73,6 @@ session_start();
 
     }
     ?>
-    
-    <script src="/js/adminViews/historyAdminActions.js" defer></script>
-
 </head>
 
 <body>

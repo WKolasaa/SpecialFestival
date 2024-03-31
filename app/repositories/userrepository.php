@@ -133,8 +133,7 @@ public function createUserByAdmin(User $user){
 
         return $users;
     }
-
- private function executeQuery($sql)
+ protected function executeQuery($sql)
  {
      try {
          $statement = $this->connection->prepare($sql);
@@ -144,7 +143,6 @@ public function createUserByAdmin(User $user){
          throw new \PDOException("Query execution failed: " . $e->getMessage());
      }
  }
-
 
   public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
   {

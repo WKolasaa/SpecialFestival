@@ -89,5 +89,6 @@ foreach ($entries as $entry) {
     </form>
 </div>
 
+<script src="/js/adminViews/historyAdminActions.js" defer></script>
 
 <?php include __DIR__ . '/../footer.php'; ?>
