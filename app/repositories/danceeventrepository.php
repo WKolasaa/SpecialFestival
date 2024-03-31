@@ -3,6 +3,7 @@ namespace App\Repositories;
 use App\Models\Artist;
 use App\Models\Agenda;
 use App\Models\Session;
+use App\Models\DanceOverView;
 
 use PDO;
 
@@ -38,6 +39,31 @@ class DanceEventRepository extends Repository{
             return [];
           }
             return $this->mapToSessionObjects($rows);
+    }
+    public function getAllDanceOverViews(){
+        $sql = "SELECT id,header,subHeader, text, imageName FROM danceOverview";
+
+        $rows = $this->executeQuery($sql);
+        if (!$rows) {
+            echo "No dance overviews found.";
+            return [];
+          }
+        
+            return $this->mapToDanceOverViewObjects($rows);
+    }
+
+    private function mapToDanceOverViewObjects($rows){
+        $danceOverViews = [];
+        foreach ($rows as $row) {
+            $id=$row['id'];
+            $header=$row['header'];
+            $subHeader=$row['subHeader'];
+            $text=$row['text'];
+            $imageName=$row['imageName'];
+            $danceOverView = new DanceOverView($id,$header,$subHeader, $text, $imageName);
+            $danceOverViews[] = $danceOverView;
+        }
+        return $danceOverViews;
     }
     private function mapToSessionObjects($rows){
         $sessions = [];
@@ -104,7 +130,7 @@ class DanceEventRepository extends Repository{
     }
 ///////////////////////////update///////////////////////////
     public function updateArtist(Artist $artist) {
-        
+
         try{
         $sql = "UPDATE artist SET artistName = :artistName, style = :style, description= :description, title= :title, participationDate = :participationDate, imageName= :imageName WHERE artistId = :artistId";
     
@@ -116,11 +142,9 @@ class DanceEventRepository extends Repository{
         $title = $artist->getTitle();
         $participationDate = $artist->getParticipationDate();
         $imageName = $artist->getImageName();
-    
         // Manually construct a debug SQL string
         // $debugSql = "UPDATE artist SET artistName = '{$artistName}', style = '{$style}', description= '{$description}' participationDate = '{$participationDate}' WHERE artistId = {$artistId}";
         // echo "Debug SQL: " . $debugSql . "\n";
-    //   var_dump($sql);  
         // Proceed with the actual prepared statement execution
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
@@ -216,6 +240,35 @@ class DanceEventRepository extends Repository{
             var_dump($statement->errorInfo());
         }
     }
+    public function updateDanceOverView(DanceOverView $danceOverView){
+        $sql = "UPDATE danceOverview SET text = :text, header=:header, subHeader=:subHeader, imageName = :imageName WHERE id = :id";
+    
+        $id = $danceOverView->getId();
+        $header = $danceOverView->getHeader();
+        $subHeader = $danceOverView->getSubHeader();
+        $text = $danceOverView->getText();
+        $imageName = $danceOverView->getImageName();
+
+    
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->bindParam(':header', $header, PDO::PARAM_STR);
+        $statement->bindParam(':subHeader', $subHeader, PDO::PARAM_STR);
+        $statement->bindParam(':text', $text, PDO::PARAM_STR);
+        $statement->bindParam(':imageName', $imageName, PDO::PARAM_STR);
+    
+        if ($statement->execute()){
+            echo "Statement executed successfully.\n";
+            if ($statement->rowCount() > 0) {
+                echo "DanceOverview information updated successfully.\n";
+            } else {
+                echo "No rows were affected, possibly because the danceOverview ID was not found.\n";
+            }
+        } else {
+            echo "Statement execution failed.\n";
+            var_dump($statement->errorInfo());
+        }
+    }
 
     ///////////////delete/////////////////////
     public function deleteArtist($artistId){
@@ -239,7 +292,7 @@ class DanceEventRepository extends Repository{
     }
 
     public function getArtistById($artistId){
-        $sql = "SELECT artistId, artistName, style, participationDate, imageName FROM artist WHERE artistId = :artistId";
+        $sql = "SELECT artistId, artistName, style,description,title, participationDate, imageName FROM artist WHERE artistId = :artistId";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
         $statement->execute();
@@ -250,6 +303,21 @@ class DanceEventRepository extends Repository{
             return null;
         }
         return $artist;
+    }
+
+    public function getDanceOverviewById($id)
+    {
+        $sql = "SELECT id,header,subHeader, text, imageName FROM danceOverview WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $danceOverView = new DanceOverView($row['id'],$row['header'],$row['subHeader'], $row['text'], $row['imageName']);
+        if (!$row) {
+            echo "No dance overview found with the given ID.\n";
+            return null;
+        }
+        return $danceOverView;
     }
 
     public function deleteAgenda(Agenda $agenda){
@@ -281,6 +349,20 @@ class DanceEventRepository extends Repository{
         }
     }
 
+    public function deleteDanceOverview($danceOverviewId){
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM danceOverview WHERE id = :id");
+            $id = $danceOverviewId;
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            // echo "DanceOverview information deleted successfully.\n";
+            return true; // Return true if deletion is successful
+        } catch (\PDOException $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new \PDOException('Error deleting danceOverview: ' . $e->getMessage());
+        }
+    }
 
     ///////////////add/////////////////////
     public function addArtist(Artist $artist){
@@ -338,9 +420,111 @@ class DanceEventRepository extends Repository{
         }
     }
 
+    // public function addSession(Session $session){
+    //     try {
+            
+    //         $stmt = $this->connection->prepare("INSERT INTO session (artistName, startSession, sessionDate, venue, sessionPrice, sessionType, endSession) VALUES (:artistName, :startSession, :sessionDate, :venue, :sessionPrice, :sessionType, :endSession)");
+    //         $artistName = $session->getArtistName();
+    //         $startSession = $session->getStartSession();
+    //         $sessionDate = $session->getSessionDate();
+    //         $venue = $session->getVenue();
+    //         $sessionPrice = $session->getSessionPrice();
+    //         $sessionType = $session->getSessionType();
+    //         $endSession = $session->getEndSession();
+    //         $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
+    //         // $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
+    //         if ($startSession !== NULL) {
+    //             $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
+    //         }
+            
+    //         $stmt->bindParam(':sessionDate', $sessionDate, PDO::PARAM_STR);
+    //         $stmt->bindParam(':venue', $venue, PDO::PARAM_STR);
+    //         $stmt->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
+    //         $stmt->bindParam(':sessionType', $sessionType, PDO::PARAM_STR);
+    //         // $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
+    //         if ($endSession !== NULL) {
+    //             $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
+    //         }
+    //         $stmt->execute();
+    
+    //         return true; // Return true if insertion is successful
+    //     } catch (\PDOException $e) {
+    //         // Handle the exception (log, show an error message, etc.)
+    //         throw new \PDOException('Error adding session: ' . $e->getMessage());
+    //     }
+    // }
     public function addSession(Session $session){
         try {
-            
+            $artistName = $session->getArtistName();
+            $startSession = $session->getStartSession();
+            $sessionDate = $session->getSessionDate();
+            $venue = $session->getVenue();
+            $sessionPrice = $session->getSessionPrice();
+            $sessionType = $session->getSessionType();
+            $endSession = $session->getEndSession();
+    
+            $sql = "INSERT INTO session (artistName, sessionDate, venue, sessionPrice, sessionType";
+            if ($startSession !== NULL) { // Check if the startSession is set because of the all day access sessions
+                $sql .= ", startSession";
+            }
+            if ($endSession !== NULL) {// Check if the startSession is set because of the all day access sessions
+                $sql .= ", endSession";
+            }
+            $sql .= ") VALUES (:artistName, :sessionDate, :venue, :sessionPrice, :sessionType";
+            if ($startSession !== NULL) {
+                $sql .= ", :startSession";
+            }
+            if ($endSession !== NULL) {
+                $sql .= ", :endSession";
+            }
+            $sql .= ")";
+    
+            $stmt = $this->connection->prepare($sql);
+    
+            $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
+            $stmt->bindParam(':sessionDate', $sessionDate, PDO::PARAM_STR);
+            $stmt->bindParam(':venue', $venue, PDO::PARAM_STR);
+            $stmt->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
+            $stmt->bindParam(':sessionType', $sessionType, PDO::PARAM_STR);
+            if ($startSession !== NULL) {
+                $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
+            }
+            if ($endSession !== NULL) {
+                $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
+            }
+    
+            $stmt->execute();
+    
+            return true; // Return true if insertion is successful
+        } catch (\PDOException $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new \PDOException('Error adding session: ' . $e->getMessage());
+        }
+    }
+
+    public function addDanceOverView(DanceOverView $danceOverView){
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO danceOverview (header,subHeader,text, imageName) VALUES (:header, :subHeader, :text, :imageName)");
+            $header = $danceOverView->getHeader();
+            $subHeader = $danceOverView->getSubHeader();
+            $text = $danceOverView->getText();
+            $imageName = $danceOverView->getImageName();
+            $stmt->bindParam(':header', $header, PDO::PARAM_STR);
+            $stmt->bindParam(':subHeader', $subHeader, PDO::PARAM_STR);
+            $stmt->bindParam(':text', $text, PDO::PARAM_STR);
+            $stmt->bindParam(':imageName', $imageName, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            return true; // Return true if insertion is successful
+        } catch (\PDOException $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new \PDOException('Error adding danceOverview: ' . $e->getMessage());
+        }
+    }
+
+    public function addTicket(Session $session)
+    {
+        try {
             $stmt = $this->connection->prepare("INSERT INTO session (artistName, startSession, sessionDate, venue, sessionPrice, sessionType, endSession) VALUES (:artistName, :startSession, :sessionDate, :venue, :sessionPrice, :sessionType, :endSession)");
             $artistName = $session->getArtistName();
             $startSession = $session->getStartSession();

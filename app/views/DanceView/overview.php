@@ -1,9 +1,18 @@
-<?php include __DIR__ . '/../header.php'; ?>
+<?php include __DIR__ . '/../header.php';
+// Prepare data
+$overviewData = [];
+for ($i = 0; $i < 5; $i++) {
+    if (isset($overviews[$i])) {
+        $overviewData[$i] = [
+            'header' => $overviews[$i]->getHeader(),
+            'subHeader' => $overviews[$i]->getSubHeader(),
+            'text' => $overviews[$i]->getText(),
+            'imageName' => $overviews[$i]->getImageName(),
+        ];
+    }
+} ?>
 
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <video autoplay muted loop class="video-background">
   <source src="img/DanceEvent/IntroVideo.mp4" type="video/mp4">
@@ -13,17 +22,27 @@
   <div class="row h-100">
     <div class="col-6 d-flex align-items-end justify-content-start">
       <div class="text-white overlay-text festival-title">
-        <h1>Move & Flow Festival</h1>
+        <h1>Move & Flow Festival </h1>
         <h2>HAARLEM</h2>
       </div>
     </div>
     <div class="col-6 d-flex align-items-end justify-content-end">
       <div class="text-white overlay-text festival-date text-center">
-        <h3>July 26-28, 2024</h3>
+        <!-- <h3>July 26-28, 2024</h3> -->
+        <h3 class="overview-title">
+          <?= $overviewData[0] ['header'] ?>
+        </h3>
+
         <hr class="golden-line">
-        <p>Unleash the Beat, Move Your Feet</p>
-        <p>Join the Dance Celebration!</p>
-        <p>(Unforgettable Dance Experience)</p>
+        <!-- <p>Unleash the Beat, Move Your Feet</p>
+        <p>Join the Dance Celebration!</p> -->
+        <p class="overview-subtitle">
+          <?= $overviewData[0] ['subHeader'] ?>
+        </p>
+        <p class="overview-text">
+          <?= $overviewData[0] ['text']?>
+        </p>
+        <!-- <p>(Unforgettable Dance Experience)</p> -->
       </div>
     </div>
   </div>
@@ -34,14 +53,15 @@
   style="height: 100vh;">
   <h1 class="countdown-title">Countdown <i class="far regular fa-hourglass"></i>
   </h1>
-  <h2 class="countdown-subtitle">To Dance Festival!</h2>
+
+  <h2 class="countdown-subtitle"> <?= $overviewData[1] ['header'] ?></h2>
   <div class="countdown-details">
-    <p>Get ready to groove and have a blast with your family! We're counting down the days until the Family Dance
-      Festival lights up Haarlem from July 26th to 28th. Don't miss the chance to join the fun – mark your calendars and
-      get ready for a dance-filled family celebration.</p>
+    <p> <?= $overviewData[1] ['text'] ?></p>
   </div>
+
   <div class="countdown-dates">
-    July 26-28
+  <?=$overviewData[1] ['subHeader'] ?>
+    <!-- July 26-28 -->
   </div>
 </div>
 <!-- CARD SLIDER -->
@@ -58,30 +78,39 @@
 <div class="container desc1">
   <div class="row">
     <div class="col-md-6 ">
-      <h1 class="sessionType">BACK2BACK</h1>
-      <h4 class="DateAndTime">Saturday 27,2024 14:00</h4>
-      <p class="sessionDescription">Experience a Saturday like never before at Caprera Openluchttheater, featuring the incredible beats of Hardwell, the dynamic melodies of Martin Garrix, and the transcendent tunes of Armin van Buuren. It's a back-to-back dance extravaganza, lasting 540 minutes! Limited tickets available, so secure your spot for a day of music and memories. Tickets: €110.00.</p>
+      <h1 class="sessionType"> <?= $overviewData[2] ['header'] ?></h1>
+      <h4 class="DateAndTime"> <?= $overviewData[2] ['subHeader'] ?></h4>
+      <p class="sessionDescription"> <?=$overviewData[2] ['text'] ?></p>
     </div>
     <div class="col-md-6 image-container">
-      <img src="img/DanceEvent/Nicky Romero.jpeg" alt="Your Image Description" class="img-fluid image1">
-      <img src="img/DanceEvent/Hardwell.jpeg" alt="Your Image Description" class="img-fluid image2">
-      <img src="img/DanceEvent/Armin van buuren.jpeg" alt="Your Image Description" class="img-fluid image3">
+      <img src="img/DanceEvent/<?= $overviewData[2] ['imageName']?>" alt="Your Image Description" class="img-fluid image1">
     </div>
   </div>
 </div>
 
 <div class="container desc1">
   <div class="row">
-    
+
     <div class="col-md-6 image-container">
-      <img src="img/DanceEvent/Nicky Romero.jpeg" alt="Your Image Description" class="img-fluid image1">
-      <img src="img/DanceEvent/Hardwell.jpeg" alt="Your Image Description" class="img-fluid image2">
-      <img src="img/DanceEvent/Armin van buuren.jpeg" alt="Your Image Description" class="img-fluid image3">
+      <img src="img/DanceEvent/<?=$overviewData[3] ['imageName'] ?>" alt="Your Image Description" class="img-fluid image22">
     </div>
     <div class="col-md-6 ">
-      <h1 class="sessionType">BACK2BACK</h1>
-      <h4 class="DateAndTime">Saturday 27,2024 14:00</h4>
-      <p class="sessionDescription">Experience a Saturday like never before at Caprera Openluchttheater, featuring the incredible beats of Hardwell, the dynamic melodies of Martin Garrix, and the transcendent tunes of Armin van Buuren. It's a back-to-back dance extravaganza, lasting 540 minutes! Limited tickets available, so secure your spot for a day of music and memories. Tickets: €110.00.</p>
+      <h1 class="sessionType2"><?= $overviewData[3] ['header'] ?></h1>
+      <h4 class="DateAndTime2"><?= $overviewData[3] ['subHeader'] ?></h4>
+      <p class="sessionDescription2"><?= $overviewData[3] ['text'] ?></p>
+    </div>
+  </div>
+</div>
+
+<div class="container desc1">
+  <div class="row">
+    <div class="col-md-6 ">
+      <h1 class="sessionType3"><?=$overviewData[4] ['header'] ?></h1>
+      <h4 class="DateAndTime3"><?= $overviewData[4] ['subHeader'] ?></h4>
+      <p class="sessionDescription3"><?= $overviewData[4] ['text'] ?></p>
+    </div>
+    <div class="col-md-6 image-container">
+      <img src="img/DanceEvent/<?= $overviewData[4] ['imageName']?>" alt="Your Image Description" class="img-fluid image3">
     </div>
   </div>
 </div>
@@ -89,14 +118,13 @@
 
 
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <link rel="stylesheet"  href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="js/DanceEvent/DanceMain.js"></script>
 
 

@@ -11,7 +11,8 @@ body{
 }
 
 .background-image {
-  height: 100vh; /* Full height of the viewport */
+  position: relative;
+  height: 80vh; /* Full height of the viewport */
   background-image: url('../../img/DanceEvent/agendaIntro.jpg'); /* The URL of the background image */
   background-size: cover; /* Cover the entire page */
   background-position: center; /* Center the background image */
@@ -33,6 +34,12 @@ font-weight: 100;
 font-style: normal;
 font-size: 24px;
 color: white;
+}
+.durationMinutesDay1, .durationMinutesDay2, .durationMinutesDay3{
+  color: rgb(252, 249, 249);
+  font-family: "Almarai", sans-serif;
+  font-style: light;
+  font-weight: 100;
 }
 .day-info{
   color:white;
