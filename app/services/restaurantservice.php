@@ -38,6 +38,11 @@ class restaurantservice
         return $this->restaurantRepository->addSession($restaurantSession);
     }
 
+    public function deleteSession($sessionID)
+    {
+        return $this->restaurantRepository->deleteSession($sessionID);
+    }
+
     public function updateRestaurant($restaurant)
     {
         return $this->restaurantRepository->updateRestaurant($restaurant);

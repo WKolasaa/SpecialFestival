@@ -379,6 +379,28 @@ function displayEditSessionForm(events){
          .catch(error => alert('Error updating session:', error));
  }
 
+ function removeSession(eventId) {
+        if (confirm('Are you sure you want to delete this session?')) {
+            fetch('http://localhost/api/yummyadmin/deleteSession', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ eventId: eventId })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Refresh the session list after deletion
+                        fetchRestaurantSessions(selectedRestaurantId);
+                    } else {
+                        console.error('Error deleting session:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error deleting session:', error));
+        }
+
+ }
+
 function addRestaurant(){ //TODO: Find here is a problem here
     const restaurant = {
         name: document.getElementById('name').value,

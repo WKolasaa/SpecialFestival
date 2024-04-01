@@ -140,6 +140,18 @@ class RestaurantRepository extends Repository
         }
     }
 
+    public function deleteSession($sessionID){
+        $sql = "DELETE FROM restaurant_events WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $success = $statement->execute($sessionID);
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function updateRestaurant($restaurant){
         $sql = "UPDATE restaurants SET name = ?, address = ?, type = ?, price = ?, reduced = ?, stars = ?, phoneNumber = ?, email = ?, website = ?, chef = ? WHERE id = ?";
         $statement = $this->connection->prepare($sql);

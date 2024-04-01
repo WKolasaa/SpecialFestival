@@ -219,4 +219,23 @@ class YummyAdminController
             echo json_encode(['error' => 'Invalid data']);
         }
     }
+
+    public function deleteSession(){
+        $jsonData = file_get_contents('php://input');
+        $jsonData = json_decode($jsonData, true);
+
+        if($jsonData !== null){
+            $sessionID = $jsonData['id'];
+
+            $restaurantService = new RestaurantService();
+            if($restaurantService->deleteSession($sessionID)){
+                echo json_encode(['success' => 'Event deleted']);
+            }
+            else{
+                echo json_encode(['error' => 'Failed to delete event']);
+            }
+        }else{
+            echo json_encode(['error' => 'Invalid data']);
+        }
+    }
 }
