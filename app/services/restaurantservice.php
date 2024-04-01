@@ -22,4 +22,24 @@ class restaurantservice
     {
         return $this->restaurantRepository->getRestaurantByID($restaurantID);
     }
+
+    public function addRestaurant($restaurant)
+    {
+        return $this->restaurantRepository->addRestaurant($restaurant);
+    }
+
+    public function updateSession($restaurantSession)
+    {
+        return $this->restaurantRepository->updateSession($restaurantSession);
+    }
+
+    public function addSession($restaurantSession)
+    {
+        return $this->restaurantRepository->addSession($restaurantSession);
+    }
+
+    public function updateRestaurant($restaurant)
+    {
+        return $this->restaurantRepository->updateRestaurant($restaurant);
+    }
 }

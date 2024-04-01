@@ -119,11 +119,23 @@ foreach ($events as $event) {
                             <label for="daySelect">Choose a Day:</label>
                             <select id="daySelect" name="daySelect" class="form-control" onchange="updateSessions(this.value)" required>
                                 <option value="">Select a Day</option>
-                                <?php foreach ($events as $event): ?>
-                                    <option value="<?php echo htmlspecialchars($event['event_day']); ?>">
-                                        <?php echo htmlspecialchars($event['event_day']); ?>
-                                    </option>
-                                <?php endforeach; ?>
+                                <?php
+                                // Array to keep track of the days already displayed
+                                $displayedDays = array();
+
+                                foreach ($events as $event):
+                                    // Check if the event day has already been displayed
+                                    if (!in_array($event->getEventDay(), $displayedDays)) {
+                                        // If not, display the event and add the day to the displayedDays array
+                                        $displayedDays[] = $event->getEventDay();
+                                        ?>
+                                        <option value="<?php echo htmlspecialchars($event->getEventday()); ?>">
+                                            <?php echo htmlspecialchars($event->getEventDay()); ?>
+                                        </option>
+                                        <?php
+                                    }
+                                endforeach;
+                                ?>
                             </select>
                         </div>
 

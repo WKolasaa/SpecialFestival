@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\restaurant;
+use App\Models\restaurantSession;
 
 class RestaurantRepository extends Repository
 {
@@ -79,17 +80,75 @@ class RestaurantRepository extends Repository
 
     private function setEvents($restaurants){
         foreach ($restaurants as $restaurant) {
-            $sql = "SELECT event_date, event_day, event_time_start, event_time_end, seats_total, seats_left FROM restaurant_events WHERE restaurant_id = ?";
+            $sql = "SELECT id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left FROM restaurant_events WHERE restaurant_id = ?";
             $eventStmt = $this->connection->prepare($sql);
             $eventStmt->execute([$restaurant->getId()]);
             $eventRows = $eventStmt->fetchAll();
 
             $events = [];
             foreach ($eventRows as $eventRow) {
-                $restaurant->addEvent($eventRow['event_date'], $eventRow['event_day'], $eventRow['event_time_start'], $eventRow['event_time_end'], $eventRow['seats_total'], $eventRow['seats_left']);
+                $event = new RestaurantSession();
+                $event->setId($eventRow['id']);
+                $event->setRestaurantId($restaurant->getId());
+                $event->setEventDate($eventRow['event_date']);
+                $event->setEventDay($eventRow['event_day']);
+                $event->setEventTimeStart($eventRow['event_time_start']);
+                $event->setEventTimeEnd($eventRow['event_time_end']);
+                $event->setSeatsTotal($eventRow['seats_total']);
+                $event->setSeatsLeft($eventRow['seats_left']);
+
+                $restaurant->addEvent($event);
             }
         }
 
         return $restaurants;
+    }
+
+    public function addRestaurant($restaurant){
+        $sql = "INSERT INTO restaurants (name, address, type, price, reduced, stars, phoneNumber, email, website, chef) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $statement = $this->connection->prepare($sql);
+        $success = $statement->execute([$restaurant->getName(), $restaurant->getAddress(), $restaurant->getType(), $restaurant->getPrice(), $restaurant->getReduced(), $restaurant->getStars(), $restaurant->getPhoneNumber(), $restaurant->getEmail(), $restaurant->getWebsite(), $restaurant->getChef()]);
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateSession($session){ //TODO: Potential SQL Injection
+        $sql = "UPDATE restaurant_events SET restaurant_id = ?, event_date = ?, event_day = ?, event_time_start = ?, event_time_end = ?, seats_total = ?, seats_left = ? WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $success = $statement->execute([$session->getRestaurantId() ,$session->getEventDate(), $session->getEventDay(), $session->getEventTimeStart(), $session->getEventTimeEnd(), $session->getSeatsTotal(), $session->getSeatsLeft(), $session->getId()]);
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addSession($restaurantSession){
+        $sql = "INSERT INTO restaurant_events (restaurant_id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $statement = $this->connection->prepare($sql);
+        $success = $statement->execute([$restaurantSession->getRestaurantId(), $restaurantSession->getEventDate(), $restaurantSession->getEventDay(), $restaurantSession->getEventTimeStart(), $restaurantSession->getEventTimeEnd(), $restaurantSession->getSeatsTotal(), $restaurantSession->getSeatsLeft()]);
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateRestaurant($restaurant){
+        $sql = "UPDATE restaurants SET name = ?, address = ?, type = ?, price = ?, reduced = ?, stars = ?, phoneNumber = ?, email = ?, website = ?, chef = ? WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $success = $statement->execute([$restaurant->getName(), $restaurant->getAddress(), $restaurant->getType(), $restaurant->getPrice(), $restaurant->getReduced(), $restaurant->getStars(), $restaurant->getPhoneNumber(), $restaurant->getEmail(), $restaurant->getWebsite(), $restaurant->getChef(), $restaurant->getId()]);
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

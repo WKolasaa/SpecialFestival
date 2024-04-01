@@ -127,30 +127,30 @@ class Restaurant implements \JsonSerializable {
         }
     }
 
-    public function addEvent($eventDate, $eventDay, $eventTimeStart, $eventTimeEnd, $seatsTotal, $seatsLeft) {
-        // Create the session array
-        $session = [
-            'event_time_start' => $eventTimeStart,
-            'event_time_end' => $eventTimeEnd,
-            'seats_total' => $seatsTotal,
-            'seats_left' => $seatsLeft
-        ];
-
-        // Check if the event date already exists
-        if (!isset($this->events[$eventDate])) {
-            // If not, initialize it with the event day and an empty sessions array
-            $this->events[$eventDate] = [
-                'event_day' => $eventDay,
-                'sessions' => []
-            ];
-        }
-
-        // Add the session to the sessions array for the event date
-        $this->events[$eventDate]['sessions'][] = $session;
+    public function addEvent($restaurantSession) {
+        $this->events[] = $restaurantSession;
     }
 
     public function getEvents() {
         return $this->events;
+    }
+
+    public function getEventsAsArray() {
+        $events = [];
+        foreach ($this->events as $event) {
+            array_push($events, $event->toArray());
+        }
+        return $events;
+    }
+
+    public function getEventByRestaurantId($id) {
+        $events = [];
+        foreach ($this->events as $event) {
+            if ($event->getRestaurantId() == $id) {
+                array_push($events, $event);
+            }
+        }
+        return $events;
     }
 
     public function jsonSerialize():mixed

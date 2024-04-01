@@ -1,27 +1,25 @@
 function updateSessions(selectedDay) {
-    console.log("TEST");
     const restaurantID = document.getElementById('restaurant').textContent;
     fetch('http://localhost/api/yummyreservation/getRestaurantEvents', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ restaurantID: restaurantID }) // Sending restaurantID as an object
+        body: JSON.stringify({ restaurantID: restaurantID })
     })
         .then(response => response.json())
         .then(data => {
+            // Filter events based on the selected day
+            const filteredEvents = data.filter(event => event.event_day === selectedDay);
+
+            // Clear sessionSelect and populate with filtered events
             const sessionSelect = document.getElementById('sessionSelect');
             sessionSelect.innerHTML = '';
-
-            Object.entries(data).forEach(([date, eventData]) => {
-                if (eventData.event_day === selectedDay) {
-                    eventData.sessions.forEach(session => {
-                        const optionText = `${session.event_time_start} - ${session.event_time_end} (${session.seats_left} seats left)`;
-                        const option = new Option(optionText, session.event_time_start);
-                        option.setAttribute('data-seats-left', session.seats_left);
-                        sessionSelect.add(option);
-                    });
-                }
+            filteredEvents.forEach(event => {
+                const optionText = `${event.event_time_start} - ${event.event_time_end} (${event.seats_left} seats left)`;
+                const option = new Option(optionText, event.id); // Use event ID as value
+                option.setAttribute('data-seats-left', event.seats_left);
+                sessionSelect.add(option);
             });
         })
         .catch(error => {
@@ -29,7 +27,6 @@ function updateSessions(selectedDay) {
             showMessage('Error fetching restaurant data', 'alert-danger');
         });
 }
-
 
 function validateForm() {
     const daySelect = document.getElementById('daySelect').value;

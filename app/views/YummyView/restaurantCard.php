@@ -10,21 +10,21 @@
             <!--photos on top-->
             <div class="row">
                 <div class="col-md-6 text-center">
-                    <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                    <img src="/<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
                 </div>
                 <div class="col-md-6 text-center">
                     <div class="row row-cols-2">
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                     </div>
                 </div>
@@ -36,10 +36,10 @@
             <div class="container text-center">
                 <div class="row row-cols-2">
                     <div class="col">
-                        <img src="<?php echo htmlspecialchars($restaurant->getImages('map')) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImages('map')) ?>" class="img-fluid" alt="Restaurant Image">
                     </div>
                     <div class="col">
-                        <img src="<?php echo htmlspecialchars($restaurant->getImages('chef')) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImages('chef')) ?>" class="img-fluid" alt="Restaurant Image">
                     </div>
                     <div class="col">
                         <p><?php echo htmlspecialchars($restaurant->getAddress()) ?></p>
