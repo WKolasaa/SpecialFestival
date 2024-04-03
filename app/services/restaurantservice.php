@@ -47,4 +47,8 @@ class restaurantservice
     {
         return $this->restaurantRepository->updateRestaurant($restaurant);
     }
+
+    public function updateImages($restaurantID, $images){
+        return $this->restaurantRepository->updateImages($restaurantID, $images);
+    }
 }

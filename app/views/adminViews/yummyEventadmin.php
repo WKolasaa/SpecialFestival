@@ -2,6 +2,23 @@
     include __DIR__ . '/../header.php';
 ?>
 
+<style>
+    .image-wrapper {
+        position: relative;
+        width: 200px; /* Adjust as needed */
+        height: 150px; /* Adjust as needed */
+    }
+
+    .image-type-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+        padding: 5px;
+        font-size: 12px;
+    }
+</style>
+
 <script src="js/adminViews/YummyAdmin.js"></script>
 
 <div class="parent-container">
@@ -17,28 +34,7 @@
 
         <!-- Restaurant List -->
         <div id="restaurantsContainer">
-            <div class="card" id="restaurantsTable" style="display: block">
-                <div class="card-header">Restaurant List</div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Type</th>
-                            <th>Price</th>
-                            <th>Reduced</th>
-                            <th>Stars</th>
-                            <th class="table-actions align-left">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody id="restaurantList">
-                        <!-- Restaurant records will be dynamically added here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
         </div>
 
         <div id="editRestaurantContainer" style="display: none;">
@@ -83,7 +79,7 @@
                         <form method="POST" action="upload_images.php" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="restaurantImages"><strong>Select Restaurant:</strong></label>
-                                <select id="restaurantImages" name="restaurantImages" class="form-control" onchange="updateImages(this.value)">
+                                <select id="restaurantImages" name="restaurantImages" class="form-control" onchange="displayImages(this.value)">
                                     <?php
                                     foreach ($restaurants as $restaurant) {
                                         echo '<option value="' . $restaurant->getId() . '">' . $restaurant->getName() . '</option>';
@@ -95,13 +91,7 @@
                             <div class="form-group">
                                 <label><strong>Upload Images:</strong></label>
                                 <div id="imageContainer">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
-                                    <input type="file" name="restaurant_images[]" class="form-control-file mt-2" accept="image/*">
+
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success">Update Images</button>

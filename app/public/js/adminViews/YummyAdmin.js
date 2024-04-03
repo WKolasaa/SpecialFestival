@@ -1,22 +1,20 @@
 window.onload = showRestaurants;
 
-// Initial fetch of restaurant data when the page loads
 function showRestaurants(){
     document.getElementById('restaurantsContainer').style.display = "block";
     document.getElementById('sessionContainer').style.display = "none";
     document.getElementById('imagesContainer').style.display = "none";
     document.getElementById('sessions').innerHTML = '';
     updateButton('restaurant');
-    fetchRestaurants();
+    displayRestaurants();
 }
 
 function showSessions(){
     document.getElementById('restaurantsContainer').style.display = "none";
-    document.getElementById('sessionContainer').style.display = "none";
     document.getElementById('sessionContainer').style.display = "block";
     document.getElementById('imagesContainer').style.display = "none";
     updateButton('session');
-    fetchRestaurantsNames(); //TODO: change those methods
+    restaurantNamesToComboBox();
 
 }
 
@@ -48,45 +46,8 @@ function updateButton(action) {
     }
 }
 
-function fetchRestaurants() {
-    fetch('http://localhost/api/yummyadmin/getAllRestaurants')
-        .then(response => response.json())
-        .then(data => {
-            // Clear previous data
-            document.getElementById('restaurantList').innerHTML = '';
-
-            // Populate the table with new data
-            data.forEach(restaurant => {
-                const row = `
-                    <tr>
-                        <td>${restaurant.id}</td>
-                        <td>${restaurant.name}</td>
-                        <td>${restaurant.address}</td>
-                        <td>${restaurant.type}</td>
-                        <td>${restaurant.price}</td>
-                        <td>${restaurant.reduced}</td>
-                        <td>${restaurant.stars}</td>
-                        <!-- Actions -->
-                        <td>
-                            <button class="btn btn-sm btn-info" onclick="editRestaurant(${restaurant.id})">Edit</button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteRestaurant(${restaurant.id})">Delete</button>
-                        </td>
-                    </tr>
-                `;
-                document.getElementById('restaurantList').innerHTML += row;
-            });
-        })
-        .catch(error => console.error('Error fetching restaurants:', error));
-}
-
-function editRestaurant(restaurantId) {
-    fetch('http://localhost/api/yummyadmin/getRestaurantById', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ restaurantId: restaurantId })
-    })
+function fetchRestaurantsReturn() {
+    return fetch('http://localhost/api/yummyadmin/getAllRestaurants')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -94,87 +55,74 @@ function editRestaurant(restaurantId) {
             return response.json();
         })
         .then(data => {
-            createEditRestaurantForm(data);
+            return data;
         })
-        .catch(error => console.error('Error fetching sessions:', error));
+        .catch(error => {
+            console.error('Error fetching restaurants:', error);
+            throw error; // Re-throw the error to be caught by the caller
+        });
 }
 
-function createEditRestaurantForm(restaurantData) {
-    console.log(restaurantData);
-    document.getElementById('restaurantsContainer').style.display = 'none';
-    const editRestaurantContainer = document.getElementById('editRestaurantContainer');
-    editRestaurantContainer.style.display = 'block';
-    editRestaurantContainer.innerHTML = `
-        <div class="card-container">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="card-title">Edit Restaurant</h2>
-                    <form id="editRestaurantForm">
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" value="${restaurantData.name}" required>
+function displayRestaurants() {
+    fetchRestaurantsReturn()
+        .then(data => {
+            // Clear previous data
+            const restaurantsContainer = document.getElementById('restaurantsContainer');
+            restaurantsContainer.innerHTML = ''; // Clear existing content
+            restaurantsContainer.classList.add('container'); // Add Bootstrap container class
+
+            const heading = document.createElement('h2');
+            heading.textContent = 'Restaurants'; // Set the heading text
+            heading.classList.add('my-3'); // Add Bootstrap margin class
+            restaurantsContainer.appendChild(heading);
+
+            // Populate the container with restaurant data
+            data.forEach(restaurant => {
+                const restaurantItem = document.createElement('div');
+                restaurantItem.classList.add('restaurant', 'mb-3'); // Add Bootstrap classes
+
+                restaurantItem.innerHTML = `
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><span contenteditable="false" id="restaurant-id-${restaurant.id}">Restaurant ID: ${restaurant.id}</span></h5>
+                            <p class="card-text">
+                                Restaurant Name: <span contenteditable="true" id="restaurant-name-${restaurant.id}">${restaurant.name}</span><br>
+                                Restaurant Address: <span contenteditable="true" id="restaurant-address-${restaurant.id}">${restaurant.address}</span><br>
+                                Restaurant Type: <span contenteditable="true" id="restaurant-type-${restaurant.id}">${restaurant.type}</span><br>
+                                Restaurant Price: <span contenteditable="true" id="restaurant-price-${restaurant.id}">${restaurant.price}</span><br>
+                                Restaurant Reduced Price: <span contenteditable="true" id="restaurant-reduced-${restaurant.id}">${restaurant.reduced}</span><br>
+                                Restaurant Stars: <span contenteditable="true" id="restaurant-stars-${restaurant.id}">${restaurant.stars}</span> <br>
+                                Restaurant Phone Number: <span contenteditable="true" id="restaurant-phone-${restaurant.id}">${restaurant.phoneNumber}</span><br>
+                                Restaurant Email Address: <span contenteditable="true" id="restaurant-email-${restaurant.id}">${restaurant.email}</span><br>
+                                Restaurant Website: <span contenteditable="true" id="restaurant-website-${restaurant.id}">${restaurant.website}</span><br>
+                                Restaurant Chef: <span contenteditable="true" id="restaurant-chef-${restaurant.id}">${restaurant.chef}</span><br>
+                            </p>
+                            <button class="btn btn-success btnTicket" onclick="updateRestaurant(${restaurant.id})">Save</button>
+                            <button class="btn btn-danger btnTicket" onclick="deleteRestaurant(${restaurant.id})">Delete</button>
                         </div>
-                        <div class="form-group">
-                            <label for="address">Address:</label>
-                            <input type="text" class="form-control" id="address" name="address" value="${restaurantData.address}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Type:</label>
-                            <input type="text" class="form-control" id="type" name="type" value="${restaurantData.type}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price:</label>
-                            <input type="number" class="form-control" id="price" name="price" value="${restaurantData.price}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reduced">Reduced Price:</label>
-                            <input type="number" class="form-control" id="reduced" name="reduced" value="${restaurantData.reduced}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="stars">Stars:</label>
-                            <input type="number" class="form-control" id="stars" name="stars" value="${restaurantData.stars}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number:</label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="${restaurantData.phoneNumber}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address:</label>
-                            <input type="text" class="form-control" id="email" name="email" value="${restaurantData.email}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="website">Website:</label>
-                            <input type="text" class="form-control" id="website" name="website" value="${restaurantData.website}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="chef">Chef:</label>
-                            <input type="text" class="form-control" id="chef" name="chef" value="${restaurantData.chef}" required>
-                        </div>
-                        
-                        <input type="hidden" id="restaurantId" name="restaurantId" value="${restaurantData.id}">
-    
-                        <button type="button" class="btn btn-primary" onclick="updateRestaurant()">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    `;
+                    </div>
+                `;
+                restaurantsContainer.appendChild(restaurantItem);
+            });
+        })
+        .catch(error => console.error('Error while displaying restaurants:', error));
 }
 
-function updateRestaurant() {
+function updateRestaurant(restaurantId) {
     const restaurant = {
-        id: document.getElementById('restaurantId').value,
-        name: document.getElementById('name').value,
-        address: document.getElementById('address').value,
-        type: document.getElementById('type').value,
-        price: document.getElementById('price').value,
-        reduced: document.getElementById('reduced').value,
-        stars: document.getElementById('stars').value,
-        phoneNumber: document.getElementById('phoneNumber').value,
-        email: document.getElementById('email').value,
-        website: document.getElementById('website').value,
-        chef: document.getElementById('chef').value
+        id: restaurantId,
+        name: document.getElementById(`restaurant-name-${restaurantId}`).textContent,
+        address: document.getElementById(`restaurant-address-${restaurantId}`).textContent,
+        type: document.getElementById(`restaurant-type-${restaurantId}`).textContent,
+        price: document.getElementById(`restaurant-price-${restaurantId}`).textContent,
+        reduced: document.getElementById(`restaurant-reduced-${restaurantId}`).textContent,
+        stars: document.getElementById(`restaurant-stars-${restaurantId}`).textContent,
+        phoneNumber: document.getElementById(`restaurant-phone-${restaurantId}`).textContent,
+        email: document.getElementById(`restaurant-email-${restaurantId}`).textContent,
+        website: document.getElementById(`restaurant-website-${restaurantId}`).textContent,
+        chef: document.getElementById(`restaurant-chef-${restaurantId}`).textContent
     };
+    console.log(restaurant);
     fetch('http://localhost/api/yummyadmin/updateRestaurant', {
         method: 'POST',
         headers: {
@@ -184,10 +132,8 @@ function updateRestaurant() {
     })
         .then(response => {
             if (response.ok) {
-                alert('Restaurant updated successfully');
-                document.getElementById('restaurantsContainer').style.display = 'block';
-                document.getElementById('editRestaurantContainer').style.display = 'none';
-                fetchRestaurants();
+                alert('Restaurant updated! successfully');
+                showRestaurants();
             } else {
                 alert('Error updating restaurant:', response.statusText);
             }
@@ -208,8 +154,8 @@ function deleteRestaurant(restaurantId) { //TODO: Finish it (only url here was p
         })
             .then(response => {
                 if (response.ok) {
-                    // Refresh the restaurant list after deletion
-                    fetchRestaurants();
+                    alert('Restaurant deleted successfully');
+                    showRestaurants();
                 } else {
                     console.error('Error deleting restaurant:', response.statusText);
                 }
@@ -222,14 +168,9 @@ function deleteRestaurant(restaurantId) { //TODO: Finish it (only url here was p
 let nameArray = [];
 let selectedRestaurantId = 0;
 
-function fetchRestaurantsNames() {
-    fetch('http://localhost/api/yummyadmin/getAllRestaurants')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+// metod to add restaurant names to combobox in session
+function restaurantNamesToComboBox() {
+    fetchRestaurantsReturn()
         .then(restaurants => {
             const restaurantSelect = document.getElementById('restaurantList');
             restaurantSelect.innerHTML = '';
@@ -248,19 +189,6 @@ function fetchRestaurantsNames() {
             fetchRestaurantSessions(1);
         })
         .catch(error => console.error('Error fetching restaurants:', error));
-}
-
-async function returnfetchRestaurantsNames() {
-    try {
-        const response = await fetch('http://localhost/api/yummyadmin/getAllRestaurants');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching restaurants:', error);
-        return []; // Return an empty array in case of error
-    }
 }
 
 function fetchRestaurantSessions(restaurantId) {
@@ -297,7 +225,7 @@ function fetchRestaurantSessions(restaurantId) {
 document.getElementById('restaurantImages').addEventListener('change', function() {
     selectedRestaurantId = this.value;
     console.log("Works");
-    updateImages(this.value);
+    displayImages(this.value);
 });
 
 
@@ -330,7 +258,7 @@ function displayEditSessionForm(events){
 
         eventItem.innerHTML = `
             <div class="card-body">
-            <h5 class="card-title"><span contenteditable="false" id="agenda-Artist-${event.id}">Session ID: ${event.id}</span></h5>
+            <h5 class="card-title"><span contenteditable="false" id="event-id-${event.id}">Session ID: ${event.id}</span></h5>
             <p class="card-text">
                 Restaurant ID: <span contenteditable="true" id="restaurant-id-${event.id}">${event.restaurant_id}</span><br>
                 Event Date: <span contenteditable="true" id="event-date-${event.id}">${event.event_date}</span><br>
@@ -372,6 +300,7 @@ function displayEditSessionForm(events){
          .then(response => {
              if (response.ok) {
                  alert('Session updated successfully');
+                 showSessions();
              } else {
                  alert('Error updating session:', response.statusText);
              }
@@ -379,7 +308,7 @@ function displayEditSessionForm(events){
          .catch(error => alert('Error updating session:', error));
  }
 
- function removeSession(eventId) {
+ function removeSession(eventId) { //TODO: Change method to remove
         if (confirm('Are you sure you want to delete this session?')) {
             fetch('http://localhost/api/yummyadmin/deleteSession', {
                 method: 'POST',
@@ -391,7 +320,8 @@ function displayEditSessionForm(events){
                 .then(response => {
                     if (response.ok) {
                         // Refresh the session list after deletion
-                        fetchRestaurantSessions(selectedRestaurantId);
+                        alert('Session removed successfully');
+                        showSessions();
                     } else {
                         console.error('Error deleting session:', response.statusText);
                     }
@@ -400,38 +330,6 @@ function displayEditSessionForm(events){
         }
 
  }
-
-function addRestaurant(){ //TODO: Find here is a problem here
-    const restaurant = {
-        name: document.getElementById('name').value,
-        address: document.getElementById('address').value,
-        type: document.getElementById('type').value,
-        price: document.getElementById('price').value,
-        reduced: document.getElementById('reducedPrice').value,
-        stars: document.getElementById('stars').value,
-        phoneNumber: document.getElementById('phoneNumber').value,
-        email: document.getElementById('email').value,
-        website: document.getElementById('website').value,
-        chef: document.getElementById('Chef').value
-    };
-
-    fetch('http://localhost/api/yummyadmin/addRestaurant', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(restaurant)
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('Restaurant added successfully');
-                fetchRestaurants();
-            } else {
-                alert('Error adding restaurant:', response.statusText);
-            }
-        })
-        .catch(error => alert('Error adding restaurant:', error));
-}
 
 function createAddRestaurantForm(){
     document.getElementById('restaurantsContainer').innerHTML = `
@@ -444,43 +342,43 @@ function createAddRestaurantForm(){
                             <form>
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter restaurant name">
+                                    <input type="text" class="form-control" id="name-addRestaurant" name="name" placeholder="Enter restaurant name">
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                                    <input type="text" class="form-control" id="address-addRestaurant" name="address" placeholder="Enter address">
                                 </div>
                                 <div class="form-group">
                                     <label for="type">Type</label>
-                                    <input type="text" class="form-control" id="type" name="type" placeholder="Enter type">
+                                    <input type="text" class="form-control" id="type-addRestaurant" name="type" placeholder="Enter type">
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="text" class="form-control" id="price" name="price" pattern="[0-9]*" inputmode="numeric" placeholder="0.00">
+                                    <input type="text" class="form-control" id="price-addRestaurant" name="price" pattern="[0-9]*" inputmode="numeric" placeholder="0.00">
                                 </div>
                                 <div class="form-group">
                                     <label for="reducedPrice">Reduced Price</label>
-                                    <input type="text" class="form-control" id="reducedPrice" name="reducedPrice" pattern="[0-9]*" inputmode="numeric" placeholder="0.00">
+                                    <input type="text" class="form-control" id="reducedPrice-addRestaurant" name="reducedPrice" pattern="[0-9]*" inputmode="numeric" placeholder="0.00">
                                 </div>
                                 <div class="form-group">
                                     <label for="stars">Stars</label>
-                                    <input type="number" class="form-control" id="stars" name="stars" placeholder="Enter stars">
+                                    <input type="number" class="form-control" id="stars-addRestaurant" name="stars" placeholder="Enter stars">
                                 </div>
                                 <div class="form-group">
                                     <label for="phoneNumber">Phone number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Enter Phone Number">
+                                    <input type="text" class="form-control" id="phoneNumber-addRestaurant" name="phoneNumber" placeholder="Enter Phone Number">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Phone Number">
+                                    <input type="text" class="form-control" id="email-addRestaurant" name="email" placeholder="Enter Phone Number">
                                 </div>
                                 <div class="form-group">
                                     <label for="website">Website</label>
-                                    <input type="text" class="form-control" id="website" name="website" placeholder="Enter Website">
+                                    <input type="text" class="form-control" id="website-addRestaurant" name="website" placeholder="Enter Website">
                                 </div>
                                 <div class="form-group">
                                     <label for="Chef">Chef</label>
-                                    <input type="text" class="form-control" id="Chef" name="Chef" placeholder="Enter Chef's Name">
+                                    <input type="text" class="form-control" id="Chef-addRestaurant" name="Chef" placeholder="Enter Chef's Name">
                                 </div>
                                 <br>
                                 <button type="button" name="addRestaurant" class="btn btn-primary btn-block" onclick="addRestaurant()">Submit</button>
@@ -493,15 +391,48 @@ function createAddRestaurantForm(){
     `;
 }
 
+function addRestaurant(){ //TODO: Find here is a problem here (console says that this method doesnt exist)
+    const restaurant = {
+        name: document.getElementById('name-addRestaurant').textContent,
+        address: document.getElementById('address-addRestaurant').textContent,
+        type: document.getElementById('type-addRestaurant').textContent,
+        price: document.getElementById('price-addRestaurant').textContent,
+        reduced: document.getElementById('reducedPrice-addRestaurant').textContent,
+        stars: document.getElementById('stars-addRestaurant').textContent,
+        phoneNumber: document.getElementById('phoneNumber-addRestaurant').textContent,
+        email: document.getElementById('email-addRestaurant').textContent,
+        website: document.getElementById('website-addRestaurant').textContent,
+        chef: document.getElementById('Chef-addRestaurant').textContent
+    };
+
+    fetch('http://localhost/api/yummyadmin/addRestaurant', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(restaurant)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Restaurant added successfully');
+                showRestaurants();
+            } else {
+                alert('Error adding restaurant:', response.statusText);
+            }
+        })
+        .catch(error => alert('Error adding restaurant:', error));
+}
+
 function createAddSessionForm() {
     // Get the container element where the form will be appended
     const sessionContainer = document.getElementById('sessionContainer');
+    document.getElementById('sessions').innerHTML = '';
 
     // Clear previous content
     sessionContainer.innerHTML = '';
 
     // Fetch restaurants
-    returnfetchRestaurantsNames()
+    fetchRestaurantsReturn()
         .then(restaurants => {
             // Create a Bootstrap card element
             const card = document.createElement('div');
@@ -534,12 +465,12 @@ function createAddSessionForm() {
 
             // Create input fields for event date, event day, event start time, event end time, event seats total, and event seats available
             const fields = [
-                { label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate' },
-                { label: 'Event Day:', type: 'text', name: 'eventDay' },
-                { label: 'Event Start Time (24h):', type: 'text', name: 'eventStartTime' },
-                { label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime' },
-                { label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal' },
-                { label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable' }
+                { label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate', id: 'eventDate-addSession' },
+                { label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession'},
+                { label: 'Event Start Time (24h):', type: 'text', name: 'eventStartTime', id: 'eventStartTime-addSession' },
+                { label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession'},
+                { label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal', id: 'eventSeatsTotal-addSession'},
+                { label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable', id: 'eventSeatsAvailable-addSession'}
             ];
 
             fields.forEach(field => {
@@ -590,15 +521,15 @@ function createAddSessionForm() {
 }
 
 
-function addSession(){ //TODO: finish this method
+function addSession(){ //TODO: finish this method cos it goes to weird page
 const session = {
         restaurant_id: document.getElementById('restaurantList').value,
-        event_date: document.getElementById('eventDate').value,
-        event_day: document.getElementById('eventDay').value,
-        event_time_start: document.getElementById('eventStartTime').value,
-        event_time_end: document.getElementById('eventEndTime').value,
-        seats_total: document.getElementById('eventSeatsTotal').value,
-        seats_left: document.getElementById('eventSeatsAvailable').value
+        event_date: document.getElementById('eventDate-addSession').textContent,
+        event_day: document.getElementById('eventDay-addSession').textContent,
+        event_time_start: document.getElementById('eventStartTime-addSession').textContent,
+        event_time_end: document.getElementById('eventEndTime-addSession').textContent,
+        seats_total: document.getElementById('eventSeatsTotal-addSession').textContent,
+        seats_left: document.getElementById('eventSeatsAvailable-addSession').textContent
     };
 
     fetch('http://localhost/api/yummyadmin/addSession', {
@@ -611,7 +542,7 @@ const session = {
         .then(response => {
             if (response.ok) {
                 alert('Session added successfully');
-                fetchRestaurantSessions(session.restaurant_id);
+                showSessions();
             } else {
                 alert('Error adding session:', response.statusText);
             }
@@ -619,7 +550,7 @@ const session = {
         .catch(error => alert('Error adding session:', error));
 }
 
-function updateImages(restaurantID) {
+function displayImages(restaurantID) {
     fetch('http://localhost/api/yummyadmin/getAllImagesByRestaurantId', {
         method: 'POST',
         headers: {
@@ -638,86 +569,89 @@ function updateImages(restaurantID) {
             const imagesContainer = document.getElementById('imageContainer');
             imagesContainer.innerHTML = '';
 
-            // Iterate over each property in the images object
-            for (const key in images) {
-                if (images.hasOwnProperty(key)) {
-                    // Create a div to contain each image type and its input box
-                    const div = document.createElement('div');
-                    div.className = 'form-group';
+            imagesContainer.style.display = 'flex';
+            imagesContainer.style.flexDirection = 'column';
+            imagesContainer.style.justifyContent = 'center';
+            imagesContainer.style.alignItems = 'center';
 
-                    // Create a label for the image type
-                    const label = document.createElement('label');
-                    label.textContent = `${key}: `;
-                    div.appendChild(label);
+            // Map image
+            const mapImageContainer = createImageInputContainer('Map', images.map);
+            imagesContainer.appendChild(mapImageContainer);
 
-                    // Create a container div for the image inputs and URLs
-                    const containerDiv = document.createElement('div');
-                    div.appendChild(containerDiv);
+            // Chef image
+            const chefImageContainer = createImageInputContainer('Chef', images.chef);
+            imagesContainer.appendChild(chefImageContainer);
 
-                    // Check if the value associated with the key is an array
-                    if (Array.isArray(images[key])) {
-                        // Iterate over each image URL in the array
-                        images[key].forEach(imageUrl => {
-                            // Create a div for each image item
-                            const itemDiv = document.createElement('div');
-                            containerDiv.appendChild(itemDiv);
-
-                            // Create an input for the image file
-                            const fileInput = document.createElement('input');
-                            fileInput.type = 'file';
-                            fileInput.className = 'form-control-file mt-2';
-                            fileInput.setAttribute('accept', 'image/*');
-                            itemDiv.appendChild(fileInput);
-
-                            // Create a span to display the URL of the chosen image or "Choose a photo" if not set
-                            const urlSpan = document.createElement('span');
-                            urlSpan.textContent = imageUrl ? imageUrl : 'Choose a photo';
-                            itemDiv.appendChild(urlSpan);
-
-                            // Add event listener to file input to update URL when file is chosen
-                            fileInput.addEventListener('change', function(event) {
-                                const file = event.target.files[0];
-                                if (file) {
-                                    // Display the name of the chosen image
-                                    urlSpan.textContent = file.name;
-                                }
-                            });
-                        });
-                    } else {
-                        // Create an input for the single image file
-                        const fileInput = document.createElement('input');
-                        fileInput.type = 'file';
-                        fileInput.className = 'form-control-file mt-2';
-                        fileInput.setAttribute('accept', 'image/*');
-                        containerDiv.appendChild(fileInput);
-
-                        // Create a span to display the URL of the single image or "Choose a photo" if not set
-                        const urlSpan = document.createElement('span');
-                        urlSpan.textContent = images[key] ? images[key] : 'Choose a photo';
-                        containerDiv.appendChild(urlSpan);
-
-                        // Add event listener to file input to update URL when file is chosen
-                        fileInput.addEventListener('change', function(event) {
-                            const file = event.target.files[0];
-                            if (file) {
-                                // Display the name of the chosen image
-                                urlSpan.textContent = file.name;
-                            }
-                        });
-                    }
-
-                    // Append the div to the imagesContainer
-                    imagesContainer.appendChild(div);
-                }
+            // Gallery images
+            const galleryImages = images.gallery.slice(0, 5);
+            for (let i = 0; i < 5; i++) {
+                const imageUrl = galleryImages[i] || ''; // Use empty string if no image at index i
+                const galleryImageContainer = createImageInputContainer(`Gallery ${i + 1}`, imageUrl);
+                imagesContainer.appendChild(galleryImageContainer);
             }
         })
         .catch(error => console.error('Error updating images:', error));
 }
 
+function createImageInputContainer(type, imageUrl) {
+    const container = document.createElement('div');
+    container.classList.add('image-container');
 
+    const typeName = document.createElement('div');
+    typeName.textContent = type;
+    typeName.classList.add('type-name');
+    container.appendChild(typeName);
 
+    const inputWrapper = document.createElement('div');
+    inputWrapper.classList.add('input-wrapper');
 
+    const imageInput = document.createElement('input');
+    imageInput.setAttribute('type', 'file');
+    imageInput.setAttribute('accept', 'image/*');
+    imageInput.setAttribute('data-type', type);
 
+    inputWrapper.appendChild(imageInput);
 
+    const imagePreview = document.createElement('img');
+    imagePreview.classList.add('image-preview');
+    imagePreview.setAttribute('src', imageUrl);
 
+    imagePreview.style.maxWidth = '200px';
+    imagePreview.style.maxHeight = '200px';
 
+    inputWrapper.appendChild(imagePreview);
+
+    container.appendChild(inputWrapper);
+
+    return container;
+}
+
+function updateImages(restaurantId){
+    const images = {
+        map: document.querySelector('.image-container[data-type="Map"] .image-preview').src,
+        chef: document.querySelector('.image-container[data-type="Chef"] .image-preview').src,
+        gallery: []
+    };
+
+    const galleryContainers = document.querySelectorAll('.image-container[data-type^="Gallery"]');
+    galleryContainers.forEach(container => {
+        images.gallery.push(container.querySelector('.image-preview').src);
+    });
+
+    fetch('http://localhost/api/yummyadmin/updateImages', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ restaurantId: restaurantId, images: images })
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Images updated successfully');
+                showImages();
+            } else {
+                alert('Error updating images:', response.statusText);
+            }
+        })
+        .catch(error => alert('Error updating images:', error));
+}

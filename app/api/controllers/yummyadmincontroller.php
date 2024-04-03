@@ -163,7 +163,7 @@ class YummyAdminController
     public function addSession(){
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
-        echo "works";
+
         if($jsonData !== null){
             $restaurantSession = new RestaurantSession();
             $restaurantSession->setRestaurantId(intval($jsonData['restaurant_id']));
@@ -233,6 +233,26 @@ class YummyAdminController
             }
             else{
                 echo json_encode(['error' => 'Failed to delete event']);
+            }
+        }else{
+            echo json_encode(['error' => 'Invalid data']);
+        }
+    }
+
+    public function updateImages(){
+        $jsonData = file_get_contents('php://input');
+        $jsonData = json_decode($jsonData, true);
+
+        if($jsonData !== null){
+            $restaurantID = $jsonData['restaurantId'];
+            $images = $jsonData['images'];
+
+            $restaurantService = new RestaurantService();
+            if($restaurantService->updateImages($restaurantID, $images)){
+                echo json_encode(['success' => 'Images updated']);
+            }
+            else{
+                echo json_encode(['error' => 'Failed to update images']);
             }
         }else{
             echo json_encode(['error' => 'Invalid data']);
