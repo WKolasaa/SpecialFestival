@@ -12,11 +12,7 @@ class Restaurant implements \JsonSerializable {
     private $email;
     private $website;
     private $chef;
-    private $images = [
-        'map' => '',
-        'chef' => '',
-        'gallery' => []
-    ];
+    private $images = [];
     private $events = [];
 
     public function __construct() {
@@ -111,20 +107,20 @@ class Restaurant implements \JsonSerializable {
         $this->chef = $chef;
     }
 
-    public function setImagePath($type, $path) {
-        if ($type === 'gallery') {
-            $this->images[$type][] = $path;
-        } else {
-            $this->images[$type] = $path;
-        }
+    public function addImage($restaurantImage) {
+        $this->images[] = $restaurantImage;
     }
 
-    public function getImages($type = null) {
-        if ($type === null) {
-            return $this->images;
-        } else {
-            return $this->images[$type] ?? null;
+    public function getImages() {
+        return $this->images;
+    }
+
+    public function getImagesAsArray() {
+        $images = [];
+        foreach ($this->images as $image) {
+            array_push($images, $image->toArray());
         }
+        return $images;
     }
 
     public function addEvent($restaurantSession) {

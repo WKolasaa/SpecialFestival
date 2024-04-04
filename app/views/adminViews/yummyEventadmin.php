@@ -2,22 +2,6 @@
     include __DIR__ . '/../header.php';
 ?>
 
-<style>
-    .image-wrapper {
-        position: relative;
-        width: 200px; /* Adjust as needed */
-        height: 150px; /* Adjust as needed */
-    }
-
-    .image-type-label {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
-        padding: 5px;
-        font-size: 12px;
-    }
-</style>
 
 <script src="js/adminViews/YummyAdmin.js"></script>
 
@@ -76,7 +60,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h2 class="card-title mb-6">Upload Restaurant Images</h2>
-                        <form method="POST" action="upload_images.php" enctype="multipart/form-data">
+                        <form>
                             <div class="form-group">
                                 <label for="restaurantImages"><strong>Select Restaurant:</strong></label>
                                 <select id="restaurantImages" name="restaurantImages" class="form-control" onchange="displayImages(this.value)">
@@ -94,7 +78,7 @@
 
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Update Images</button>
+                            <button type="button" class="btn btn-success" onclick="updateImages()">Update Images</button>
                         </form>
                     </div>
                 </div>

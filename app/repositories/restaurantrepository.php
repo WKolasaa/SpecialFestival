@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\restaurant;
+use App\Models\restaurantImage;
 use App\Models\restaurantSession;
 
 class RestaurantRepository extends Repository
@@ -65,16 +66,21 @@ class RestaurantRepository extends Repository
     private function setImages($restaurants)
     {
         foreach ($restaurants as $restaurant) {
-            $sql = "SELECT image_path, image_type FROM restaurant_images WHERE restaurant_id = ?";
+            $sql = "SELECT id, restaurant_id, image_path, image_type FROM restaurant_images WHERE restaurant_id = ?";
             $imageStmt = $this->connection->prepare($sql);
             $imageStmt->execute([$restaurant->getId()]);
             $imageRows = $imageStmt->fetchAll();
 
             foreach ($imageRows as $imageRow) {
-                $restaurant->setImagePath($imageRow['image_type'], $imageRow['image_path']);
+                $image = new RestaurantImage();
+                $image->setId($imageRow['id']);
+                $image->setRestaurantId($restaurant->getId());
+                $image->setImagePath($imageRow['image_path']);
+                $image->setImageType($imageRow['image_type']);
+
+                $restaurant->addImage($image);
             }
         }
-
         return $restaurants;
     }
 
@@ -164,4 +170,29 @@ class RestaurantRepository extends Repository
         }
     }
     // TODO: Make method to update images
+    public function updateImages($images)
+    {
+        $sql = "UPDATE restaurant_images SET image_path = :image_path WHERE id = :image_id";
+        $updateStmt = $this->connection->prepare($sql);
+
+        // Iterate over each image and update the corresponding record in the database
+        foreach ($images as $image) {
+            $imagePath = $image->getImagePath();
+            $id = $image->getId();
+
+            $updateStmt->bindParam(':image_path', $imagePath, PDO::PARAM_STR);
+            $updateStmt->bindParam(':image_id', $id, PDO::PARAM_STR);
+
+            $success = $updateStmt->execute();
+        }
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }

@@ -53,4 +53,14 @@ class restaurantImage
     {
         $this->imageType = $imageType;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'restaurantId' => $this->restaurantId,
+            'imagePath' => $this->imagePath,
+            'imageType' => $this->imageType
+        ];
+    }
 }

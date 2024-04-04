@@ -151,7 +151,11 @@ class YummyAdminController
                 $restaurantService = new RestaurantService();
                 $restaurant = $restaurantService->getRestaurantByID($restaurantID);
 
-                $images = $restaurant->getImages();
+                $images = [];
+                foreach ($restaurant->getImagesAsArray() as $image) {
+                    $images[] = $image;
+                }
+
             }
 
             echo json_encode($images);
@@ -243,12 +247,11 @@ class YummyAdminController
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
-            $restaurantID = $jsonData['restaurantId'];
+        if($jsonData !== null && isset($jsonData['restaurantId']) && isset($jsonData['images'])){
             $images = $jsonData['images'];
 
             $restaurantService = new RestaurantService();
-            if($restaurantService->updateImages($restaurantID, $images)){
+            if($restaurantService->updateImages($images)){
                 echo json_encode(['success' => 'Images updated']);
             }
             else{

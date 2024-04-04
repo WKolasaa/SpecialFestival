@@ -1,6 +1,6 @@
 window.onload = showRestaurants;
 
-function showRestaurants(){
+function showRestaurants() {
     document.getElementById('restaurantsContainer').style.display = "block";
     document.getElementById('sessionContainer').style.display = "none";
     document.getElementById('imagesContainer').style.display = "none";
@@ -9,7 +9,7 @@ function showRestaurants(){
     displayRestaurants();
 }
 
-function showSessions(){
+function showSessions() {
     document.getElementById('restaurantsContainer').style.display = "none";
     document.getElementById('sessionContainer').style.display = "block";
     document.getElementById('imagesContainer').style.display = "none";
@@ -18,7 +18,7 @@ function showSessions(){
 
 }
 
-function showImages(){
+function showImages() {
     document.getElementById('restaurantsContainer').style.display = "none";
     document.getElementById('sessionContainer').style.display = "none";
     document.getElementById('sessions').innerHTML = '';
@@ -222,7 +222,7 @@ function fetchRestaurantSessions(restaurantId) {
         .catch(error => console.error('Error fetching sessions:', error));
 }
 
-document.getElementById('restaurantImages').addEventListener('change', function() {
+document.getElementById('restaurantImages').addEventListener('change', function () {
     selectedRestaurantId = this.value;
     console.log("Works");
     displayImages(this.value);
@@ -230,7 +230,7 @@ document.getElementById('restaurantImages').addEventListener('change', function(
 
 
 // Add event listener for selection change
-document.getElementById('restaurantList').addEventListener('change', function() {
+document.getElementById('restaurantList').addEventListener('change', function () {
     console.log("Works");
     selectedRestaurantId = this.value;
     const selectedRestaurant = nameArray.find(restaurant => restaurant.id == selectedRestaurantId);
@@ -241,7 +241,7 @@ document.getElementById('restaurantList').addEventListener('change', function() 
     }
 });
 
-function displayEditSessionForm(events){
+function displayEditSessionForm(events) {
     const sessionContainer = document.getElementById('sessions');
     sessionContainer.innerHTML = ''; // Clear existing content
     sessionContainer.classList.add('container'); // Add Bootstrap container class
@@ -278,60 +278,60 @@ function displayEditSessionForm(events){
     });
 }
 
- function saveSession(eventId) {
-     const event= {
-         id: eventId,
-         restaurant_id: document.getElementById(`restaurant-id-${eventId}`).textContent,
-         event_date: document.getElementById(`event-date-${eventId}`).textContent,
-         event_day: document.getElementById(`event-day-${eventId}`).textContent,
-         event_time_start: document.getElementById(`event-time-start-${eventId}`).textContent,
-         event_time_end: document.getElementById(`event-time-end-${eventId}`).textContent,
-         seats_total: document.getElementById(`event-seats-total-${eventId}`).textContent,
-         seats_left: document.getElementById(`event-seats-left-${eventId}`).textContent
-     };
+function saveSession(eventId) {
+    const event = {
+        id: eventId,
+        restaurant_id: document.getElementById(`restaurant-id-${eventId}`).textContent,
+        event_date: document.getElementById(`event-date-${eventId}`).textContent,
+        event_day: document.getElementById(`event-day-${eventId}`).textContent,
+        event_time_start: document.getElementById(`event-time-start-${eventId}`).textContent,
+        event_time_end: document.getElementById(`event-time-end-${eventId}`).textContent,
+        seats_total: document.getElementById(`event-seats-total-${eventId}`).textContent,
+        seats_left: document.getElementById(`event-seats-left-${eventId}`).textContent
+    };
 
-     fetch('http://localhost/api/yummyadmin/updateEvent', {
+    fetch('http://localhost/api/yummyadmin/updateEvent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(event)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Session updated successfully');
+                showSessions();
+            } else {
+                alert('Error updating session:', response.statusText);
+            }
+        })
+        .catch(error => alert('Error updating session:', error));
+}
+
+function removeSession(eventId) { //TODO: Change method to remove
+    if (confirm('Are you sure you want to delete this session?')) {
+        fetch('http://localhost/api/yummyadmin/deleteSession', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(event)
+            body: JSON.stringify({ eventId: eventId })
         })
-         .then(response => {
-             if (response.ok) {
-                 alert('Session updated successfully');
-                 showSessions();
-             } else {
-                 alert('Error updating session:', response.statusText);
-             }
-         })
-         .catch(error => alert('Error updating session:', error));
- }
-
- function removeSession(eventId) { //TODO: Change method to remove
-        if (confirm('Are you sure you want to delete this session?')) {
-            fetch('http://localhost/api/yummyadmin/deleteSession', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ eventId: eventId })
+            .then(response => {
+                if (response.ok) {
+                    // Refresh the session list after deletion
+                    alert('Session removed successfully');
+                    showSessions();
+                } else {
+                    console.error('Error deleting session:', response.statusText);
+                }
             })
-                .then(response => {
-                    if (response.ok) {
-                        // Refresh the session list after deletion
-                        alert('Session removed successfully');
-                        showSessions();
-                    } else {
-                        console.error('Error deleting session:', response.statusText);
-                    }
-                })
-                .catch(error => console.error('Error deleting session:', error));
-        }
+            .catch(error => console.error('Error deleting session:', error));
+    }
 
- }
+}
 
-function createAddRestaurantForm(){
+function createAddRestaurantForm() {
     document.getElementById('restaurantsContainer').innerHTML = `
         <div class="container">
             <div class="row">
@@ -381,7 +381,7 @@ function createAddRestaurantForm(){
                                     <input type="text" class="form-control" id="Chef-addRestaurant" name="Chef" placeholder="Enter Chef's Name">
                                 </div>
                                 <br>
-                                <button type="button" name="addRestaurant" class="btn btn-primary btn-block" onclick="addRestaurant()">Submit</button>
+                                <button type="button" name="addRestaurant" class="btn btn-primary btn-block" onclick="addingRestaurant()">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -391,7 +391,7 @@ function createAddRestaurantForm(){
     `;
 }
 
-function addRestaurant(){ //TODO: Find here is a problem here (console says that this method doesnt exist)
+function addingRestaurant() { //TODO: Find here is a problem here (console says that this method doesnt exist)
     const restaurant = {
         name: document.getElementById('name-addRestaurant').textContent,
         address: document.getElementById('address-addRestaurant').textContent,
@@ -466,11 +466,11 @@ function createAddSessionForm() {
             // Create input fields for event date, event day, event start time, event end time, event seats total, and event seats available
             const fields = [
                 { label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate', id: 'eventDate-addSession' },
-                { label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession'},
+                { label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession' },
                 { label: 'Event Start Time (24h):', type: 'text', name: 'eventStartTime', id: 'eventStartTime-addSession' },
-                { label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession'},
-                { label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal', id: 'eventSeatsTotal-addSession'},
-                { label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable', id: 'eventSeatsAvailable-addSession'}
+                { label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession' },
+                { label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal', id: 'eventSeatsTotal-addSession' },
+                { label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable', id: 'eventSeatsAvailable-addSession' }
             ];
 
             fields.forEach(field => {
@@ -521,8 +521,8 @@ function createAddSessionForm() {
 }
 
 
-function addSession(){ //TODO: finish this method cos it goes to weird page
-const session = {
+function addSession() { //TODO: finish this method cos it goes to weird page
+    const session = {
         restaurant_id: document.getElementById('restaurantList').value,
         event_date: document.getElementById('eventDate-addSession').textContent,
         event_day: document.getElementById('eventDay-addSession').textContent,
@@ -574,36 +574,52 @@ function displayImages(restaurantID) {
             imagesContainer.style.justifyContent = 'center';
             imagesContainer.style.alignItems = 'center';
 
-            // Map image
-            const mapImageContainer = createImageInputContainer('Map', images.map);
-            imagesContainer.appendChild(mapImageContainer);
+            // Define an object to store images by type
+            const imageTypes = {};
 
-            // Chef image
-            const chefImageContainer = createImageInputContainer('Chef', images.chef);
-            imagesContainer.appendChild(chefImageContainer);
+            // Group images by type
+            images.forEach(image => {
+                if (!imageTypes.hasOwnProperty(image.imageType)) {
+                    imageTypes[image.imageType] = [];
+                }
+                imageTypes[image.imageType].push({ id: image.id, path: image.imagePath });
+            });
 
-            // Gallery images
-            const galleryImages = images.gallery.slice(0, 5);
-            for (let i = 0; i < 5; i++) {
-                const imageUrl = galleryImages[i] || ''; // Use empty string if no image at index i
-                const galleryImageContainer = createImageInputContainer(`Gallery ${i + 1}`, imageUrl);
-                imagesContainer.appendChild(galleryImageContainer);
+            // Create image containers for each type
+            for (const imageType in imageTypes) {
+                if (imageTypes.hasOwnProperty(imageType)) {
+                    const imagePaths = imageTypes[imageType];
+                    let imageContainer;
+                    if (imageType === 'gallery') {
+                        const galleryImages = imagePaths.slice(0, 5); // Display up to 5 gallery images
+                        for (let i = 0; i < 5; i++) {
+                            const imageData = galleryImages[i] || { id: '', path: '' }; // Use empty object if no image at index i
+                            imageContainer = createImageInputContainer(`Gallery ${i + 1}`, imageData.path, imageData.id);
+                            imagesContainer.appendChild(imageContainer);
+                        }
+                    } else {
+                        // For map and chef images, display only one image
+                        const imageData = imagePaths.length > 0 ? imagePaths[0] : { id: '', path: '' };
+                        imageContainer = createImageInputContainer(imageType, imageData.path, imageData.id);
+                        imagesContainer.appendChild(imageContainer);
+                    }
+                }
             }
         })
         .catch(error => console.error('Error updating images:', error));
 }
 
-function createImageInputContainer(type, imageUrl) {
+function createImageInputContainer(type, imageUrl, id) {
     const container = document.createElement('div');
     container.classList.add('image-container');
 
-    const typeName = document.createElement('div');
-    typeName.textContent = type;
-    typeName.classList.add('type-name');
-    container.appendChild(typeName);
-
     const inputWrapper = document.createElement('div');
     inputWrapper.classList.add('input-wrapper');
+
+    // Display the ID along with the type
+    const label = document.createElement('label');
+    label.textContent = `ID: ${id} | Type: ${type}`;
+    inputWrapper.appendChild(label);
 
     const imageInput = document.createElement('input');
     imageInput.setAttribute('type', 'file');
@@ -616,42 +632,64 @@ function createImageInputContainer(type, imageUrl) {
     imagePreview.classList.add('image-preview');
     imagePreview.setAttribute('src', imageUrl);
 
-    imagePreview.style.maxWidth = '200px';
-    imagePreview.style.maxHeight = '200px';
+    // Apply CSS styles to make the images smaller
+    imagePreview.style.maxWidth = '200px'; // Adjust the maximum width as needed
+    imagePreview.style.maxHeight = '200px'; // Adjust the maximum height as needed
+    imagePreview.style.paddingBottom = '10px'; // Add padding to separate images
 
     inputWrapper.appendChild(imagePreview);
+
+    // Create an "Update" button
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'Update';
+    updateButton.classList.add('btn', 'btn-primary');
+    // Use a closure to pass the ID to the update method
+    updateButton.onclick = function () {
+        updateImages(id); // Call the update method with the ID
+    };
+    inputWrapper.appendChild(updateButton);
 
     container.appendChild(inputWrapper);
 
     return container;
 }
 
-function updateImages(restaurantId){
+function updateImages() {
     const images = {
-        map: document.querySelector('.image-container[data-type="Map"] .image-preview').src,
-        chef: document.querySelector('.image-container[data-type="Chef"] .image-preview').src,
+        map: {
+            id: document.querySelector('.image-container[data-type="Map"]').getAttribute('data-id'),
+            url: document.querySelector('.image-container[data-type="Map"] .image-preview').src
+        },
+        chef: {
+            id: document.querySelector('.image-container[data-type="Chef"]').getAttribute('data-id'),
+            url: document.querySelector('.image-container[data-type="Chef"] .image-preview').src
+        },
         gallery: []
     };
 
     const galleryContainers = document.querySelectorAll('.image-container[data-type^="Gallery"]');
     galleryContainers.forEach(container => {
-        images.gallery.push(container.querySelector('.image-preview').src);
+        const id = container.getAttribute('data-id');
+        const url = container.querySelector('.image-preview').src;
+        images.gallery.push({ id, url });
     });
 
-    fetch('http://localhost/api/yummyadmin/updateImages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ restaurantId: restaurantId, images: images })
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('Images updated successfully');
-                showImages();
-            } else {
-                alert('Error updating images:', response.statusText);
-            }
-        })
-        .catch(error => alert('Error updating images:', error));
+    console.log(images);
+
+    // fetch('http://localhost/api/yummyadmin/updateImages', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({ images: images })
+    // })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             alert('Images updated successfully');
+    //             showImages();
+    //         } else {
+    //             alert('Error updating images:', response.statusText);
+    //         }
+    //     })
+    //     .catch(error => alert('Error updating images:', error));
 }
