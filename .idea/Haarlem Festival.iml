@@ -18,6 +18,16 @@
       <sourceFolder url="file://$MODULE_DIR$/./services" isTestSource="false" packagePrefix="App\Services\" />
       <sourceFolder url="file://$MODULE_DIR$/./views" isTestSource="false" packagePrefix="App\Views\" />
       <sourceFolder url="file://$MODULE_DIR$/app/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/resend/resend-php" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/deprecation-contracts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
