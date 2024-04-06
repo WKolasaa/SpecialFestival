@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Services\OrderService;
+use App\Services\restaurantservice;
+
 
 class AdminViewController
 {
@@ -26,8 +28,16 @@ class AdminViewController
    }
    public function yummy()
    {
-      include '../views/adminViews/yummyEventadmin.php';
+      try{
+         $restaurantService = new RestaurantService();
+         $restaurants = $restaurantService->getRestaurants();
+     }
+     catch (\Exception $e) {
+         $error = $e->getMessage();
+     }
+     include '../views/adminViews/yummyEventadmin.php';
    }
+   
    public function history() //TODO: SLAVA check your route here
    {
       include '../views/adminViews/ordersadmin.php';

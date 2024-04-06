@@ -206,3 +206,19 @@
     background-color: #1A1A1A;
     color: white;
 }
+
+/*TEST*/
+
+/* Custom CSS for carousel control buttons */
+.carousel-control-prev,
+.carousel-control-next {
+    color: #FFFFFF; /* Set the color to white */
+    background-color: transparent; /* Set background color to transparent */
+    border: none; /* Remove border */
+}
+
+/* Optionally, you can style the carousel indicators as well */
+.carousel-indicators .active {
+    background-color: #FFFFFF; /* Set background color of active indicator to white */
+    border-color: #FFFFFF; /* Set border color of active indicator to white */
+}

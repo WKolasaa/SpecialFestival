@@ -1,27 +1,25 @@
 function updateSessions(selectedDay) {
-    console.log("TEST");
     const restaurantID = document.getElementById('restaurant').textContent;
     fetch('http://localhost/api/yummyreservation/getRestaurantEvents', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ restaurantID: restaurantID }) // Sending restaurantID as an object
+        body: JSON.stringify({ restaurantID: restaurantID })
     })
         .then(response => response.json())
         .then(data => {
+            // Filter events based on the selected day
+            const filteredEvents = data.filter(event => event.event_day === selectedDay);
+
+            // Clear sessionSelect and populate with filtered events
             const sessionSelect = document.getElementById('sessionSelect');
             sessionSelect.innerHTML = '';
-
-            Object.entries(data).forEach(([date, eventData]) => {
-                if (eventData.event_day === selectedDay) {
-                    eventData.sessions.forEach(session => {
-                        const optionText = `${session.event_time_start} - ${session.event_time_end} (${session.seats_left} seats left)`;
-                        const option = new Option(optionText, session.event_time_start);
-                        option.setAttribute('data-seats-left', session.seats_left);
-                        sessionSelect.add(option);
-                    });
-                }
+            filteredEvents.forEach(event => {
+                const optionText = `${event.event_time_start} - ${event.event_time_end} (${event.seats_left} seats left)`;
+                const option = new Option(optionText, event.id); // Use event ID as value
+                option.setAttribute('data-seats-left', event.seats_left);
+                sessionSelect.add(option);
             });
         })
         .catch(error => {
@@ -30,15 +28,16 @@ function updateSessions(selectedDay) {
         });
 }
 
-
 function validateForm() {
     const daySelect = document.getElementById('daySelect').value;
     const sessionSelect = document.getElementById('sessionSelect');
     const selectedSessionOption = sessionSelect.options[sessionSelect.selectedIndex];
     const regularTickets = parseInt(document.getElementById('regularTickets').value, 10);
     const reducedTickets = parseInt(document.getElementById('reducedTickets').value, 10);
-    const totalTickets = regularTickets + reducedTickets;
+    const totalTickets = regularTickets + reducedTickets; //
     const seatsLeft = parseInt(selectedSessionOption.getAttribute('data-seats-left'), 10);
+    const restaurantId = document.getElementById('restaurant').textContent;
+    const eventID = sessionSelect.value;
 
     if (daySelect === "" || sessionSelect.value === "") {
         showMessage("Please select both a day and a session.", 'alert-danger');
@@ -50,8 +49,35 @@ function validateForm() {
         return false;
     }
 
-    showMessage('Reservation successful!', 'alert-success')
-    return false;
+    fetch('http://localhost/api/yummyreservation/reserve', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            restaurantID: restaurantId,
+            eventID: eventID,
+            regularTickets: regularTickets,
+            reducedTickets: reducedTickets,
+            specialRequests: document.getElementById('specialRequests').value
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('Reservation successful', 'alert-success');
+                setTimeout(() => {
+                    updateSessions(daySelect);
+                }, 1000);
+            } else {
+                showMessage('Error reserving seats', 'alert-danger');
+            }
+        })
+        .catch(error => {
+            console.log('Error:', error);
+            showMessage('Error reserving seats', 'alert-danger');
+        });
+
 }
 
 function showMessage(message, alertClass) {
