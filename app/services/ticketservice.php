@@ -51,27 +51,3 @@ class TicketService {
   }
 
 }
-
-/*
-  private function convertArrayToDanceOverview(array $danceOverviewData): DanceOverview
-  {
-    $requiredKeys = [ 'text'];
-    $id= isset($danceOverviewData['id']) ? $danceOverviewData['id'] : null;
-    $header= isset($danceOverviewData['header']) ? $danceOverviewData['header'] : null;
-    $subHeader= isset($danceOverviewData['subHeader']) ? $danceOverviewData['subHeader'] : null;
-    $imageName= isset($danceOverviewData['imageName']) ? $danceOverviewData['imageName'] : null;
-    foreach ($requiredKeys as $key) {
-      if (!array_key_exists($key, $danceOverviewData)) {
-        throw new \Exception("Missing key in dance overview data: $key");
-      }
-    }
-    $danceOverview = new DanceOverview(
-      $id,
-      $header,
-      $subHeader,
-      $danceOverviewData['text'],
-      $danceOverviewData['imageName']
-    );
-    return $danceOverview;
-  }
-*/ 

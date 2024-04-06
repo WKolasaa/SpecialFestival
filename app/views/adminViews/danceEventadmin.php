@@ -184,7 +184,7 @@ include __DIR__ . '/../header.php';
 
 
 
-<script src="js/adminViews/DanceEventInfo.js"></script>
+<script src="/js/adminViews/DanceEventInfo.js"></script>
 
 <?
 include __DIR__ . '/../footer.php';

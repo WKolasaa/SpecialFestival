@@ -31,7 +31,9 @@ foreach ($event as $e) {
           <p class="day-info">Kick off your Haarlem Festival experience on Friday! Explore the exciting agenda filled with
             electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
           </p>
+          <a href="/danceevent/session">
           <button class="btn btn-danger day1">Get Tickets</button>
+          </a>
         </div>
         <div class="col-md-7 ">
           <table class="table" id="day1-table">
@@ -101,7 +103,9 @@ foreach ($event as $e) {
           <p class="day-info">Kick off your Haarlem Festival experience on Saturday! Explore the exciting agenda filled with
             electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
           </p>
+          <a href="/danceevent/session">
           <button class="btn btn-danger day2">Get Tickets</button>
+          </a>
         </div>
        
       </div>
@@ -118,7 +122,9 @@ foreach ($event as $e) {
           <p class="day-info">Kick off your Haarlem Festival experience on Sunday! Explore the exciting agenda filled with
             electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
           </p>
+          <a href="/danceevent/session">
           <button class="btn btn-danger day3">Get Tickets</button>
+          </a>
         </div>
         <div class="col-md-7 ">
           <table class="table" id="day3-table">
