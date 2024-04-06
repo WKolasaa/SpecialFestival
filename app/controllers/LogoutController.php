@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-class logoutcontroller
+class LogoutController
 {
     function index(){
         session_start();

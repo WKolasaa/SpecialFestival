@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\RestaurantRepository;
 
-class restaurantservice
+class RestaurantService
 {
     private $restaurantRepository;
 

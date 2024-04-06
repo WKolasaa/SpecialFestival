@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Services\tokenservice;
+use App\Services\TokenService;
 
-class changepasswordcontroller
+class ChangePasswordController
 {
     public function index(){
         $this->checkToken();
@@ -14,7 +14,7 @@ class changepasswordcontroller
         $token = $_GET['token'];
         $email = $_GET['email'];
 
-        $tokenService = new tokenservice();
+        $tokenService = new TokenService();
         $response = $tokenService->checkToken($email, $token);
         if($response == "Token is valid"){
             $_SESSION['email'] = $email;

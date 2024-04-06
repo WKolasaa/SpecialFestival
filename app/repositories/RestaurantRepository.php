@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\restaurant;
-use App\Models\restaurantImage;
-use App\Models\restaurantReservation;
-use App\Models\restaurantSession;
+use App\Models\RestaurantImage;
+use App\Models\RestaurantReservation;
+use App\Models\RestaurantSession;
 use PDO;
 
 class RestaurantRepository extends Repository

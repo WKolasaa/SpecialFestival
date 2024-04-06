@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\restaurantservice;
+use App\Services\RestaurantService;
 
 class YummyAdminController
 {

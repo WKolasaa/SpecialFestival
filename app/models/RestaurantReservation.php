@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class restaurantReservation
+class RestaurantReservation
 {
     private $id; //
     private $restaurantId; //

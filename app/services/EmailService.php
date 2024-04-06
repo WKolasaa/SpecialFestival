@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Resend;
 
-class emailservice
+class EmailService
 {
     public function sendResetTokenEmail($userEmail, $token)
     {

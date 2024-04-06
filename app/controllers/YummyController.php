@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Services\restaurantservice;
+use App\Services\RestaurantService;
 
-class yummycontroller
+class yummyController
 {
     public function index(){
         $restaurantService = new RestaurantService();

@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Services\UserService;
 use PDOException;
 
-class signupcontroller
+class SignupController
 {
     function index()
     {

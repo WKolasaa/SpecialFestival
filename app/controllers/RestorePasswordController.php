@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Services\tokenservice;
+use App\Services\TokenService;
 use App\Services\UserService;
 
-class restorepasswordcontroller
+class RestorePasswordController
 {
     function index(){
         include '../views/restorepassword.php';
@@ -26,7 +26,7 @@ class restorepasswordcontroller
             $token = bin2hex(random_bytes(32));
 
             // Save the token in the database (using your model)
-            $tokenService = new tokenservice();
+            $tokenService = new TokenService();
             $tokenService->updateResetToken($user['id'], $token);
 
             // Send reset email (you may use PHPMailer or similar)

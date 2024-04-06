@@ -6,7 +6,7 @@ use App\Models\token;
 use PDO;
 use PDOException;
 
-class tokenrepository extends Repository
+class TokenRepository extends Repository
 {
     public function getResetToken($user_email){
         try{

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class restaurantImage
+class RestaurantImage
 {
     private $id;
     private $restaurantId;

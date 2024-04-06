@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class restaurantSession
+class RestaurantSession
 {
     private $id;
     private $restaurantId;

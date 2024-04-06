@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\tokenrepository;
+use App\Repositories\TokenRepository;
 
-class tokenservice
+class TokenService
 {
     public function storeOrUpdateToken($email, $tokenString) {
-        $tokenrepository = new tokenrepository();
+        $tokenrepository = new TokenRepository();
         $tokenrepository->storeOrUpdateToken($email, $tokenString);
     }
 
@@ -16,7 +16,7 @@ class tokenservice
     }
 
     public function checkToken($email, $token){
-        $tokenrepository = new tokenrepository();
+        $tokenrepository = new TokenRepository();
         return $tokenrepository->checkToken($email, $token);
     }
 }
