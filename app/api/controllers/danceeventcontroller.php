@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Services\DanceEventService;
 use Exception;
 use App\Models\Artist;
-use App\Models\DanceOverView;
+use App\Models\DanceOverview;
 use App\Services\TicketService;
 
 
@@ -529,7 +529,7 @@ class DanceEventController
                 }
             }
 
-            $overview = new DanceOverView(null, $header, $subHeader, $text, $imageName);
+            $overview = new DanceOverview(null, $header, $subHeader, $text, $imageName);
             error_log(print_r($overview, true));
             // error_log(print_r($sanitizedData, true));
 
