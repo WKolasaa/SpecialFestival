@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yummy Homepage</title>
   <link rel="stylesheet" href="/css/YummyMain.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body class="YummyBody">
     <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
@@ -27,48 +29,62 @@
         </div>
     </section>
 
-    <div id="restaurantsCarousel" class="carousel slide" data-ride="carousel">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="true">
+        <div class="carousel-indicators">
+            <?php
+            // Iterate over each restaurant and create carousel indicators
+            foreach ($restaurants as $index => $restaurant) {
+                $active = $index === 0 ? 'active' : '';
+                echo '<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="' . $index . '" class="' . $active . '" aria-current="' . $active . '" aria-label="Slide ' . ($index + 1) . '"></button>';
+            }
+            ?>
+        </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="card mb-3 mx-auto" style="max-width: 940px;">
-                    <div class="row no-gutters">
-                        <div class="container mt-4">
-                            <div class="card mb-3 mx-auto" style="max-width: 540px;">
-                                <img src="/img/Yummy/CafeDeRoemer.jpeg" class="card-img-top" alt="Café de Roemer">
-                                <div class="card-body">
-                                    <h5 class="card-title">Café de Roemer</h5>
-                                    <p class="card-text">Botermarkt 17, 2011 XL Haarlem</p>
-                                    <p class="card-text"><small>Type: Dutch, fish and seafood, European</small></p>
-                                    <p class="card-text">Price: € 35,00</p>
-                                    <p class="card-text">Reduced: € 17,50</p>
-                                    <p class="card-text">First Session: 18:00</p>
-                                    <p class="card-text">Duration: 1.5h</p>
-                                    <p class="card-text">Sessions: 3</p>
-                                    <p class="card-text">
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star"></span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            // Iterate over each restaurant and create carousel items
+            foreach ($restaurants as $index => $restaurant) {
+                $active = $index === 0 ? 'active' : '';
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="card mb-3 mx-auto" style="max-width: 940px;">';
+                echo '<div class="row no-gutters">';
+                echo '<div class="container mt-4">';
+                echo '<div class="card mb-3 mx-auto" style="max-width: 540px;">';
+                echo '<img src="' . htmlspecialchars($restaurant->getImagesAsArray()[0]['imagePath']) . '" class="card-img-top" alt="' . htmlspecialchars($restaurant->getName()) . '">';
+                echo '<div class="card-body">';
+                echo '<h5 class="card-title">' .htmlspecialchars($restaurant->getName()) . '</h5>';
+                echo '<p class="card-text">' . htmlspecialchars($restaurant->getAddress()) . '</p>';
+                echo '<p class="card-text"><small>Type: ' . htmlspecialchars($restaurant->getType()) . '</small></p>';
+                echo '<p class="card-text">Price: € ' . htmlspecialchars($restaurant->getPrice()) . '</p>';
+                echo '<p class="card-text">Reduced: € ' . htmlspecialchars($restaurant->getReduced()) . '</p>';
+                echo '<p class="card-text">First Session: ' . 1 . '</p>';
+                echo '<p class="card-text">Duration: ' . 1 . '</p>';
+                echo '<p class="card-text">Sessions: ' . 1 . '</p>';
+                // Add more restaurant details as needed
+                echo '<p class="card-text">';
+                $counter = 1;
+                for ($x = 1; $x <= 5; $x++) {
+                    if ($counter <= $restaurant->getStars()) {
+                        echo '<span class="fa fa-star checked"></span>';
+                    } else {
+                        echo '<span class="fa fa-star"></span>';
+                    }
+                    $counter++;
+                }
+                echo '</p>';
+                // Close the card-body and card elements
+                echo '</div></div></div></div></div></div>';
+            }
+            ?>
         </div>
-        <a class="carousel-control-prev" href="#restaurantsCarousel" role="button" data-slide="prev">
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#restaurantsCarousel" role="button" data-slide="next">
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-        <div class="text-center my-4">
-            <a href="/restaurants" class="btn btn-primary btn-lg">Check restaurants</a>
-        </div>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
     <div class="contact-section">
