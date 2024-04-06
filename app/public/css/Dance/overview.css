@@ -26,6 +26,7 @@ body{
   z-index: 1;
 }
 
+
 .festival-title {
   margin-top: 60%;
   margin-left:20px ;
@@ -73,14 +74,25 @@ body{
   opacity: 100%;  
 }
 
-.festival-date p {
-  font-family: "Barlow Condensed", sans-serif;
+.festival-date .overview-subtitle {
+  font-family: "Baloo Chettan 2", sans-serif;
   font-weight: 200;
   font-size: 20px ;
    color: white;
    z-index: 9999 ;
    opacity: 1;
+   width: 400px;
 }
+.festival-date p {
+  font-family: "Baloo Chettan 2", sans-serif;
+  font-weight: 100;
+  font-size: 20px ;
+   color: white;
+   z-index: 9999 ;
+   opacity: 1;
+   width: 400px;
+}
+
 
 .my-class {
   margin-top: 10px;
@@ -101,6 +113,7 @@ body{
   padding: 10px 0; /* Add padding as needed */
   font-family: "Almarai", sans-serif;
   font-weight: 300;
+  
 
 
 }
@@ -281,33 +294,88 @@ margin-top: 50px;
   padding: 0 0 10px 0;
   width: 50vh;
 }
+.image1{
+  position: absolute;
+  width: 70%; /* Adjust as needed */
+  height: auto;
+  left: 8vh;
+  top: -12vh;
+}
+
+/*  -------------- */
+
+.sessionType2{
+  color: white;
+  font-family: "Almarai", sans-serif;
+  font-weight: 900;
+}
+
+.DateAndTime2{
+
+  font-family: "Bellota Text", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 24px;
+  color: white;
+}
+.sessionDescription2{
+  font-family: "Almarai", sans-serif;
+  font-weight: 300;
+  font-style: regular;
+  font-size: 16px;
+  color: white;
+  padding: 0 0 10px 0;
+  width: 50vh;
+}
 
 .image-container {
   position: relative;
   margin-top: 40px;
 }
-
-.image1,
-.image2,
-.image3 {
+.image22{
+ border: #d1031a 1px solid;
   position: absolute;
-  width: 50%; /* Adjust as needed */
+  width: 70%; /* Adjust as needed */
   height: auto;
-}
-.image1 {
-  top: -130px; /* Adjust as needed */
-  left: 60px; /* Adjust as needed */
-  z-index: 1;
+  left: 5vh;
+  top: -5vh;
 }
 
-.image2 {
- left: 40vh;
- z-index: 1;
+
+/*  -------------- */
+
+.sessionType3{
+  color: white;
+  font-family: "Almarai", sans-serif;
+  font-weight: 900;
 }
 
-.image3 {
-  right: 190px; /* Adjust as needed */
-  left: 60px; /* Adjust as needed */
-  bottom: -70px;
-  
+.DateAndTime3{
+
+  font-family: "Bellota Text", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 24px;
+  color: white;
+}
+.sessionDescription3{
+  font-family: "Almarai", sans-serif;
+  font-weight: 300;
+  font-style: regular;
+  font-size: 16px;
+  color: white;
+  padding: 0 0 10px 0;
+  width: 50vh;
+}
+
+.image-container {
+  position: relative;
+  margin-top: 40px;
+}
+.image3{
+  position: absolute;
+  width: 70%; /* Adjust as needed */
+  height: auto;
+  left: 5vh;
+  top: -5vh;
 }

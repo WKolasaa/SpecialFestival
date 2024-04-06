@@ -1,21 +1,45 @@
 <?php
 
 namespace App\Controllers;
-use App\Services\UserService;
+use App\Services\HistoryAdminService;
 
 class HistoryMainController{
-private $userService;
+private $service;
     public function __construct(){
 
-    $this->userService=new UserService();
+    $this->service=new HistoryAdminService();
 
     }
 
     public function index()
     {
+      $service = $this->getHistoryAdminService();
       include '../views/HistoryView/HistoryMain.php';
       
     }
+
+    public function port()
+    {
+      $service = $this->getHistoryAdminService();
+      include '../views/HistoryView/HistoryPort.php';
+      
+    }
+
+    public function windmill()
+    {
+      $service = $this->getHistoryAdminService();
+      include '../views/HistoryView/HistoryWindmill.php';
+      
+    }
     
+    public function cart()
+    {
+      include '../views/HistoryView/HistoryAddingToCart.php';
+      
+    }
     
+    private function getHistoryAdminService() 
+    {
+      return new \App\Services\HistoryAdminService();
+    }
 }

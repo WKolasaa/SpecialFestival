@@ -35,14 +35,34 @@ session_start();
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;
             case 'HistoryMain':
-                $cssFile = 'HistoryMain.css';
+                $cssFile = 'History/HistoryMain.css';
+                break;
+            case 'historymain/port':
+                $cssFile = 'History/HistoryPort.css';
+                break;
+            case 'historymain/windmill':
+                $cssFile = 'History/HistoryWindmill.css';
+                break;
+            case 'HistoryAdmin':
+                $cssFile = 'admin/historyAdmin.css';
+                break;
+            case 'historymain/cart':
+                $cssFile = 'History/HistoryAddingToCart.css';
                 break;
             case 'danceevent/agenda':
                 $cssFile = 'Dance/agenda.css';
                 break;
-
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
+                break;
+            case 'danceevent/artist':
+                $cssFile = 'Dance/artist.css';
+                break;
+            case 'YummyMain':
+                $cssFile = 'YummyMain.css';
+                break;
+            case 'yummyadmin':
+                $cssFile = 'admin/danceAdminEvent.css';
                 break;
             default:
                 $defaultCssFile = 'festival.css';
@@ -50,7 +70,6 @@ session_start();
                 break;
         }
         echo '<link rel="stylesheet" href="/css/' . $cssFile . '">';
-
 
     }
     ?>
