@@ -45,21 +45,28 @@ class signupcontroller
             $responseData = json_decode($result);
 
             if (!$responseData->success) {
-                echo('CAPTCHA verification failed.');
-                die('CAPTCHA verification failed.');
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                 // Set a session variable with the error message
+                $_SESSION['error'] = 'CAPTCHA verification failed.';
+                header('Location: /signup'); // Redirect back to the signup page
+                exit();
+
             }
 
             $this->createUser();
         }
     }
 
-    private function createUser(){
+    public function createUser(){
         $userName = $_POST['userName'];
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $photo = "";
+        $phoneNumber = $_POST['phoneNumber'];
 
         $userService = new UserService();
         try{
@@ -72,8 +79,10 @@ class signupcontroller
                 return "Email already exists";
             }
             else{
+                //  public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
 
-                $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo);
+
+                $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber);
             }
         }catch (PDOException $e) {
             echo '<div class="alert alert-danger">An error occurred during registration.</div>';

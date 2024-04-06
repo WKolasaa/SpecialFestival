@@ -12,7 +12,7 @@ function loadSessions() {
     });
 }
 
-function displaySessions(sessions) {
+function displaySessions(sessions) { //TODO: check the method again
   // Get the template for the sessions
   const template = document.querySelector(".ticket");
 
@@ -89,6 +89,7 @@ function displaySessions(sessions) {
       // Check the value of session.artistName
       if (session.artistName === "All-Day Pass") {
         sessionName.style.color = "#FF0705";
+        row.querySelector(".time-price p").style.display = "none"; // Hide the session times
       } /* (session.artistName === 'Golden Ticket')*/ else {
         sessionName.style.color = "#FFCE31";
       }
@@ -114,7 +115,7 @@ function displaySessions(sessions) {
     template.parentNode.appendChild(row);
     // Inside the sessions.forEach loop...
     const addButton = row.querySelector(".btn");
-    addButton.addEventListener("click", () => addToCart(session));
+    addButton.addEventListener("click", () => addToCart(session, addButton));
   });
   // Remove the template
   template.remove();
@@ -122,7 +123,7 @@ function displaySessions(sessions) {
 
 loadSessions();
 
-function getImagePath(artistName) {
+function getImagePath(artistName) { //TODO: try to do it based on the artistImage
   const images = {
     afrojack: "../../img/DanceEvent/Afrojack.jpeg",
     "armin van buuren": "../../img/DanceEvent/Armin van Buuren.jpeg",
@@ -222,6 +223,8 @@ function displayGoldenTicket(sessions) {
 
   // Append the row to the goldenTicketContainer
   goldenTicketContainer.appendChild(row);
+  const addButton = row.querySelector(".btn");
+  addButton.addEventListener("click", () => addToCart(goldenTicketSession,addButton));
 
   // Remove the template
   template.remove();
@@ -229,7 +232,7 @@ function displayGoldenTicket(sessions) {
 
 //////////////////////////Adding Tickets to Cart//////////////////////////
 
-function addToCart(session) {
+function addToCart(session,button) {
   console.log("Sending session data: ", session);
 
   fetch("http://localhost/api/danceevent/addTicket", {
@@ -242,6 +245,9 @@ function addToCart(session) {
     .then((response) => {
       if (response.ok) {
         console.log("Ticket added successfully");
+        button.style.backgroundColor = "#1734F7";
+        button.textContent = "Ticket Added";
+        // button.disabled = true; check it
       } else {
         console.error("Error:", response.status, response.statusText);
       }

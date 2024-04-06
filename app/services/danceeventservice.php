@@ -42,26 +42,26 @@ class DanceEventService
     return $this->danceEventRepository->getAllDanceOverviews();
   }
   public function getDanceOverviewsByArtist()
-{
+  {
     // Get all artists and dance overviews
     $artists = $this->getAllArtists();
     $danceOverviews = $this->getAllDanceOverviews();
 
     // Filter the dance overviews
-    $filteredDanceOverviews = array_filter($danceOverviews, function($overview) use ($artists) {
-        // Check if the overview's header matches any artist name
-        foreach ($artists as $artist) {
-            if ($overview->getHeader() == $artist->getArtistName()) {
-                // If a match is found, return true
-                return true;
-            }
+    $filteredDanceOverviews = array_filter($danceOverviews, function ($overview) use ($artists) {
+      // Check if the overview's header matches any artist name
+      foreach ($artists as $artist) {
+        if ($overview->getHeader() == $artist->getArtistName()) {
+          // If a match is found, return true
+          return true;
         }
-        // If no match is found, return false
-        return false;
+      }
+      // If no match is found, return false
+      return false;
     });
     // Return the filtered dance overviews
     return $filteredDanceOverviews;
-}
+  }
 
 
 
@@ -284,8 +284,8 @@ class DanceEventService
     // echo "sessionData: ".$sessionData['sessionId'];
     $requiredKeys = ['artistName', 'sessionDate', 'venue', 'sessionPrice', 'sessionType'];
     $sessionId = isset($sessionData['sessionId']) ? $sessionData['sessionId'] : null;
-    $startSession=isset($sessionData['startSession']) ? $sessionData['startSession'] : null;
-    $endSession=isset($sessionData['endSession']) ? $sessionData['endSession'] : null;
+    $startSession = isset($sessionData['startSession']) ? $sessionData['startSession'] : null;
+    $endSession = isset($sessionData['endSession']) ? $sessionData['endSession'] : null;
 
     foreach ($requiredKeys as $key) {
       if (!array_key_exists($key, $sessionData)) {
@@ -313,8 +313,12 @@ class DanceEventService
     $sessionId = isset($sessionData['sessionId']) ? $sessionData['sessionId'] : null;
     $ticketDescription = isset($sessionData['description']) ? $sessionData['description'] : '';
     $startDateTime = new DateTime($sessionData['sessionDate'] . ' ' . $sessionData['startSession']);
-    $endDateTime = new DateTime($sessionData['sessionDate'] . ' ' . $sessionData['endSession']);
-
+    if ($sessionData['artistName'] == "Golden Ticket") {
+      $endDateTime = clone $startDateTime;
+      $endDateTime->modify('+2 day +23 hour +59 minute +59 second');
+    } else {
+      $endDateTime = new DateTime($sessionData['sessionDate'] . ' ' . $sessionData['endSession']);
+    }
     // Check if all required keys are present
     foreach ($requiredKeys as $key) {
       if (!array_key_exists($key, $sessionData)) {

@@ -6,18 +6,15 @@ use App\Services\DanceEventService;
 use Exception;
 use App\Models\Artist;
 use App\Models\DanceOverView;
-use App\Services\TicketService;
 
 
 class DanceEventController
 {
     private $danceEventService;
-    private $ticketService;
 
     function __construct()
     {
         $this->danceEventService = new DanceEventService();
-        $this->ticketService = new TicketService();
     }
 
     public function Artists()
@@ -117,9 +114,9 @@ class DanceEventController
         if (isset ($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
             // Check the file type
             $fileType = $_FILES['image']['type'];
-            if ($fileType != 'image/jpeg' && $fileType != 'image/png' && $fileType != 'image/gif') {
+            if ($fileType != 'image/jpeg' && $fileType != 'image/png' && $fileType != 'image/gif' && $fileType !='image/webp') {
                 http_response_code(400);
-                echo json_encode(['error' => 'Invalid file type. Please upload a JPEG, PNG, or GIF image.']);
+                echo json_encode(['error' => 'Invalid file type. Please upload a JPEG, PNG,WEBP, or GIF image.']);
                 return;
             }
 
@@ -144,7 +141,7 @@ class DanceEventController
                 $sanitizedArtistData['imageName'] = $imageName;
             } else {
                 http_response_code(500);
-                echo json_encode(['error' => 'Failed to upload the image.']);
+                 echo json_encode(['error' => 'Failed to upload the image.']);
                 return;
             }
             // $sanitizedArtistData['imageName'] = $imageName;
@@ -390,9 +387,9 @@ class DanceEventController
             if (isset ($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
                 // Check the file type
                 $fileType = $_FILES['image']['type'];
-                if ($fileType != 'image/jpeg' && $fileType != 'image/png' && $fileType != 'image/gif' && $fileType != 'image/jpg' && $fileType != 'image/JPG' && $fileType != 'image/PNG' && $fileType != 'image/GIF') {
+                if ($fileType != 'image/jpeg' && $fileType != 'image/png' && $fileType != 'image/gif' && $fileType != 'image/jpg' && $fileType != 'image/JPG' && $fileType != 'image/PNG' && $fileType != 'image/GIF' && $fileType !='image/webp') {
                     http_response_code(400);
-                    echo json_encode(['error' => 'Invalid file type. Please upload a JPEG, PNG, or GIF image.']);
+                    echo json_encode(['error' => 'Invalid file type. Please upload a JPEG, PNG, Webp or GIF image.']);
                     return;
                 }
 
@@ -671,18 +668,4 @@ class DanceEventController
         return $sanitizedData;
     }
 
-    // private function sanitizeTicketData(array $ticketData)
-    // {
-    //     // var_dump($ticketData);
-    //     $sanitizedData = [];
-    //     $sanitizedData['sessionId'] = filter_var($ticketData['sessionId'], FILTER_SANITIZE_NUMBER_INT);
-    //     $sanitizedData['artistName'] = filter_var($ticketData['artistName'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['startSession'] = filter_var($ticketData['startSession'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['endSession'] = filter_var($ticketData['endSession'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['sessionDate'] = filter_var($ticketData['sessionDate'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['sessionPrice'] = filter_var($ticketData['sessionPrice'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['sessionType'] = filter_var($ticketData['sessionType'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     $sanitizedData['venue'] = filter_var($ticketData['venue'], FILTER_SANITIZE_SPECIAL_CHARS);
-    //     return $sanitizedData;
-    // }
 }

@@ -25,14 +25,18 @@ session_start();
             case '':
                 $cssFile = 'homeStyle.css';
                 break;
-            case 'manageuser':
-                $cssFile = 'manageuser.css';
+                case 'adminView/orders':
+                    $cssFile = 'admin/orders.css';
+                    break;
+            case 'adminView/manageUser':
+                $cssFile = 'admin/manageuser.css';
                 break;
             case 'danceevent':
                 $cssFile = 'Dance/overview.css';
                 break;
-            case 'danceadmin':
+            case 'adminView/dance':
                 $cssFile = 'admin/danceAdminEvent.css';
+
                 break;
             case 'HistoryMain':
                 $cssFile = 'HistoryMain.css';
@@ -43,18 +47,15 @@ session_start();
             case 'danceevent/session':
                 $cssFile = 'Dance/session.css';
                 break;
-<<<<<<< HEAD
-                case 'danceevent/artist':
-                    $cssFile = 'Dance/artist.css';
-                    break;
-=======
+            case 'danceevent/artist':
+                $cssFile = 'Dance/artist.css';
+                break;
             case 'YummyMain':
                 $cssFile = 'YummyMain.css';
                 break;
-            case 'yummyadmin':
+            case 'admin/yummyAdmin':
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;
->>>>>>> development
             default:
                 $defaultCssFile = 'festival.css';
                 $cssFile = $defaultCssFile;

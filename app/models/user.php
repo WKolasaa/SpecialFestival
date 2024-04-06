@@ -14,8 +14,9 @@ class User implements \JsonSerializable{
     private $lastName;
     private $email;
     private $photo;
+    private $phoneNumber;
 
-    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo){
+    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo, $phoneNumber){
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -25,6 +26,7 @@ class User implements \JsonSerializable{
         $this->registeredDate = $registeredDate;
         $this->email = $email;
         $this->photo = $photo;
+        $this->phoneNumber = $phoneNumber;
     }
 
 
@@ -42,6 +44,12 @@ class User implements \JsonSerializable{
 
     public function setUsername(string $username): void {
         $this->username = $username;
+    }
+    public function getPhoneNumber() {
+        return $this->phoneNumber;
+    }   
+    public function setPhoneNumber($phoneNumber) {
+        $this->phoneNumber = $phoneNumber;
     }
 
     public function getPassword() {
