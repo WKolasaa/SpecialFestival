@@ -34,8 +34,10 @@ function validateForm() {
     const selectedSessionOption = sessionSelect.options[sessionSelect.selectedIndex];
     const regularTickets = parseInt(document.getElementById('regularTickets').value, 10);
     const reducedTickets = parseInt(document.getElementById('reducedTickets').value, 10);
-    const totalTickets = regularTickets + reducedTickets;
+    const totalTickets = regularTickets + reducedTickets; //
     const seatsLeft = parseInt(selectedSessionOption.getAttribute('data-seats-left'), 10);
+    const restaurantId = document.getElementById('restaurant').textContent;
+    const eventID = sessionSelect.value;
 
     if (daySelect === "" || sessionSelect.value === "") {
         showMessage("Please select both a day and a session.", 'alert-danger');
@@ -47,8 +49,35 @@ function validateForm() {
         return false;
     }
 
-    showMessage('Reservation successful!', 'alert-success')
-    return false;
+    fetch('http://localhost/api/yummyreservation/reserve', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            restaurantID: restaurantId,
+            eventID: eventID,
+            regularTickets: regularTickets,
+            reducedTickets: reducedTickets,
+            specialRequests: document.getElementById('specialRequests').value
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('Reservation successful', 'alert-success');
+                setTimeout(() => {
+                    updateSessions(daySelect);
+                }, 1000);
+            } else {
+                showMessage('Error reserving seats', 'alert-danger');
+            }
+        })
+        .catch(error => {
+            console.log('Error:', error);
+            showMessage('Error reserving seats', 'alert-danger');
+        });
+
 }
 
 function showMessage(message, alertClass) {

@@ -1,29 +1,39 @@
 window.onload = showRestaurants;
 
 function showRestaurants() {
+    hideAll();
     document.getElementById('restaurantsContainer').style.display = "block";
-    document.getElementById('sessionContainer').style.display = "none";
-    document.getElementById('imagesContainer').style.display = "none";
-    document.getElementById('sessions').innerHTML = '';
     updateButton('restaurant');
     displayRestaurants();
 }
 
 function showSessions() {
-    document.getElementById('restaurantsContainer').style.display = "none";
+    hideAll();
     document.getElementById('sessionContainer').style.display = "block";
-    document.getElementById('imagesContainer').style.display = "none";
     updateButton('session');
     restaurantNamesToComboBox();
 
 }
 
 function showImages() {
-    document.getElementById('restaurantsContainer').style.display = "none";
-    document.getElementById('sessionContainer').style.display = "none";
-    document.getElementById('sessions').innerHTML = '';
+    hideAll();
     document.getElementById('imagesContainer').style.display = "block";
     updateButton('image');
+}
+
+function showReservations() {
+    hideAll();
+    document.getElementById('reservationsContainer').style.display = "block";
+    updateButton('reservation');
+    fetchReservations();
+}
+
+function hideAll() {
+    document.getElementById('restaurantsContainer').style.display = "none";
+    document.getElementById('sessionContainer').style.display = "none";
+    document.getElementById('imagesContainer').style.display = "none";
+    document.getElementById('reservationsContainer').style.display = "none";
+    document.getElementById('sessions').innerHTML = '';
 }
 
 function updateButton(action) {
@@ -40,6 +50,10 @@ function updateButton(action) {
         case 'image':
             sessionButton.textContent = 'Add Image';
             sessionButton.onclick = createAddRestaurantForm;
+            break;
+        case 'reservation':
+            sessionButton.textContent = 'Add Reservation';
+            sessionButton.onclick = createAddReservationForm;
             break;
         default:
             console.error('Invalid action');
@@ -150,7 +164,7 @@ function deleteRestaurant(restaurantId) { //TODO: Finish it (only url here was p
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ restaurantId: restaurantId })
+            body: JSON.stringify({restaurantId: restaurantId})
         })
             .then(response => {
                 if (response.ok) {
@@ -208,7 +222,7 @@ function fetchRestaurantSessions(restaurantId) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ restaurantId: restaurantId })
+        body: JSON.stringify({restaurantId: restaurantId})
     })
         .then(response => {
             if (!response.ok) {
@@ -261,10 +275,10 @@ function displayEditSessionForm(events) {
             <h5 class="card-title"><span contenteditable="false" id="event-id-${event.id}">Session ID: ${event.id}</span></h5>
             <p class="card-text">
                 Restaurant ID: <span contenteditable="true" id="restaurant-id-${event.id}">${event.restaurant_id}</span><br>
-                Event Date: <span contenteditable="true" id="event-date-${event.id}">${event.event_date}</span><br>
+                Event Date: <input type="date" id="event-date-${event.id}" value="${event.event_date}"><br>
                 Event day: <span contenteditable="true" id="event-day-${event.id}">${event.event_day}</span><br>
-                Event start time: <span contenteditable="true" id="event-time-start-${event.id}">${event.event_time_start}</span><br>
-                Event end time: <span contenteditable="true" id="event-time-end-${event.id}">${event.event_time_end}</span><br>
+                Event Start Time: <input type="time" id="event-time-start-${event.id}" value="${event.event_time_start}"><br>
+                Event End Time: <input type="time" id="event-time-end-${event.id}" value="${event.event_time_end}"><br>
                 Event seats total: <span contenteditable="true" id="event-seats-total-${event.id}">${event.seats_total}</span> <br>
                 Event seats left: <span contenteditable="true" id="event-seats-left-${event.id}">${event.seats_left}</span><br><br>
             </p>
@@ -315,7 +329,7 @@ function removeSession(eventId) { //TODO: Change method to remove
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ eventId: eventId })
+            body: JSON.stringify({eventId: eventId})
         })
             .then(response => {
                 if (response.ok) {
@@ -465,12 +479,27 @@ function createAddSessionForm() {
 
             // Create input fields for event date, event day, event start time, event end time, event seats total, and event seats available
             const fields = [
-                { label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate', id: 'eventDate-addSession' },
-                { label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession' },
-                { label: 'Event Start Time (24h):', type: 'text', name: 'eventStartTime', id: 'eventStartTime-addSession' },
-                { label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession' },
-                { label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal', id: 'eventSeatsTotal-addSession' },
-                { label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable', id: 'eventSeatsAvailable-addSession' }
+                {label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate', id: 'eventDate-addSession'},
+                {label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession'},
+                {
+                    label: 'Event Start Time (24h):',
+                    type: 'text',
+                    name: 'eventStartTime',
+                    id: 'eventStartTime-addSession'
+                },
+                {label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession'},
+                {
+                    label: 'Event Seats Total:',
+                    type: 'number',
+                    name: 'eventSeatsTotal',
+                    id: 'eventSeatsTotal-addSession'
+                },
+                {
+                    label: 'Event Seats Available:',
+                    type: 'number',
+                    name: 'eventSeatsAvailable',
+                    id: 'eventSeatsAvailable-addSession'
+                }
             ];
 
             fields.forEach(field => {
@@ -556,7 +585,7 @@ function displayImages(restaurantID) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ restaurantId: restaurantID })
+        body: JSON.stringify({restaurantId: restaurantID})
     })
         .then(response => {
             if (!response.ok) {
@@ -582,7 +611,7 @@ function displayImages(restaurantID) {
                 if (!imageTypes.hasOwnProperty(image.imageType)) {
                     imageTypes[image.imageType] = [];
                 }
-                imageTypes[image.imageType].push({ id: image.id, path: image.imagePath });
+                imageTypes[image.imageType].push({id: image.id, path: image.imagePath});
             });
 
             // Create image containers for each type
@@ -593,13 +622,13 @@ function displayImages(restaurantID) {
                     if (imageType === 'gallery') {
                         const galleryImages = imagePaths.slice(0, 5); // Display up to 5 gallery images
                         for (let i = 0; i < 5; i++) {
-                            const imageData = galleryImages[i] || { id: '', path: '' }; // Use empty object if no image at index i
+                            const imageData = galleryImages[i] || {id: '', path: ''}; // Use empty object if no image at index i
                             imageContainer = createImageInputContainer(`Gallery ${i + 1}`, imageData.path, imageData.id);
                             imagesContainer.appendChild(imageContainer);
                         }
                     } else {
                         // For map and chef images, display only one image
-                        const imageData = imagePaths.length > 0 ? imagePaths[0] : { id: '', path: '' };
+                        const imageData = imagePaths.length > 0 ? imagePaths[0] : {id: '', path: ''};
                         imageContainer = createImageInputContainer(imageType, imageData.path, imageData.id);
                         imagesContainer.appendChild(imageContainer);
                     }
@@ -625,6 +654,7 @@ function createImageInputContainer(type, imageUrl, id) {
     imageInput.setAttribute('type', 'file');
     imageInput.setAttribute('accept', 'image/*');
     imageInput.setAttribute('data-type', type);
+    imageInput.setAttribute('id', `image-input-${id}`); // Set the input's id attribute with the image ID
 
     inputWrapper.appendChild(imageInput);
 
@@ -645,7 +675,8 @@ function createImageInputContainer(type, imageUrl, id) {
     updateButton.classList.add('btn', 'btn-primary');
     // Use a closure to pass the ID to the update method
     updateButton.onclick = function () {
-        updateImages(id); // Call the update method with the ID
+        const imageInput = document.getElementById(`image-input-${id}`); // Get the input box using the stored ID
+        updateImages(id, imageInput); // Call the update method with the ID and the input element
     };
     inputWrapper.appendChild(updateButton);
 
@@ -654,42 +685,200 @@ function createImageInputContainer(type, imageUrl, id) {
     return container;
 }
 
-function updateImages() {
-    const images = {
-        map: {
-            id: document.querySelector('.image-container[data-type="Map"]').getAttribute('data-id'),
-            url: document.querySelector('.image-container[data-type="Map"] .image-preview').src
-        },
-        chef: {
-            id: document.querySelector('.image-container[data-type="Chef"]').getAttribute('data-id'),
-            url: document.querySelector('.image-container[data-type="Chef"] .image-preview').src
-        },
-        gallery: []
+
+function updateImages(id, imageInput) {
+    if (imageInput.files.length > 0) {
+        const imageFile = imageInput.files[0];
+
+        // Create a FormData object to send the image file
+        const formData = new FormData();
+        formData.append('image', imageFile);
+        formData.append('id', id);
+
+        console.log(formData.get('id'), formData.get('image'));
+
+        fetch(`http://localhost/api/yummyadmin/updateImage`, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => {
+                if (response.ok) {
+                    console.log("Overview deleted successfully");
+                    //  loadOverviews(); // Reload overviews to reflect changes
+                } else {
+                    throw new Error("Failed to delete overview");
+                }
+            })
+            .catch(error => alert('Error updating image:', error));
+    } else {
+        alert('Please select an image to update');
+    }
+}
+
+function fetchReservations() {
+    fetch('http://localhost/api/yummyadmin/getAllReservations')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayReservations(data);
+        })
+        .catch(error => console.error('Error fetching reservations:', error));
+}
+
+function displayReservations(data) {
+    const reservationContainer = document.getElementById('reservationsContainer');
+    reservationContainer.innerHTML = ''; // Clear existing content
+    reservationContainer.classList.add('container'); // Add Bootstrap container class
+
+    const heading = document.createElement('h2');
+    heading.textContent = 'Reservations'; // Set the heading text
+    heading.classList.add('my-3'); // Add Bootstrap margin class
+    reservationContainer.appendChild(heading);
+
+    console.log(data);
+    data.forEach(reservation => {
+        const eventItem = document.createElement('div');
+        eventItem.classList.add('reservation', 'mb-3'); // Use the same custom class as for tickets
+
+        eventItem.innerHTML = `
+           <div class="card-body">
+           <h5 class="card-title"><span contenteditable="false" id="reservation-id-${reservation.id}">Reservation ID: ${reservation.id}</span></h5>
+           <p class="card-text">
+                Restaurant ID: <span contenteditable="true" id="reservation-restaurant-id-${reservation.id}">${reservation.restaurantId}</span><br>
+                Event ID: <span contenteditable="true" id="reservation-event-ID-${reservation.id}">${reservation.eventID}</span><br>
+                Date: <input type="date" id="reservation-date-${reservation.id}" value="${reservation.date}"><br>
+                Start Time: <input type="time" id="reservation-start-time-${reservation.id}" value="${reservation.startTime}"><br>
+                End Time: <input type="time" id="reservation-end-time-${reservation.id}" value="${reservation.endTime}"><br>
+                Reqular Tickets: <span contenteditable="true" id="reservation-regular-tickets-${reservation.id}">${reservation.regularTickets}</span><br>
+                Reduced Tickets: <span contenteditable="true" id="reservation-reduced-tickets-${reservation.id}">${reservation.reducedTickets}</span> <br>
+                Special Requests: <span contenteditable="true" id="reservation-special-requests-${reservation.id}">${reservation.specialRequests}</span><br>
+                Enabled: <input type="checkbox" id="reservation-enabled-${reservation.id}" ${reservation.enabled ? 'checked' : ''}><br><br>
+           </p>
+           <button class="btn btn-success btnTicket" onclick="saveReservation(${reservation.id})">Save</button>
+           <button class="btn btn-danger btnTicket" onclick="removeReservation(${reservation.id})">Delete</button>
+           </div>
+        `;
+
+
+        reservationContainer.appendChild(eventItem);
+    });
+}
+
+function saveReservation(id) {
+    const reservation = {
+        id: id,
+        restaurantId: document.getElementById(`reservation-restaurant-id-${id}`).textContent,
+        eventId: document.getElementById(`reservation-event-ID-${id}`).textContent,
+        date: document.getElementById(`reservation-date-${id}`).textContent,
+        startTime: document.getElementById(`reservation-start-time-${id}`).textContent,
+        endTime: document.getElementById(`reservation-end-time-${id}`).textContent,
+        regularTickets: document.getElementById(`reservation-regular-tickets-${id}`).textContent,
+        reducedTickets: document.getElementById(`reservation-reduced-tickets-${id}`).textContent,
+        specialRequests: document.getElementById(`reservation-special-requests-${id}`).textContent,
+        enabled: document.getElementById(`reservation-enabled-${id}`).checked
     };
 
-    const galleryContainers = document.querySelectorAll('.image-container[data-type^="Gallery"]');
-    galleryContainers.forEach(container => {
-        const id = container.getAttribute('data-id');
-        const url = container.querySelector('.image-preview').src;
-        images.gallery.push({ id, url });
-    });
+    console.log(reservation);
 
-    console.log(images);
-
-    // fetch('http://localhost/api/yummyadmin/updateImages', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({ images: images })
-    // })
-    //     .then(response => {
-    //         if (response.ok) {
-    //             alert('Images updated successfully');
-    //             showImages();
-    //         } else {
-    //             alert('Error updating images:', response.statusText);
-    //         }
-    //     })
-    //     .catch(error => alert('Error updating images:', error));
+    fetch('http://localhost/api/yummyadmin/updateReservation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reservation)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Reservation updated successfully');
+                showReservations();
+            } else {
+                alert('Error updating reservation:', response.statusText);
+            }
+        })
+        .catch(error => alert('Error updating reservation:', error));
 }
+
+function removeReservation(id) { //TODO: Finish this method
+    if (confirm('Are you sure you want to delete this reservation?')) {
+        fetch('http://localhost/api/yummyadmin/deleteReservation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({reservationId: id})
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Reservation removed successfully');
+                    showReservations();
+                } else {
+                    console.error('Error deleting reservation:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error deleting reservation:', error));
+    }
+}
+
+function createAddReservationForm(){
+    hideAll();
+    document.getElementById('addReservationContainer').style.display = "block";
+    document.getElementById('addReservationContainer').innerHTML = `
+        <form>
+            <div class="form-group">
+                <label for="restaurantId-Reservation">Restaurant ID:</label>
+                <input type="number" class="form-control" id="restaurantId-Reservation" name="restaurantId-Reservation" required>
+            </div>
+            <div class="form-group">
+                <label for="eventID-Reservation">Event ID:</label>
+                <input type="number" class="form-control" id="eventID-Reservation" name="eventID-Reservation" required>
+            </div>
+            <div class="form-group">
+                <label for="regularTickets-Reservation">Regular Tickets:</label>
+                <input type="number" class="form-control" id="regularTickets-Reservation" name="regularTickets-Reservation" required>
+            </div>
+            <div class="form-group">
+                 <label for="reducedTickets-Reservation">Reduced Tickets:</label>
+                 <input type="number" class="form-control" id="reducedTickets-Reservation" name="reducedTickets-Reservation">
+            </div>
+            <div class="form-group">
+                 <label for="specialRequests-Reservation">Special Requests:</label>
+                 <textarea class="form-control" id="specialRequests-Reservation" name="specialRequests-Reservation"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addReservation()">Submit</button>
+        </form>
+    `;
+}
+
+function addReservation() {
+    const reservation = {
+        restaurantId: document.getElementById('restaurantId-Reservation').value,
+        eventID: document.getElementById('eventID-Reservation').value,
+        regularTickets: document.getElementById('regularTickets-Reservation').value,
+        reducedTickets: document.getElementById('reducedTickets-Reservation').value,
+        specialRequests: document.getElementById('specialRequests-Reservation').value
+    };
+
+    fetch('http://localhost/api/yummyadmin/addReservation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reservation)
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Reservation added successfully');
+                showReservations();
+            } else {
+                alert('Error adding reservation:', response.statusText);
+            }
+            document.getElementById('addReservationContainer').style.display = "none";
+        })
+        .catch(error => alert('Error adding reservation:', error));
+}
+
+

@@ -123,6 +123,16 @@ class Restaurant implements \JsonSerializable {
         return $images;
     }
 
+    public function getImagesByType($type) {
+        $images = [];
+        foreach ($this->images as $image) {
+            if ($image->getImageType() == $type) {
+                array_push($images, $image);
+            }
+        }
+        return $images;
+    }
+
     public function addEvent($restaurantSession) {
         $this->events[] = $restaurantSession;
     }

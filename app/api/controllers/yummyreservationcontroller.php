@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\restaurantReservation;
 use App\Services\restaurantservice;
 
 class yummyreservationcontroller
@@ -41,5 +42,51 @@ class yummyreservationcontroller
             return null;
         }
     }
+
+    public function reserve()
+    {
+        try{
+            $jsonData = file_get_contents('php://input');
+            $jsonData = json_decode($jsonData, true);
+
+            if ($jsonData === null || !isset($jsonData['restaurantID'], $jsonData['regularTickets'], $jsonData['reducedTickets'], $jsonData['specialRequests'], $jsonData['eventID'])) {
+                http_response_code(400); // Bad Request
+                echo json_encode(['error' => 'Invalid data']);
+                return;
+            }
+
+            $reservation = new restaurantReservation();
+            $reservation->setRestaurantId($jsonData['restaurantID']);
+            $reservation->setEventID($jsonData['eventID']);
+            $reservation->setRegularTickets(intval($jsonData['regularTickets']));
+            $reservation->setReducedTickets(intval($jsonData['reducedTickets']));
+            $reservation->setSpecialRequests($jsonData['specialRequests']);
+
+            $event = $this->restaurantService->getEventByID($jsonData['eventID']);
+
+            if ($event === null) {
+                http_response_code(404); // Not Found
+                echo json_encode(['error' => 'Event not found']);
+                return;
+            }
+
+            if ($event->getSeatsLeft() < intval($jsonData['regularTickets']) + intval($jsonData['reducedTickets'])) {
+                http_response_code(400); // Bad Request
+                echo json_encode(['error' => 'Not enough seats left']);
+                return;
+            }
+
+            if ($this->restaurantService->reserve($reservation)) {
+                echo json_encode(['success' => 'Reservation added']);
+            } else {
+                http_response_code(500); // Internal Server Error
+                echo json_encode(['error' => 'Reservation not created']);
+            }
+        }catch (\Exception $e){
+            http_response_code(500); // Internal Server Error
+            echo json_encode(['error' => 'Reservation not created from catch']);
+        }
+    }
+
 
 }

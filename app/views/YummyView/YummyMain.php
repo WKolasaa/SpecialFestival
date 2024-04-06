@@ -14,7 +14,6 @@
 
 </head>
 <body class="YummyBody">
-    <?php var_dump($restaurants); ?>
     <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
         <div class="overlay">
             <h1 class="display-4">Explore Haarlem's Culinary Delights at</h1>
@@ -50,7 +49,7 @@
                 echo '<div class="row no-gutters">';
                 echo '<div class="container mt-4">';
                 echo '<div class="card mb-3 mx-auto" style="max-width: 540px;">';
-                echo '<img src="' . htmlspecialchars($restaurant->getImages('gallery')[0]) . '" class="card-img-top" alt="' . htmlspecialchars($restaurant->getName()) . '">';
+                echo '<img src="' . htmlspecialchars($restaurant->getImagesAsArray()[0]['imagePath']) . '" class="card-img-top" alt="' . htmlspecialchars($restaurant->getName()) . '">';
                 echo '<div class="card-body">';
                 echo '<h5 class="card-title">' .htmlspecialchars($restaurant->getName()) . '</h5>';
                 echo '<p class="card-text">' . htmlspecialchars($restaurant->getAddress()) . '</p>';

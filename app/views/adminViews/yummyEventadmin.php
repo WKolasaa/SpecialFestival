@@ -10,6 +10,7 @@
         <a href="#" onclick="showRestaurants()">Restaurants</a>
         <a href="#" onclick="showSessions()">Sessions</a>
         <a href="#" onclick="showImages()">Images</a>
+        <a href="#" onclick="showReservations()">Reservations</a>
     </div>
 
     <div class="container mt-5">
@@ -84,7 +85,16 @@
                 </div>
             </div>
         </div>
-    </div>
+
+
+<!--    Reservations-->
+        <div id="reservationsContainer" style="Display: none">
+
+        </div>
+
+        <div id="addReservationContainer" style="Display: none">
+
+        </div>
 
 </div>
 

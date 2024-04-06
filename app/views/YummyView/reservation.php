@@ -2,9 +2,6 @@
 require __DIR__ . '/../header.php';
 use App\Models\Restaurant;
 $events = $restaurant->getEvents();
-foreach ($events as $event) {
-    var_dump($event);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,21 +36,21 @@ foreach ($events as $event) {
             <!--photos on top-->
             <div class="row">
                 <div class="col-md-6 text-center">
-                    <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                    <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                 </div>
                 <div class="col-md-6 text-center">
                     <div class="row row-cols-2">
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[1]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[2]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[3]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                         <div class="col">
-                            <img src="<?php echo htmlspecialchars($restaurant->getImages('gallery')[0]) ?>" class="img-fluid" alt="Restaurant Image">
+                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[4]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                         </div>
                     </div>
                 </div>
@@ -65,10 +62,10 @@ foreach ($events as $event) {
             <div class="container text-center">
                 <div class="row row-cols-2">
                     <div class="col">
-                        <img src="<?php echo htmlspecialchars($restaurant->getImages('map')) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('map')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                     </div>
                     <div class="col">
-                        <img src="<?php echo htmlspecialchars($restaurant->getImages('chef')) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('chef')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
                     </div>
                     <div class="col">
                         <p><?php echo htmlspecialchars($restaurant->getAddress()) ?></p>
@@ -114,7 +111,7 @@ foreach ($events as $event) {
                 <div class="col-md-2 text-left"> </div>
                 <div class="col-md-8 text-left">
                     <div id="message" class="alert alert-api"></div>
-                    <form action="submitReservation.php" method="post" onsubmit="return validateForm()">
+                    <form>
                         <div class="form-group">
                             <label for="daySelect">Choose a Day:</label>
                             <select id="daySelect" name="daySelect" class="form-control" onchange="updateSessions(this.value)" required>
@@ -173,7 +170,7 @@ foreach ($events as $event) {
 
                         <div class="row justify-content-center mt-4">
                             <div class="col-auto">
-                                <button type="submit" class="btn btn-reserve">Reserve</button>
+                                <button type="button" class="btn btn-reserve" onclick="validateForm()">Reserve</button>
                             </div>
                         </div>
 
