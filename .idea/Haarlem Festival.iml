@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/app/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
       <sourceFolder url="file://$MODULE_DIR$/app/./services" isTestSource="false" packagePrefix="App\Services\" />
       <sourceFolder url="file://$MODULE_DIR$/app/./views" isTestSource="false" packagePrefix="App\Views\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />
@@ -21,6 +22,11 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/resend/resend-php" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/dompdf/dompdf" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/masterminds/html5" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phenx/php-font-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phenx/php-svg-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/sabberworm/php-css-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
