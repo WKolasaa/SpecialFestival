@@ -132,6 +132,6 @@
 </div>
 </div>
 
-<script src="/js/DanceEvent/session.js"></script>
+<script src="/js/DanceEvent/session.js"> </script>
 
 <?php include __DIR__ . '/../footer.php'; ?>

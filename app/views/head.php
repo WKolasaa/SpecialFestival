@@ -31,7 +31,7 @@ session_start();
             case 'adminView/manageUser':
                 $cssFile = 'admin/manageuser.css';
                 break;
-            case 'danceevent':
+            case 'DanceEvent':
                 $cssFile = 'Dance/overview.css';
                 break;
             case 'adminView/dance':
@@ -53,13 +53,13 @@ session_start();
             case 'historymain/cart':
                 $cssFile = 'History/HistoryAddingToCart.css';
                 break;
-            case 'danceevent/agenda':
+            case 'DanceEvent/agenda':
                 $cssFile = 'Dance/agenda.css';
                 break;
-            case 'danceevent/session':
+            case 'DanceEvent/session':
                 $cssFile = 'Dance/session.css';
                 break;
-            case 'danceevent/artist':
+            case 'DanceEvent/artist':
                 $cssFile = 'Dance/artist.css';
                 break;
             case 'YummyMain':

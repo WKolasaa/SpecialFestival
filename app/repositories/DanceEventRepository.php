@@ -24,7 +24,7 @@ class DanceEventRepository extends Repository
         return $this->mapToArtistObjects($rows);
     }
 
-    protected function executeQuery($sql)
+    protected function executeQuery($sql): false|array
     {
         try {
             $statement = $this->connection->prepare($sql);

@@ -10,14 +10,6 @@ include 'head.php';
         aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-brand festival-parent">
-        <p class="navBrand festival" href="#">FESTIVAL</p>
-    </div>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div class="collapse navbar-collapse" id="navbar">
     <div class="collapse navbar-collapse" id="navbar">
@@ -50,10 +42,10 @@ include 'head.php';
                         Dance
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
-                        <a class="dropdown-item" href="/danceevent">Overview</a>
-                        <a class="dropdown-item" href="/danceevent/artist">Artists</a>
-                        <a class="dropdown-item" href="/danceevent/agenda">Agenda</a>
-                        <a class="dropdown-item" href="/danceevent/session">Tickets</a>
+                        <a class="dropdown-item" href="/DanceEvent">Overview</a>
+                        <a class="dropdown-item" href="/DanceEvent/artist">Artists</a>
+                        <a class="dropdown-item" href="/DanceEvent/agenda">Agenda</a>
+                        <a class="dropdown-item" href="/DanceEvent/session">Tickets</a>
                     </div>
                 </li>
 
@@ -81,13 +73,11 @@ include 'head.php';
                     </li>
 
                     <li class="nav-item">
-                        <a id="festPlan" class="nav-link" href="#">FestPlan</a>
+                        <a id="festPlan" class="nav-link" href="/FestPlan">FestPlan</a>
                     </li>
                 <?php endif; ?>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-user"></i>

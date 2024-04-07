@@ -19,7 +19,7 @@
       <img src="img/TeylersEvent.png" alt="Teyler's app" class="event-image">
       <h2 class="event-title">Teyler's app</h2>
     </a>
-    <a href="/danceevent" class="event">
+    <a href="/DanceEvent" class="event">
       <img src="img/DanceEvent.jpg" alt="Dance Event" class="event-image">
       <h2 class="event-title">Dance Event</h2>
     </a>
