@@ -7,11 +7,13 @@ use App\Services\UserService;
 
 class RestorePasswordController
 {
-    function index(){
+    function index()
+    {
         include '../views/restorepassword.php';
     }
 
-    function handleForgotPassword($email) {
+    function handleForgotPassword($email)
+    {
         // Validate email (you can add more robust validation)
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return 'Please enter a valid email address.';

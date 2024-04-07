@@ -48,27 +48,33 @@ class RestaurantService
         return $this->restaurantRepository->updateRestaurant($restaurant);
     }
 
-    public function updateImage($id, $imagePath){
+    public function updateImage($id, $imagePath)
+    {
         return $this->restaurantRepository->updateImages($id, $imagePath);
     }
 
-    public function getEventByID($id){
+    public function getEventByID($id)
+    {
         return $this->restaurantRepository->getEventByID($id);
     }
 
-    public function reserve($reservation){
+    public function reserve($reservation)
+    {
         return $this->restaurantRepository->reserve($reservation);
     }
 
-    public function getAllReservations(){
+    public function getAllReservations()
+    {
         return $this->restaurantRepository->getAllReservations();
     }
 
-    public function updateReservation($reservation){
+    public function updateReservation($reservation)
+    {
         return $this->restaurantRepository->updateReservation($reservation);
     }
 
-    public function deleteReservation($reservationID){
+    public function deleteReservation($reservationID)
+    {
         return $this->restaurantRepository->deleteReservation($reservationID);
     }
 }

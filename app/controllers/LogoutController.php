@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 class LogoutController
 {
-    function index(){
+    function index()
+    {
         session_start();
         $_SESSION['user'] = null;
         session_destroy();

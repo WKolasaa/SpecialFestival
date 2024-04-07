@@ -1,7 +1,8 @@
 <?php
- namespace App\Models;
 
-enum TicketType : int
+namespace App\Models;
+
+enum TicketType: int
 {
     case Dance = 1;
     case Yummy = 2;

@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Controllers;
 
 
-class ManageUserController{
+class ManageUserController
+{
 
-  public function index()
-  {
-    include '../views/manageusers.php';
-  }
+    public function index()
+    {
+        include '../views/manageusers.php';
+    }
 }
