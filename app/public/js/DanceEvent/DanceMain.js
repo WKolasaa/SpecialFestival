@@ -44,7 +44,7 @@ function displayArtists(artists) {
     artistCard.innerHTML = `
       <div class="card-content">
         <div class="image">
-          <img src="../../img/DanceEvent/${artist.imageName}" alt="Artists">
+          <img src="../../img/DanceEvent/${artist.imageName}" alt="Artists" style="height: 200px; object-fit:cover;">
         </div>
         <div class="artist-container">
           <div class="artistDate">
