@@ -1,25 +1,27 @@
-//Ticket means session
-// TODO: change the naming to make it more clear and aligned with the database
-////////////sidebar/////////////////////
+loadArtists();
+loadAgenda();
+loadTickets();
+loadOverviews();
+
+////////////SideBar/////////////////////
 function showArtists() {
   document.getElementById("artists-container").style.display = "flex";
   document.getElementById("agenda-container").style.display = "none";
   document.getElementById("tickets-container").style.display = "none";
+  document.getElementById("danceOverview-container").style.display="none";
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Artist`;
   addButton.onclick = showAddArtistForm; // Assign the onclick handler here
 
   loadArtists();
 }
-loadArtists();
-loadAgenda();
-loadTickets();
 
-// Function to display agenda
 function showAgenda() {
   document.getElementById("artists-container").style.display = "none";
   document.getElementById("agenda-container").style.display = "block";
   document.getElementById("tickets-container").style.display = "none";
+  document.getElementById("danceOverview-container").style.display="none";
+
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Event`;
   addButton.onclick = showAddAgendaForm; // Assign the onclick handler here
@@ -27,11 +29,12 @@ function showAgenda() {
   loadAgenda();
 }
 
-// Function to display tickets
 function showTickets() {
   document.getElementById("artists-container").style.display = "none";
   document.getElementById("agenda-container").style.display = "none";
   document.getElementById("tickets-container").style.display = "block";
+  document.getElementById("danceOverview-container").style.display="none";
+
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Ticket`;
   addButton.onclick = showAddTicketForm; // Assign the onclick handler here
@@ -49,33 +52,32 @@ function showOverview() {
   addButton.onclick = showAddOverviewForm; // Assign the onclick handler here
   loadOverviews();
 }
-//////////////////////Adjusting the Form///////////////////////
+////////////////////End of SideBar//////////////////////////
 
+
+//////////////////////Adjusting the Form///////////////////////
 function showAddArtistForm() {
   // Get the modal
   var modal = document.getElementById("add-artist-modal");
   var form = document.getElementById("add-artist-form");
 
-  // Get the <span> element that closes the modal
   var span = modal.getElementsByClassName("close")[0];
 
-  // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = "none";
-    form.style.display = "none"; // Also hide the form
+    form.style.display = "none"; 
   };
 
-  // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      form.style.display = "none"; // Also hide the form
+      form.style.display = "none"; 
     }
   };
-  // Show the modal and the form
   modal.style.display = "block";
   form.style.display = "block";
 }
+
 
 function showAddAgendaForm() {
   var modal = document.getElementById("add-agenda-modal");
@@ -120,28 +122,28 @@ function showAddTicketForm() {
 }
 
 function showAddOverviewForm() {
-  // Get the modal
+ 
   var modal = document.getElementById("add-overview-modal");
   var form = document.getElementById("add-overview-form");
 
-  // Get the <span> element that closes the modal
+  
   var span = modal.getElementsByClassName("close")[0];
 
-  // When the user clicks on <span> (x), close the modal
+  
   span.onclick = function () {
     modal.style.display = "none";
-    form.style.display = "none"; // Also hide the form
+    form.style.display = "none"; 
   };
 
-  // When the user clicks anywhere outside of the modal, close it
+  
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      form.style.display = "none"; // Also hide the form
+      form.style.display = "none"; 
     }
   };
 
-  // Show the modal and the form
+  
   modal.style.display = "block";
   form.style.display = "block";
 }
@@ -149,17 +151,19 @@ function showAddOverviewForm() {
 document
   .getElementById("artistForm")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the form from being submitted normally
-    addArtist(); // Replace this with your function to add the artist
-    loadArtists(); // Reload the artists
+    event.preventDefault(); 
+    addArtist(); 
+    loadArtists(); 
   });
+
+
 
 document
   .getElementById("overviewForm")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the form from being submitted normally
-    addOverview(); // Replace this with your function to add the overview
-    loadOverviews(); // Reload the overviews
+    event.preventDefault(); 
+    addOverview(); 
+    loadOverviews();
   });
 
 //////////////////////fetch data///////////////////////
@@ -179,14 +183,12 @@ function loadArtists() {
 
 let allAgenda = [];
 function loadAgenda() {
-  console.log("loadAgenda called"); // Add this
   fetch("http://localhost/api/danceevent/Agenda")
     .then((response) => {
-      console.log("Response:", response); // And this
       return response.json();
     })
     .then((data) => {
-      console.log("Data:", data); // And this
+     
       allAgenda = data;
       displayAgenda(allAgenda);
     })
@@ -299,22 +301,16 @@ function displayArtists(artists) {
     dates.forEach((date) => {
       const option = document.createElement("option");
       option.value = date;
-    //   option.text = date;
-    //   if (date === artist.participationDate) {
-    //     option.selected = true;
-    //   }
-    //   artistDate.appendChild(option);
-    // });
-    const [year, month, day] = date.split("-");
-    option.text = `${day}-${month}-${year}`;
-  
-    if (date === artist.participationDate) {
-      option.selected = true;
-    }
-    artistDate.appendChild(option);
-  });
+      
+      const [year, month, day] = date.split("-");
+      option.text = `${day}-${month}-${year}`;
 
-  
+      if (date === artist.participationDate) {
+        option.selected = true;
+      }
+      artistDate.appendChild(option);
+    });
+
     artistDateLabel.appendChild(artistDate);
 
     const saveButton = document.createElement("button");
@@ -395,12 +391,37 @@ function saveArtist(artistId) {
     .then((response) => {
       if (response.ok) {
         console.log("Artist updated successfully");
+
+        if (artistImageElement.files.length > 0) {
+          const updatedImage = document.querySelector(
+            `#artist-image-${artistId}`
+          );
+          updatedImage.src = URL.createObjectURL(artistImageElement.files[0]);
+        }
       } else {
-        throw new Error("Failed to update artist");
+        if (response.status === 413) {
+          // If the status code is 413, throw a specific error message
+          throw new Error(
+            "The image file is too large. Please select a smaller file."
+          );
+        } else {
+          // Check the Content-Type of the response
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.indexOf("application/json") !== -1) {
+            // If the Content-Type is JSON, parse the response body and throw an error
+            return response.json().then((error) => {
+              throw new Error(error.error);
+            });
+          } else {
+            // If the Content-Type is not JSON, throw a generic error message
+            throw new Error("An error occurred while updating the artist");
+          }
+        }
       }
     })
     .catch((error) => {
-      console.error("Error updating artist:", error);
+      // console.error("Error updating artist:", error);
+      alert(error.message);
     });
 }
 
@@ -472,6 +493,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("artistForm").addEventListener("submit", addArtist);
 });
 
+
 //////////////////////////CRUD Agenda data//////////////////////////
 
 function displayAgenda(agendas) {
@@ -490,26 +512,54 @@ function displayAgenda(agendas) {
 
     agendaItem.innerHTML = `
       <div class="card-body">
-        <h5 class="card-title"><span contenteditable="true" id="agenda-Artist-${agenda.agendaId}">${agenda.artistName}</span></h5>
+        <h5 class="card-title"><span contenteditable="true" id="agenda-Artist-${
+          agenda.agendaId
+        }">${agenda.artistName}</span></h5>
         <p class="card-text">
           Event Day: <select id="agenda-day-${agenda.agendaId}">
-          <option value="Friday" ${agenda.eventDay === "Friday" ? "selected" : ""}>Friday</option>
-          <option value="Saturday" ${agenda.eventDay === "Saturday" ? "selected" : ""}>Saturday</option>
-          <option value="Sunday" ${agenda.eventDay === "Sunday" ? "selected" : ""}>Sunday</option>
+          <option value="Friday" ${
+            agenda.eventDay === "Friday" ? "selected" : ""
+          }>Friday</option>
+          <option value="Saturday" ${
+            agenda.eventDay === "Saturday" ? "selected" : ""
+          }>Saturday</option>
+          <option value="Sunday" ${
+            agenda.eventDay === "Sunday" ? "selected" : ""
+          }>Sunday</option>
         </select>
           Date: <select id="agenda-date-${agenda.agendaId}">
-          <option value="2024-07-26" ${agenda.eventDate === "2024-07-26" ? "selected" : ""}>26-07-2024</option>
-          <option value="2024-07-27" ${agenda.eventDate === "2024-07-27" ? "selected" : ""}>27-07-2024</option>
-          <option value="2024-07-28" ${agenda.eventDate === "2024-07-28" ? "selected" : ""}>28-07-2024</option>
+          <option value="2024-07-26" ${
+            agenda.eventDate === "2024-07-26" ? "selected" : ""
+          }>26-07-2024</option>
+          <option value="2024-07-27" ${
+            agenda.eventDate === "2024-07-27" ? "selected" : ""
+          }>27-07-2024</option>
+          <option value="2024-07-28" ${
+            agenda.eventDate === "2024-07-28" ? "selected" : ""
+          }>28-07-2024</option>
         </select>
-          Time: <span contenteditable="true" id="agenda-time-${agenda.agendaId}">${agenda.eventTime}</span>
-          Duration: <span contenteditable="true" id="agenda-duration-${agenda.agendaId}">${agenda.durationMinutes} min</span>
-          Price: €<span contenteditable="true" id="agenda-price-${agenda.agendaId}">${agenda.sessionPrice}</span> 
-          Tickets Available: <span contenteditable="true" id="agenda-tickets-${agenda.agendaId}">${agenda.sessionsAvailable}</span><br>
-          Venue: <span contenteditable="true" id="agenda-venue-${agenda.agendaId}">${agenda.venueAddress}</span>
+          Time: <span contenteditable="true" id="agenda-time-${
+            agenda.agendaId
+          }">${agenda.eventTime}</span>
+          Duration: <span contenteditable="true" id="agenda-duration-${
+            agenda.agendaId
+          }">${agenda.durationMinutes} min</span>
+          Price: €<span contenteditable="true" id="agenda-price-${
+            agenda.agendaId
+          }">${agenda.sessionPrice}</span> 
+          Tickets Available: <span contenteditable="true" id="agenda-tickets-${
+            agenda.agendaId
+          }">${agenda.sessionsAvailable}</span><br>
+          Venue: <span contenteditable="true" id="agenda-venue-${
+            agenda.agendaId
+          }">${agenda.venueAddress}</span>
         </p>
-        <button class="btn btn-success btnTicket" onclick="saveAgenda(${agenda.agendaId})">Save</button>
-        <button class="btn btn-danger btnTicket" onclick="deleteAgenda(${agenda.agendaId})">Delete</button>
+        <button class="btn btn-success btnTicket" onclick="saveAgenda(${
+          agenda.agendaId
+        })">Save</button>
+        <button class="btn btn-danger btnTicket" onclick="deleteAgenda(${
+          agenda.agendaId
+        })">Delete</button>
       </div>
     `;
 
@@ -538,7 +588,9 @@ function saveAgenda(agendaId) {
   const selectedDate = updatedAgenda.eventDate;
 
   if (getDayOfWeek(selectedDate) !== selectedDay) {
-    alert("The selected day does not match the selected date. Please select a matching day and date.");
+    alert(
+      "The selected day does not match the selected date. Please select a matching day and date."
+    );
     return; // Exit the function early if the day and date don't match
   }
 
@@ -589,8 +641,8 @@ function deleteAgenda(agendaId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Agenda deleted successfully");
-        loadAgenda(); // Reload agendas to reflect changes
+        alert("Event Deleted successfully");
+        loadAgenda(); 
       } else {
         throw new Error("Failed to delete agenda");
       }
@@ -605,20 +657,28 @@ function addEvent() {
     eventDay: document.getElementById("new-event-day").value,
     eventDate: document.getElementById("new-event-date").value,
     eventTime: document.getElementById("new-event-time").value,
-    
+
     durationMinutes: document.getElementById("new-event-duration").value,
     sessionPrice: document.getElementById("new-event-ticketPrice").value,
     sessionsAvailable: document.getElementById("new-event-ticketsAvailable")
       .value,
     venueAddress: document.getElementById("new-event-venueAddress").value,
   };
-    const selectedDay = eventData.eventDay;
-    const selectedDate = eventData.eventDate;
+  const selectedDay = eventData.eventDay;
+  const selectedDate = eventData.eventDate;
+  const artistExists=allArtists.some(artist=>artist.artistName===eventData.artistName); //check if artist exists
+  if(!artistExists)
+  {
+    alert("Artist doesn't exist, please provide correct artist name.")
+    return;
+  }
 
-    if (getDayOfWeek(selectedDate) !== selectedDay) {
-      alert("The selected day does not match the selected date. Please select a matching day and date.");
-      return; // Exit the function early if the day and date don't match
-    }
+  if (getDayOfWeek(selectedDate) !== selectedDay) {
+    alert(
+      "The selected day does not match the selected date. Please select a matching day and date."
+    );
+    return; // Exit the function early if the day and date don't match
+  }
   fetch("http://localhost/api/danceevent/addEvent", {
     method: "POST",
     headers: {
@@ -637,7 +697,15 @@ function addEvent() {
 
 function getDayOfWeek(date) {
   const dateObject = new Date(date);
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
   return daysOfWeek[dateObject.getDay()];
 }
 
@@ -645,35 +713,57 @@ function getDayOfWeek(date) {
 
 function displayTickets(tickets) {
   const ticketContainer = document.getElementById("tickets-container");
-  ticketContainer.innerHTML = ""; // Clear existing content
-  ticketContainer.classList.add("container"); // Add Bootstrap container class
+  ticketContainer.innerHTML = ""; 
+  ticketContainer.classList.add("container"); 
 
   const heading = document.createElement("h2");
-  heading.textContent = "Sessions"; // Set the heading text
-  heading.classList.add("my-3"); // Add Bootstrap margin class
+  heading.textContent = "Sessions"; 
+  heading.classList.add("my-3"); 
   ticketContainer.appendChild(heading);
 
   tickets.forEach((ticket) => {
     const ticketItem = document.createElement("div");
-    ticketItem.classList.add("cardTicket", "mb-3"); // Add Bootstrap card and margin classes
+    ticketItem.classList.add("cardTicket", "mb-3"); 
 
     ticketItem.innerHTML = `
       <div class="card-body">
-        <h5 class="card-title"><span contenteditable="true" id="ticket-artistName-${ticket.sessionId}">${ticket.artistName}</span></h5>
+        <h5 class="card-title"><span contenteditable="true" id="ticket-artistName-${
+          ticket.sessionId
+        }">${ticket.artistName}</span></h5>
         <p class="card-text">
-          Start Session: <input type="time" id="ticket-startSession-${ticket.sessionId}" value="${ticket.startSession}">
-          End Session: <input type="time" id="ticket-endSession-${ticket.sessionId}" value="${ticket.endSession}">
+        Start Session: <input type="time" id="ticket-startSession-${
+            ticket.sessionId
+          }" value="${ticket.startSession}">
+          End Session: <input type="time" id="ticket-endSession-${
+            ticket.sessionId
+          }" value="${ticket.endSession}">
           Date: <select id="ticket-date-${ticket.sessionId}">
-                  <option value="2024-07-26" ${ticket.sessionDate === "2024-07-26" ? "selected" : ""}>26-07-2024</option>
-                  <option value="2024-07-27" ${ticket.sessionDate === "2024-07-27" ? "selected" : ""}>27-07-2024</option>
-                  <option value="2024-07-28" ${ticket.sessionDate === "2024-07-28" ? "selected" : ""}>28-07-2024</option>
+                  <option value="2024-07-26" ${
+                    ticket.sessionDate === "2024-07-26" ? "selected" : ""
+                  }>26-07-2024</option>
+                  <option value="2024-07-27" ${
+                    ticket.sessionDate === "2024-07-27" ? "selected" : ""
+                  }>27-07-2024</option>
+                  <option value="2024-07-28" ${
+                    ticket.sessionDate === "2024-07-28" ? "selected" : ""
+                  }>28-07-2024</option>
                 </select>
-          Venue: <span contenteditable="true" id="ticket-venue-${ticket.sessionId}">${ticket.venue}</span>
-          Price: €<span contenteditable="true" id="ticket-price-${ticket.sessionId}">${ticket.sessionPrice}</span>
-          Session Type: <span contenteditable="true" id="ticket-sessionType-${ticket.sessionId}">${ticket.sessionType}</span>
+          Venue: <span contenteditable="true" id="ticket-venue-${
+            ticket.sessionId
+          }">${ticket.venue}</span>
+          Price: €<span contenteditable="true" id="ticket-price-${
+            ticket.sessionId
+          }">${ticket.sessionPrice}</span>
+          Session Type: <span contenteditable="true" id="ticket-sessionType-${
+            ticket.sessionId
+          }">${ticket.sessionType}</span>
         </p>
-        <button class="btn btn-success btnTicket" onclick="saveTicket(${ticket.sessionId})">Save</button>
-        <button class="btn btn-danger btnTicket" onclick="deleteTicket(${ticket.sessionId})">Delete</button>
+        <button class="btn btn-success btnTicket" onclick="saveTicket(${
+          ticket.sessionId
+        })">Save</button>
+        <button class="btn btn-danger btnTicket" onclick="deleteTicket(${
+          ticket.sessionId
+        })">Delete</button>
       </div>
     `;
 
@@ -682,26 +772,22 @@ function displayTickets(tickets) {
 }
 
 function saveTicket(sessionId) {
-  // console.log('saveTicket called: ', ticketId);
   const updatedTicket = {
     sessionId: sessionId,
     artistName: document.getElementById(`ticket-artistName-${sessionId}`)
       .textContent,
     startSession: document.getElementById(`ticket-startSession-${sessionId}`)
-      .value, 
-    sessionDate: document.getElementById(`ticket-date-${sessionId}`)
-      .value, 
+      .value,
+    sessionDate: document.getElementById(`ticket-date-${sessionId}`).value,
     venue: document.getElementById(`ticket-venue-${sessionId}`).textContent,
     sessionPrice: document.getElementById(`ticket-price-${sessionId}`)
       .textContent,
-    // sessionPrice: parseFloat(document.getElementById(`ticket-price-${ticketId}`).textContent.replace('€', '')),
-    // sessionPrice: parseFloat(document.getElementById(`ticket-price-${ticketId}`).textContent.replace('€', '')),
+    
     sessionType: document.getElementById(`ticket-sessionType-${sessionId}`)
       .textContent,
     endSession: document.getElementById(`ticket-endSession-${sessionId}`).value, //change
   };
 
-  // Send POST request with the updated content of the updatedTicket
   fetch("http://localhost/api/danceevent/updateSession", {
     method: "POST",
     headers: {
@@ -712,6 +798,7 @@ function saveTicket(sessionId) {
     .then((response) => {
       if (response.ok) {
         console.log("Ticket updated successfully");
+        alert("Session updated successfully");
       } else {
         throw new Error("Failed to update ticket");
       }
@@ -749,7 +836,7 @@ function deleteTicket(sessionId) {
       if (response.ok) {
         console.log("Ticket deleted successfully");
         alert("Session deleted successfully");
-        loadTickets(); // Reload tickets to reflect changes
+        loadTickets(); 
       } else {
         throw new Error("Failed to delete ticket");
       }
@@ -768,6 +855,14 @@ function addTicket() {
     endSession: document.getElementById("new-ticket-endSession").value,
   };
   console.log("Ticket data:", ticketData);
+const artistExists=allArtists.some(artist=>artist.artistName===ticketData.artistName); //check if artist exists
+if(!artistExists)
+{
+  alert("Artist doesn't exist, please provide correct artist name.")
+  return;
+}
+
+
 
   fetch("http://localhost/api/danceevent/addSession", {
     method: "POST",
@@ -783,10 +878,11 @@ function addTicket() {
       const modal = document.getElementById("add-ticket-modal");
       modal.style.display = "none";
       loadTickets(); // Reload tickets to reflect changes
-      
     })
     .catch((error) => console.error("Error adding ticket:", error));
 }
+
+
 
 //////////////////////////CRUD Overview data//////////////////////////
 

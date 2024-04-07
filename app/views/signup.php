@@ -1,12 +1,15 @@
 <?php
 include __DIR__ . '/header.php';
 require __DIR__ . '/../config/captchaconfig.php';
+
+if(isset($_SESSION['user'])){ //checking of the user logged in or not
+    $user = $_SESSION['user'];
+}else{
+    $user = null;
+}
+// var_dump($user);
 ?>
 
-<head>
-
-</head>
-<body>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -17,8 +20,10 @@ require __DIR__ . '/../config/captchaconfig.php';
                 <div class="card-body">
                     <!-- Registration Form -->
                     <div id="message" class="alert alert-light"></div>
-                    <form id="signupForm">
+                    <form id="signupForm" action=/signup/captcha method="POST">
                         <div class="form-group">
+                        <input type="hidden" id="userId" name="id">
+                        <input type="hidden" id="userRole" name="userRole">
                             <label for="userName">Username:</label>
                             <input type="text" class="form-control" id="userName" name="userName" required>
                         </div>
@@ -39,6 +44,10 @@ require __DIR__ . '/../config/captchaconfig.php';
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="form-group">
+                            <label for="password">Phone Number:</label>
+                            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                        </div>
+                        <div class="form-group">
                             <label for="photo">Photo:</label>
                             <input type="file" class="form-control" id="photo" name="photo">
                         </div>
@@ -46,20 +55,38 @@ require __DIR__ . '/../config/captchaconfig.php';
 
                         <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
-                        <input class="btn btn-primary" type="submit" value="Submit" onclick="submitForm()">
+                        <button class="btn btn-primary" type="submit" id="submitButton">
+                        Submit </button>
+                        <?php
+                        if ($user) {
+                            // If the user is logged in, load the user.js file
+                            echo '<button type="button" class="btn btn-danger btn-block" id="deleteButton">Delete</button>';
+                            echo '<script src="js/user.js"></script>';
+                        }
+                        ?>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_SESSION['error'])) {
+    echo '<script>alert("' . $_SESSION['error'] . '");</script>'; // Show an alert with the error message
+    unset($_SESSION['error']); // Unset the session variable so the message doesn't keep showing up
+}
+?>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<scrip src="js/signup.js"></scrip>
+
+<!-- <script src="js/signup.js"></script> -->
+
 
 <?php
     include __DIR__ . '/footer.php';
 ?>
 
-
-</body>
