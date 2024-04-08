@@ -1,24 +1,21 @@
 <?php
 
-namespace App\api\controllers;
+namespace App\Controllers;
 
 use App\Services\UserService;
 
-class changepasswordcontroller
+class ChangePasswordController
 {
     public function changePassword() {
-        echo "runs";
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $requestData = json_decode(file_get_contents("php://input"));
+            $jsonData = file_get_contents('php://input');
+            $jsonData = json_decode($jsonData, true);
 
-            if (isset($requestData->new_password) && isset($requestData->confirm_password)) {
-                echo "runs";
-                $newPassword = $requestData->new_password;
-                $confirmPassword = $requestData->confirm_password;
-                $email = $_SESSION["email"];
+            if (isset($jsonData["newPassword"]) && isset($jsonData["confirmPassword"]) && isset($jsonData["email"])) {
+                $newPassword = $jsonData["newPassword"];
+                $confirmPassword = $jsonData["confirmPassword"];
+                $email = $jsonData["email"];
 
-                if ($newPassword == $confirmPassword) {
-                    echo "same password";
+                if ($newPassword === $confirmPassword) {
                     $userService = new UserService();
                     $userService->updatePassword($newPassword, $email);
                     echo json_encode(['success' => true]);
@@ -28,9 +25,5 @@ class changepasswordcontroller
             } else {
                 echo json_encode(['error' => 'New password and confirm password not provided']);
             }
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Invalid request method']);
-        }
     }
 }
