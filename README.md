@@ -1,4 +1,16 @@
 # Haarlem festival page
-TODO: ask the teacher about the firebase and the rest of the folders that i deleted or check the rest api code from the github repo :)
 
-also what is insomnia.json? does we need
+### Life website
+http://152.70.59.83
+
+## Admin
+- Username: `admin`
+- Password: `admin`
+
+## Customer
+- Username: `customer`
+- Password: `customer`
+
+## Employee
+- Username: `employee`
+- Password: `employee`

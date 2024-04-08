@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Models\Restaurant;
-use App\Models\restaurantReservation;
-use App\Models\restaurantSession;
-use App\Services\restaurantservice;
+use App\Models\RestaurantReservation;
+use App\Models\RestaurantSession;
+use App\Services\RestaurantService;
 
 class YummyAdminController
 {

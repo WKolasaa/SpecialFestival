@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\restaurantReservation;
-use App\Services\restaurantservice;
+use App\Models\RestaurantReservation;
+use App\Services\RestaurantService;
 
 class yummyreservationcontroller
 {
@@ -55,7 +55,7 @@ class yummyreservationcontroller
                 return;
             }
 
-            $reservation = new restaurantReservation();
+            $reservation = new RestaurantReservation();
             $reservation->setRestaurantId($jsonData['restaurantID']);
             $reservation->setEventID($jsonData['eventID']);
             $reservation->setRegularTickets(intval($jsonData['regularTickets']));

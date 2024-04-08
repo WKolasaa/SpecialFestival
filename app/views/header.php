@@ -1,4 +1,4 @@
-?php
+<?php
 include 'head.php';
 ?>
 <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light">
@@ -31,19 +31,19 @@ include 'head.php';
                         <?php if (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "ADMINISTRATOR"): ?>
                             <!-- Admin navigation -->
                             <li class="nav-item">
-                                <a class="nav-link" href="/danceadmin">Dance</a>
+                                <a class="nav-link" href="/AdminView/dance">Dance</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/HistoryAdmin">History</a>
+                                <a class="nav-link" href="/AdminView/history">History</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/yummy">Yummy</a>
+                                <a class="nav-link" href="/AdminView/yummy">Yummy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/orders">Orders</a>
+                                <a class="nav-link" href="/AdminView/orders">Orders</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/manageuser">Users</a>
+                                <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
                         <?php else: ?>
                             <!-- Regular navigation -->
@@ -53,10 +53,10 @@ include 'head.php';
                                     Dance
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownDance">
-                                    <a class="dropdown-item" href="/danceevent">Overview</a>
-                                    <a class="dropdown-item" href="/danceevent/artist">Artists</a>
-                                    <a class="dropdown-item" href="/danceevent/agenda">Agenda</a>
-                                    <a class="dropdown-item" href="/danceevent/session">Tickets</a>
+                                    <a class="dropdown-item" href="/DanceEvent">Overview</a>
+                                    <a class="dropdown-item" href="/DanceEvent/artist">Artists</a>
+                                    <a class="dropdown-item" href="/DanceEvent/agenda">Agenda</a>
+                                    <a class="dropdown-item" href="/DanceEvent/session">Tickets</a>
                                 </div>
                             </li>
 
@@ -77,13 +77,14 @@ include 'head.php';
                                     History
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownHistory">
-                                    <a class="dropdown-item" href="#">Historic Events</a>
-                                    <a class="dropdown-item" href="#">Locations</a>
+                                    <a class="dropdown-item" href="/HistoryMain">Historic Events</a>
+                                    <a class="dropdown-item" href="/HistoryMain/port">Port</a>
+                                    <a class="dropdown-item" href="/HistoryMain/windmill">Windmill</a>
                                 </div>
                             </li>
 
                             <li class="nav-item">
-                                <a id="festPlan" class="nav-link" href="#">FestPlan</a>
+                                <a id="festPlan" class="nav-link" href="/FestPlan">FestPlan</a>
                             </li>
                         <?php endif; ?>
 

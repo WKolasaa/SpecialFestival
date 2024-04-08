@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Services\emailservice;
-use App\Services\tokenservice;
+use App\Services\EmailService;
+use App\Services\TokenService;
 use App\Services\UserService;
 
 class RestorePasswordController

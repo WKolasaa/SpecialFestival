@@ -6,19 +6,26 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/app/." isTestSource="false" packagePrefix="App\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/./controllers" isTestSource="false" packagePrefix="App\Controllers\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/./models" isTestSource="false" packagePrefix="App\Models\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/./services" isTestSource="false" packagePrefix="App\Services\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/./views" isTestSource="false" packagePrefix="App\Views\" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/psr7" />
+      <sourceFolder url="file://$MODULE_DIR$/." isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/." isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/controllers" isTestSource="false" packagePrefix="App\Controllers\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/models" isTestSource="false" packagePrefix="App\Models\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/repositories" isTestSource="false" packagePrefix="App\Repositories\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/services" isTestSource="false" packagePrefix="App\Services\" />
+      <sourceFolder url="file://$MODULE_DIR$/app/views" isTestSource="false" packagePrefix="App\Views\" />
+      <sourceFolder url="file://$MODULE_DIR$/./controllers" isTestSource="false" packagePrefix="App\Controllers\" />
+      <sourceFolder url="file://$MODULE_DIR$/./controllers" isTestSource="false" packagePrefix="App\Controllers\" />
+      <sourceFolder url="file://$MODULE_DIR$/./models" isTestSource="false" packagePrefix="App\Models\" />
+      <sourceFolder url="file://$MODULE_DIR$/./models" isTestSource="false" packagePrefix="App\Models\" />
+      <sourceFolder url="file://$MODULE_DIR$/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
+      <sourceFolder url="file://$MODULE_DIR$/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
+      <sourceFolder url="file://$MODULE_DIR$/./services" isTestSource="false" packagePrefix="App\Services\" />
+      <sourceFolder url="file://$MODULE_DIR$/./services" isTestSource="false" packagePrefix="App\Services\" />
+      <sourceFolder url="file://$MODULE_DIR$/./views" isTestSource="false" packagePrefix="App\Views\" />
+      <sourceFolder url="file://$MODULE_DIR$/./views" isTestSource="false" packagePrefix="App\Views\" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-client" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/http-message" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/resend/resend-php" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/deprecation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/dompdf/dompdf" />
