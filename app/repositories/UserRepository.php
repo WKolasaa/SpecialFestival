@@ -13,7 +13,7 @@ class UserRepository extends Repository
     {
 
 
-        $sql = "SELECT id, userName, password, userRole, registrationDate,firstName,lastName,email,photo FROM user";
+        $sql = "SELECT id, userName, password, userRole, registrationDate,firstName,lastName,email,photo, phoneNumber FROM user";
         $rows = $this->executeQuery($sql);
 
         if (!$rows) {
@@ -49,9 +49,10 @@ class UserRepository extends Repository
             $firstName = $row['firstName'];
             $lastName = $row['lastName'];
             $photo = $row['photo'];
+            $phoneNumber = $row['phoneNumber'];
 
 
-            $user = new User($id, $username, $password, $userRole, $registeredDate, $firstName, $lastName, $email, $photo);
+            $user = new User($id, $username, $password, $userRole, $registeredDate, $firstName, $lastName, $email, $photo,$phoneNumber);
 
             $users[] = $user;
         }
@@ -204,7 +205,7 @@ class UserRepository extends Repository
 
     public function getUserByEmail($email)
     {
-        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo FROM user WHERE email = :email";
+        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo, phoneNumber FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
@@ -212,7 +213,7 @@ class UserRepository extends Repository
         if (!$row) {
             return null;
         }
-        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
+        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
         return $user;
     }
 
