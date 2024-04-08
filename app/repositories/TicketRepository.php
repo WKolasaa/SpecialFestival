@@ -7,7 +7,6 @@ use App\Models\TicketType;
 use DateTime;
 use Exception;
 use PDO;
-use PDOException;
 
 class TicketRepository extends Repository
 {

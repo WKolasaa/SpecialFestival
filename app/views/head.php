@@ -9,7 +9,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haarlem Festival</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" /> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/festival.css">
 
@@ -36,7 +35,6 @@ session_start();
                 break;
             case 'adminView/dance':
                 $cssFile = 'admin/danceAdminEvent.css';
-
                 break;
             case 'HistoryMain':
                 $cssFile = 'History/HistoryMain.css';
@@ -67,6 +65,9 @@ session_start();
                 break;
             case 'admin/yummyAdmin':
                 $cssFile = 'admin/danceAdminEvent.css';
+                break;
+            case 'FestPlan':
+                $cssFile = 'festplan.css';
                 break;
             default:
                 $defaultCssFile = 'festival.css';

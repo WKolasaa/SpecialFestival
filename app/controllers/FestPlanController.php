@@ -16,7 +16,7 @@ class FestPlanController
     public function index(): void
     {
         // TODO: Get the actual user id
-        $tickets = $this->userTicketService->getAllTicketsByUserId(1);
+        $userTickets = $this->userTicketService->getAllUserTicketsByUserId(1);
         include '../views/festplan.php';
     }
 }

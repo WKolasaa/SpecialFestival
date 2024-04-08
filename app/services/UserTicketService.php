@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ticket;
+use App\Models\UserTicket;
 use App\Repositories\TicketRepository;
 use App\Repositories\UserTicketRepository;
 
@@ -17,15 +18,18 @@ class UserTicketService
         $this->ticketRepository = new TicketRepository();
     }
 
-    public function getAllTicketsByUserId(int $userId): array
+    public function getAllUserTicketsByUserId(int $userId): array
     {
-        $ticketIds = $this->userTicketRepository->getAllTicketIdsByUserId($userId);
-        $tickets = [];
-        foreach ($ticketIds as $ticketId) {
-            $ticket = $this->ticketRepository->getTicketById($ticketId);
-            $tickets[] = $ticket;
+        $userTicketData = $this->userTicketRepository->getAllUserTicketsByUserId($userId);
+        $userTickets = [];
+        foreach ($userTicketData as $data) {
+            $userTicket = new UserTicket();
+            $userTicket->ticket = $this->ticketRepository->getTicketById($data['ticket_id']);
+            $userTicket->quantity = $data['quantity'];
+            $userTicket->paid = $data['paid'];
+            $userTickets[] = $userTicket;
         }
-        return $tickets;
+        return $userTickets;
     }
 
     public function addUserTicket(Ticket $ticket, int $userId): void

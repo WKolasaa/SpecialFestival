@@ -1,0 +1,71 @@
+body {
+    background-color: #242424;
+}
+
+.festplan {
+    margin: 30px;
+}
+
+.program-title {
+    width: 95%;
+    font-weight: 900;
+    font-size: 200px;
+    background: linear-gradient(180deg, rgba(47, 189, 106, 0.5) 6%, rgba(255, 255, 255, 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+.my-program {
+    display: flex;
+    justify-content: space-between;
+}
+
+.my-program img {
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 50px;
+    height: auto;
+}
+
+.my-program span {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.my-program div {
+    display: flex;
+    align-items: center;
+}
+
+.share-btn {
+    float: right;
+    height: 50px;
+    width: 200px;
+    border-radius: 50rem; /* Pill shape */
+    background-color: white;
+}
+
+.share-btn i {
+    padding-right: 10px;
+}
+
+table {
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+#checkoutButton {
+    float: right;
+    background-color: #0f9d58;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+}

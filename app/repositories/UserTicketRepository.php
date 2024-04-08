@@ -5,13 +5,13 @@ use PDO;
 
 class UserTicketRepository extends Repository
 {
-    public function getAllTicketIdsByUserId(int $userId) : array
+    public function getAllUserTicketsByUserId(int $userId) : array
     {
-        $sql = "SELECT ticket_id FROM user_tickets WHERE user_id = :userId";
+        $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        $rows = $stmt->fetchAll();
         if (!$rows) {
             echo "No tickets found.";
             return [];
@@ -24,7 +24,7 @@ class UserTicketRepository extends Repository
         $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, :quantity, :paid)";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':ticketId', $ticket->id, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
         $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
         $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
         $stmt->execute();
@@ -35,7 +35,7 @@ class UserTicketRepository extends Repository
         $sql = "UPDATE user_tickets SET quantity = quantity + :quantity WHERE user_id = :userId AND ticket_id = :ticketId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':ticketId', $ticket->id, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -45,7 +45,7 @@ class UserTicketRepository extends Repository
         $sql = "SELECT * FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':ticketId', $ticket->id, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
         return (bool)$row;
