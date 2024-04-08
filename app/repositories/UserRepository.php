@@ -24,7 +24,7 @@ class UserRepository extends Repository
         return $this->mapToUserObjects($rows);
     }
 
-    protected function executeQuery($sql)
+    protected function executeQuery($sql): false|array
     {
         try {
             $statement = $this->connection->prepare($sql);
@@ -149,9 +149,9 @@ class UserRepository extends Repository
         }
     }
 
-    public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
+    public function addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber)
     {
-        $sql = "INSERT INTO user (userName, firstName, lastName, email, password, photo) VALUES (:userName, :firstName, :lastName, :email, :password, :photo)";
+        $sql = "INSERT INTO user (userName, firstName, lastName, email, password, photo, phoneNumber) VALUES (:userName, :firstName, :lastName, :email, :password, :photo, :phoneNumber)";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':userName', $userName);
         $statement->bindParam(':firstName', $firstName);
@@ -159,6 +159,7 @@ class UserRepository extends Repository
         $statement->bindParam(':email', $email);
         $statement->bindParam(':password', $password);
         $statement->bindParam(':photo', $photo);
+        $statement->bindParam(':phoneNumber', $phoneNumber);
         try {
             $statement->execute();
         } catch (PDOException $e) {
@@ -168,7 +169,7 @@ class UserRepository extends Repository
 
     public function loginByEmail($email, $password)
     {
-        $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo FROM user WHERE email = :email";
+        $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo, phoneNumber FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
@@ -177,7 +178,7 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) {
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
 
             return $user;
         }
@@ -186,7 +187,7 @@ class UserRepository extends Repository
 
     public function loginByUserName($userName, $password)
     {
-        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo FROM user WHERE userName = :userName";
+        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo, phoneNumber FROM user WHERE userName = :userName";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':userName', $userName);
         $statement->execute();
@@ -195,10 +196,10 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
             return $user;
         }
-        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo']);
+        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
     }
 
     public function getUserByEmail($email)

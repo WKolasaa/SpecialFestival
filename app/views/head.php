@@ -24,28 +24,28 @@ session_start();
             case '':
                 $cssFile = 'homeStyle.css';
                 break;
-                case 'adminView/orders':
+                case 'AdminView/orders':
                     $cssFile = 'admin/orders.css';
                     break;
-            case 'adminView/manageUser':
+            case 'AdminView/manageUser':
                 $cssFile = 'admin/manageuser.css';
                 break;
             case 'DanceEvent':
                 $cssFile = 'Dance/overview.css';
                 break;
-            case 'adminView/dance':
+            case 'AdminView/dance':
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;
             case 'HistoryMain':
                 $cssFile = 'History/HistoryMain.css';
                 break;
-            case 'historymain/port':
+            case 'HistoryMain/port':
                 $cssFile = 'History/HistoryPort.css';
                 break;
-            case 'historymain/windmill':
+            case 'HistoryMain/windmill':
                 $cssFile = 'History/HistoryWindmill.css';
                 break;
-            case 'HistoryAdmin':
+            case 'AdminView/history':
                 $cssFile = 'admin/HistoryAdmin.css';
                 break;
             case 'HomeAdmin':
@@ -66,7 +66,7 @@ session_start();
             case 'YummyMain':
                 $cssFile = 'YummyMain.css';
                 break;
-            case 'admin/yummyAdmin':
+            case 'AdminView/yummy':
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;
             case 'FestPlan':

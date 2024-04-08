@@ -31,19 +31,19 @@ include 'head.php';
                         <?php if (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "ADMINISTRATOR"): ?>
                             <!-- Admin navigation -->
                             <li class="nav-item">
-                                <a class="nav-link" href="/danceadmin">Dance</a>
+                                <a class="nav-link" href="/AdminView/dance">Dance</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/HistoryAdmin">History</a>
+                                <a class="nav-link" href="/AdminView/history">History</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Yummy">Yummy</a>
+                                <a class="nav-link" href="/AdminView/yummy">Yummy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/orders">Orders</a>
+                                <a class="nav-link" href="/AdminView/orders">Orders</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/ManageUser">Users</a>
+                                <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
                         <?php else: ?>
                             <!-- Regular navigation -->
@@ -77,13 +77,14 @@ include 'head.php';
                                     History
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownHistory">
-                                    <a class="dropdown-item" href="#">Historic Events</a>
-                                    <a class="dropdown-item" href="#">Locations</a>
+                                    <a class="dropdown-item" href="/HistoryMain">Historic Events</a>
+                                    <a class="dropdown-item" href="/HistoryMain/port">Port</a>
+                                    <a class="dropdown-item" href="/HistoryMain/windmill">Windmill</a>
                                 </div>
                             </li>
 
                             <li class="nav-item">
-                                <a id="festPlan" class="nav-link" href="#">FestPlan</a>
+                                <a id="festPlan" class="nav-link" href="/FestPlan">FestPlan</a>
                             </li>
                         <?php endif; ?>
 

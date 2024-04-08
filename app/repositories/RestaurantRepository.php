@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\restaurant;
+use App\Models\Restaurant;
 use App\Models\RestaurantImage;
 use App\Models\RestaurantReservation;
 use App\Models\RestaurantSession;

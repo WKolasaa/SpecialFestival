@@ -1,7 +1,6 @@
-  <?php
-    include __DIR__ . '/header.php';
+<?php include __DIR__ . '/header.php';
     $headerImagePath = $service->getContent("Header Image");
-    ?>
+?>
 
   <header>
     <img src="<?= htmlspecialchars($headerImagePath) ?>" alt="Haarlem Festival 2024" class="header-image">

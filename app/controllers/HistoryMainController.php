@@ -1,30 +1,21 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Services\HistoryAdminService;
 
-class HistoryMainController
-{
+class HistoryMainController{
     private $service;
+    // public function __construct(){
 
-    public function __construct()
-    {
+    // $this->service=new HistoryAdminService();
 
-        $this->service = new HistoryAdminService();
-
-    }
+    // }
 
     public function index()
     {
         $service = $this->getHistoryAdminService();
         include '../views/HistoryView/HistoryMain.php';
 
-    }
-
-    private function getHistoryAdminService()
-    {
-        return new HistoryAdminService();
     }
 
     public function port()
@@ -43,7 +34,20 @@ class HistoryMainController
 
     public function cart()
     {
+        $service = $this->getHistoryAdminService();
         include '../views/HistoryView/HistoryAddingToCart.php';
 
+    }
+
+    public function timeslots()
+    {
+        $service = $this->getHistoryAdminService();
+        include '../views/HistoryView/EditTimeslots.php';
+
+    }
+
+    private function getHistoryAdminService()
+    {
+        return new HistoryAdminService();
     }
 }
