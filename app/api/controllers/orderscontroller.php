@@ -21,9 +21,8 @@ class OrdersController
 
     // Retrieve the active worksheet
     $worksheet = $spreadsheet->getActiveSheet();
-    $orders = $this->orderService->getAllTickets(); // change it later
+    $orders = $this->orderService->getAllTickets(); 
 
-    // TODO: Fetch your orders data from the database and populate the worksheet
     // For now, let's just add some static data
     $worksheet->setCellValue('A1', 'Order ID');
     $worksheet->setCellValue('B1', 'Event Name');
