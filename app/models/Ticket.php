@@ -16,6 +16,8 @@ class Ticket implements \JsonSerializable
   public DateTime $start_date;
   public DateTime $end_date;
 
+  public int $cart_id;
+
   public function __construct(int $id, string $event_name, TicketType $ticket_Type, string $ticket_name, string $location,string $description, int $price, DateTime $start_date, DateTime $end_date)
   {
     $this->id = $id;
@@ -34,4 +36,5 @@ class Ticket implements \JsonSerializable
     $vars = get_object_vars($this);
     return $vars;
   }
+
 }

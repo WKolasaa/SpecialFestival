@@ -10,16 +10,7 @@ include 'head.php';
         aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-brand festival-parent">
-        <p class="navBrand festival" href="#">FESTIVAL</p>
-    </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-        aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbar">
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -42,6 +33,7 @@ include 'head.php';
                 <li class="nav-item">
                     <a class="nav-link" href="/manageuser">Users</a>
                 </li>
+                
             <?php else: ?>
                 <!-- Regular navigation -->
                 <li class="nav-item dropdown">
@@ -56,7 +48,6 @@ include 'head.php';
                         <a class="dropdown-item" href="/danceevent/session">Tickets</a>
                     </div>
                 </li>
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownYummy" role="button"
@@ -88,8 +79,6 @@ include 'head.php';
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-user"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -104,19 +93,8 @@ include 'head.php';
                         <a class="dropdown-item" href="/signup">Create an account</a>
                     <?php endif; ?>
 
-                    <?php if (isset ($_SESSION['user'])): ?>
-                        <!-- Logged in -->
-                        <a class="dropdown-item" href="/edit-account">Edit Account</a>
-                        <a class="dropdown-item" href="/logout">Log out</a>
-                    <?php else: ?>
-                        <!-- Logged out -->
-                        <a class="dropdown-item" href="/login">Log in</a>
-                        <a class="dropdown-item" href="/signup">Create an account</a>
-                    <?php endif; ?>
-
                 </div>
             </li>
         </ul>
     </div>
-    </div>
 </nav>

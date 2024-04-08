@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
-    <style>
+    <!-- <style>
         #edit-link {
             position: fixed;
             top: 10px;
@@ -8,7 +8,7 @@
             z-index: 9999;
             font-size: 24px;
         }
-    </style>
+    </style> -->
 
     <div class="festival-banner" style="background-image: url('../img/History/HistoryEvent.jpg');">
             <div class="festival-info">
@@ -122,59 +122,29 @@
 
     <!-- Timeslots Section -->
     <div class="timeslots-section">
-        <div class="days-container">
-        <!-- Repeated day blocks for each day -->
+        <h2 class="timeslots-title">Timeslots</h2>
         <?php
-            $days = [
-                $service->getContent("History Main", "First Day") => [
-                    ['10:00 - 12:30', [$service->getContent("History Main", "First day morning tours")]], //time editable as well
-                    ['13:00 - 15:30', [$service->getContent("History Main", "First day afternoon tours")]],
-                    ['16:00 - 18:30', [$service->getContent("History Main", "First day evening tours")]],
-                ],
-                $service->getContent("History Main", "Second Day") => [
-                    ['10:00 - 12:30', [$service->getContent("History Main", "Second day morning tours")]],
-                    ['13:00 - 15:30', [$service->getContent("History Main", "Second day afternoon tours")]],//Chinese tours
-                    ['16:00 - 18:30', [$service->getContent("History Main", "Second day evening tours")]],
-                ],
-                $service->getContent("History Main", "Third Day") => [
-                    ['10:00 - 12:30', [$service->getContent("History Main", "Third day morning tours")]],
-                    ['13:00 - 15:30', [$service->getContent("History Main", "Third day afternoon tours")]],//Chinese tours
-                    ['16:00 - 18:30', [$service->getContent("History Main", "Third day evening tours")]],//Chinese tours
-                ],
-                // $service->getContent("History Main", "Fourth Day") => [
-                //     ['10:00 - 12:30', ['English tours', 'Dutch tours', 'Chinese tours']],
-                //     ['13:00 - 15:30', ['English tours', 'Dutch tours', 'Chinese tours']],
-                //     ['16:00 - 18:30', ['English tours', 'Dutch tours']],
-                // ],
-                $service->getContent("History Main", "Fourth Day") => [
-                    ['10:00 - 12:30', [$service->getContent("History Main", "Fourth day morning tours")]],//Chinese tours
-                    ['13:00 - 15:30', [$service->getContent("History Main", "Fourth day afternoon tours")]],//Chinese tours
-                    ['16:00 - 18:30', [$service->getContent("History Main", "Fourth day evening tours")]],
-                ],
-            ];
-
-            foreach ($days as $day => $timeslots) {
-                echo "<div class='day'>";
-                echo "<h3 class='day-title'>{$day}</h3>";
-                foreach ($timeslots as $timeslot) {
-                    echo "<div class='timeslot'>";
-                    echo "<div>{$timeslot[0]}</div>"; // Time e.g., '10:00 - 12:30'
-                    foreach ($timeslot[1] as $tour) {
-                        echo "<div>{$tour}</div>"; // Tour type e.g., 'English tours'
-                    }
-                    echo "</div>";
-                }
-                echo "</div>";
-            }
+        $timeslots = $service->getAllTimeslots(); // Fetch timeslots from the service
+        foreach ($timeslots as $timeslot):
+            // Convert the 'day' from Y-m-d to a more readable format
+            $formattedDate = date("F j, l", strtotime($timeslot['day']));
         ?>
-        </div>
+            <div class="timeslot">
+                <h3>Date: <?= htmlspecialchars($formattedDate) ?></h3>
+                <p><strong>Time:</strong> <?= htmlspecialchars($timeslot['start_time']) ?> - <?= htmlspecialchars($timeslot['end_time']) ?></p>
+                <div class="languages">
+                    <span class="badge">English: <?= htmlspecialchars($timeslot['english_tour']) ?></span>
+                    <span class="badge">Dutch: <?= htmlspecialchars($timeslot['dutch_tour']) ?></span>
+                    <span class="badge">Chinese: <?= htmlspecialchars($timeslot['chinese_tour']) ?></span>
+                </div>
+            </div>
+        <?php endforeach; ?>
 
         <div class="buy-tickets-button-container">
-        <a href="/historymain/cart" class="buy-tickets-button">BUY TICKETS</a>
+            <a href="/historymain/cart" class="buy-tickets-button">BUY TICKETS</a>
         </div>
-
     </div>
-
+    
     <!-- Start Location Section -->
     <div class="start-location-section">
         <h2 class="start-location-title">Start location</h2>

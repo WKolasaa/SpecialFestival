@@ -34,6 +34,25 @@ private $historyAdminRepository;
   
   public function getEntryContent($entry_id) {
     return $this->historyAdminRepository->getEntryContent($entry_id);
-}
+  }
 
+  public function addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
+    $this->historyAdminRepository->addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour);
+  }
+
+  public function getAllTimeslots() {
+    return $this->historyAdminRepository->getAllTimeslots();
+  }
+
+  public function updateTimeslot($id, $day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
+    return $this->historyAdminRepository->updateTimeslot($id, $day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour);
+  }
+
+  public function getTimeslotById($id) {
+    return $this->historyAdminRepository->getTimeslotById($id);
+  }
+
+  public function addTicket($ticketData) {
+    return $this->historyAdminRepository->addTicket($ticketData);
+  }
 }

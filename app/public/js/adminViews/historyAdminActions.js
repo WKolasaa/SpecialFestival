@@ -210,3 +210,82 @@ document.getElementById('imageInput').addEventListener('change', function() {
         contentInput.value = directoryPath + fileName;
     }
 });
+
+function toggleEdit(button) {
+    const tr = button.closest('tr');
+    Array.from(tr.getElementsByClassName('view')).forEach(el => el.style.display = 'none');
+    Array.from(tr.getElementsByClassName('edit')).forEach(el => el.style.display = '');
+    tr.getElementsByClassName('edit-btn')[0].style.display = 'none';
+    tr.getElementsByClassName('save-btn')[0].style.display = '';
+}
+
+function saveTimeslot(button) {
+    const tr = button.closest('tr');
+    const id = tr.getAttribute('data-timeslot-id');
+
+    // Ensure selectors match your input names and structure
+    const dayInput = tr.querySelector('input[type="date"]');
+    const startTimeInput = tr.querySelectorAll('input[type="time"]')[0]; // Assuming this is the correct order
+    const endTimeInput = tr.querySelectorAll('input[type="time"]')[1]; // Assuming this is the correct order
+    const englishTourInput = tr.querySelectorAll('input[type="number"]')[0]; // Assuming this is the first number input
+    const dutchTourInput = tr.querySelectorAll('input[type="number"]')[1]; // Adjust if order is different
+    const chineseTourInput = tr.querySelectorAll('input[type="number"]')[2]; // Adjust if order is different
+
+    if (!dayInput || !startTimeInput || !endTimeInput || !englishTourInput || !dutchTourInput || !chineseTourInput) {
+        console.error('One or more inputs are missing in the DOM');
+        return; // Stop execution if any input is not found
+    }
+
+    const data = {
+        id: id,
+        day: dayInput.value,
+        start_time: startTimeInput.value,
+        end_time: endTimeInput.value,
+        english_tour: englishTourInput.value,
+        dutch_tour: dutchTourInput.value,
+        chinese_tour: chineseTourInput.value,
+    };
+
+    // Send the data to the server using fetch API
+    fetch('/api/historyadmin/updateTimeslot', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Update the view spans with new data
+            const viewElements = tr.querySelectorAll('.view');
+            const editInputs = tr.querySelectorAll('.edit');
+            
+            // Assuming the order of inputs and spans matches
+            viewElements[0].textContent = editInputs[0].value; // day
+            viewElements[1].textContent = editInputs[1].value; // start_time
+            viewElements[2].textContent = editInputs[2].value; // end_time
+            viewElements[3].textContent = editInputs[3].value; // english_tour
+            viewElements[4].textContent = editInputs[4].value; // dutch_tour
+            viewElements[5].textContent = editInputs[5].value; // chinese_tour
+            
+            // Toggle visibility
+            editInputs.forEach(input => input.style.display = 'none');
+            viewElements.forEach(span => span.style.display = '');
+            
+            // Toggle button visibility
+            tr.querySelector('.edit-btn').style.display = '';
+            tr.querySelector('.save-btn').style.display = 'none';
+        } else {
+            throw new Error('Failed to update timeslot');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error.message);
+    });
+}
+

@@ -2,6 +2,11 @@
 
 namespace App\Controllers;
 use App\Services\HistoryAdminService;
+use App\Services\CartService;
+use App\Models\HistoryTicket;
+use App\Models\Ticket;
+use App\Models\TicketType;
+use DateTime;
 
 class HistoryAdminController{
     private $historyAdminService;
@@ -68,4 +73,22 @@ class HistoryAdminController{
     }
     exit();
     }
+
+    public function updateTimeslot() {
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        $success = $this->historyAdminService->updateTimeslot(
+            $data['id'],
+            $data['day'],
+            $data['start_time'],
+            $data['end_time'],
+            $data['english_tour'],
+            $data['dutch_tour'],
+            $data['chinese_tour']
+        );
+    
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+    }
+    
 }
