@@ -46,7 +46,10 @@ session_start();
                 $cssFile = 'History/HistoryWindmill.css';
                 break;
             case 'HistoryAdmin':
-                $cssFile = 'admin/historyAdmin.css';
+                $cssFile = 'admin/HistoryAdmin.css';
+                break;
+            case 'HomeAdmin':
+                $cssFile = 'admin/HomeAdmin.css';
                 break;
             case 'historymain/cart':
                 $cssFile = 'History/HistoryAddingToCart.css';

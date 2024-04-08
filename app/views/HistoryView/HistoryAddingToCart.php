@@ -2,58 +2,39 @@
 
 
 <div class="ticket-selection-container">
-    <h2 class="ticket-title">Regular ticket</h2>
-    
-    <!-- Days and Timeslots -->
-    <div class="days-container">
+   
+    <!-- Timeslots Section -->
+    <div class="timeslots-section">
+        <h2 class="timeslots-title">Timeslots</h2>
         <?php
-        // Example array for days and times
-        $days = [
-            'July 25' => ['10:00 - 12:30', '13:00 - 15:30', '16:00 - 18:30'],
-            'July 26' => ['10:00 - 12:30', '13:00 - 15:30', '16:00 - 18:30'],
-            'July 27' => ['10:00 - 12:30', '13:00 - 15:30', '16:00 - 18:30'],
-            'July 28' => ['10:00 - 12:30', '13:00 - 15:30', '16:00 - 18:30']
-        ];
-
-        foreach ($days as $day => $timeslots) {
-            echo "<div class='day-column'>";
-            echo "<h3 class='day-name'>{$day}</h3>";
-            foreach ($timeslots as $timeslot) {
-                echo "<div class='timeslot'>";
-                echo "<span class='timeslot-time'>{$timeslot}</span>";
-                echo "<button class='add-to-cart'>ADD TO CART</button>";
-                echo "</div>";
-            }
-            echo "</div>";
-        }
+        $timeslots = $service->getAllTimeslots(); // Fetch timeslots from the service
+        foreach ($timeslots as $timeslot):
+            // Convert the 'day' from Y-m-d to a more readable format
+            $formattedDate = date("F j, l", strtotime($timeslot['day']));
         ?>
+            <div class="timeslot" data-timeslot-id="<?= $timeslot['id'] ?>">
+                <h3>Date: <?= htmlspecialchars($formattedDate) ?></h3>
+                <p><strong>Time:</strong> <?= htmlspecialchars($timeslot['start_time']) ?> - <?= htmlspecialchars($timeslot['end_time']) ?></p>
+                <div>
+                    <strong>Ticket Type:</strong>
+                    <label><input type="radio" name="ticketType_<?= $timeslot['id'] ?>" value="Regular" class="ticket-type"> Regular Ticket</label>
+                    <label><input type="radio" name="ticketType_<?= $timeslot['id'] ?>" value="Family" class="ticket-type"> Family Ticket</label>
+                </div>
+                <div>
+                    <strong>Language:</strong>
+                    <label><input type="radio" name="language_<?= $timeslot['id'] ?>" value="English" class="language"> English</label>
+                    <label><input type="radio" name="language_<?= $timeslot['id'] ?>" value="Dutch" class="language"> Dutch</label>
+                    <label><input type="radio" name="language_<?= $timeslot['id'] ?>" value="Chinese" class="language"> Chinese</label>
+                </div>
+                
+                <button class="add-to-cart-btn" disabled>Add to Cart</button>
+            </div>
+        <?php endforeach; ?>
+
     </div>
 
-    <!-- Language Selector and Ticket Options -->
-    <div class="options-container">
-        <div class="language-selector">
-            <span>SELECT LANGUAGE</span>
-            <select class="language-dropdown">
-                <option value="en">English</option>
-                <option value="zh">Chinese</option>
-                <option value="nl">Dutch</option>
-            </select>
-        </div>
-        <div class="tickets-options">
-            <div class="regular-ticket-option">
-                <img src="../img/icons/person-icon.png" alt="Regular Ticket Icon">
-                <span>Regular Ticket:</span>
-                <span>Price: €17,50</span>
-                <span>Drink: 1</span>
-            </div>
-            <div class="family-ticket-option">
-                <img src="../img/icons/family-icon.png" alt="Family Ticket Icon">
-                <span>Family Ticket:</span>
-                <span>Price: €60 (Max 4 people)</span>
-                <span>Drink: 1 (per person)</span>
-            </div>
-        </div>
-    </div>
 </div>
+
+    <script src="/js/History/HistoryAddingToCart.js"></script>
 
 <?php include __DIR__ . '/../footer.php'; ?>
