@@ -69,27 +69,29 @@ class signupcontroller
         $phoneNumber = $_POST['phoneNumber'];
 
         $userService = new UserService();
+
+        session_start();
         try{
             if($userService->checkForUserName($userName)){
-                echo '<div class="alert alert-danger">Username already exists</div>'; //TODO: Display error message in the view
-                return "Username already exists";
+                $this->returnError('Username already exists');
             }
             else if($userService->checkForEmail($email)){
-                echo '<div class="alert alert-danger">Email already exists</div>';
-                return "Email already exists";
+                $this->returnError('Email already exists');
             }
             else{
-                //  public function addUser($userName, $firstName, $lastName, $email, $password, $photo)
-
-
                 $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber);
+                $_SESSION['user'] = $userService->loginByUserName($userName, $password);
+                header('Location: /');
             }
         }catch (PDOException $e) {
             echo '<div class="alert alert-danger">An error occurred during registration.</div>';
             return "An error occurred during registration";
         }
-        session_start();
-        $_SESSION['user'] = $userService->loginByUserName($userName, $password);
-        header('Location: /');
+    }
+
+    private function returnError($message){
+        $_SESSION['error'] = $message;
+        header('Location: /signup'); // Redirect back to the signup page
+        exit();
     }
 }

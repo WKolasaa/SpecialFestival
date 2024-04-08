@@ -70,15 +70,15 @@ h2{
     font-size: 25px;
     color: black;
   }
- 
+
     #navbar{
     display: flex;
     align-items: center;
     justify-content: right;
     }
-  
+
   /* Logo */
-  .navbar-brand{ 
+  .navbar-brand{
     font-size: 24px;
     font-weight: 700;
     color: #000000;
@@ -96,4 +96,24 @@ h2{
     font-weight: 500;
     transition:0.3s ease-in-out;
   }
- 
+
+/*Test*/
+.offcanvas {
+    left: auto; /* Remove the default left positioning */
+    right: 0; /* Position the offcanvas menu to the right */
+    width: 80%; /* Adjust the width as needed */
+    background-color: white; /* Adjust background color */
+}
+
+.offcanvas-body {
+    padding: 20px; /* Add padding for spacing */
+}
+
+.offcanvas-header,
+.offcanvas-body .navbar-nav .nav-link {
+    color: black; /* Adjust text color */
+}
+
+#offcanvasNavbar a:hover {
+    color: gray; /* Adjust hover color */
+}
