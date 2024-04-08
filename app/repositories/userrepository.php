@@ -140,18 +140,18 @@ class UserRepository extends Repository
         return $users;
     }
 
- protected function executeQuery($sql)
- {
-     try {
-         $statement = $this->connection->prepare($sql);
-         $statement->execute();
-         return $statement->fetchAll(PDO::FETCH_ASSOC);
-     } catch (\PDOException $e) {
-         throw new \PDOException("Query execution failed: " . $e->getMessage());
-     }
- }
+    protected function executeQuery($sql): array|bool
+    {
+        try {
+            $statement = $this->connection->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException("Query execution failed: " . $e->getMessage());
+        }
+    }
 
-    public function addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber)
+    public function addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber)
     {
         $sql = "INSERT INTO user (userName, firstName, lastName, email, password, photo,phoneNumber) VALUES (:userName, :firstName, :lastName, :email, :password, :photo,:phoneNumber)";
         $statement = $this->connection->prepare($sql);
@@ -198,10 +198,10 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'],$row['phoneNumber']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
             return $user;
         }
-        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'],$row['phoneNumber']);
+        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
     }
 
     public function getUserByEmail($email)
@@ -214,7 +214,7 @@ class UserRepository extends Repository
         if (!$row) {
             return null;
         }
-        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'],$row['phoneNumber']);
+        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
         return $user;
     }
 
@@ -228,7 +228,7 @@ class UserRepository extends Repository
         if (!$row) {
             return null;
         }
-        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'],$row['email'], $row['photo'],$row['phoneNumber']);
+        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
         return $user;
 
     }
@@ -281,9 +281,9 @@ class UserRepository extends Repository
             $statement->execute($params);
             $rowCount = $statement->rowCount();
 
-        // Display the SQL query with actual values
-        // $queryWithValues = $this->interpolateQuery($sql, $params);
-        // echo "SQL query with values: " . $queryWithValues . "\n";
+            // Display the SQL query with actual values
+            // $queryWithValues = $this->interpolateQuery($sql, $params);
+            // echo "SQL query with values: " . $queryWithValues . "\n";
 
             if ($rowCount > 0) {
                 return true;
