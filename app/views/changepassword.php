@@ -8,7 +8,7 @@
             <form id="changePasswordForm" onsubmit="return false;">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION["email"] ?>" readonly>
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>" readonly>
                 </div>
 
                 <div class="form-group">

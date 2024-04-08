@@ -17,6 +17,7 @@ class changepasswordcontroller
         $tokenService = new tokenservice();
         $response = $tokenService->checkToken($email, $token);
         if($response == "Token is valid"){
+            //session_start();
             $_SESSION['email'] = $email;
             include '../views/changepassword.php';
         }

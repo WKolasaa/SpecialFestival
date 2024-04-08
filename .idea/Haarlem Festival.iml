@@ -11,7 +11,6 @@
       <sourceFolder url="file://$MODULE_DIR$/app/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
       <sourceFolder url="file://$MODULE_DIR$/app/./services" isTestSource="false" packagePrefix="App\Services\" />
       <sourceFolder url="file://$MODULE_DIR$/app/./views" isTestSource="false" packagePrefix="App\Views\" />
-      <sourceFolder url="file://$MODULE_DIR$/app/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/promises" />
@@ -27,6 +26,19 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/phenx/php-font-lib" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/phenx/php-svg-lib" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/sabberworm/php-css-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-iconv" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-php72" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/voku/anti-xss" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/voku/portable-utf8" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
