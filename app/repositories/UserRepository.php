@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\User;
+
 use PDO;
-use PDOException;
 
 class UserRepository extends Repository
 {
@@ -13,7 +12,7 @@ class UserRepository extends Repository
     {
 
 
-        $sql = "SELECT id, userName, password, userRole, registrationDate,firstName,lastName,email,photo, phoneNumber FROM user";
+        $sql = "SELECT id, userName, password, userRole, registrationDate,firstName,lastName,email,photo,phoneNumber FROM user";
         $rows = $this->executeQuery($sql);
 
         if (!$rows) {
@@ -22,42 +21,6 @@ class UserRepository extends Repository
         }
 
         return $this->mapToUserObjects($rows);
-    }
-
-    protected function executeQuery($sql): false|array
-    {
-        try {
-            $statement = $this->connection->prepare($sql);
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            throw new PDOException("Query execution failed: " . $e->getMessage());
-        }
-    }
-
-    private function mapToUserObjects($rows)
-    {
-        $users = [];
-
-        foreach ($rows as $row) {
-            $id = $row['id'];
-            $username = $row['userName'];
-            $password = $row['password'];
-            $userRole = $row['userRole'];
-            $registeredDate = $row['registrationDate'];
-            $email = $row['email'];
-            $firstName = $row['firstName'];
-            $lastName = $row['lastName'];
-            $photo = $row['photo'];
-            $phoneNumber = $row['phoneNumber'];
-
-
-            $user = new User($id, $username, $password, $userRole, $registeredDate, $firstName, $lastName, $email, $photo,$phoneNumber);
-
-            $users[] = $user;
-        }
-
-        return $users;
     }
 
     public function updateUserByAdmin(User $user)
@@ -90,9 +53,9 @@ class UserRepository extends Repository
                 // No rows were affected, possibly because the user ID was not found
                 return false;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new PDOException('Error updating user information: ' . $e->getMessage());
+            throw new \PDOException('Error updating user information: ' . $e->getMessage());
         }
     }
 
@@ -107,9 +70,9 @@ class UserRepository extends Repository
             $stmt->execute();
 
             return true; // Return true if deletion is successful
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new PDOException('Error deleting user: ' . $e->getMessage());
+            throw new \PDOException('Error deleting user: ' . $e->getMessage());
 
         }
 
@@ -144,15 +107,53 @@ class UserRepository extends Repository
                 // No rows were affected, possibly because the user ID was not found
                 return false;
             }
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new PDOException('Error creating user: ' . $e->getMessage());
+            throw new \PDOException('Error creating user: ' . $e->getMessage());
+        }
+    }
+
+
+
+    private function mapToUserObjects($rows)
+    {
+        $users = [];
+
+        foreach ($rows as $row) {
+            $id = $row['id'];
+            $username = $row['userName'];
+            $password = $row['password'];
+            $userRole = $row['userRole'];
+            $registeredDate = $row['registrationDate'];
+            $email = $row['email'];
+            $firstName = $row['firstName'];
+            $lastName = $row['lastName'];
+            $photo = $row['photo'];
+            $phoneNumber = $row['phoneNumber'];
+
+
+            $user = new User($id, $username, $password, $userRole, $registeredDate, $firstName, $lastName, $email, $photo, $phoneNumber);
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
+    protected function executeQuery($sql): array|bool
+    {
+        try {
+            $statement = $this->connection->prepare($sql);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            throw new \PDOException("Query execution failed: " . $e->getMessage());
         }
     }
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber)
     {
-        $sql = "INSERT INTO user (userName, firstName, lastName, email, password, photo, phoneNumber) VALUES (:userName, :firstName, :lastName, :email, :password, :photo, :phoneNumber)";
+        $sql = "INSERT INTO user (userName, firstName, lastName, email, password, photo,phoneNumber) VALUES (:userName, :firstName, :lastName, :email, :password, :photo,:phoneNumber)";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':userName', $userName);
         $statement->bindParam(':firstName', $firstName);
@@ -163,14 +164,14 @@ class UserRepository extends Repository
         $statement->bindParam(':phoneNumber', $phoneNumber);
         try {
             $statement->execute();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
     }
 
     public function loginByEmail($email, $password)
     {
-        $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo, phoneNumber FROM user WHERE email = :email";
+        $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo,phoneNumber FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
@@ -179,7 +180,7 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) {
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
 
             return $user;
         }
@@ -188,7 +189,7 @@ class UserRepository extends Repository
 
     public function loginByUserName($userName, $password)
     {
-        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo, phoneNumber FROM user WHERE userName = :userName";
+        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo,phoneNumber FROM user WHERE userName = :userName";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':userName', $userName);
         $statement->execute();
@@ -197,15 +198,15 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
+            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
             return $user;
         }
-        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
+        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
     }
 
     public function getUserByEmail($email)
     {
-        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo, phoneNumber FROM user WHERE email = :email";
+        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo,phoneNumber FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':email', $email);
         $statement->execute();
@@ -215,6 +216,21 @@ class UserRepository extends Repository
         }
         $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['email'], $row['firstName'], $row['lastName'], $row['photo'], $row['phoneNumber']);
         return $user;
+    }
+
+    public function getUserById($userId)
+    {
+        $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo,phoneNumber FROM user WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $userId);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
+        return $user;
+
     }
 
     public function checkForUserName($userName)
@@ -241,6 +257,61 @@ class UserRepository extends Repository
             return false;
         }
         return true;
+    }
+
+    public function updateUser(User $user)
+    {
+
+        // var_dump($user);
+        try {
+            $sql = "UPDATE user SET userName = :userName, firstName = :firstName, lastName = :lastName, email = :email, password = :password, photo = :photo, userRole=:userRole, phoneNumber=:phoneNumber WHERE id = :id";
+            $params = [
+                ':userName' => $user->getUsername(),
+                ':firstName' => $user->getFirstName(),
+                ':lastName' => $user->getLastName(),
+                ':email' => $user->getEmail(),
+                ':password' => $user->getPassword(),
+                ':photo' => $user->getPhoto(),
+                ':id' => $user->getId(),
+                ':userRole' => $user->getUserRole(),
+                ':phoneNumber' => $user->getPhoneNumber()
+            ];
+            $statement = $this->connection->prepare($sql);
+
+            $statement->execute($params);
+            $rowCount = $statement->rowCount();
+
+            // Display the SQL query with actual values
+            // $queryWithValues = $this->interpolateQuery($sql, $params);
+            // echo "SQL query with values: " . $queryWithValues . "\n";
+
+            if ($rowCount > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error updating user information: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteUser($userId)
+    {
+        try {
+            $sql = "DELETE FROM user WHERE id = :id";
+            $params = [':id' => $userId];
+            $statement = $this->connection->prepare($sql);
+            $statement->execute($params);
+            $rowCount = $statement->rowCount();
+
+            if ($rowCount > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error deleting user: ' . $e->getMessage());
+        }
     }
 
     public function updatePassword($new_password, $email)
