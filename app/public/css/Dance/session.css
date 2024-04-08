@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Lexend+Deca:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Lexend+Deca:wght@100..900&display=swap");
 body {
   margin: 0;
   padding: 0;
@@ -98,11 +98,11 @@ body {
 }
 
 .line-div {
-  width: 73vh;
+  width: 65vh;
   border-top: 1px solid #fdc500;
   box-sizing: border-box;
   height: 1px;
-  margin-left: 80vh;
+  margin-left: 20px;
 }
 .nav-item .navButton {
   border-radius: 10px 10px 0 0;
@@ -255,8 +255,6 @@ body {
   color: white !important;
 }
 
-
-
 /* Golden Ticket Design */
 .full-event-access {
   display: flex;
@@ -264,7 +262,7 @@ body {
   align-items: center;
   flex-direction: column;
   margin-top: 80px;
-  color: #FFCE31;
+  color: #ffce31;
   font-family: "Lexend Deca", sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
@@ -276,7 +274,9 @@ body {
   justify-content: center;
 }
 
-.day-1,.day-2,.day-3 {
+.day-1,
+.day-2,
+.day-3 {
   margin-top: 40px;
   font-family: "Almarai", sans-serif;
   font-weight: 800;
@@ -284,10 +284,17 @@ body {
   color: white;
   font-size: 35px;
 }
-.friday-262024, .saturday-272024, .sunday-282024 {
+.friday-262024,
+.saturday-272024,
+.sunday-282024 {
   font-family: "Almarai", sans-serif;
   font-weight: 200;
   font-style: normal;
   color: white;
   font-size: 25px;
+}
+@media (max-width: 868px) {
+  .ticket .btn {
+    width: auto;
+  }
 }

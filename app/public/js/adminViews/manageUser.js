@@ -58,9 +58,12 @@ function displayUsers(users) {
 function filterUsers(role) {
     if (role === 'all') {
         displayUsers(allUsers); // Display all users
+        restoreHeaders();
     } else {
         const filteredUsers = allUsers.filter(user => user.userRole.toLowerCase() === role.toLowerCase());
         displayUsers(filteredUsers); // Display users with the specified role
+        restoreHeaders();
+
     }
 }
 
@@ -318,10 +321,10 @@ function handleDeleteButtonClick(event) {
         alert('An error occurred while deleting user.');
     });
 }
+
 /////////////////////////Create user /////////////////////////////
 
 function AddUser() {
-    // Remove the existing table header
 
     const userList = document.getElementById('userList');
      const idHeader = document.querySelector('.id-column');
@@ -389,7 +392,7 @@ function saveNewUser() {
         if (response.ok) {
             alert('User created successfully!');
             loadData(); // Reload the user data
-            restoreRegistrationDateHeader(); // Restore the "Registration Date" header
+            restoreHeaders();
 
         } else {
             alert('Failed to create user. Please try again.');
@@ -411,11 +414,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function restoreRegistrationDateHeader() {
+  
+function restoreHeaders() {
+    const idHeader = document.querySelector('.id-column');
+    const usernameHeader = document.querySelector('.userName-column');
     const registrationDateHeader = document.querySelector('.registrationDate-column');
+
+    if (idHeader) {
+        idHeader.textContent = 'ID';
+    }
+
+    if (usernameHeader) {
+        usernameHeader.textContent = 'Username';
+    }
+
     if (registrationDateHeader) {
         registrationDateHeader.textContent = 'Registration Date';
     }
 }
-  
 
