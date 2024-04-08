@@ -37,13 +37,13 @@ include 'head.php';
                                 <a class="nav-link" href="/HistoryAdmin">History</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/yummy">Yummy</a>
+                                <a class="nav-link" href="/Yummy">Yummy</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/orders">Orders</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/manageuser">Users</a>
+                                <a class="nav-link" href="/ManageUser">Users</a>
                             </li>
                         <?php else: ?>
                             <!-- Regular navigation -->
