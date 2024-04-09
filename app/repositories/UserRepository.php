@@ -140,7 +140,7 @@ class UserRepository extends Repository
         return $users;
     }
 
-    protected function executeQuery($sql): array|bool
+    protected function executeQuery($sql): array
     {
         try {
             $statement = $this->connection->prepare($sql);

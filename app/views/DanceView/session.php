@@ -1,7 +1,6 @@
 <?php include __DIR__ . '/../header.php';
 ?>
 
-
 <div class="background-image">
   <div class="overlay"></div> <!-- Add overlay div for brightness adjustment -->
   <div class="container">

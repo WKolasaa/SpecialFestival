@@ -67,8 +67,9 @@ class TicketRepository extends Repository
     public function addTicket(Ticket $ticket)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ticket (event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date) VALUES (:event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date)");
+            $stmt = $this->connection->prepare("INSERT INTO ticket (ticketId, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date) VALUES (:ticketId, :event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date)");
             //TODO: we should use getter and setter methods to get the values of the ticket object
+            $ticketId= $ticket->getTicketId();
             $event_name = $ticket->getEventName();
             $ticket_Type = $ticket->getTicketType()->value;
             $ticket_name = $ticket->getTicketName();
@@ -78,6 +79,7 @@ class TicketRepository extends Repository
             $start_date = $ticket->getStartDate()->format('Y-m-d H:i:s');
             $end_date = $ticket->getEndDate()->format('Y-m-d H:i:s');
 
+            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
             $stmt->bindParam(':event_name', $event_name, PDO::PARAM_STR);
             $stmt->bindParam(':ticket_Type', $ticket_Type, PDO::PARAM_INT);
             $stmt->bindParam(':ticket_name', $ticket_name, PDO::PARAM_STR);
@@ -88,6 +90,7 @@ class TicketRepository extends Repository
             $stmt->bindParam(':end_date', $end_date, PDO::PARAM_STR);
 
             $stmt->execute();
+            
             return true;
         } catch (\PDOException $e) {
             throw new \PDOException('Error adding ticket: ' . $e->getMessage());

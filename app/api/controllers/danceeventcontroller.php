@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\DanceEventService;
+use App\Services\UserTicketService;
 use Exception;
 use App\Models\Artist;
 use App\Models\DanceOverView;
@@ -11,10 +12,12 @@ use App\Models\DanceOverView;
 class DanceEventController
 {
     private $danceEventService;
+    private $userTicketService;
 
     function __construct()
     {
         $this->danceEventService = new DanceEventService();
+        $this->userTicketService = new UserTicketService();
     }
 
     public function Artists()
@@ -565,13 +568,35 @@ class DanceEventController
     }
     $sanitizedTicketData = $this->sanitizeSessionData($decodedData);
     try {
-      $this->danceEventService->addTicket($sanitizedTicketData);
+        // var_dump($sanitizedTicketData);
+    $this->danceEventService->addTicket($sanitizedTicketData);
+    $danceTicket=$this->danceEventService->convertSessionToTicket($sanitizedTicketData);
+
+    session_start();
+    $userId=$_SESSION['userId'];
+   
+    
+      $this->userTicketService->addUserTicket($danceTicket,$userId); ///
     //   echo json_encode(['message' => 'Ticket added successfully']);
     } catch (Exception $e) {
         error_log('Error in ticketService->addTicket: ' . $e->getMessage());
     }
 
   }
+
+  public function checkUser() {
+    session_start();
+    if (isset($_SESSION['user'])) {
+        echo json_encode(['hasSession' => true]);
+    } else {
+        echo json_encode(['hasSession' => false]);
+    }
+}
+
+
+
+
+
 
 
     private function sanitizeArtistData($artistData) // Use a different name for the parameter to avoid confusion

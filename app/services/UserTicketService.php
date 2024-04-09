@@ -16,6 +16,7 @@ class UserTicketService
     {
         $this->userTicketRepository = new UserTicketRepository();
         $this->ticketRepository = new TicketRepository();
+
     }
 
     public function getAllUserTicketsByUserId(int $userId): array
@@ -37,6 +38,8 @@ class UserTicketService
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket, $userId);
         } else {
+             echo "ADD USER TICKET SERVICE";
+            // var_dump($ticket, $userId);
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }
@@ -50,4 +53,6 @@ class UserTicketService
     {
         $this->userTicketRepository->addTicketQuantity($ticket, $userId, -1);
     }
+
+    
 }

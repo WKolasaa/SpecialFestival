@@ -36,6 +36,7 @@ class LoginController
         if ($user) {
             session_start();
             $_SESSION['user'] = $user;
+            $_SESSION['userId'] = $user->getId();
             header('Location: /');
         } else {
             echo "Wrong username or password";
