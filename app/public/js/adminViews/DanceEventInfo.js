@@ -887,6 +887,8 @@ if(!artistExists)
 //////////////////////////CRUD Overview data//////////////////////////
 
 function displayOverviews(overviews) {
+
+  
   const overviewContainer = document.getElementById("danceOverview-container");
   overviewContainer.innerHTML = "";
   overviewContainer.className = "row";
@@ -980,6 +982,8 @@ function displayOverviews(overviews) {
     overviewContainer.appendChild(overviewCard);
   });
 }
+
+
 function decodeHtmlEntities(str) {
   var textArea = document.createElement("textarea");
   textArea.innerHTML = str;

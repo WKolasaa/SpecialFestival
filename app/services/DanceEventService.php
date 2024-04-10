@@ -335,7 +335,7 @@ class DanceEventService
         }
     }
 
-    private function convertSessionToTicket(array $sessionData): Ticket
+    public function convertSessionToTicket(array $sessionData): Ticket
     {
 
         $requiredKeys = ['artistName', 'venue', 'sessionPrice', 'startSession', 'endSession'];

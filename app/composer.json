@@ -4,7 +4,8 @@
     "require": {
         "resend/resend-php": "^0.12.0",
         "phpoffice/phpspreadsheet": "^2.0",
-        "stripe/stripe-php": "v13.18.0"
+        "stripe/stripe-php": "v13.18.0",
+        "chillerlan/php-qrcode": "dev-main#<commit_hash>"
     },
     "autoload": {
         "psr-4": {

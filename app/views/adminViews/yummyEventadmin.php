@@ -3,7 +3,7 @@
 ?>
 
 
-<script src="js/adminViews/YummyAdmin.js"></script>
+<script src="/js/adminViews/YummyAdmin.js"></script>
 
 <div class="parent-container">
     <div class="sidebar">

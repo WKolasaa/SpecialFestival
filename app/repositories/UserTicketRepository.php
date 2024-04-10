@@ -1,7 +1,9 @@
 <?php
 namespace App\Repositories;
+
 use App\Models\Ticket;
 use PDO;
+use App\Models\QrCode;
 
 class UserTicketRepository extends Repository
 {
@@ -44,7 +46,7 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
-        return (bool)$row;
+        return (bool) $row;
     }
 
     public function markTicketsAsPaid(int $userId): void
@@ -54,4 +56,41 @@ class UserTicketRepository extends Repository
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    private function getTicketId(Ticket $ticket)
+    {
+        $sql = "SELECT id FROM ticket WHERE ticketId = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $id = $row['id'];
+        return $id;
+    }
+
+
+    public function checkAndGenerateQrForPaidTicket(int $ticketId)
+    {
+        // Get the ticket from the user_tickets table
+        $sql = "SELECT * FROM user_tickets WHERE ticket_id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->execute();
+        $ticket = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($ticket && $ticket['paid'] == 1) {
+            // Insert a row into the qr table
+            $sql = "INSERT INTO qr (user_ticket_id, scan) VALUES (:userTicketId, :scan)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':userTicketId', $ticketId, PDO::PARAM_INT);
+            $stmt->bindValue(':scan', 0, PDO::PARAM_INT); // Set scan to 0 (not scanned)
+            $stmt->execute();
+
+        } else {
+            // The ticket is not paid or does not exist, return an error
+            throw new \Exception("Ticket with id $ticketId does not exist or is not paid");
+        }
+    }
+
+
 }

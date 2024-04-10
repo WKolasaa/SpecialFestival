@@ -448,39 +448,6 @@ class DanceEventRepository extends Repository
         }
     }
 
-    // public function addSession(Session $session){
-    //     try {
-
-    //         $stmt = $this->connection->prepare("INSERT INTO session (artistName, startSession, sessionDate, venue, sessionPrice, sessionType, endSession) VALUES (:artistName, :startSession, :sessionDate, :venue, :sessionPrice, :sessionType, :endSession)");
-    //         $artistName = $session->getArtistName();
-    //         $startSession = $session->getStartSession();
-    //         $sessionDate = $session->getSessionDate();
-    //         $venue = $session->getVenue();
-    //         $sessionPrice = $session->getSessionPrice();
-    //         $sessionType = $session->getSessionType();
-    //         $endSession = $session->getEndSession();
-    //         $stmt->bindParam(':artistName', $artistName, PDO::PARAM_STR);
-    //         // $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
-    //         if ($startSession !== NULL) {
-    //             $stmt->bindParam(':startSession', $startSession, PDO::PARAM_STR);
-    //         }
-
-    //         $stmt->bindParam(':sessionDate', $sessionDate, PDO::PARAM_STR);
-    //         $stmt->bindParam(':venue', $venue, PDO::PARAM_STR);
-    //         $stmt->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR);
-    //         $stmt->bindParam(':sessionType', $sessionType, PDO::PARAM_STR);
-    //         // $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
-    //         if ($endSession !== NULL) {
-    //             $stmt->bindParam(':endSession', $endSession, PDO::PARAM_STR);
-    //         }
-    //         $stmt->execute();
-
-    //         return true; // Return true if insertion is successful
-    //     } catch (\PDOException $e) {
-    //         // Handle the exception (log, show an error message, etc.)
-    //         throw new \PDOException('Error adding session: ' . $e->getMessage());
-    //     }
-    // }
     public function addSession(Session $session)
     {
         try {
