@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\RestaurantRepository;
+use App\Repositories\TicketRepository;
 
 class RestaurantService
 {
@@ -76,5 +77,10 @@ class RestaurantService
     public function deleteReservation($reservationID)
     {
         return $this->restaurantRepository->deleteReservation($reservationID);
+    }
+
+    public function addTicket($ticket){
+        $ticketRepository = new TicketRepository();
+        return $ticketRepository->addTicket($ticket);
     }
 }
