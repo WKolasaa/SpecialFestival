@@ -9,7 +9,6 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haarlem Festival</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" /> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/festival.css">
 
@@ -25,48 +24,53 @@ session_start();
             case '':
                 $cssFile = 'homeStyle.css';
                 break;
-                case 'adminView/orders':
+                case 'AdminView/orders':
                     $cssFile = 'admin/orders.css';
                     break;
-            case 'adminView/manageUser':
+            case 'AdminView/manageUser':
                 $cssFile = 'admin/manageuser.css';
                 break;
-            case 'danceevent':
+            case 'DanceEvent':
                 $cssFile = 'Dance/overview.css';
                 break;
-            case 'adminView/dance':
+            case 'AdminView/dance':
                 $cssFile = 'admin/danceAdminEvent.css';
-
                 break;
             case 'HistoryMain':
                 $cssFile = 'History/HistoryMain.css';
                 break;
-            case 'historymain/port':
+            case 'HistoryMain/port':
                 $cssFile = 'History/HistoryPort.css';
                 break;
-            case 'historymain/windmill':
+            case 'HistoryMain/windmill':
                 $cssFile = 'History/HistoryWindmill.css';
                 break;
-            case 'HistoryAdmin':
-                $cssFile = 'admin/historyAdmin.css';
+            case 'AdminView/history':
+                $cssFile = 'admin/HistoryAdmin.css';
+                break;
+            case 'HomeAdmin':
+                $cssFile = 'admin/HomeAdmin.css';
                 break;
             case 'historymain/cart':
                 $cssFile = 'History/HistoryAddingToCart.css';
                 break;
-            case 'danceevent/agenda':
+            case 'DanceEvent/agenda':
                 $cssFile = 'Dance/agenda.css';
                 break;
-            case 'danceevent/session':
+            case 'DanceEvent/session':
                 $cssFile = 'Dance/session.css';
                 break;
-            case 'danceevent/artist':
+            case 'DanceEvent/artist':
                 $cssFile = 'Dance/artist.css';
                 break;
             case 'YummyMain':
                 $cssFile = 'YummyMain.css';
                 break;
-            case 'admin/yummyAdmin':
+            case 'AdminView/yummy':
                 $cssFile = 'admin/danceAdminEvent.css';
+                break;
+            case 'FestPlan':
+                $cssFile = 'festplan.css';
                 break;
             default:
                 $defaultCssFile = 'festival.css';

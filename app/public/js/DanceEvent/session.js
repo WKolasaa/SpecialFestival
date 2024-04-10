@@ -12,7 +12,8 @@ function loadSessions() {
     });
 }
 
-function displaySessions(sessions) { //TODO: check the method again
+function displaySessions(sessions) {
+  //TODO: check the method again
   // Get the template for the sessions
   const template = document.querySelector(".ticket");
 
@@ -123,7 +124,8 @@ function displaySessions(sessions) { //TODO: check the method again
 
 loadSessions();
 
-function getImagePath(artistName) { //TODO: try to do it based on the artistImage
+function getImagePath(artistName) {
+  //TODO: try to do it based on the artistImage
   const images = {
     afrojack: "../../img/DanceEvent/Afrojack.jpeg",
     "armin van buuren": "../../img/DanceEvent/Armin van Buuren.jpeg",
@@ -184,18 +186,23 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function displayGoldenTicket(sessions) {
-  const template = document.querySelector(".ticket"); 
+  const template = document.querySelector(".ticket");
 
-  const goldenTicketContainer = document.querySelector(".goldenTicketContainer");
+  const goldenTicketContainer = document.querySelector(
+    ".goldenTicketContainer"
+  );
   goldenTicketContainer.innerHTML = "";
-  const goldenTicketSession = sessions.find(session => session.artistName === 'Golden Ticket');
-  
+  const goldenTicketSession = sessions.find(
+    (session) => session.artistName === "Golden Ticket"
+  );
+
   const row = template.cloneNode(true);
 
   const imagePath = getImagePath(goldenTicketSession.artistName);
   row.querySelector(".group-child").src = imagePath;
   row.querySelector(".group-child").style.border = "0.5px solid #FFCE31";
-  row.querySelector(".artist-name").textContent = goldenTicketSession.artistName;
+  row.querySelector(".artist-name").textContent =
+    goldenTicketSession.artistName;
   row.querySelector(".artist-name").style.color = "#FFCE31";
   row.querySelector(".session").textContent = goldenTicketSession.sessionType;
   row.querySelector(".month").textContent = "July";
@@ -214,17 +221,24 @@ function displayGoldenTicket(sessions) {
   row.querySelector(".year").style.color = "black";
 
   let venueText = goldenTicketSession.venue;
-  venueText = venueText.substring(0, venueText.length / 2) + "<br>" + venueText.substring(venueText.length / 2);
+  venueText =
+    venueText.substring(0, venueText.length / 2) +
+    "<br>" +
+    venueText.substring(venueText.length / 2);
   row.querySelector(".location").innerHTML = venueText;
 
   row.querySelector(".time-price p").innerHTML = "";
 
-  row.querySelector(".price").innerHTML = `<i class="fa fa-euro-sign"></i> ${goldenTicketSession.sessionPrice}`;
+  row.querySelector(
+    ".price"
+  ).innerHTML = `<i class="fa fa-euro-sign"></i> ${goldenTicketSession.sessionPrice}`;
 
   // Append the row to the goldenTicketContainer
   goldenTicketContainer.appendChild(row);
   const addButton = row.querySelector(".btn");
-  addButton.addEventListener("click", () => addToCart(goldenTicketSession,addButton));
+  addButton.addEventListener("click", () =>
+    addToCart(goldenTicketSession, addButton)
+  );
 
   // Remove the template
   template.remove();
@@ -232,25 +246,38 @@ function displayGoldenTicket(sessions) {
 
 //////////////////////////Adding Tickets to Cart//////////////////////////
 
-function addToCart(session,button) {
-  console.log("Sending session data: ", session);
+function addToCart(session, button) {
+  checkUserSession().then((hasSession) => {
+    if (!hasSession) {
+      alert("Please log in to add items to the cart.");
+      return;
+    }
 
-  fetch("http://localhost/api/danceevent/addTicket", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(session),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Ticket added successfully");
-        button.style.backgroundColor = "#1734F7";
-        button.textContent = "Ticket Added";
-        // button.disabled = true; check it
-      } else {
-        console.error("Error:", response.status, response.statusText);
-      }
+    fetch("http://localhost/api/danceevent/addTicket", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(session),
     })
-    .catch((error) => console.error("Error:", error));
+      .then((response) => {
+        if (response.ok) {
+          console.log("Ticket added successfully");
+          button.style.backgroundColor = "#1734F7";
+          button.textContent = "Ticket Added";
+          // button.disabled = true; check it
+          return response.text();
+        } else {
+          console.error("Error:", response.status, response.statusText);
+        }
+      })
+      .then((text) => console.log(text)) // log the response body
+      .catch((error) => console.error("Error:", error));
+  });
+}
+
+function checkUserSession() {
+  return fetch("http://localhost/api/danceevent/checkUser")
+    .then((response) => response.json())
+    .then((data) => data.hasSession);
 }

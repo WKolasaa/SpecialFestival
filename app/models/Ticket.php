@@ -6,6 +6,7 @@ use DateTime;
 class Ticket implements \JsonSerializable
 {
 
+  private int $ticketId; //this maybe session, reservation or Tour
   private int $id;
   private string $event_name;
   private TicketType $ticket_Type;
@@ -16,9 +17,11 @@ class Ticket implements \JsonSerializable
   private DateTime $start_date;
   private DateTime $end_date;
 
-  public function __construct(int $id, string $event_name, TicketType $ticket_Type, string $ticket_name, string $location,string $description, int $price, DateTime $start_date, DateTime $end_date)
+  public int $cart_id;
+
+  public function __construct(int $ticketId, string $event_name, TicketType $ticket_Type, string $ticket_name, string $location,string $description, int $price, DateTime $start_date, DateTime $end_date)
   {
-    $this->id = $id;
+    $this->ticketId = $ticketId;
     $this->event_name = $event_name;
     $this->ticket_Type = $ticket_Type;
     $this->ticket_name = $ticket_name;
@@ -28,9 +31,15 @@ class Ticket implements \JsonSerializable
     $this->start_date = $start_date;
     $this->end_date = $end_date;
   }
-  public function getTicketId()
+
+  public  function getId()
   {
     return $this->id;
+  }
+
+  public function getTicketId()
+  {
+    return $this->ticketId;
   }
 
   public function getEventName()
@@ -124,4 +133,5 @@ class Ticket implements \JsonSerializable
     $vars = get_object_vars($this);
     return $vars;
   }
+
 }

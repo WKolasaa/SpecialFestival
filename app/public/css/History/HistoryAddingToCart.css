@@ -7,84 +7,98 @@ body, html {
     font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-.ticket-selection-container {
-    min-height: 100vh; /* Ensures minimum height of the viewport */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .ticket-title {
     margin-top: 30px;
     margin-bottom: 30px;
     color: white;
+    text-align: center; /* Center the title */
 }
 
-.days-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
-
-.day-column {
-    margin-right: 20px;
-}
-
-.day-name {
-    text-align: center;
-    margin-bottom: 20px;
+.timeslots-section {
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #D8DFE0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 14px; /* Smaller font size for the entire section */
 }
 
 .timeslot {
-    background: lightblue; /* Placeholder color */
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
+    margin-bottom: 15px; /* Reduced margin */
+    padding: 8px; /* Reduced padding */
+    background-color: #5674AE;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.add-to-cart {
-    display: block;
-    width: 100%;
-    padding: 10px 0;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #0044cc;
+.timeslot h3 {
+    color: #000000;
+    margin-top: 0;
+    font-size: 20px; /* Smaller title font size */
+}
+
+.timeslot p, .timeslot .languages {
+    color: #ffffff;
+    margin: 4px 0; /* Reduced margin */
+    line-height: 1.4; /* Adjusted line height for compactness */
+    font-size: 13px; /* Smaller paragraph font size */
+}
+
+.languages {
+    display: flex; /* Aligns the language badges in a row */
+    gap: 8px; /* Reduced gap */
+    flex-wrap: wrap;
+}
+
+.timeslot .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px; /* Reduced padding */
+    background-color: #007bff;
     color: white;
-    cursor: pointer;
+    border-radius: 12px; /* Adjusted border radius */
+    font-size: 12px; /* Reduced font size */
 }
 
-.options-container {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+
+.buy-tickets-button-container {
+    text-align: center;
+    width: calc(100% - 40px); /* Subtract the padding from the total width */
+    padding: 20px 0; /* Padding on top and bottom only */
 }
 
-.language-selector {
-    margin: 20px 0;
+.buy-tickets-button {
+    background-color: #005483; /* Adjust button color as needed */
+    color: white;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.5em;
+    border-radius: 25px;
+    box-shadow: 4px 4px 0 #090732;
+    transition: background-color 0.3s ease;
+    width: auto; /* Auto width based on content */
+    display: inline-block; /* Allows the button to have auto width */
 }
 
-.tickets-options {
-    display: flex;
-    justify-content: space-around;
+.buy-tickets-button:hover {
+    background-color: #014871; /* Darker shade on hover */
 }
 
-.regular-ticket-option, .family-ticket-option {
-    background: #2C2F5B;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
+.ticket-type-selection {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.regular-ticket-option img, .family-ticket-option img {
-    display: block;
-    margin: auto;
+.ticket-type-selection label {
+    margin: 0 10px;
+    color: #fff; /* Adjust based on your background */
+    font-size: 18px;
 }
 
-.language-dropdown {
-    display: block;
-    margin: 10px auto;
-    padding: 5px;
+.ticket-type-selection input[type="radio"] {
+    margin-right: 5px;
 }
-
-/* Further styling as per the attached image */

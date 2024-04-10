@@ -1,7 +1,6 @@
 <?php include __DIR__ . '/../header.php';
 ?>
 
-
 <div class="background-image">
   <div class="overlay"></div> <!-- Add overlay div for brightness adjustment -->
   <div class="container">
@@ -25,12 +24,11 @@
 
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-12 d-flex justify-content-end">
+    <div class="col-md-12 d-flex flex-column align-items-end"> <!-- Change to flex-column and add align-items-end -->
       <nav>
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <button class="nav-link  navButton buttonDay1" href="#">Day
-              1</button>
+            <button class="nav-link  navButton buttonDay1" href="#">Day 1</button>
           </li>
           <li class="nav-item">
             <button class="nav-link navButton buttonDay2" href="#">Day 2</button>
@@ -40,9 +38,8 @@
           </li>
         </ul>
       </nav>
+      <div class="line-div"></div> <!-- This will now appear directly under the nav -->
     </div>
-    <div class="line-div"></div>
-
   </div>
 </div>
 
@@ -132,6 +129,6 @@
 </div>
 </div>
 
-<script src="/js/DanceEvent/session.js"></script>
+<script src="/js/DanceEvent/session.js"> </script>
 
 <?php include __DIR__ . '/../footer.php'; ?>

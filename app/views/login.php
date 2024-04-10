@@ -22,7 +22,7 @@
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
                             <div id="passwordHelpBlock" class="form-text">
-                                Forgot password? <a href="/restorepassword">Click here</a>
+                                Forgot password? <a href="/RestorePassword">Click here</a>
                             </div>
                             <p></p>
                             <button type="submit" class="btn btn-primary">Login</button>

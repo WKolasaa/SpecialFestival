@@ -121,6 +121,51 @@ class HistoryAdminRepository extends Repository
         echo "Error: " . $e->getMessage();
         return null;
     }
-}
+  } 
+
+  public function addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
+    $sql = "INSERT INTO history_timeslots (day, start_time, end_time, english_tour, dutch_tour, chinese_tour) VALUES (:day, :start_time, :end_time, :english_tour, :dutch_tour, :chinese_tour);";
+    $statement = $this->connection->prepare($sql);
+
+    $statement->bindParam(":day", $day);
+    $statement->bindParam(":start_time", $start_time);
+    $statement->bindParam(":end_time", $end_time);
+    $statement->bindParam(":english_tour", $english_tour);
+    $statement->bindParam(":dutch_tour", $dutch_tour);
+    $statement->bindParam(":chinese_tour", $chinese_tour);
+
+    $statement->execute();
+  }
+
+  public function getAllTimeslots() {
+    $sql = "SELECT id, day, start_time, end_time, english_tour, dutch_tour, chinese_tour FROM history_timeslots ORDER BY id ASC;";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute();
+    return $statement->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function updateTimeslot($id, $day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
+    $sql = "UPDATE history_timeslots SET day = :day, start_time = :start_time, end_time = :end_time, english_tour = :english_tour, dutch_tour = :dutch_tour, chinese_tour = :chinese_tour WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    $statement->execute([
+        ':day' => $day,
+        ':start_time' => $start_time,
+        ':end_time' => $end_time,
+        ':english_tour' => $english_tour,
+        ':dutch_tour' => $dutch_tour,
+        ':chinese_tour' => $chinese_tour,
+        ':id' => $id,
+    ]);
+
+    return $statement->rowCount() > 0;
+  }
+
+  public function getTimeslotById($id) {
+    $sql = "SELECT * FROM history_timeslots WHERE id = :id";
+    $statement = $this->connection->prepare($sql);
+    $statement->bindParam(':id', $id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_ASSOC); // Assuming only one record will be returned
+  }
 
 }
