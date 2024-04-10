@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\RestaurantRepository;
 use App\Repositories\TicketRepository;
+use App\Repositories\UserTicketRepository;
 
 class RestaurantService
 {
@@ -80,7 +81,20 @@ class RestaurantService
     }
 
     public function addTicket($ticket){
-        $ticketRepository = new TicketRepository();
-        return $ticketRepository->addTicket($ticket);
+        try{
+            session_start();
+            $ticketRepository = new TicketRepository();
+            $ticketRepository->addTicket($ticket);
+            $userTicketRepository = new UserTicketRepository();
+            $user = $_SESSION['userId'];
+            $userTicketRepository->addUserTicket($ticket, $user);
+            return true;
+        } catch (\Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public function getLastReservationID(){
+        return $this->restaurantRepository->getLastReservationID();
     }
 }
