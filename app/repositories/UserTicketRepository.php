@@ -5,18 +5,14 @@ use PDO;
 
 class UserTicketRepository extends Repository
 {
-    public function getAllUserTicketsByUserId(int $userId) : array
+    public function getAllUserTicketsByUserId(int $userId, bool $paid) : array
     {
-        $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId";
+        $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId AND paid = :paid";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':paid', $paid, PDO::PARAM_BOOL);
         $stmt->execute();
-        $rows = $stmt->fetchAll();
-        if (!$rows) {
-            echo "No tickets found.";
-            return [];
-        }
-        return $rows;
+        return $stmt->fetchAll();
     }
 
     public function addUserTicket(Ticket $ticket, int $userId): void
@@ -49,5 +45,13 @@ class UserTicketRepository extends Repository
         $stmt->execute();
         $row = $stmt->fetch();
         return (bool)$row;
+    }
+
+    public function markTicketsAsPaid(int $userId): void
+    {
+        $sql = "UPDATE user_tickets SET paid = true WHERE user_id = :userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

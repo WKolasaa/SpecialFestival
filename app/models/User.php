@@ -10,6 +10,7 @@ class User implements \JsonSerializable{
     private  $password;
     private  $userRole;
     private $registeredDate; //dateTime
+    public bool $paymentInProgress;
     private $firstName;
     private $lastName;
     private $email;
@@ -27,6 +28,7 @@ class User implements \JsonSerializable{
         $this->email = $email;
         $this->photo = $photo;
         $this->phoneNumber = $phoneNumber;
+        $this->paymentInProgress = false;
     }
 
 

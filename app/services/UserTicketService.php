@@ -18,9 +18,9 @@ class UserTicketService
         $this->ticketRepository = new TicketRepository();
     }
 
-    public function getAllUserTicketsByUserId(int $userId): array
+    public function getAllUserTicketsByUserId(int $userId, bool $paid): array
     {
-        $userTicketData = $this->userTicketRepository->getAllUserTicketsByUserId($userId);
+        $userTicketData = $this->userTicketRepository->getAllUserTicketsByUserId($userId, $paid);
         $userTickets = [];
         foreach ($userTicketData as $data) {
             $userTicket = new UserTicket();
@@ -34,6 +34,11 @@ class UserTicketService
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
+        // TODO: Get the actual user
+//        if ($user->paymentInProgress) {
+//            throw new Exception("Cannot add tickets while payment is in progress");
+//        }
+
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket, $userId);
         } else {
@@ -49,5 +54,10 @@ class UserTicketService
     public function decreaseTicketQuantity(Ticket $ticket, int $userId): void
     {
         $this->userTicketRepository->addTicketQuantity($ticket, $userId, -1);
+    }
+
+    public function markTicketsAsPaid(int $userId): void
+    {
+        $this->userTicketRepository->markTicketsAsPaid($userId);
     }
 }
