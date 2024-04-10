@@ -66,8 +66,8 @@ include 'head.php';
                                     Yummy
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownYummy">
-                                    <a class="dropdown-item" href="#">Restaurants</a>
-                                    <a class="dropdown-item" href="#">Menu</a>
+                                    <a class="dropdown-item" href="/yummy">Overview</a>
+                                    <a class="dropdown-item" href="/restaurants">Restaurant</a>
                                 </div>
                             </li>
 

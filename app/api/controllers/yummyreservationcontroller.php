@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\restaurantReservation;
+use App\Models\Ticket;
+use App\Models\TicketType;
 use App\Services\restaurantservice;
+use DateTime;
 
 class yummyreservationcontroller
 {
@@ -86,6 +89,46 @@ class yummyreservationcontroller
             http_response_code(500); // Internal Server Error
             echo json_encode(['error' => 'Reservation not created from catch']);
         }
+    }
+
+    public function addTicket(){
+        $jsonData = file_get_contents('php://input');
+        $jsonData = json_decode($jsonData, true);
+        //var_dump($jsonData);
+        if($jsonData !== null && isset($jsonData['restaurantID'], $jsonData['eventID'], $jsonData['regularTickets'], $jsonData['reducedTickets'], $jsonData['specialRequests'])){
+            $restaurantID = intval($jsonData['restaurantID']);
+            $regularTickets = intval($jsonData['regularTickets']);
+            $reducedTickets = intval($jsonData['reducedTickets']);
+            $specialRequests = $jsonData['specialRequests'];
+            $eventID = intval($jsonData['eventID']);
+
+            $ticket = $this->createTicket($restaurantID, $eventID, $regularTickets, $reducedTickets, $specialRequests);
+            if($this->restaurantService->addTicket($ticket)){
+                echo json_encode(['success' => 'Ticket added']);
+            } else {
+                echo json_encode(['error' => 'Ticket not added']);
+            }
+        } else {
+            echo json_encode(['error' => 'Invalid data']);
+        }
+    }
+
+    private function createTicket($restaurantID, $eventID, $regularTickets, $reducedTickets, $specialRequests)
+    {
+        $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
+        $ticketType = TicketType::Yummy;
+        $ticketName = $restaurant->getName();
+        $location = $restaurant->getAddress();
+        $description = $regularTickets . "/" . $reducedTickets . "/" . $specialRequests;
+        $price = 10 * ($regularTickets + $reducedTickets);
+        $event = $this->restaurantService->getEventByID($eventID);
+        $startDateString = $event->getEventDate() . " " . $event->getEventTimeStart();
+        $format = 'Y-m-d H:i:s';
+        $startDate = DateTime::createFromFormat($format, $startDateString);
+        $endDateString = $event->getEventDate() . " " . $event->getEventTimeEnd();
+        $endDate = DateTime::createFromFormat($format, $endDateString);
+
+        return new Ticket((int)null, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate);
     }
 
 
