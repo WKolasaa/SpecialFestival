@@ -24,10 +24,10 @@ class UserTicketRepository extends Repository
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
-        echo "ADD USER TICKET REPOSITORY";
+        //echo "ADD USER TICKET REPOSITORY";
 
         $ticketId = $this->getTicketId($ticket);
-        echo "This is the ticket id: " . $ticketId;
+        //echo "This is the ticket id: " . $ticketId;
 
         try {
             $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, :quantity, :paid)";

@@ -127,8 +127,9 @@ class yummyreservationcontroller
         $startDate = DateTime::createFromFormat($format, $startDateString);
         $endDateString = $event->getEventDate() . " " . $event->getEventTimeEnd();
         $endDate = DateTime::createFromFormat($format, $endDateString);
+        $lastID = $this->restaurantService->getLastReservationID();
 
-        return new Ticket((int)null, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate);
+        return new Ticket($lastID, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate);
     }
 
 

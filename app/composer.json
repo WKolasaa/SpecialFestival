@@ -3,8 +3,7 @@
     "description": "Festival Project",
     "require": {
         "resend/resend-php": "^0.12.0",
-        "chillerlan/php-qrcode": "dev-main#<commit_hash>",
-        "dompdf/dompdf": "^2.0"
+        "chillerlan/php-qrcode": "dev-main#<commit_hash>"
     },
     "autoload": {
         "psr-4": {

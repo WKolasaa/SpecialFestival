@@ -390,4 +390,13 @@ class RestaurantRepository extends Repository
         return $statement->execute();
     }
 
+    public function getLastReservationID(){
+        $sql = "SELECT id FROM restaurant_reservations ORDER BY id DESC LIMIT 1";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
+        $row = $statement->fetch();
+
+        return $row['id'];
+    }
+
 }
