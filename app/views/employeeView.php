@@ -1,38 +1,40 @@
 <?php
     include __DIR__ . '/header.php';
 ?>
-<h1>QR Code Scanner</h1>
-<video id="video" width="300" height="200" style="border: 1px solid gray"></video>
-<button id="startButton">Start Scanning</button>
 
-<script src="app.js"></script>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title text-center">QR Code Scanner</h1>
+                    <div class="text-center">
+                        <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button id="startButton" class="btn btn-primary">Start Scanning</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body" id="ticketInfoCard">
+                    <!-- You can add content dynamically here using JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/employee.js"></script>
 <script src="https://unpkg.com/@zxing/library@latest"></script>
-<script>
-document.getElementById('startButton').addEventListener('click', () => {
-    const codeReader = new ZXing.BrowserQRCodeReader()
-    console.log('ZXing code reader initialized')
 
-    codeReader.getVideoInputDevices()
-        .then((videoInputDevices) => {
-            const firstDeviceId = videoInputDevices[0].deviceId
-            codeReader.decodeFromVideoDevice(firstDeviceId, 'video', (result, err) => {
-                if (result) {
-                    console.log(result)
-                    alert('QR Code content: ' + result.text)
-                    // process the result here (e.g., redirecting, making a request, etc.)
-                }
-                if (err && !(err instanceof ZXing.NotFoundException)) {
-                    console.error(err)
-                    alert('Error scanning QR Code: ' + err.message)
-                }
-            })
-        })
-        .catch((err) => {
-            console.error(err)
-            alert('Error initializing camera: ' + err.message)
-        })
-});
-</script>
 <?php
     include __DIR__ . '/footer.php';
 ?>

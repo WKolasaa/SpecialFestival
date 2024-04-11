@@ -97,4 +97,9 @@ class RestaurantService
     public function getLastReservationID(){
         return $this->restaurantRepository->getLastReservationID();
     }
+
+    public function deleteRestaurant($restaurantID)
+    {
+        return $this->restaurantRepository->deleteRestaurant($restaurantID);
+    }
 }

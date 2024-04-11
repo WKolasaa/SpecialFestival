@@ -94,8 +94,11 @@ class EmailService
 
             $pdfs = [];
 
+            var_dump($ticketsObjects);
 
             foreach ($ticketsObjects as $ticketsObject) {
+                //var_dump($ticketsObject);
+                //echo "\n";
                 $pdf = $pdfService->generatePDF($ticketsObject);
                 // Encode the PDF content as base64
                 $pdfBase64 = base64_encode($pdf);
@@ -104,6 +107,8 @@ class EmailService
                     'content' => $pdfBase64  // Use the base64 encoded content
                 ];
             }
+
+            //var_dump($userTickets);
 
             $resend = Resend::client('re_DF4R1gUB_CFNiNU9FrxGhNdDUCFxaK6NN');
 

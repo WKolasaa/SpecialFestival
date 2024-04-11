@@ -367,4 +367,22 @@ class YummyAdminController
             echo json_encode(['error' => 'Invalid data']);
         }
     }
+
+    public function deleteRestaurant(){
+        $jsonData = file_get_contents('php://input');
+        $jsonData = json_decode($jsonData, true);
+
+        if($jsonData !== null){
+            $restaurantID = $jsonData['restaurantId'];
+
+            if($this->restaurantService->deleteRestaurant($restaurantID)){
+                echo json_encode(['success' => 'Restaurant deleted']);
+            }
+            else{
+                echo json_encode(['error' => 'Failed to delete restaurant']);
+            }
+        }else{
+            echo json_encode(['error' => 'Invalid data']);
+        }
+    }
 }
