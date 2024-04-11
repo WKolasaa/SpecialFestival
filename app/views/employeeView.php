@@ -1,46 +1,38 @@
 <?php
     include __DIR__ . '/header.php';
 ?>
-    <h1>QR Code Scanner</h1>
-    <div id="video-container">
-        <video id="video" style="width: 100%; max-width: 400px;"></video>
-    </div>
-    <script src="https://unpkg.com/@zxing/library@latest"></script>
+<h1>QR Code Scanner</h1>
+<video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+<button id="startButton">Start Scanning</button>
 
-    <script src="js/employee.js"></script>
+<script src="app.js"></script>
+<script src="https://unpkg.com/@zxing/library@latest"></script>
+<script>
+document.getElementById('startButton').addEventListener('click', () => {
+    const codeReader = new ZXing.BrowserQRCodeReader()
+    console.log('ZXing code reader initialized')
 
-    <script>
-        // Initialize QR code reader
-        const codeReader = new ZXing.BrowserQRCodeReader();
-
-        // Function to send scanned QR code to the server
-        function sendScannedQRCode(scannedQRCode) {
-            fetch('/process_qr_code.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ scannedQRCode: scannedQRCode })
+    codeReader.getVideoInputDevices()
+        .then((videoInputDevices) => {
+            const firstDeviceId = videoInputDevices[0].deviceId
+            codeReader.decodeFromVideoDevice(firstDeviceId, 'video', (result, err) => {
+                if (result) {
+                    console.log(result)
+                    alert('QR Code content: ' + result.text)
+                    // process the result here (e.g., redirecting, making a request, etc.)
+                }
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                    console.error(err)
+                    alert('Error scanning QR Code: ' + err.message)
+                }
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.message); // Log the response from the server
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-
-        // Start scanning QR code
-        codeReader.decodeFromInputVideoDevice(undefined, 'video').then(result => {
-            console.log('Scan result:', result.text);
-            // Send scanned QR code to the server
-            sendScannedQRCode(result.text);
-        }).catch(err => {
-            console.error('Error:', err);
-        });
-    </script>
-
+        })
+        .catch((err) => {
+            console.error(err)
+            alert('Error initializing camera: ' + err.message)
+        })
+});
+</script>
 <?php
     include __DIR__ . '/footer.php';
 ?>
