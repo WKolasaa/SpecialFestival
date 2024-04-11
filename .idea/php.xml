@@ -23,6 +23,19 @@
       <path value="$PROJECT_DIR$/app/vendor/composer" />
       <path value="$PROJECT_DIR$/app/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/app/vendor/stripe/stripe-php" />
+      <path value="$PROJECT_DIR$/app/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/app/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/app/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/app/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/app/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/app/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/app/vendor/voku/anti-xss" />
+      <path value="$PROJECT_DIR$/app/vendor/voku/portable-utf8" />
+      <path value="$PROJECT_DIR$/app/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/app/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/app/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/app/vendor/chillerlan/php-settings-container" />
+      <path value="$PROJECT_DIR$/app/vendor/chillerlan/php-qrcode" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">

@@ -92,5 +92,16 @@ class UserTicketRepository extends Repository
         }
     }
 
+    public function getTicketByUserID($userID){
+        $sql = "SELECT * FROM user_tickets WHERE user_id = :userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userID, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row;
+        }
+        return $result;
+    }
 
 }
