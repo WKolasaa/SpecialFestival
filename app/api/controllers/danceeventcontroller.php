@@ -594,11 +594,6 @@ class DanceEventController
 }
 
 
-
-
-
-
-
     private function sanitizeArtistData($artistData) // Use a different name for the parameter to avoid confusion
     {
         $sanitizedData = [];
