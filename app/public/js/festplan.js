@@ -33,8 +33,7 @@ document.querySelectorAll('.delete-ticket').forEach(function(button) {
 });
 
 function increaseTicketQuantity(ticketId) {
-    // Make an AJAX request to increase the ticket quantity on the server
-    fetch('/api/controllers/FestPlanController/increaseTicketQuantity', {
+    fetch('/api/FestPlan/increaseTicketQuantity', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -44,7 +43,11 @@ function increaseTicketQuantity(ticketId) {
             userId: userId
         }),
     })
-        .then(response => response.json())
+        .then(response => {
+            // Log the raw response text
+            response.text().then(text => console.log(text));
+            return response.json();
+        })
         .then(data => console.log(data))
         .catch((error) => {
             console.error('Error:', error);
@@ -52,7 +55,7 @@ function increaseTicketQuantity(ticketId) {
 }
 
 function decreaseTicketQuantity(ticketId) {
-    fetch('/api/controllers/FestPlanController/decreaseTicketQuantity', {
+    fetch('/api/FestPlan/decreaseTicketQuantity', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -71,7 +74,7 @@ function decreaseTicketQuantity(ticketId) {
 
 function deleteTicket(ticketId) {
     // Make an AJAX request to delete the ticket on the server
-    fetch('/api/controllers/FestPlanController/deleteTicket', {
+    fetch('/api/FestPlan/deleteTicket', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
