@@ -21,27 +21,24 @@ class OrdersController
 
     // Retrieve the active worksheet
     $worksheet = $spreadsheet->getActiveSheet();
-    $orders = $this->orderService->getAllTickets(); 
+    $orders = $this->orderService->getAllOrders(); 
+    // var_dump($orders);
 
     // For now, let's just add some static data
     $worksheet->setCellValue('A1', 'Order ID');
-    $worksheet->setCellValue('B1', 'Event Name');
-    $worksheet->setCellValue('C1', 'Ticket Type');
-    $worksheet->setCellValue('D1', 'Ticket Name');
-    $worksheet->setCellValue('E1', 'Location');
-    $worksheet->setCellValue('F1', 'Price');
-    $worksheet->setCellValue('G1', 'Start Date');
-    $worksheet->setCellValue('H1', 'End Date');
+    $worksheet->setCellValue('B1', 'Ticket Name');
+    $worksheet->setCellValue('C1', 'Event Name');
+    $worksheet->setCellValue('D1', 'Payment Status');
+    $worksheet->setCellValue('E1', 'Total Amount');
+    $worksheet->setCellValue('F1', 'Order Date');
     $row = 2; // Start from the second row because the first row is for the header
     foreach ($orders as $order) {
-      $worksheet->setCellValue('A' . $row, $order->getTicketId());
-      $worksheet->setCellValue('B' . $row, $order->getEventName());
-      $worksheet->setCellValue('C' . $row, $order->getTicketTypeAsString());
-      $worksheet->setCellValue('D' . $row, $order->getTicketName());
-      $worksheet->setCellValue('E' . $row, $order->getLocation());
-      $worksheet->setCellValue('F' . $row, $order->getPrice());
-      $worksheet->setCellValue('G' . $row, $order->getStartDate());
-      $worksheet->setCellValue('H' . $row, $order->getEndDate());
+      $worksheet->setCellValue('A' . $row, $order->getOrderId());
+      $worksheet->setCellValue('B' . $row, $order->getTicketName());
+      $worksheet->setCellValue('C' . $row, $order->getEventName());
+      $worksheet->setCellValue('D' . $row, $order->isPaid());
+      $worksheet->setCellValue('E' . $row, $order->getTotalPrice());
+      $worksheet->setCellValue('F' . $row, $order->getOrderedAt());
       $row++;
     }
     // Create a new Xlsx writer

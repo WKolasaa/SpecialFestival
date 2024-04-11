@@ -19,13 +19,26 @@ class UserTicketRepository extends Repository
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
+        $userTicketId = $this->getTicketId($ticket);
+         echo $userTicketId;
+
+       
         $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, :quantity, :paid)";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $userTicketId, PDO::PARAM_INT);
         $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
         $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
+
         $stmt->execute();
+        // echo $userId;
+        if($stmt->rowCount()>0)
+        {
+            echo "Ticket added successfully";
+        }else
+        {
+            echo "Ticket not added";
+        }
     }
 
     public function addTicketQuantity(Ticket $ticket, int $userId, int $quantity): void
@@ -40,7 +53,7 @@ class UserTicketRepository extends Repository
 
     public function hasTicket(Ticket $ticket, int $userId): bool
     {
-        $sql = "SELECT * FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId";
+        $sql = "SELECT * FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId"; //TODO: remove the * to avoid sql injection
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
@@ -59,9 +72,13 @@ class UserTicketRepository extends Repository
 
     private function getTicketId(Ticket $ticket)
     {
-        $sql = "SELECT id FROM ticket WHERE ticketId = :ticketId";
+        $sql = "SELECT id FROM ticket WHERE ticketId = :ticketId AND event_name = :eventName AND ticket_name = :ticketName AND price = :price ";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->bindValue(':eventName', $ticket->getEventName(), PDO::PARAM_STR);
+        $stmt->bindValue(':ticketName', $ticket->getTicketName(), PDO::PARAM_STR);
+        $stmt->bindValue(':price', $ticket->getPrice(), PDO::PARAM_INT);
+        
         $stmt->execute();
         $row = $stmt->fetch();
         $id = $row['id'];

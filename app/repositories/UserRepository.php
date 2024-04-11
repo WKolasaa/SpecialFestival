@@ -286,7 +286,7 @@ class UserRepository extends Repository
             // echo "SQL query with values: " . $queryWithValues . "\n";
 
             if ($rowCount > 0) {
-                return true;
+                return $user;
             } else {
                 return false;
             }

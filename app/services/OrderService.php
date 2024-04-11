@@ -1,23 +1,27 @@
 <?php
 namespace App\Services;
-
-use App\Repositories\TicketRepository;
+use App\Repositories\OrderRepository;
 
 
 class OrderService
 {
 
-  public $ticketRepository;
+  public $orderRepository;
 
   function __construct()
   {
 
-    $this->ticketRepository=new TicketRepository();
+    $this->orderRepository=new OrderRepository();
   }
   
-  public function getAllTickets()
+  public function getAllOrders()
   {
-   return $this->ticketRepository->getAllTickets();
+      $orders=$this->orderRepository->getAllOrders();
+   return $orders;
+  }
+  public function addOrder($ticketId, $totalAmount): void
+  {
+    $this->orderRepository->addOrder($ticketId, $totalAmount);
   }
 
 

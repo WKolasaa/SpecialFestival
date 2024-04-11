@@ -18,28 +18,24 @@ include __DIR__ . '/../header.php';
   <table class="table" id="orderTable">
     <thead id="tableHead" class="bg-primary text-white">
       <tr>
-        <th class="id-column">ID</th>
-        <th class="eventName-column">Event Name</th>
-        <th class="ticketType-column">Ticket Type</th>
-        <th class="ticketName-column">Ticket Name</th>
-        <th class="location-column">Location</th>
-        <th class="price-column">Price</th>
-        <th class="startDate-column">Start Date</th>
-        <th class="endDate-column">End Date</th>
+        <th class="id-column">Order ID</th>
+        <th class="eventName-column">Ticket Name</th>
+        <th class="ticketType-column">Event Name</th>
+        <th class="ticketName-column">Payment Status</th>
+        <th class="location-column">Total Amount</th>
+        <th class="price-column">Order Date</th>
       </tr>
     </thead>
     <tbody id="orderList">
       <?php if ($orders !== null): ?>
         <?php foreach ($orders as $order): ?>
           <tr>
-            <td><?= $order->getTicketId() ?></td>
-            <td><?= $order->getEventName() ?></td>
-            <td><?= $order->getTicketTypeAsString() ?></td>
+            <td><?= $order->getOrderId() ?></td>
             <td><?= $order->getTicketName() ?></td>
-            <td><?= $order->getLocation() ?></td>
-            <td><?= $order->getPrice() ?></td>
-            <td><?= $order->getStartDate()->format('Y-m-d H:i:s') ?></td>
-            <td><?= $order->getEndDate()->format('Y-m-d H:i:s') ?></td>
+            <td><?= $order->getEventName() ?></td>
+            <td><?= $order->isPaid() ?></td>
+            <td><?= $order->getTotalPrice() ?></td>
+            <td><?= $order->getOrderedAt()->format('Y-m-d H:i:s')  ?></td>
           </tr>
         <?php endforeach; ?>
       <?php else: ?>

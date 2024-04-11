@@ -3,18 +3,22 @@
 namespace App\Controllers;
 
 use App\Services\UserTicketService;
+use App\Services\OrderService;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
+
 
 class FestPlanController
 {
     private UserTicketService $userTicketService;
+    private OrderService $orderService;
     private String $serverUrl;
     private int $userId;
 
     public function __construct()
     {
         $this->userTicketService = new UserTicketService();
+        $this->orderService = new OrderService();
         $this->serverUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         // TODO: use a .env file
         Stripe::setApiKey("sk_test_51P46xi02pSwboFFFHCzZPrJ2AGGq89X0xCx8kXYXIJxbukQ2cRjSGL6KMKtJEk8MjIBMhA7qnS5qnCbnJIwhirUU00mKu76Ybk");
@@ -24,21 +28,14 @@ class FestPlanController
 
     public function index(): void
     {
-        // $userId=$_SESSION['user_id'];
-        // TODO: Get the actual user id
+       
         $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
         include '../views/festplan.php';
     }
 
     public function checkoutSuccess(): void
     {
-        // TODO: Get the actual user
-        //$user->paymentInProgress = false;
-
-        // Do whatever you want to do after the payment is successful
-        // $userId=$_SESSION['user_id'];
-
-        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);//TODO: 
+        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
 
         $this->userTicketService->markTicketsAsPaid($this->userId);
 
@@ -52,12 +49,10 @@ class FestPlanController
 
     public function checkout(): void
     {
-        // TODO: Get the actual user
-        //$user->paymentInProgress = true;
-
         $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
 
         $line_items = [];
+        $totalAmount = 0;
 
         foreach ($userTickets as $userTicket) {
             $ticket = $userTicket->ticket;
@@ -65,11 +60,13 @@ class FestPlanController
             if (empty($description)) {
                 $description = "No description available"; // Default description
             }
+            $unit_amount = $ticket->getPrice() * 100; // Stripe expects amount in cents
+            $quantity = $userTicket->quantity;
             $item = [
-                "quantity" => $userTicket->quantity,
+                "quantity" => $quantity,
                 "price_data" => [
                     "currency" => "eur",
-                    "unit_amount" => $ticket->getPrice() * 100, // Stripe expects amount in cents
+                    "unit_amount" => $unit_amount,
                     "product_data" => [
                         "name" => $ticket->getTicketName(),
                         "description" => $description,
@@ -83,7 +80,11 @@ class FestPlanController
                 ],
             ];
             $line_items[] = $item;
+            $totalAmount = $ticket->getPrice() * $quantity;
+             $this->orderService->addOrder($ticket->getTicketId(), $totalAmount);
+
         }
+
 
         $checkout_session = Session::create([
             "mode" => "payment",
