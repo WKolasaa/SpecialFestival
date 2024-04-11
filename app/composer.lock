@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f024693e6b468492919944afd6fdbda0",
+    "content-hash": "a484638b5323d9002c11eb1649117eb7",
     "packages": [
         {
             "name": "chillerlan/php-qrcode",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-qrcode.git",
-                "reference": "b57d1703f6b1becb418d00a21ee327f028d9dd94"
+                "reference": "181e12c70c90f27be928f55067b4861d988c5c7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/b57d1703f6b1becb418d00a21ee327f028d9dd94",
-                "reference": "b57d1703f6b1becb418d00a21ee327f028d9dd94",
+                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/181e12c70c90f27be928f55067b4861d988c5c7c",
+                "reference": "181e12c70c90f27be928f55067b4861d988c5c7c",
                 "shasum": ""
             },
             "require": {
@@ -99,7 +99,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2024-03-08T19:57:55+00:00"
+            "time": "2024-04-11T17:41:50+00:00"
         },
         {
             "name": "chillerlan/php-settings-container",
@@ -751,6 +751,65 @@
                 "source": "https://github.com/resend/resend-php/tree/v0.12.0"
             },
             "time": "2024-03-04T03:16:28+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v13.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/02abb043b103766f4ed920642ae56ffdc58c7467",
+                "reference": "02abb043b103766f4ed920642ae56ffdc58c7467",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v13.18.0"
+            },
+            "time": "2024-04-09T21:08:04+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",

@@ -3,7 +3,7 @@
         'name' => 'group6/festivalproject',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '2241ec8f6795a845d45eb35f15f1f8323c2d0046',
+        'reference' => '668dabb2ede0e26d98efc1b80ac97204eeb48351',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'chillerlan/php-qrcode' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b57d1703f6b1becb418d00a21ee327f028d9dd94',
+            'reference' => '181e12c70c90f27be928f55067b4861d988c5c7c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../chillerlan/php-qrcode',
             'aliases' => array(
@@ -33,7 +33,7 @@
         'group6/festivalproject' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '2241ec8f6795a845d45eb35f15f1f8323c2d0046',
+            'reference' => '668dabb2ede0e26d98efc1b80ac97204eeb48351',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -126,6 +126,15 @@
             'reference' => '37fb79bb8160ce2de521bf37484ba59e89236521',
             'type' => 'library',
             'install_path' => __DIR__ . '/../resend/resend-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v13.18.0',
+            'version' => '13.18.0.0',
+            'reference' => '02abb043b103766f4ed920642ae56ffdc58c7467',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

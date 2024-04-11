@@ -27,7 +27,12 @@
                     <td><?= $userTicket->ticket->getEventName() ?></td>
                     <td><?= $userTicket->ticket->getTicketName() ?></td>
                     <td><?= $userTicket->ticket->getPrice() ?></td>
-                    <td><?= $userTicket->quantity ?></td>
+                    <td>
+                        <button class="quantity-decrease">-</button>
+                        <span class="quantity"><?= $userTicket->quantity ?></span>
+                        <button class="quantity-increase">+</button>
+                        <button class="delete-ticket">Delete</button>
+                    </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

@@ -17,6 +17,7 @@
       <sourceFolder url="file://$MODULE_DIR$/./controllers" isTestSource="false" packagePrefix="App\Controllers\" />
       <sourceFolder url="file://$MODULE_DIR$/./models" isTestSource="false" packagePrefix="App\Models\" />
       <sourceFolder url="file://$MODULE_DIR$/./models" isTestSource="false" packagePrefix="App\Models\" />
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="Abdelrahmanghonim\SpecialFestival\" />
       <sourceFolder url="file://$MODULE_DIR$/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
       <sourceFolder url="file://$MODULE_DIR$/./repositories" isTestSource="false" packagePrefix="App\Repositories\" />
       <sourceFolder url="file://$MODULE_DIR$/./services" isTestSource="false" packagePrefix="App\Services\" />
@@ -34,6 +35,9 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/stripe/stripe-php" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/chillerlan/php-qrcode" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/chillerlan/php-settings-container" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

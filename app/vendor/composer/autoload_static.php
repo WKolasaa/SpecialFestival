@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf024693e6b468492919944afd6fdbda0
+class ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -18,6 +18,10 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
         array (
             'chillerlan\\Settings\\' => 20,
             'chillerlan\\QRCode\\' => 18,
+        ),
+        'S' => 
+        array (
+            'Stripe\\' => 7,
         ),
         'R' => 
         array (
@@ -54,14 +58,18 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
         'Resend\\' => 
         array (
             0 => __DIR__ . '/..' . '/resend/resend-php/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -112,9 +120,9 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf024693e6b468492919944afd6fdbda0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf024693e6b468492919944afd6fdbda0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf024693e6b468492919944afd6fdbda0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$classMap;
 
         }, null, ClassLoader::class);
     }
