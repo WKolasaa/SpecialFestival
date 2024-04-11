@@ -28,12 +28,12 @@ class UserTicketRepository extends Repository
         $stmt->execute();
     }
 
-    public function addTicketQuantity(Ticket $ticket, int $userId, int $quantity): void
+    public function addTicketQuantity(int $ticketId, int $userId, int $quantity): void
     {
         $sql = "UPDATE user_tickets SET quantity = quantity + :quantity WHERE user_id = :userId AND ticket_id = :ticketId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -54,6 +54,15 @@ class UserTicketRepository extends Repository
         $sql = "UPDATE user_tickets SET paid = true WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function deleteTicket(int $ticketId, int $userId): void
+    {
+        $sql = "DELETE FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
         $stmt->execute();
     }
 

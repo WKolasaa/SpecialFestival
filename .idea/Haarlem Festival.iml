@@ -37,7 +37,6 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/stripe/stripe-php" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/chillerlan/php-qrcode" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/chillerlan/php-settings-container" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

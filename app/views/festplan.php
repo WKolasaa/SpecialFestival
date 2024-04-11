@@ -23,7 +23,7 @@
             </thead>
             <tbody id="eventData">
             <?php foreach ($userTickets as $userTicket): ?>
-                <tr>
+                <tr data-ticket-id="<?= $userTicket->ticket->getId() ?>">
                     <td><?= $userTicket->ticket->getEventName() ?></td>
                     <td><?= $userTicket->ticket->getTicketName() ?></td>
                     <td><?= $userTicket->ticket->getPrice() ?></td>
@@ -42,5 +42,6 @@
         </form>
     </div>
 
+<script src="js/festplan.js">const userId = <?= json_encode($_SESSION['userId']) ?>;</script>
 
 <?php include __DIR__ . '/footer.php'; ?>

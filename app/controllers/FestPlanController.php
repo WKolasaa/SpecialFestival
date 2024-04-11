@@ -17,7 +17,7 @@ class FestPlanController
         $this->userTicketService = new UserTicketService();
         $this->serverUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         session_start();
-        $this->userId = $_SESSION['userId'];
+        $this->userId = $_SESSION['userId'] ?? 0;
         // TODO: use a .env file
         Stripe::setApiKey("sk_test_51P46xi02pSwboFFFHCzZPrJ2AGGq89X0xCx8kXYXIJxbukQ2cRjSGL6KMKtJEk8MjIBMhA7qnS5qnCbnJIwhirUU00mKu76Ybk");
     }

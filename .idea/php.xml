@@ -23,7 +23,6 @@
       <path value="$PROJECT_DIR$/app/vendor/composer" />
       <path value="$PROJECT_DIR$/app/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/app/vendor/stripe/stripe-php" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/app/vendor/chillerlan/php-settings-container" />
       <path value="$PROJECT_DIR$/app/vendor/chillerlan/php-qrcode" />
     </include_path>

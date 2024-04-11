@@ -40,24 +40,29 @@ class UserTicketService
 //        }
 
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
-            $this->increaseTicketQuantity($ticket, $userId);
+            $this->increaseTicketQuantity($ticket->getId(), $userId);
         } else {
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }
 
-    public function increaseTicketQuantity(Ticket $ticket, int $userId): void
+    public function increaseTicketQuantity(int $ticketId, int $userId): void
     {
-        $this->userTicketRepository->addTicketQuantity($ticket, $userId, 1);
+        $this->userTicketRepository->addTicketQuantity($ticketId, $userId, 1);
     }
 
-    public function decreaseTicketQuantity(Ticket $ticket, int $userId): void
+    public function decreaseTicketQuantity(int $ticketId, int $userId): void
     {
-        $this->userTicketRepository->addTicketQuantity($ticket, $userId, -1);
+        $this->userTicketRepository->addTicketQuantity($ticketId, $userId, -1);
     }
 
     public function markTicketsAsPaid(int $userId): void
     {
         $this->userTicketRepository->markTicketsAsPaid($userId);
+    }
+
+    public function deleteTicket(int $ticketId, int $userId): void
+    {
+        $this->userTicketRepository->deleteTicket($ticketId, $userId);
     }
 }
