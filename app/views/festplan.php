@@ -42,6 +42,9 @@
         </form>
     </div>
 
-<script src="js/festplan.js">const userId = <?= json_encode($_SESSION['userId']) ?>;</script>
+    <script src="js/festplan.js"></script>
+    <script>
+        const userId = <?= json_encode($_SESSION['userId']) ?>;
+    </script>
 
 <?php include __DIR__ . '/footer.php'; ?>
