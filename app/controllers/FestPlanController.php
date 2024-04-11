@@ -10,6 +10,7 @@ class FestPlanController
 {
     private UserTicketService $userTicketService;
     private String $serverUrl;
+    private int $userId;
 
     public function __construct()
     {
@@ -17,12 +18,15 @@ class FestPlanController
         $this->serverUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         // TODO: use a .env file
         Stripe::setApiKey("sk_test_51P46xi02pSwboFFFHCzZPrJ2AGGq89X0xCx8kXYXIJxbukQ2cRjSGL6KMKtJEk8MjIBMhA7qnS5qnCbnJIwhirUU00mKu76Ybk");
+        session_start();
+        $this->userId=$_SESSION['userId'];
     }
 
     public function index(): void
     {
+        // $userId=$_SESSION['user_id'];
         // TODO: Get the actual user id
-        $userTickets = $this->userTicketService->getAllUserTicketsByUserId(1, false);
+        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
         include '../views/festplan.php';
     }
 
@@ -32,9 +36,11 @@ class FestPlanController
         //$user->paymentInProgress = false;
 
         // Do whatever you want to do after the payment is successful
-        $userTickets = $this->userTicketService->getAllUserTicketsByUserId(1, false);
+        // $userId=$_SESSION['user_id'];
 
-        $this->userTicketService->markTicketsAsPaid(1);
+        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);//TODO: 
+
+        $this->userTicketService->markTicketsAsPaid($this->userId);
 
         header("Location: $this->serverUrl/FestPlan");
     }
@@ -49,7 +55,7 @@ class FestPlanController
         // TODO: Get the actual user
         //$user->paymentInProgress = true;
 
-        $userTickets = $this->userTicketService->getAllUserTicketsByUserId(1, false);
+        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
 
         $line_items = [];
 
