@@ -2,7 +2,11 @@
 
 namespace App\Services;
 
+use App\Repositories\TicketRepository;
+use App\Repositories\UserTicketRepository;
+use Dompdf\Exception;
 use Resend;
+use App\Models\Ticket;
 
 class EmailService
 {
@@ -70,5 +74,51 @@ class EmailService
                 ]
             ],
         ]);
+    }
+
+    public function sendTickets(){ //TODO: CAll this method in checkout
+        try{
+            $ticketRepository = new TicketRepository();
+            $userTicketRepository = new UserTicketRepository();
+            $pdfService = new PDFService();
+            session_start();
+            $userID = $_SESSION['userId'];
+            $userTickets = $userTicketRepository->getTicketByUserID($userID); //TODO: change the hardcoded shit
+            $ticketsObjects = [];
+
+            foreach ($userTickets as $ticket){
+                if($ticket['paid'] == 1){
+                    $ticketsObjects[] = $ticketRepository->getTicketById($ticket['ticket_id']);
+                }
+            }
+
+            $pdfs = [];
+
+
+            foreach ($ticketsObjects as $ticketsObject) {
+                $pdf = $pdfService->generatePDF($ticketsObject);
+                // Encode the PDF content as base64
+                $pdfBase64 = base64_encode($pdf);
+                $pdfs[] = [
+                    'filename' => 'ticket_' . $ticketsObject->getTicketId() . '.pdf',
+                    'content' => $pdfBase64  // Use the base64 encoded content
+                ];
+            }
+
+            $resend = Resend::client('re_DF4R1gUB_CFNiNU9FrxGhNdDUCFxaK6NN');
+
+            $resend->emails->send([
+                'from' => 'onboarding@resend.dev',
+                'to' => '695344@student.inholland.nl',
+                'subject' => 'Invoice',
+                'html' => '
+            <h1>Hey, this is your invoice!</h1>
+        ',
+                'attachments' => $pdfs,
+            ]);
+        } catch (Exception $e){
+            throw new Exception($e->getMessage());
+        }
+
     }
 }

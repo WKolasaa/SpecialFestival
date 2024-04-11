@@ -2,30 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\Ticket;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 
 class QRService
 {
-    public function generateQRCode(){
-        $data = 'Test Test';
+    public function generateQRCode($ticket){
+        $data = 'TicketID='. $ticket->getTicketId() . '/TicketName='. $ticket->getTicketName();
 
-// Instantiate QR code options
-        $options = new QROptions([
-            'version'      => 5, // QR version (1 - 40)
-            'outputType'   => 'png', // Image format, // Error correction level (L stands for the lowest)
-            'imageBase64'  => false // Disable base64 encoding
-        ]);
+        $hash = hash('sha256', $data);
 
-// Instantiate QR code generator
-        $qrcode = new QRCode($options);
-
-// Set the file path where you want to save the QR code image
-        $filePath = 'PDF/qrcode.png';
-
-// Generate and save the QR code to a file
-        file_put_contents($filePath, $qrcode->render($data));
-
-        echo 'QR code saved to: ' . $filePath;
+        return (new QRCode)->render($hash);
     }
 }

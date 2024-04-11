@@ -60,4 +60,8 @@ class UserTicketService
     {
         $this->userTicketRepository->markTicketsAsPaid($userId);
     }
+
+    public function getTicketByUserID(int $userID){
+        return $this->userTicketRepository->getTicketByUserID($userID);
+    }
 }

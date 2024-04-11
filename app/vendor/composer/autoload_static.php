@@ -19,6 +19,12 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
             'chillerlan\\Settings\\' => 20,
             'chillerlan\\QRCode\\' => 18,
         ),
+        'S' => 
+        array (
+            'Svg\\' => 4,
+            'Stripe\\' => 7,
+            'Sabberworm\\CSS\\' => 15,
+        ),
         'R' => 
         array (
             'Resend\\' => 7,
@@ -28,11 +34,23 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
         ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+        ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
+        'D' => 
+        array (
+            'Dompdf\\' => 7,
         ),
         'A' => 
         array (
@@ -54,18 +72,34 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
+        ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
         'Resend\\' => 
         array (
             0 => __DIR__ . '/..' . '/resend/resend-php/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -78,6 +112,14 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
         'App\\Views\\' => 
         array (
@@ -107,6 +149,7 @@ class ComposerStaticInitf024693e6b468492919944afd6fdbda0
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
