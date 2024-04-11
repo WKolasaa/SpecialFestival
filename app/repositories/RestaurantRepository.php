@@ -399,4 +399,17 @@ class RestaurantRepository extends Repository
         return $row['id'];
     }
 
+    public function deleteRestaurant($restaurantID)
+    {
+        $sql = "DELETE FROM restaurants WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $restaurantID, PDO::PARAM_INT);
+        $success = $statement->execute();
+
+        if($success){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
