@@ -3,7 +3,7 @@
         'name' => 'group6/festivalproject',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0c75038833ebecb2d6593c481a0a5823e13e9d6a',
+        'reference' => '15a14a3db786c2c5969825b64d5ae179d4c76018',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -42,7 +42,7 @@
         'group6/festivalproject' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0c75038833ebecb2d6593c481a0a5823e13e9d6a',
+            'reference' => '15a14a3db786c2c5969825b64d5ae179d4c76018',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -6,6 +6,7 @@ use App\Models\HistoryEntryTypeEnum;
 // Group entries by page
 $groupedEntries = [];
 foreach ($entries as $entry) {
+    // During each iteration, the current $entry is appended to array in $groupedEntries that corresponds to its page_name
     $groupedEntries[$entry->page_name][] = $entry;
 }
 

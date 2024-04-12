@@ -40,10 +40,9 @@ class HistoryAdminRepository extends Repository
     }
 
 ////////////////// Fetches the content for a specific entry from the history_contents table //////////////////
-// string|null Returns the content of the entry, or null if not found
     public function getContent($page_name, $entry_name) {
       //This line defines a SQL query that selects the content field from the history_contents table where the page_name and entry_name match specified parameters. 
-      //The use of named placeholders (:page_name, :entry_name) in the SQL query helps prevent SQL injection and enhances code readability.
+      //The use of named placeholders (:page_name, :entry_name) in the SQL query prevents SQL injection 
       $sql = "SELECT content FROM history_contents WHERE page_name = :page_name AND entry_name = :entry_name";
       $statement = $this->connection->prepare($sql);
       

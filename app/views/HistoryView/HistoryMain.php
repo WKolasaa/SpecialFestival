@@ -25,6 +25,7 @@
                 <?php
                 $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
                 ?>
+                <!-- htmlspecialchars - converts special characters to their html enteties-->
                 <img src="<?= htmlspecialchars($adriaanWindmillImagePath) ?>" alt="Adriaan Windmill" class="location-image">
             </div>
                 <h3 class="location-name"><?= $service->getContent("History Main", "Seventh Location Name") ?></h3>
