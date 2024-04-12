@@ -185,3 +185,5 @@ $events = $restaurant->getEvents();
 
     <script src="js/Yummy/reservation.js"></script>
 </body>
+
+<?php include __DIR__ . '/../footer.php'; ?>

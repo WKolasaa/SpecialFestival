@@ -13,12 +13,12 @@ class HomeContentRepository extends Repository
     public function getAll() {
       $sql = "SELECT id, content_name, content_type, content FROM home_contents";
       $statement = $this->connection->prepare($sql);
+      $entries = [];
 
       try {
         $statement->execute();
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $entries = [];
         foreach ($rows as $row) {
           $content_type = $row["content_type"] == "TEXT" ? HistoryEntryTypeEnum::Text : HistoryEntryTypeEnum::Image;
           $entries[] = new HomeCMSEntry(
@@ -28,11 +28,10 @@ class HomeContentRepository extends Repository
             $row["content"]);
         }
         
-        return $entries;
       } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-      
       }
+      return $entries;
     }
 
     public function getContent($content_name) {

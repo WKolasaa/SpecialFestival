@@ -18,30 +18,30 @@ use App\Models\HistoryEntryTypeEnum;
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($entries as $entry) : ?>
-                <tr id="entry-<?= $entry->id ?>" data-entry-type="<?= $entry->content_type ?>"> 
-                    <td><?= htmlspecialchars($entry->content_name) ?></td>
-                    <td><?= $entry->content_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
-                    <td class="editable-content">
-                        <?php if ($entry->content_type == HistoryEntryTypeEnum::Image): ?>
-                            <!-- Show image preview -->
-                            <img src="<?= htmlspecialchars($entry->content) ?>" style="max-width: 200px; max-height: 200px;">
-                        <?php else: ?>
-                            <!-- For TEXT content, simply display it within a div -->
-                            <div><?= $entry->content ?></div>
-                        <?php endif; ?>
-                        <!-- Hidden textarea for edit mode -->
-                        <textarea style="display: none;"><?= htmlspecialchars($entry->content) ?></textarea>
-                    </td>
-                    <td class="action-buttons">
-                        <!-- Adjust the onclick functions to your corresponding JavaScript functions for editing and deleting -->
-                        <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
-                        <button onclick="deleteEntry(<?= $entry->id ?>)">Delete</button>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
+            <tbody>
+                <?php foreach ($entries as $entry) : ?>
+                    <tr id="entry-<?= $entry->id ?>" data-entry-type="<?= $entry->content_type ?>"> 
+                        <td><?= htmlspecialchars($entry->content_name) ?></td>
+                        <td><?= $entry->content_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
+                        <td class="editable-content">
+                            <?php if ($entry->content_type == HistoryEntryTypeEnum::Image): ?>
+                                <!-- Show image preview -->
+                                <img src="<?= htmlspecialchars($entry->content) ?>" style="max-width: 200px; max-height: 200px;">
+                            <?php else: ?>
+                                <!-- For TEXT content, simply display it within a div -->
+                                <div><?= $entry->content ?></div>
+                            <?php endif; ?>
+                            <!-- Hidden textarea for edit mode -->
+                            <textarea style="display: none;"><?= htmlspecialchars($entry->content) ?></textarea>
+                        </td>
+                        <td class="action-buttons">
+                            <!-- Adjust the onclick functions to your corresponding JavaScript functions for editing and deleting -->
+                            <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
+                            <button onclick="deleteEntry(<?= $entry->id ?>)">Delete</button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
     </table>
 
     <form action="/HomeAdmin/addEntry" method="POST" class="add-entry-form" enctype="multipart/form-data">
@@ -75,6 +75,6 @@ use App\Models\HistoryEntryTypeEnum;
 
 </div>
 
-<script src="/js/adminViews/homeAdminActions.js"></script> <!-- Adjust the path as necessary -->
+<script src="/js/adminViews/homeAdminActions.js"></script>
 
 <?php include __DIR__ . '/../footer.php'; ?>

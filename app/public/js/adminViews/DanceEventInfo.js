@@ -166,6 +166,64 @@ document
     loadOverviews();
   });
 
+
+
+  function validateAgendaForm() {
+    const venue = document.getElementById('new-event-venueAddress').value;
+    const ticketsAvailable = document.getElementById('new-event-ticketsAvailable').value;
+    const time = document.getElementById('new-event-time').value;
+    const duration = document.getElementById('new-event-duration').value;
+    const price = document.getElementById('new-event-ticketPrice').value;
+  
+    if (typeof venue !== 'string' || venue.trim() === '') {
+      alert('Venue must be a string and cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(ticketsAvailable) || ticketsAvailable <= 0) {
+      alert('Tickets Available must be a positive number');
+      return false;
+    }
+  
+    if (time === '') {
+      alert('Time cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(duration) || duration <= 0) {
+      alert('Duration must be a positive number');
+      return false;
+    }
+  
+    if (isNaN(price) || price <= 0) {
+      alert('Price must be a positive number');
+      return false;
+    }
+  
+    // Add more validations as needed
+  
+    return true;
+  }
+  
+  function validateSessionForm() {
+    const sessionType = document.getElementById('new-ticket-sessionType').value;
+    const price = document.getElementById('new-ticket-price').value;
+  
+    if (typeof sessionType !== 'string' || sessionType.trim() === '') {
+      alert('Session Type must be a string and cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(price) || price <= 0) {
+      alert('Price must be a positive number');
+      return false;
+    }
+  
+    // Add more validations as needed
+  
+    return true;
+  }
+
 //////////////////////fetch data///////////////////////
 
 let allArtists = [];

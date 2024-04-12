@@ -12,12 +12,6 @@ foreach ($entries as $entry) {
 ?>
 <div class="admin-container">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <button class="sidebar-button" onclick="location.href='HistoryAdmin/index'">Overview</button>
-        <button class="sidebar-button" onclick="location.href='historyadmin/timeslots'">Timeslots</button>
-    </div>
-
     <div class="admin-panel">
         <h1>History Admin Panel</h1>
         <hr />
@@ -35,9 +29,10 @@ foreach ($entries as $entry) {
                         <th>Chinese Tour</th>
                     </tr>
                 </thead>
+                <!-- (timeslot->getId()) -->
                 <tbody>
                     <?php foreach ($timeslots as $timeslot): ?>
-                        <tr data-timeslot-id="<?= htmlspecialchars($timeslot['id']) ?>">
+                        <tr data-timeslot-id="<?= htmlspecialchars($timeslot['id']) ?>"> 
                             <td>
                                 <span class="view"><?= htmlspecialchars($timeslot['day']) ?></span>
                                 <input class="edit" type="date" value="<?= htmlspecialchars($timeslot['day']) ?>" style="display:none;">
@@ -65,6 +60,7 @@ foreach ($entries as $entry) {
                             <td>
                                 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
                                 <button class="save-btn" onclick="saveTimeslot(this)" style="display:none;">Save</button>
+                                <button class="delete-btn" onclick="deleteTimeslot(this)">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -110,7 +106,6 @@ foreach ($entries as $entry) {
                             </td>
                             <td class="action-buttons">
                                 <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
-                                <button onclick="deleteEntry(<?= $entry->id ?>)">Delete</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -118,45 +113,6 @@ foreach ($entries as $entry) {
             </table>
             <hr />
         <?php endforeach; ?>
-
-       
-
-        <form action="/HistoryAdmin/addEntry" method="POST" class="add-entry-form" enctype="multipart/form-data">
-            <label>
-                Page:
-                <select name="page_name">
-                    <option value="History Main">History Main</option>
-                    <option value="History Port">History Port</option>
-                    <option value="History Windmill">History Windmill</option>
-                </select>
-            </label>
-
-            <label>
-                Entry Name:
-                <input name="entry_name" value="" />
-            </label>
-
-            <label>
-                Entry Type:
-                <select name="entry_type" id="entryTypeSelect">
-                    <option value="TEXT">Text</option>
-                    <option value="IMAGE">Image</option>
-                </select>
-            </label>
-
-            <!-- Separated Entry Content Label -->
-            <div id="entryContentLabel" style="flex-grow: 1;">
-                Entry Content:
-            </div>
-
-            <!-- Entry Content Inputs -->
-            <label id="entryContentInputs">
-                <input type="text" name="content" id="contentInput" value="" /> <!-- For text entries -->
-                <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;"> 
-            </label>
-
-            <button type="submit">Add Entry</button>
-        </form>
     </div>
 </div>
 <script src="/js/adminViews/historyAdminActions.js" defer></script>

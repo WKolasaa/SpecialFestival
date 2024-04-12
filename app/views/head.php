@@ -50,7 +50,7 @@ if (session_status() === PHP_SESSION_NONE)
             case 'AdminView/history':
                 $cssFile = 'admin/HistoryAdmin.css';
                 break;
-            case 'HomeAdmin':
+            case 'AdminView':
                 $cssFile = 'admin/HomeAdmin.css';
                 break;
             case 'historymain/cart':

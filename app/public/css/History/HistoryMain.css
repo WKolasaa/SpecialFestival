@@ -214,7 +214,7 @@ body, html {
 .timeslots-section {
     margin: 20px auto;
     max-width: 800px;
-    background-color: #f9f9f9;
+    background-color: #D8DFE0;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px; /* Reduced padding */
@@ -225,22 +225,23 @@ body, html {
 .timeslot {
     margin-bottom: 15px; /* Reduced margin */
     padding: 8px; /* Reduced padding */
-    background-color: white;
+    background-color: #5674AE;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .timeslot h3 {
-    color: #333;
+    color: #ffffff;
+    font-weight: bold;
     margin-top: 0;
-    font-size: 16px; /* Smaller title font size */
+    font-size: 20px; /* Smaller title font size */
 }
 
 .timeslot p, .timeslot .languages {
-    color: #666;
+    color: #ffffff;
     margin: 4px 0; /* Reduced margin */
     line-height: 1.4; /* Adjusted line height for compactness */
-    font-size: 13px; /* Smaller paragraph font size */
+    font-size: 16px; /* Smaller paragraph font size */
 }
 
 .languages {
@@ -253,7 +254,7 @@ body, html {
     display: inline-flex;
     align-items: center;
     padding: 6px 16px; /* Reduced padding */
-    background-color: #007bff;
+    background-color: #193B53;
     color: white;
     border-radius: 12px; /* Adjusted border radius */
     font-size: 12px; /* Reduced font size */
