@@ -69,3 +69,7 @@ table {
     color: black;
     padding: 10px 20px;
 }
+
+#calendar {
+    margin-top: 100px;
+}

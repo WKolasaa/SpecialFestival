@@ -2,8 +2,10 @@ document.querySelectorAll('.quantity-increase').forEach(function(button) {
     button.addEventListener('click', function() {
         const row = button.parentElement.parentElement;
         const quantityElement = row.querySelector('.quantity');
+        const priceElement = row.querySelector('.price');
         const quantity = parseInt(quantityElement.textContent, 10);
         quantityElement.textContent = quantity + 1;
+        priceElement
         increaseTicketQuantity(row.dataset.ticketId);
     });
 });

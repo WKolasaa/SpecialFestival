@@ -1,4 +1,37 @@
 <?php include __DIR__ . '/header.php'; ?>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            // Create an array of events from user tickets
+            var events = [];
+            <?php foreach ($userTickets as $userTicket): ?>
+            events.push({
+                title: '<?= $userTicket->ticket->getTicketName() ?>',
+                start: '<?= $userTicket->ticket->getStartDate()->format('Y-m-d H:i:s') ?>',
+                end: '<?= $userTicket->ticket->getEndDate()->format('Y-m-d H:i:s') ?>',
+                // Add additional data here
+                eventName: '<?= $userTicket->ticket->getEventName() ?>',
+                location: '<?= $userTicket->ticket->getLocation() ?>',
+            });
+            <?php endforeach; ?>
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'timeGridWeek',
+                events: events,
+                eventContent: function(arg) {
+                    var html = '<div class="event">';
+                    html += '<div class="event-ticket-name">' + arg.event.extendedProps.eventName + '</div>';
+                    html += '<div class="event-location">' + arg.event.extendedProps.location + '</div>';
+                    html += '</div>';
+
+                    return { html: html };
+                }
+            });
+            calendar.render();
+        });
+    </script>
 
     <div class="festplan">
         <div>
@@ -40,6 +73,8 @@
         <form action="/FestPlan/checkout" method="post">
             <button id="checkoutButton" class="btn btn-primary" type="submit">Check out</button>
         </form>
+
+        <div id='calendar'></div>
     </div>
 
     <script>
