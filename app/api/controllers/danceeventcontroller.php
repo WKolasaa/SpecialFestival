@@ -574,8 +574,6 @@ class DanceEventController
 
     session_start();
     $userId=$_SESSION['userId'];
-   
-    
       $this->userTicketService->addUserTicket($danceTicket,$userId); ///
     //   echo json_encode(['message' => 'Ticket added successfully']);
     } catch (Exception $e) {
@@ -592,11 +590,6 @@ class DanceEventController
         echo json_encode(['hasSession' => false]);
     }
 }
-
-
-
-
-
 
 
     private function sanitizeArtistData($artistData) // Use a different name for the parameter to avoid confusion

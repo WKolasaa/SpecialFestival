@@ -32,7 +32,9 @@
             <?php endforeach; ?>
             </tbody>
         </table>
-        <button id="checkoutButton" class="btn btn-primary">Check out</button>
+        <form action="/FestPlan/checkout" method="post">
+            <button id="checkoutButton" class="btn btn-primary" type="submit">Check out</button>
+        </form>
     </div>
 
 

@@ -53,7 +53,8 @@ class AdminViewController
 
    public function orders()
    {
-      $orders = $this->orderService->getAllTickets();
+       $orders = $this->orderService->getAllOrders();
+      // var_dump($orders);
       include '../views/adminViews/ordersadmin.php';
 
 

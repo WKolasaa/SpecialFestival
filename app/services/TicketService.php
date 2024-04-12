@@ -54,6 +54,11 @@ class TicketService
 
     }
 
+    public function getTicketById($id)
+    {
+        return $this->ticketRepository->getTicketById($id);
+    }
+
 }
 
 /*

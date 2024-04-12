@@ -70,8 +70,8 @@ include 'head.php';
                                     Yummy
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownYummy">
-                                    <a class="dropdown-item" href="#">Restaurants</a>
-                                    <a class="dropdown-item" href="#">Menu</a>
+                                    <a class="dropdown-item" href="/yummy">Overview</a>
+                                    <a class="dropdown-item" href="/restaurants">Restaurant</a>
                                 </div>
                             </li>
 
@@ -100,7 +100,7 @@ include 'head.php';
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <?php if (isset ($_SESSION['user'])): ?>
                                     <!-- Logged in -->
-                                    <a class="dropdown-item" href="/edit-account">Edit Account</a>
+                                    <a class="dropdown-item" href="/signup">Edit Account</a>
                                     <a class="dropdown-item" href="/logout">Log out</a>
                                 <?php else: ?>
                                     <!-- Logged out -->

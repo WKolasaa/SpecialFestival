@@ -16,12 +16,11 @@ class UserTicketService
     {
         $this->userTicketRepository = new UserTicketRepository();
         $this->ticketRepository = new TicketRepository();
-
     }
 
-    public function getAllUserTicketsByUserId(int $userId): array
+    public function getAllUserTicketsByUserId(int $userId, bool $paid): array
     {
-        $userTicketData = $this->userTicketRepository->getAllUserTicketsByUserId($userId);
+        $userTicketData = $this->userTicketRepository->getAllUserTicketsByUserId($userId, $paid);
         $userTickets = [];
         foreach ($userTicketData as $data) {
             $userTicket = new UserTicket();
@@ -35,11 +34,11 @@ class UserTicketService
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
+      
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket, $userId);
         } else {
-             echo "ADD USER TICKET SERVICE";
-            // var_dump($ticket, $userId);
+            
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }
@@ -54,5 +53,12 @@ class UserTicketService
         $this->userTicketRepository->addTicketQuantity($ticket, $userId, -1);
     }
 
-    
+    public function markTicketsAsPaid(int $userId): void
+    {
+        $this->userTicketRepository->markTicketsAsPaid($userId);
+    }
+
+    public function getTicketByUserID(int $userID){
+        return $this->userTicketRepository->getTicketByUserID($userID);
+    }
 }

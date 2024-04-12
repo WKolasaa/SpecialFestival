@@ -38,6 +38,7 @@ function validateForm() {
     const seatsLeft = parseInt(selectedSessionOption.getAttribute('data-seats-left'), 10);
     const restaurantId = document.getElementById('restaurant').textContent;
     const eventID = sessionSelect.value;
+    const specialRequests = document.getElementById('specialRequests').value;
 
     if (daySelect === "" || sessionSelect.value === "") {
         showMessage("Please select both a day and a session.", 'alert-danger');
@@ -59,16 +60,13 @@ function validateForm() {
             eventID: eventID,
             regularTickets: regularTickets,
             reducedTickets: reducedTickets,
-            specialRequests: document.getElementById('specialRequests').value
+            specialRequests: specialRequests
         })
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                showMessage('Reservation successful', 'alert-success');
-                setTimeout(() => {
-                    updateSessions(daySelect);
-                }, 1000);
+                reserve(restaurantId, eventID, regularTickets, reducedTickets, specialRequests, daySelect);
             } else {
                 showMessage('Error reserving seats', 'alert-danger');
             }
@@ -78,6 +76,43 @@ function validateForm() {
             showMessage('Error reserving seats', 'alert-danger');
         });
 
+}
+
+function reserve(restaurantID, eventID, regularTickets, reducedTickets, specialRequests, daySelect) {
+    const form = document.getElementById('reservationForm');
+
+    const array = {
+        restaurantID: restaurantID,
+        eventID: eventID,
+        regularTickets: regularTickets,
+        reducedTickets: reducedTickets,
+        specialRequests: specialRequests
+    };
+
+    console.log(array);
+
+    fetch('http://localhost/api/yummyreservation/addTicket', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(array)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showMessage('Reservation successful', 'alert-success');
+                setTimeout(() => {
+                    updateSessions(daySelect);
+                }, 1000);
+            } else {
+                showMessage('Error reserving seats ADD TICKET', 'alert-danger');
+            }
+        })
+        .catch(error => {
+            console.log('Error:', error);
+            showMessage('Error reserving seats CATCH ADD TICKET', 'alert-danger');
+        });
 }
 
 function showMessage(message, alertClass) {

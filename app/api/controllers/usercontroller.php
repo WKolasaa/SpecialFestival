@@ -46,6 +46,8 @@ public function update()
     try {
          $updateResult=$this->userService->updateUser($sanitizedData);
          if($updateResult){
+          session_start();
+          $_SESSION['userId']=$updateResult->getId();
             echo json_encode(['success' => 'User updated successfully']);
           }else{
             echo json_encode(['error' => 'No rows were affected.']);

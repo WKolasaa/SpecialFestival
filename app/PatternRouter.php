@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use Exception;
+
 class PatternRouter
 {
     private function stripParameters($uri)
@@ -48,8 +50,6 @@ class PatternRouter
         }
         if (file_exists($filename)) {
             require $filename;
-            
-         
         } else {
             http_response_code(404);
             die();
@@ -62,15 +62,11 @@ class PatternRouter
             http_response_code(404);
             die();
         }
-      
 
         try {
             $controllerObj = new $controllerName();
             $controllerObj->{$methodName}();
-           
-
-       
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log or handle the error more gracefully
             http_response_code(500);
             die();
