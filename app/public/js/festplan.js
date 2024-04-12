@@ -13,7 +13,7 @@ document.querySelectorAll('.quantity-decrease').forEach(function(button) {
         const row = button.parentElement.parentElement;
         const quantityElement = row.querySelector('.quantity');
         const quantity = parseInt(quantityElement.textContent, 10);
-        if (quantity > 0) {
+        if (quantity > 1) {
             quantityElement.textContent = quantity - 1;
             decreaseTicketQuantity(row.dataset.ticketId);
         } else {
