@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../header.php'; // Adjust the path as necessary
+include __DIR__ . '/../header.php'; 
 
 use App\Models\HistoryEntryTypeEnum;
 
@@ -28,14 +28,12 @@ use App\Models\HistoryEntryTypeEnum;
                                 <!-- Show image preview -->
                                 <img src="<?= htmlspecialchars($entry->content) ?>" style="max-width: 200px; max-height: 200px;">
                             <?php else: ?>
-                                <!-- For TEXT content, simply display it within a div -->
                                 <div><?= $entry->content ?></div>
                             <?php endif; ?>
                             <!-- Hidden textarea for edit mode -->
                             <textarea style="display: none;"><?= htmlspecialchars($entry->content) ?></textarea>
                         </td>
                         <td class="action-buttons">
-                            <!-- Adjust the onclick functions to your corresponding JavaScript functions for editing and deleting -->
                             <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
                             <button onclick="deleteEntry(<?= $entry->id ?>)">Delete</button>
                         </td>
@@ -58,7 +56,7 @@ use App\Models\HistoryEntryTypeEnum;
             </select>
         </label>
 
-        <!-- Separated Entry Content Label -->
+        <!-- Entry Content Label -->
         <div id="entryContentLabel" style="flex-grow: 1;">
             Content:
         </div>
