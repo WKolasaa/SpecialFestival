@@ -2,30 +2,45 @@
 
 namespace App\Services;
 
+use App\Models\Ticket;
+use App\Repositories\TicketRepository;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
+use Exception;
 
 class QRService
 {
-    public function generateQRCode(){
-        $data = 'Test Test';
+    public function generateQRCode($ticket){ //TODO: handle Exception
+        $data = 'TicketID='. $ticket->getTicketId() . '/UserID='. $_SESSION['userId'];
 
-// Instantiate QR code options
-        $options = new QROptions([
-            'version'      => 5, // QR version (1 - 40)
-            'outputType'   => 'png', // Image format, // Error correction level (L stands for the lowest)
-            'imageBase64'  => false // Disable base64 encoding
-        ]);
+        $hash = hash('sha256', $data);
+        $ticketRepository = new TicketRepository();
+        if($ticketRepository->addQRCodeTicket($ticket->getTicketId(), $hash)){
+            return (new QRCode)->render($hash);
+        }
 
-// Instantiate QR code generator
-        $qrcode = new QRCode($options);
+        throw new Exception("Error adding QR code to ticket");
 
-// Set the file path where you want to save the QR code image
-        $filePath = 'PDF/qrcode.png';
+    }
 
-// Generate and save the QR code to a file
-        file_put_contents($filePath, $qrcode->render($data));
+    public function scanQRCode($userTicketID){
+        $ticketRepository = new TicketRepository();
+        return $ticketRepository->scanQRCode($userTicketID);
+    }
 
-        echo 'QR code saved to: ' . $filePath;
+    public function qrCodeScanned($userTicketID){
+        $ticketRepository = new TicketRepository();
+
+        return $ticketRepository->qrCodeScanned($userTicketID);
+    }
+
+    public function getQrCode($userTicketID){
+        $ticketRepository = new TicketRepository();
+        return $ticketRepository->getQrCode($userTicketID);
+    }
+
+    public function getQRIDByCode($code){
+        $ticketRepository = new TicketRepository();
+        return $ticketRepository->getQRIDByCode($code);
     }
 }

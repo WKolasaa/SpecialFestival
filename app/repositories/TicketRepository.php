@@ -96,5 +96,85 @@ class TicketRepository extends Repository
             throw new \PDOException('Error adding ticket: ' . $e->getMessage());
         }
     }
+
+    public function addQRCodeTicket(int $userTicketID, string $hash){
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO qr (user_ticket_id, code, scan) VALUES (:user_ticket_id, :code, :scanned)");
+            $stmt->bindParam(':user_ticket_id', $userTicketID, PDO::PARAM_INT);
+            $scanned = 0;
+            $stmt->bindParam(':scanned', $scanned, PDO::PARAM_INT);
+            $stmt->bindParam(':code', $hash, PDO::PARAM_STR);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error adding qr code ticket: ' . $e->getMessage());
+        }
+    }
+
+    public function scanQRCode(int $userTicketID){
+        try {
+            $stmt = $this->connection->prepare("UPDATE qr SET scan = 1 WHERE user_ticket_id = :user_ticket_id");
+            $stmt->bindParam(':user_ticket_id', $userTicketID, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error scanning qr code: ' . $e->getMessage());
+        }
+    }
+
+    public function qrCodeScanned(int $userTicketID){
+        try {
+            $sql = "SELECT scan FROM qr WHERE user_ticket_id = :scanId";
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':scanId', $userTicketID, PDO::PARAM_INT);
+            $statement->execute();
+
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($result && $result['scan'] == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error scanning qr code: ' . $e->getMessage());
+        }
+    }
+
+    public function getQrCode(int $userTicketID){
+        try {
+            $sql = "SELECT code FROM qr WHERE user_ticket_id = :user_ticket_id";
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':user_ticket_id', $userTicketID, PDO::PARAM_INT);
+            $statement->execute();
+
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($result) {
+                return $result['code'];
+            } else {
+                return null;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error getting qr code: ' . $e->getMessage());
+        }
+    }
+
+    public function getQRIDByCode($code){
+        try {
+            $sql = "SELECT user_ticket_id FROM qr WHERE code = :code";
+            $statement = $this->connection->prepare($sql);
+            $statement->bindParam(':code', $code, PDO::PARAM_STR);
+            $statement->execute();
+
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($result) {
+                return $result['user_ticket_id'];
+            } else {
+                return null;
+            }
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error getting qr code: ' . $e->getMessage());
+        }
+    }
 }
 

@@ -20,9 +20,9 @@ class UserTicketRepository extends Repository
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
         $userTicketId = $this->getTicketId($ticket);
-         echo $userTicketId;
+        //echo $userTicketId;
 
-       
+
         $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, :quantity, :paid)";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
@@ -32,13 +32,13 @@ class UserTicketRepository extends Repository
 
         $stmt->execute();
         // echo $userId;
-        if($stmt->rowCount()>0)
-        {
-            echo "Ticket added successfully";
-        }else
-        {
-            echo "Ticket not added";
-        }
+//        if($stmt->rowCount()>0)
+//        {
+//            echo "Ticket added successfully";
+//        }else
+//        {
+//            echo "Ticket not added";
+//        }
     }
 
     public function addTicketQuantity(Ticket $ticket, int $userId, int $quantity): void
@@ -78,7 +78,7 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':eventName', $ticket->getEventName(), PDO::PARAM_STR);
         $stmt->bindValue(':ticketName', $ticket->getTicketName(), PDO::PARAM_STR);
         $stmt->bindValue(':price', $ticket->getPrice(), PDO::PARAM_INT);
-        
+
         $stmt->execute();
         $row = $stmt->fetch();
         $id = $row['id'];
@@ -108,6 +108,19 @@ class UserTicketRepository extends Repository
             throw new \Exception("Ticket with id $ticketId does not exist or is not paid");
         }
     }
+
+    public function getTicketByUserID($userID){
+        $sql = "SELECT * FROM user_tickets WHERE user_id = :userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userID, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $result[] = $row;
+        }
+        return $result;
+    }
+
 
 
 }

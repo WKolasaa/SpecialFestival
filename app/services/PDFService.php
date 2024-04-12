@@ -7,24 +7,26 @@ use Dompdf\Options;
 
 class PDFService
 {
-    public function generatePDF(){
+    public function generatePDF($ticket){ //TODO: Change the HTML for this
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
         $dompdf = new Dompdf($options);
 
+        $QRService = new QRService();
+        $image = $QRService->generateQRCode($ticket);
         // Load HTML content for the invoice
         $html = '
         <!DOCTYPE html>
         <html>
         <head>
         <meta charset="UTF-8">
-        <title>Invoice</title>
+        <title>Ticket</title>
         </head>
         <body>
-        <h2>Invoice</h2>
-        <p>Invoice Number: INV-123456</p>
-        <p>Invoice Date: ' . date('Y-m-d') . '</p>
+        <h2>Ticket for '. $ticket->getTicketName() .'</h2>
+        <img src="'. $image .'" width="400px" height="400px"> 
+        <p>Ticket Date: ' . date('Y-m-d') . '</p>
         <p>Client Name: John Doe</p>
         <p>Phone Number: +1234567890</p>
         <p>Address: 123 Main Street, City, Country</p>
@@ -46,19 +48,6 @@ class PDFService
         // Render the HTML as PDF
         $dompdf->render();
 
-        $pdfContent = $dompdf->output();
-
-        // Save the PDF to a file
-        $filePath = 'PDF/invoice.pdf'; // Specify the file path where you want to save the PDF
-        file_put_contents($filePath, $pdfContent);
-
-        $emailService = new EmailService();
-        try{
-            $emailService->sendInvoice($pdfContent);
-        }catch (\Exception $e) {
-            echo 'Failed to send email: ' . $e->getMessage();
-        }
-
-        echo 'PDF saved successfully at: ' . $filePath;
+        return $dompdf->output();
     }
 }
