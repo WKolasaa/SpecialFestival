@@ -7,22 +7,24 @@ use App\Models\HistoryTicket;
 use App\Models\Ticket;
 use App\Models\TicketType;
 use DateTime;
+use App\Services\UserTicketService;
 
 class HistoryAdminController{
     private $historyAdminService;
-    
+    private $userTicketService;
      function __construct()
     {
+        $this->userTicketService = new UserTicketService();
         $this->historyAdminService = new HistoryAdminService();
     }
 
+    //////////////////////////////// Update of text entry ////////////////////////////////
     public function update() {
-        // echo "update";
     $entry_id = $_POST["entry_id"];
     $content = $_POST["content"];
 
-    // Assume updateEntry method returns true on success, false on failure
-    $result = $this->historyAdminService->updateEntry($entry_id, $content);
+    // Call to service layer to update the entry in the database
+    $this->historyAdminService->updateEntry($entry_id, $content);
 
     header('Content-Type: application/json');
 
@@ -30,12 +32,9 @@ class HistoryAdminController{
 
     exit();
 }
-  
-    public function delete() {
-      $entry_id = $_GET["entry_id"];
-      $this->historyAdminService->deleteEntry($entry_id);
-    }
 
+    //////////////////////////////// Update of image entry ////////////////////////////////
+    // Handles file upload and updates the entry with the new image path.
     public function updateImage() {
       $entry_id = $_POST["entry_id"];
   
@@ -57,11 +56,11 @@ class HistoryAdminController{
         $uniqueFileName = uniqid("img_") . '.' . $extension;
         $targetFile = $targetDirectory . $uniqueFileName;
 
+        // Move uploaded file and update entry with new image URL
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
             // Constructing a relative URL to the uploaded image to return to the client
             $relativeUrl = '/img/History/' . $uniqueFileName;
             $this->historyAdminService->updateEntry($entry_id, $relativeUrl);
-            // Ensure you return the full URL or a correct relative path that the client can resolve
             echo json_encode(['success' => true, 'imageUrl' => $relativeUrl, 'message' => 'Image updated successfully.']);
         } else {
             http_response_code(500); // Internal Server Error
@@ -91,4 +90,45 @@ class HistoryAdminController{
         echo json_encode(['success' => true]);
     }
     
-}
+    //////////////////////////////// Deletes a specified timeslot using its ID ////////////////////////////////
+    public function deleteTimeslot() {
+        $timeslotId = $_GET['id']; 
+        if ($this->historyAdminService->deleteTimeslot($timeslotId)) {
+            echo json_encode(['success' => true, 'message' => 'Timeslot deleted successfully.']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to delete timeslot.']);
+        }
+    }
+
+    //////////////////////////////// Adds a ticket to the cart. Decodes JSON data from the request, converts it to a Ticket model, and adds to the session ////////////////////////////////
+    public function addToCart() {
+        header('Content-Type: application/json');
+        // Decode the JSON body from the incoming HTTP request
+        $data = json_decode(file_get_contents('php://input'), true);
+        $this->historyAdminService->addTicket($data);
+        // Extract and store the selected language from the decoded data
+        
+        $ticket=$this->historyAdminService->convertHistoryTicketToTicket($data);
+        session_start();
+        $userId=$_SESSION['userId'];
+        $successfullyAdded = $this->userTicketService->addUserTicket($ticket,$userId);
+        // Send a JSON response indicating the success or failure of adding the ticket to the cart
+        if ($successfullyAdded) { 
+            echo json_encode(['success' => true, 'message' => 'Ticket added to cart successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to add ticket to cart.']);
+        }
+    }
+    ////////////////////////////////  Checks if a user session exists ////////////////////////////////
+    //This method is used to verify if a user is currently logged in.
+    public function checkUser() {
+        session_start();
+        if (isset($_SESSION['user'])) {
+            echo json_encode(['hasSession' => true]);
+        } else {
+            echo json_encode(['hasSession' => false]);
+        }
+    }
+    
+    }

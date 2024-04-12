@@ -13,7 +13,9 @@ class HomeAdminController{
 
   public function index()
   {
+    error_log("Index method called.");
     $entries = $this->homeContentService->getAll();
+    var_dump($entries);
     include '../views/adminViews/HomeAdmin.php';
   }
 

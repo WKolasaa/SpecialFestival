@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\HistoryAdminService;
+use App\Services\HomeContentService;
 use App\Services\OrderService;
 use App\Services\RestaurantService;
 
@@ -12,17 +13,19 @@ class AdminViewController
 
    private $orderService;
    private HistoryAdminService $historyService;
+   private HomeContentService $homeContentService;
 
 
    function __construct()
    {
        $this->orderService = new OrderService();
        $this->historyService = new HistoryAdminService();
+       $this->homeContentService = new HomeContentService();
    }
    public function index()
    {
-      include '../views/home.php';
-
+      $entries = $this->homeContentService->getAll();
+      include '../views/adminViews/HomeAdmin.php';
    }
    public function dance()
    {            //ADMIN CONTROLLER
@@ -41,7 +44,7 @@ class AdminViewController
      include '../views/adminViews/yummyEventadmin.php';
    }
    
-   public function history() //TODO: SLAVA check your route here
+   public function history()
    {
        $entries = $this->historyService->getAll();
        $timeslots = $this->historyService->getAllTimeslots();

@@ -1,15 +1,5 @@
 <?php include __DIR__ . '/../header.php'; ?>
 
-    <!-- <style>
-        #edit-link {
-            position: fixed;
-            top: 10px;
-            right: 30px;
-            z-index: 9999;
-            font-size: 24px;
-        }
-    </style> -->
-
     <div class="festival-banner" style="background-image: url('../img/History/HistoryEvent.jpg');">
             <div class="festival-info">
                 <h1 class="festival-title"><?= $service->getContent("History Main", "Title") ?></h1>
@@ -33,11 +23,7 @@
             <a href="historymain/windmill" class="location-item">
             <div class="location-image-container">
                 <?php
-                // Assuming $service is an instance of HistoryAdminService initialized earlier
                 $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
-                // if($adriaanWindmillImagePath == "<null>") {
-                //     $adriaanWindmillImagePath = "../img/History/AdriaanWindmill.png";
-                // }
                 ?>
                 <img src="<?= htmlspecialchars($adriaanWindmillImagePath) ?>" alt="Adriaan Windmill" class="location-image">
             </div>
@@ -49,11 +35,7 @@
             <a href="historymain/port" class="location-item">
                 <div class="location-image-container">
                 <?php
-                    // Assuming $service is an instance of HistoryAdminService initialized earlier
                     $amsterdamPortImagePath = $service->getContent("History Main", "Amsterdam Port Image");
-                    // if($amsterdamPortImagePath == "<null>") {
-                    //     $amsterdamPortImagePath = "../img/History/AmsterdamPort.png";
-                    // }
                     ?>
                     <img src="<?= htmlspecialchars($amsterdamPortImagePath) ?>" alt="Amsterdam Port" class="location-image">
                 </div>
@@ -68,12 +50,8 @@
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <!-- <img src="../img/History/Map_Route.png" alt="Map" class="map-image"> -->
                 <?php
                 $homeMapImagePath = $service->getContent("History Main", "Route Image");
-                if($homeMapImagePath == "<null>") {
-                    $homeMapImagePath = "../img/History/Map_Route.png";
-                }
                 ?>
                 <img src="<?= htmlspecialchars($homeMapImagePath) ?>" alt="Map image" class="map-image">
             </div>
@@ -149,12 +127,9 @@
     <div class="start-location-section">
         <h2 class="start-location-title">Start location</h2>
         <div class="start-location-image-container">
-            <!-- <img src="../img/History/Start_Location_Grote_Markt.jpg" alt="Start Location" class="start-location-image"> -->
             <?php
                 $startLocationImagePath = $service->getContent("History Main", "Start Location Image");
-                if($startLocationImagePath == "<null>") {
-                    $startLocationImagePath = "../img/History/Start_Location_Grote_Markt.jpg";
-                }
+                
                 ?>
                 <img src="<?= htmlspecialchars($startLocationImagePath) ?>" alt="Start Location" class="start-location-image">
             <div class="start-location-marker">
