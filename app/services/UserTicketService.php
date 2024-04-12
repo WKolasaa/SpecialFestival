@@ -56,9 +56,9 @@ class UserTicketService
         $this->userTicketRepository->addTicketQuantity($ticketId, $userId, -1);
     }
 
-    public function markTicketsAsPaid(int $userId): void
+    public function markTicketsAsPaid(int $userId, array $userTickets): void
     {
-        $this->userTicketRepository->markTicketsAsPaid($userId);
+        $this->userTicketRepository->markTicketsAsPaid($userId, $userTickets);
     }
 
     public function deleteTicket(int $ticketId, int $userId): void
@@ -79,11 +79,5 @@ class UserTicketService
 
     public function getUserIdByShareToken(string $token): int {
         return $this->userTicketRepository->getUserIdByShareToken($token);
-    }
-
-    public function updateTicketAvailability(int $userId, int $amount) {
-        $ticketIds = $this->userTicketRepository->getTicketIdsByUserId($userId);
-
-        $this->ticketRepository->updateTicketAvailability($ticketIds, $amount);
     }
 }

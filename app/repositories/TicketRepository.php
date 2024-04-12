@@ -24,14 +24,12 @@ class TicketRepository extends Repository
         return $this->rowToTicket($row);
     }
 
-    public function updateTicketAvailability(array $ticketIds, int $amount) {
-        foreach ($ticketIds as $ticketId) {
-            $sql = "UPDATE ticket SET available = available + :amount WHERE id = :ticketId";
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
-            $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
-            $stmt->execute();
-        }
+    public function updateTicketAvailability(int $ticketId, int $amount) {
+        $sql = "UPDATE ticket SET available = available + :amount WHERE id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     public function getAllTickets()

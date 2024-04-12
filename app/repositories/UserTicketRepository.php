@@ -58,12 +58,15 @@ class UserTicketRepository extends Repository
         return (bool) $row;
     }
 
-    public function markTicketsAsPaid(int $userId): void
+    public function markTicketsAsPaid(int $userId, array $userTickets): void
     {
-        $sql = "UPDATE user_tickets SET paid = true WHERE user_id = :userId";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->execute();
+        foreach ($userTickets as $userTicket) {
+            $sql = "UPDATE user_tickets SET paid = 1 WHERE user_id = :userId AND ticket_id = :ticketId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->bindValue(':ticketId', $userTicket->ticket->getTicketId(), PDO::PARAM_INT);
+            $stmt->execute();
+        }
     }
 
     public function deleteTicket(int $ticketId, int $userId): void

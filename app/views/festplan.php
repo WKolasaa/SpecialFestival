@@ -78,6 +78,13 @@ $tokenIsSet = isset($_GET['token']);
             <?php endforeach; ?>
             </tbody>
         </table>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger">
+                <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (!$tokenIsSet): ?>
             <form action="/FestPlan/checkout" method="post">
                 <button id="checkoutButton" class="btn btn-primary" type="submit">Check out</button>
