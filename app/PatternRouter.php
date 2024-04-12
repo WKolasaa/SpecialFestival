@@ -47,6 +47,7 @@ class PatternRouter
         $filename = __DIR__ . '/controllers/' . ucfirst($explodedUri[0]) . 'Controller.php';
         if ($api) {
             $filename = __DIR__ . '/api/controllers/' . ucfirst($explodedUri[0]) . 'Controller.php';
+            $controllerName = "App\\Api\\Controllers\\" . ucfirst($explodedUri[0]) . "Controller";
         }
         if (file_exists($filename)) {
             require $filename;

@@ -36,26 +36,46 @@ class UserTicketService
     {
       
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
-            $this->increaseTicketQuantity($ticket, $userId);
+            $this->increaseTicketQuantity($ticket->getId(), $userId);
         } else {
             
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }
 
-    public function increaseTicketQuantity(Ticket $ticket, int $userId): void
+    public function increaseTicketQuantity(int $ticketId, int $userId): void
     {
-        $this->userTicketRepository->addTicketQuantity($ticket, $userId, 1);
+        $this->userTicketRepository->addTicketQuantity($ticketId, $userId, 1);
     }
 
-    public function decreaseTicketQuantity(Ticket $ticket, int $userId): void
+    public function decreaseTicketQuantity(int $ticketId, int $userId): void
     {
-        $this->userTicketRepository->addTicketQuantity($ticket, $userId, -1);
+        $this->userTicketRepository->addTicketQuantity($ticketId, $userId, -1);
     }
 
-    public function markTicketsAsPaid(int $userId): void
+    public function markTicketsAsPaid(int $userId, array $userTickets): void
     {
-        $this->userTicketRepository->markTicketsAsPaid($userId);
+        $this->userTicketRepository->markTicketsAsPaid($userId, $userTickets);
+    }
+
+    public function deleteTicket(int $ticketId, int $userId): void
+    {
+        $this->userTicketRepository->deleteQrCode($ticketId);
+        $this->userTicketRepository->deleteTicket($ticketId, $userId);
+    }
+
+    public function generateShareToken(int $userId): string {
+        $token = $this->userTicketRepository->getShareTokenByUserId($userId);
+
+        if ($token == null) {
+            return $this->userTicketRepository->generateShareToken($userId);
+        } else {
+            return $token;
+        }
+    }
+
+    public function getUserIdByShareToken(string $token): int {
+        return $this->userTicketRepository->getUserIdByShareToken($token);
     }
 
     public function getTicketByUserID(int $userID){

@@ -21,6 +21,10 @@ class TicketService
         return $this->ticketRepository->getAllTickets();
     }
 
+    public function getTicketById(int $id): ?Ticket
+    {
+        return $this->ticketRepository->getTicketById($id);
+    }
 
     private function convertArrayToTicket(array $ticketData): Ticket
     { //change the array to object
@@ -54,33 +58,8 @@ class TicketService
 
     }
 
-    public function getTicketById($id)
-    {
-        return $this->ticketRepository->getTicketById($id);
+    public function updateTicketAvailability(int $ticketId, int $amount) {
+        $this->ticketRepository->updateTicketAvailability($ticketId, $amount);
     }
 
 }
-
-/*
-  private function convertArrayToDanceOverview(array $danceOverviewData): DanceOverview
-  {
-    $requiredKeys = [ 'text'];
-    $id= isset($danceOverviewData['id']) ? $danceOverviewData['id'] : null;
-    $header= isset($danceOverviewData['header']) ? $danceOverviewData['header'] : null;
-    $subHeader= isset($danceOverviewData['subHeader']) ? $danceOverviewData['subHeader'] : null;
-    $imageName= isset($danceOverviewData['imageName']) ? $danceOverviewData['imageName'] : null;
-    foreach ($requiredKeys as $key) {
-      if (!array_key_exists($key, $danceOverviewData)) {
-        throw new \Exception("Missing key in dance overview data: $key");
-      }
-    }
-    $danceOverview = new DanceOverview(
-      $id,
-      $header,
-      $subHeader,
-      $danceOverviewData['text'],
-      $danceOverviewData['imageName']
-    );
-    return $danceOverview;
-  }
-*/ 
