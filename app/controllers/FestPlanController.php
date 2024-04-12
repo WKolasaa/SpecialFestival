@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserTicket;
+use App\Services\EmailService;
 use App\Services\TicketService;
 use App\Services\UserTicketService;
 use App\Services\OrderService;
@@ -22,6 +23,7 @@ class FestPlanController
     private UserTicketService $userTicketService;
     private TicketService $ticketService;
     private OrderService $orderService;
+    private EmailService $emailService;
     private String $serverUrl;
     private int $userId;
 
@@ -30,6 +32,7 @@ class FestPlanController
         $this->userTicketService = new UserTicketService();
         $this->ticketService = new TicketService();
         $this->orderService = new OrderService();
+        $this->emailService = new EmailService();
         $this->serverUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         session_start();
         $this->userId = $_SESSION['userId'] ?? 0;
@@ -110,6 +113,8 @@ class FestPlanController
 
         $invoice->finalizeInvoice();
         $invoice->sendInvoice();
+
+        $this->emailService->sendTickets();
 
         header("Location: $this->serverUrl/FestPlan");
     }
