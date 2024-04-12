@@ -34,23 +34,20 @@ $events = $restaurant->getEvents();
             </div>
 
             <!--photos on top-->
-            <div class="row">
-                <div class="col-md-6 text-center">
-                    <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="row row-cols-2">
-                        <div class="col">
-                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[1]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
-                        </div>
-                        <div class="col">
-                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[2]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
-                        </div>
-                        <div class="col">
-                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[3]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
-                        </div>
-                        <div class="col">
-                            <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[4]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('gallery')[0]->getImagePath()); ?>" class="img-fluid full-height-img" alt="Restaurant Image">
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div class="row g-2">
+                            <?php
+                            for ($i = 1; $i <= 4; $i++) {
+                                echo '<div class="col-6">';
+                                echo '<img src="/' . htmlspecialchars($restaurant->getImagesByType('gallery')[$i]->getImagePath()) . '" class="img-fluid img-fluid-cover" alt="Restaurant Image">';
+                                echo '</div>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -62,16 +59,16 @@ $events = $restaurant->getEvents();
             <div class="container text-center">
                 <div class="row row-cols-2">
                     <div class="col">
-                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('map')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('map')[0]->getImagePath()) ?>" class="img-fluid img-fluid-cover" alt="Map Image">
                     </div>
                     <div class="col">
-                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('chef')[0]->getImagePath()) ?>" class="img-fluid" alt="Restaurant Image">
+                        <img src="/<?php echo htmlspecialchars($restaurant->getImagesByType('chef')[0]->getImagePath()) ?>" class="img-fluid img-fluid-cover" alt="Chef Image">
                     </div>
                     <div class="col">
-                        <p><?php echo htmlspecialchars($restaurant->getAddress()) ?></p>
+                        <p class="text-details"><?php echo htmlspecialchars($restaurant->getAddress()) ?></p>
                     </div>
                     <div class="col">
-                        <p>Chef <?php echo htmlspecialchars($restaurant->getChef()) ?></p>
+                        <p class="text-details">Chef <?php echo htmlspecialchars($restaurant->getChef()) ?></p>
                     </div>
                 </div>
             </div>
@@ -185,3 +182,8 @@ $events = $restaurant->getEvents();
 
     <script src="js/Yummy/reservation.js"></script>
 </body>
+
+
+<?php
+include __DIR__ . '/../footer.php';
+?>

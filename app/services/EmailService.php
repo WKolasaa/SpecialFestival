@@ -94,17 +94,13 @@ class EmailService
 
             $pdfs = [];
 
-            var_dump($ticketsObjects);
-
             foreach ($ticketsObjects as $ticketsObject) {
-                //var_dump($ticketsObject);
-                //echo "\n";
                 $pdf = $pdfService->generatePDF($ticketsObject);
-                // Encode the PDF content as base64
+
                 $pdfBase64 = base64_encode($pdf);
                 $pdfs[] = [
                     'filename' => 'ticket_' . $ticketsObject->getTicketId() . '.pdf',
-                    'content' => $pdfBase64  // Use the base64 encoded content
+                    'content' => $pdfBase64
                 ];
             }
 
@@ -115,10 +111,126 @@ class EmailService
             $resend->emails->send([
                 'from' => 'onboarding@resend.dev',
                 'to' => '695344@student.inholland.nl',
-                'subject' => 'Invoice',
+                'subject' => 'Your Tickets and Invoice',
                 'html' => '
-            <h1>Hey, this is your invoice!</h1>
-        ',
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 0; padding: 0; min-width: 100%!important; }
+                            .content { width: 100%; max-width: 600px; }
+                            .header { padding: 40px 30px 20px 30px; }
+                            .innerpadding { padding: 30px 30px 30px 30px; }
+                            .borderbottom { border-bottom: 1px solid #f2eeed; }
+                            .subhead { font-size: 15px; color: #ffffff; font-family: sans-serif; letter-spacing: 10px; }
+                            .h1, .h2, .bodycopy { color: #153643; font-family: sans-serif; }
+                            .h1 { font-size: 33px; line-height: 38px; font-weight: bold; }
+                            .h2 { padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold; }
+                            .bodycopy { font-size: 16px; line-height: 22px; }
+                            .button { text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px; }
+                            .button a { color: #ffffff; text-decoration: none; }
+                            .footer { padding: 20px 30px 15px 30px; }
+                            .footercopy { font-family: sans-serif; font-size: 14px; color: #ffffff; }
+                            .footer a { color: #ffffff; text-decoration: underline; }
+            
+                            @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
+                                body[yahoo] .hide { display: none!important; }
+                                body[yahoo] .buttonwrapper { background-color: transparent!important; }
+                                body[yahoo] .button a { background-color: #e05443; padding: 15px 15px 13px!important; display: block!important; }
+                            }
+                        </style>
+                    </head>
+                    <body yahoo bgcolor="#f6f8f1">
+                        <table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                    <td>
+                                <![endif]-->
+                                <table class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff;">
+                                    <tr>
+                                        <td class="header" bgcolor="#c7d8a7">
+                                            <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td height="70" style="padding: 0 20px 20px 0;">
+                                                        <img class="fix" src="https://resend.dev/logo.png" width="70" height="70" border="0" alt="" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            <table width="425" align="left" cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                <td>
+                                            <![endif]-->
+                                            <table class="col425" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">
+                                                <tr>
+                                                    <td height="70">
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td class="subhead" style="padding: 0 0 0 3px;">
+                                                                    TICKETS
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="h1" style="padding: 5px 0 0 0;">
+                                                                    Hey, those are your tickets!
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!--[if (gte mso 9)|(IE)]>
+                                                </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="innerpadding borderbottom">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td class="h2">
+                                                        Your Tickets:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bodycopy">
+                                                        Here are your tickets attached with this email. Please find them below.
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="footer" bgcolor="#44525f">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" class="footercopy">
+                                                        &reg; Haarlem Festival 2023<br/>
+                                                        <a href="#" class="unsubscribe"><font color="#ffffff">Unsubscribe</font></a>
+                                                        <span class="hide"> | </span>
+                                                        <a href="#"><font color="#ffffff">More Info</font></a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--[if (gte mso 9)|(IE)]>
+                                    </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
+                            </td>
+                        </tr>
+                        </table>
+                    </body>
+                    </html>
+                ',
                 'attachments' => $pdfs,
             ]);
         } catch (Exception $e){

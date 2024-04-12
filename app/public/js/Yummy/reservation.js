@@ -40,6 +40,11 @@ function validateForm() {
     const eventID = sessionSelect.value;
     const specialRequests = document.getElementById('specialRequests').value;
 
+    if(regularTickets < 0 || reducedTickets < 0) {
+        showMessage("Please enter a valid number of tickets.", 'alert-danger');
+        return false;
+    }
+
     if (daySelect === "" || sessionSelect.value === "") {
         showMessage("Please select both a day and a session.", 'alert-danger');
         return false;

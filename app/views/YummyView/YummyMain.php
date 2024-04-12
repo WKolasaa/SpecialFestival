@@ -87,6 +87,10 @@
         </button>
     </div>
 
+    <div class="text-center mt-4">
+        <a href="/restaurants" class="btn btn-primary">View More Details</a>
+    </div>
+
     <div class="contact-section">
         <div class="container">
             <h2>Contact us!</h2>
@@ -107,4 +111,8 @@
 
 </body>
 </html>
+
+<?php
+    include __DIR__ . '/../footer.php';
+?>
 
