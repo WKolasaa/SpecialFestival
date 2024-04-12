@@ -43,11 +43,7 @@ function increaseTicketQuantity(ticketId) {
             userId: userId
         }),
     })
-        .then(response => {
-            // Log the raw response text
-            response.text().then(text => console.log(text));
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => console.log(data))
         .catch((error) => {
             console.error('Error:', error);

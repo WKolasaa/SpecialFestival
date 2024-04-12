@@ -77,7 +77,6 @@ class UserTicketRepository extends Repository
         return $id;
     }
 
-
     public function checkAndGenerateQrForPaidTicket(int $ticketId)
     {
         // Get the ticket from the user_tickets table
