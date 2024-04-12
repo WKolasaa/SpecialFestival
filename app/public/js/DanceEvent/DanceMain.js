@@ -103,5 +103,3 @@ function displayArtists(artists) {
 document.addEventListener("DOMContentLoaded", function () {
   loadArtists();
 });
-
-

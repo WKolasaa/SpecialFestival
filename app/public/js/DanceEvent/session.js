@@ -124,22 +124,37 @@ function displaySessions(sessions) {
 
 loadSessions();
 
-function getImagePath(artistName) {
-  //TODO: try to do it based on the artistImage
-  const images = {
-    afrojack: "../../img/DanceEvent/Afrojack.jpeg",
-    "armin van buuren": "../../img/DanceEvent/Armin van Buuren.jpeg",
-    hardwell: "../../img/DanceEvent/Hardwell.jpeg",
-    "martin garrix": "../../img/DanceEvent/Martin Garrix.jpeg",
-    tiěsto: "../../img/DanceEvent/Tiësto.jpeg",
-    "nicky romero": "../../img/DanceEvent/Nicky Romero.jpeg",
-    alldaypass: "../../img/DanceEvent/alldaypass.jpeg",
-    "golden ticket": "../../img/DanceEvent/Golden Ticket.jpeg",
-  };
 
-  return (
-    images[artistName.toLowerCase()] || "../../img/DanceEvent/Default.jpeg"
-  );
+let allArtists = [];
+function loadArtists() {
+  fetch("http://localhost/api/danceevent/Artists")
+    .then((response) => response.json())
+    .then((data) => {
+      allArtists = data; // Store all users in the array
+      console.log(allArtists);
+
+    })
+    .catch((error) => {
+      console.error("Error fetching items:", error);
+    });
+}
+loadArtists();
+
+function getImagePath(sessionArtistName) {
+  // Find the artist in the allArtists array
+  const artist = allArtists.find(a => a.artistName.toLowerCase() === sessionArtistName.toLowerCase());
+  console.log(artist +"and " + sessionArtistName);
+  // console.log(allArtists);
+ // If the sessionArtistName is "Golden Ticket", return the image path for the golden ticket
+ if (sessionArtistName.toLowerCase() === "golden ticket") {
+  return `../../img/DanceEvent/Golden Ticket.jpeg`;
+}
+  // If the artist was found and has an artistImage property, return the image path
+  if (artist && artist.imageName) {
+    return `../../img/DanceEvent/${artist.imageName}`;
+  }
+  // If the artist was not found or doesn't have an artistImage property, return a default image path
+  return "../../img/DanceEvent/Default.jpeg";
 }
 
 function filterSessions(day) {

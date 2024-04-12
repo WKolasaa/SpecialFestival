@@ -159,10 +159,7 @@ class DanceEventRepository extends Repository
             $title = $artist->getTitle();
             $participationDate = $artist->getParticipationDate();
             $imageName = $artist->getImageName();
-            // Manually construct a debug SQL string
-            // $debugSql = "UPDATE artist SET artistName = '{$artistName}', style = '{$style}', description= '{$description}' participationDate = '{$participationDate}' WHERE artistId = {$artistId}";
-            // echo "Debug SQL: " . $debugSql . "\n";
-            // Proceed with the actual prepared statement execution
+            
             $statement = $this->connection->prepare($sql);
             $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
             $statement->bindParam(':artistName', $artistName, PDO::PARAM_STR);
@@ -313,36 +310,6 @@ class DanceEventRepository extends Repository
         }
     }
 
-    public function getArtistById($artistId)
-    {
-        $sql = "SELECT artistId, artistName, style,description,title, participationDate, imageName FROM artist WHERE artistId = :artistId";
-        $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        $artist = new Artist($row['artistId'], $row['artistName'], $row['style'], $row['description'], $row['title'], $row['participationDate'], $row['imageName']);
-        if (!$row) {
-            echo "No artist found with the given ID.\n";
-            return null;
-        }
-        return $artist;
-    }
-
-    public function getDanceOverviewById($id)
-    {
-        $sql = "SELECT id,header,subHeader, text, imageName FROM danceOverview WHERE id = :id";
-        $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        $danceOverView = new DanceOverview($row['id'], $row['header'], $row['subHeader'], $row['text'], $row['imageName']);
-        if (!$row) {
-            echo "No dance overview found with the given ID.\n";
-            return null;
-        }
-        return $danceOverView;
-    }
-
     public function deleteAgenda(Agenda $agenda)
     {
         try {
@@ -390,6 +357,35 @@ class DanceEventRepository extends Repository
         }
     }
 
+    public function getArtistById($artistId)
+    {
+        $sql = "SELECT artistId, artistName, style,description,title, participationDate, imageName FROM artist WHERE artistId = :artistId";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $artist = new Artist($row['artistId'], $row['artistName'], $row['style'], $row['description'], $row['title'], $row['participationDate'], $row['imageName']);
+        if (!$row) {
+            echo "No artist found with the given ID.\n";
+            return null;
+        }
+        return $artist;
+    }
+
+    public function getDanceOverviewById($id)
+    {
+        $sql = "SELECT id,header,subHeader, text, imageName FROM danceOverview WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $danceOverView = new DanceOverview($row['id'], $row['header'], $row['subHeader'], $row['text'], $row['imageName']);
+        if (!$row) {
+            echo "No dance overview found with the given ID.\n";
+            return null;
+        }
+        return $danceOverView;
+    }
     ///////////////add/////////////////////
     public function addArtist(Artist $artist)
     {
