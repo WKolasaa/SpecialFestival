@@ -1,8 +1,6 @@
 <?php 
 include __DIR__ . '/../header.php'; 
 
-// use App\Services\HistoryAdminService;
-// $service = new HistoryAdminService();
 ?>
 
     <div class="festival-banner" style="background-image: url('../img/History/AdriaanWindmill.png');">
@@ -28,9 +26,6 @@ include __DIR__ . '/../header.php';
         <div class="heritage-image">
             <?php
                 $FirstImagePath = $service->getContent("History Windmill", "Adriaan Windmill Image 1");
-                // if($FirstImagePath == "<null>") {
-                //     $FirstImagePath = "../img/History/Amsterdam_Windmill_Pic_01.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($FirstImagePath) ?>" alt="Adriaan Windmill Image">
         </div>
@@ -44,9 +39,6 @@ include __DIR__ . '/../header.php';
         <div class="heritage-image">
             <?php
                 $SecondImagePath = $service->getContent("History Windmill", "Adriaan Windmill Image 2");
-                // if($SecondImagePath == "<null>") {
-                //     $SecondImagePath = "../img/History/Amsterdam_Windmill_Pic_02.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($SecondImagePath) ?>" alt="Adriaan Windmill Image">
         </div>
@@ -60,10 +52,6 @@ include __DIR__ . '/../header.php';
             <?php
                 
                 $ThirdImagePath = $service->getContent("History Windmill", "Adriaan Windmill Image 3");
-                // echo $ThirdImagePath;
-                // if($ThirdImagePath == "<null>") {
-                //     $ThirdImagePath = "../img/History/Amsterdam_Windmill_Pic_03.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($ThirdImagePath) ?>" alt="Adriaan Windmill Image">
         </div>
@@ -77,9 +65,6 @@ include __DIR__ . '/../header.php';
         <div class="heritage-image">
             <?php
                 $FourthImagePath = $service->getContent("History Windmill", "Adriaan Windmill Image 4");
-                // if($FourthImagePath == "<null>") {
-                //     $FourthImagePath = "../img/History/Amsterdam_Windmill_Pic_04.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($FourthImagePath) ?>" alt="Adriaan Windmill Image">
         </div>
@@ -92,9 +77,6 @@ include __DIR__ . '/../header.php';
             <div class="map-container">
                 <?php
                     $WindmillMapImagePath = $service->getContent("History Windmill", "Route Image");
-                    // if($WindmillMapImagePath == "<null>") {
-                    //     $WindmillMapImagePath = "../img/History/Map_Amsterdam_Windmill.png";
-                    // }
                 ?>
                 <img src="<?= htmlspecialchars($WindmillMapImagePath) ?>" alt="Route Image" class="map-image">
             </div>

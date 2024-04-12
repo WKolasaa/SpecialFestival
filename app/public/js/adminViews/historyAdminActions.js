@@ -67,50 +67,6 @@ function editEntry(entryId) {
             }
         }
     } else {
-        // Handle text entries
-        // if (editButton.innerText === 'Edit') {
-        //     // Switch to edit mode for text
-        //     contentContainer.style.display = 'none';
-        //     contentTextarea.style.display = 'block';
-        //     contentTextarea.focus();
-        //     editButton.innerText = 'Save';
-        // } else {
-        //     // Attempt to save text changes
-        //     let formData = new FormData();
-        //     formData.append('entry_id', entryId);
-        //     formData.append('content', contentTextarea.value);
-
-        //     fetch('/api/historyadmin/update', {
-        //         method: 'POST',
-        //         body: formData
-        //     }).then(response => {
-        //         if (response.ok) {
-        //             return response.json(); // Process it as JSON only if response was ok
-        //         } else {
-        //             throw new Error('Server responded with a non-ok status: ' + response.status);
-        //         }
-        //     }).then(text => {
-        //         try {
-        //             return JSON.parse(text);
-        //         } catch (e) {
-        //             throw new Error('Failed to parse JSON response: ' + e.message);
-        //         }
-        //     }).then(data => {
-        //         if (data.success) {
-        //             console.log(data.message);
-        //             contentContainer.innerText = contentTextarea.value;
-        //             contentContainer.style.display = 'inline-block';
-        //             contentTextarea.style.display = 'none';
-        //             editButton.innerText = 'Edit';
-        //         } else {
-        //             console.error('Failed to update the content:', data.message);
-        //             alert("Failed to update entry: " + data.message);
-        //         }
-        //     }).catch(error => {
-        //         console.error('Error:', error);
-        //         alert("Failed to update entry. Error: " + error.toString());
-        //     });
-        // }
 
         if (editButton.innerText === 'Edit') {
             // Switch to edit mode for text
@@ -157,8 +113,6 @@ function editEntry(entryId) {
 
     }
 }
-
-
 
 function deleteEntry(entryId) {
     fetch(`/api/historyadmin/delete?entry_id=${entryId}`)
@@ -236,6 +190,19 @@ function saveTimeslot(button) {
         return; // Stop execution if any input is not found
     }
 
+    // Check for empty fields
+    if (!dayInput.value.trim() || !startTimeInput.value.trim() || !endTimeInput.value.trim() || 
+        !englishTourInput.value.trim() || !dutchTourInput.value.trim() || !chineseTourInput.value.trim()) {
+        alert("Please fill in all the fields before saving.");
+        return; // Stop execution if one of the fields is empty
+    }
+
+    // Check for negative numbers in tour fields
+    if (englishTourInput.value < 0 || dutchTourInput.value < 0 || chineseTourInput.value < 0) {
+        alert("Tour numbers cannot be negative. Please enter a valid number.");
+        return; // Stop execution if one of the fields is negative
+    }
+
     const data = {
         id: id,
         day: dayInput.value,
@@ -288,4 +255,32 @@ function saveTimeslot(button) {
         alert(error.message);
     });
 }
+
+function deleteTimeslot(button) {
+    const tr = button.closest('tr');
+    const timeslotId = tr.getAttribute('data-timeslot-id');
+
+    if (confirm("Are you sure you want to delete this timeslot?")) {
+        fetch(`/api/historyadmin/deleteTimeslot?id=${timeslotId}`, {
+            method: 'GET'  // Or 'POST', if your server endpoint requires it
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to delete timeslot.');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                tr.remove();  // Remove the row from the table on successful deletion
+                alert("Timeslot deleted successfully.");
+            } else {
+                throw new Error('Failed to delete timeslot: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error: " + error.message);
+        });
+    }
+}
+
 

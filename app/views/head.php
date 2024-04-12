@@ -48,7 +48,7 @@ session_start();
             case 'AdminView/history':
                 $cssFile = 'admin/HistoryAdmin.css';
                 break;
-            case 'HomeAdmin':
+            case 'AdminView':
                 $cssFile = 'admin/HomeAdmin.css';
                 break;
             case 'historymain/cart':

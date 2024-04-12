@@ -1,8 +1,6 @@
 <?php 
 include __DIR__ . '/../header.php'; 
 
-// use App\Services\HistoryAdminService;
-// $service = new HistoryAdminService();
 ?>
 
     <div class="festival-banner" style="background-image: url('../img/History/AmsterdamPort.png');">
@@ -26,12 +24,8 @@ include __DIR__ . '/../header.php';
             <p><?= $service->getContent("History Port", "Amsterdam Port First Description") ?></p>
         </div>
         <div class="heritage-image">
-            <!-- <img src="../img/History/Amsterdam_Port_Pic_01.jpg" alt="Amsterdamse Poort History"> -->
             <?php
                 $FirstImagePath = $service->getContent("History Port", "Amsterdam Port Image 1");
-                // if($FirstImagePath == "<null>") {
-                //     $FirstImagePath = "../img/History/Amsterdam_Port_Pic_01.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($FirstImagePath) ?>" alt="Amsterdam Port Image">
         </div>
@@ -43,12 +37,8 @@ include __DIR__ . '/../header.php';
             <p><?= $service->getContent("History Port", "Amsterdam Port Second Description") ?></p>
         </div>
         <div class="heritage-image">
-            <!-- <img src="../img/History/Amsterdam_Port_Pic_02.jpg" alt="Amsterdamse Poort Industrial Heritage"> -->
             <?php
                 $SecondImagePath = $service->getContent("History Port", "Amsterdam Port Image 2");
-                // if($SecondImagePath == "<null>") {
-                //     $SecondImagePath = "../img/History/Amsterdam_Port_Pic_02.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($SecondImagePath) ?>" alt="Amsterdam Port Image">
         </div>
@@ -59,14 +49,9 @@ include __DIR__ . '/../header.php';
             <p><?= $service->getContent("History Port", "Amsterdam Port Third Description") ?></p>
         </div>
         <div class="heritage-image">
-            <!-- <img src="../img/History/Amsterdam_Port_Pic_03.jpg" alt="Amsterdamse Poort History"> -->
             <?php
                 
                 $ThirdImagePath = $service->getContent("History Port", "Amsterdam Port Image 3");
-                // echo $ThirdImagePath;
-                // if($ThirdImagePath == "<null>") {
-                //     $ThirdImagePath = "../img/History/Amsterdam_Port_Pic_03.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($ThirdImagePath) ?>" alt="Amsterdam Port Image">
         </div>
@@ -78,12 +63,8 @@ include __DIR__ . '/../header.php';
             <p><?= $service->getContent("History Port", "Amsterdam Port Fourth Description") ?></p>
         </div>
         <div class="heritage-image">
-            <!-- <img src="../img/History/Amsterdam_Port_Pic_04.jpg" alt="Amsterdamse Poort Industrial Heritage"> -->
             <?php
                 $FourthImagePath = $service->getContent("History Port", "Amsterdam Port Image 4");
-                // if($FourthImagePath == "<null>") {
-                //     $FourthImagePath = "../img/History/Amsterdam_Port_Pic_04.jpg";
-                // }
             ?>
             <img src="<?= htmlspecialchars($FourthImagePath) ?>" alt="Amsterdam Port Image">
         </div>
@@ -94,12 +75,8 @@ include __DIR__ . '/../header.php';
         <h2 class="route-title">Route</h2>
         <div class="route-content">
             <div class="map-container">
-                <!-- <img src="../img/History/Map_Amsterdam_Port.png" alt="Map" class="map-image">  -->
                 <?php
                     $portMapImagePath = $service->getContent("History Port", "Route Image");
-                    // if($portMapImagePath == "<null>") {
-                    //     $portMapImagePath = "../img/History/Map_Amsterdam_Port.png";
-                    // }
                 ?>
                 <img src="<?= htmlspecialchars($portMapImagePath) ?>" alt="Route Image" class="map-image">
             </div>

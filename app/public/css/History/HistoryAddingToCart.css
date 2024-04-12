@@ -35,7 +35,8 @@ body, html {
 }
 
 .timeslot h3 {
-    color: #000000;
+    color: #ffffff;
+    font-weight: bold;
     margin-top: 0;
     font-size: 20px; /* Smaller title font size */
 }
@@ -44,7 +45,7 @@ body, html {
     color: #ffffff;
     margin: 4px 0; /* Reduced margin */
     line-height: 1.4; /* Adjusted line height for compactness */
-    font-size: 13px; /* Smaller paragraph font size */
+    font-size: 16px; /* Smaller paragraph font size */
 }
 
 .languages {

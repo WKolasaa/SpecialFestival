@@ -24,12 +24,13 @@ include 'head.php';
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
+                        
                         <!-- Additional navigation links with PHP condition for ADMINISTRATOR -->
                         <?php if (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "ADMINISTRATOR"): ?>
                             <!-- Admin navigation -->
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/AdminView">Home <span class="sr-only">(current)</span></a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/AdminView/dance">Dance</a>
                             </li>
@@ -47,6 +48,9 @@ include 'head.php';
                             </li>
                         <?php else: ?>
                             <!-- Regular navigation -->
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDance" role="button"
                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
