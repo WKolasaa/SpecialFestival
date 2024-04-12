@@ -34,6 +34,10 @@ document.querySelectorAll('.delete-ticket').forEach(function(button) {
     });
 });
 
+document.querySelector('.share-btn').addEventListener('click', function() {
+    generateShareToken();
+});
+
 function increaseTicketQuantity(ticketId) {
     fetch('/api/FestPlan/increaseTicketQuantity', {
         method: 'POST',
@@ -84,6 +88,37 @@ function deleteTicket(ticketId) {
     })
         .then(response => response.json())
         .then(data => console.log(data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function generateShareToken() {
+    fetch('/api/FestPlan/generateShareToken', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: userId,
+        }),
+    })
+        .then(response => response.text())  // Get the response text
+        .then(text => {
+            console.log('Raw response:', text);  // Print the raw response
+            return JSON.parse(text);  // Parse the text as JSON
+        })
+        .then(data => {
+            console.log('Data:', data);
+            const shareUrl = `${window.location.origin}/FestPlan?token=${data.token}`;
+
+            // Copy the share link to the clipboard
+            navigator.clipboard.writeText(shareUrl).then(function() {
+                alert('Share link copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        })
         .catch((error) => {
             console.error('Error:', error);
         });

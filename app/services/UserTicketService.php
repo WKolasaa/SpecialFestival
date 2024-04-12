@@ -65,4 +65,18 @@ class UserTicketService
     {
         $this->userTicketRepository->deleteTicket($ticketId, $userId);
     }
+
+    public function generateShareToken(int $userId): string {
+        $token = $this->userTicketRepository->getShareTokenByUserId($userId);
+
+        if ($token == null) {
+            return $this->userTicketRepository->generateShareToken($userId);
+        } else {
+            return $token;
+        }
+    }
+
+    public function getUserIdByShareToken(string $token): int {
+        return $this->userTicketRepository->getUserIdByShareToken($token);
+    }
 }

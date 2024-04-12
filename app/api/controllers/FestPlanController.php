@@ -64,4 +64,20 @@ class FestPlanController
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
+
+    public function generateShareToken()
+    {
+        header("Content-Type: application/json");
+        $jsonData = file_get_contents('php://input');
+        $decodedData = json_decode($jsonData, true);
+
+        $userId = $decodedData['userId'];
+
+        try {
+            $token = $this->userTicketService->generateShareToken($userId);
+            echo json_encode(['token' => $token]);
+        } catch (Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
 }

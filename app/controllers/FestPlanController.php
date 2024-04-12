@@ -24,7 +24,14 @@ class FestPlanController
 
     public function index(): void
     {
-        $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
+        $userTickets = 0;
+        if (isset($_GET["token"])) {
+            $sharedUserId = $this->userTicketService->getUserIdByShareToken($_GET["token"]);
+            $userTickets = $this->userTicketService->getAllUserTicketsByUserId($sharedUserId, true);
+        } else {
+            $userTickets = $this->userTicketService->getAllUserTicketsByUserId($this->userId, false);
+        }
+
         include '../views/festplan.php';
     }
 

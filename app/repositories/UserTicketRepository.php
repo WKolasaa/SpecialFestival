@@ -9,10 +9,19 @@ class UserTicketRepository extends Repository
 {
     public function getAllUserTicketsByUserId(int $userId, bool $paid) : array
     {
-        $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId AND paid = :paid";
+        if ($paid) {
+            $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId";
+        } else {
+            $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId AND paid = :paid";
+        }
+
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':paid', $paid, PDO::PARAM_BOOL);
+
+        if (!$paid) {
+            $stmt->bindParam(':paid', $paid, PDO::PARAM_BOOL);
+        }
+
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -64,6 +73,32 @@ class UserTicketRepository extends Repository
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    public function generateShareToken(int $userId): string {
+        $token = substr(bin2hex(random_bytes(3)), 0, 5);
+        $sql = "INSERT INTO share_personal_program (user_id, share_token) VALUES (:userId, :token)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        return $token;
+    }
+
+    public function getShareTokenByUserId(int $userId): ?string {
+        $sql = "SELECT share_token FROM share_personal_program WHERE user_id = :userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function getUserIdByShareToken(string $token): ?int {
+        $sql = "SELECT user_id FROM share_personal_program WHERE share_token = :token";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     private function getTicketId(Ticket $ticket)

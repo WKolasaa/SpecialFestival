@@ -16,9 +16,8 @@ if (session_status() === PHP_SESSION_NONE)
     <link rel="stylesheet" href="/css/festival.css">
 
     <?php
-    $currentPage = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    $currentPage = trim($_SERVER["REQUEST_URI"], '/');
-    // echo $currentPage;
+    $currentPage = explode('?', $_SERVER["REQUEST_URI"], 2)[0];
+    $currentPage = trim($currentPage, '/');
     
     // loadTime is way faster
     if (!str_starts_with($currentPage, 'api/')) {
