@@ -8,7 +8,7 @@ use App\Models\TicketType;
 use App\Services\restaurantservice;
 use DateTime;
 
-class yummyreservationcontroller
+class YummyReservationController
 {
     private $restaurantService;
 
