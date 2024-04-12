@@ -85,7 +85,6 @@ public function delete()
 
   public function sanitizeUserData($data) //This helps prevent XSS (Cross-Site Scripting) attacks.
   {
-    // var_dump($data);
     
     $data['id']=filter_var($data['id'], FILTER_SANITIZE_SPECIAL_CHARS);
     $data['userRole']=filter_var($data['userRole'], FILTER_SANITIZE_SPECIAL_CHARS);

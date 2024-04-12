@@ -83,7 +83,6 @@ class User implements \JsonSerializable{
                 break;
             default:
                 // Handle unknown role
-                // For example, you could set it to a default role or throw an exception
                 $this->userRole = UserRolesEnum::Customer;
                 break;
         }

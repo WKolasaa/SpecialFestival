@@ -105,7 +105,8 @@ include __DIR__ . '/../header.php';
                     <label for="new-event-venueAddress" class="form-label">Venue Address</label>
                     <input type="text" id="new-event-venueAddress" class="form-control" required>
                 </div>
-                <button class="btn btn-success" onclick="addEvent()">Submit</button>
+                <!-- <button class="btn btn-success" onclick="addEvent()">Submit</button> -->
+                <button class="btn btn-success" onclick="if(validateAgendaForm()) { addEvent(); }">Submit</button>
             </div>
         </div>
     </div>
@@ -148,7 +149,8 @@ include __DIR__ . '/../header.php';
                     <label for="new-ticket-sessionType" class="form-label">Session Type</label>
                     <input type="text" id="new-ticket-sessionType" name="sessionType" class="form-control" required>
                 </div>
-                <button class="btn btn-success" onclick="addTicket()">Submit</button>
+                <!-- <button class="btn btn-success" onclick="addTicket()">Submit</button> -->
+                <button class="btn btn-success" onclick="if(validateSessionForm()) { addTicket(); }">Submit</button>
             </div>
         </div>
     </div>
