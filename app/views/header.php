@@ -96,7 +96,7 @@ include 'head.php';
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <?php if (isset ($_SESSION['user'])): ?>
                                     <!-- Logged in -->
-                                    <a class="dropdown-item" href="/edit-account">Edit Account</a>
+                                    <a class="dropdown-item" href="/signup">Edit Account</a>
                                     <a class="dropdown-item" href="/logout">Log out</a>
                                 <?php else: ?>
                                     <!-- Logged out -->

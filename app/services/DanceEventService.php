@@ -145,7 +145,6 @@ class DanceEventService
         return $agenda;
     }
 
-    //////////////////////delete///////////////////////////
 
     public function updateSession(array $sessionArray)
     {

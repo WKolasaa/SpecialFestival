@@ -34,14 +34,11 @@ class UserTicketService
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
-        // TODO: Get the actual user
-//        if ($user->paymentInProgress) {
-//            throw new Exception("Cannot add tickets while payment is in progress");
-//        }
-
+      
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket, $userId);
         } else {
+            
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }

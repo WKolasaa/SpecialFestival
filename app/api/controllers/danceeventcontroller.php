@@ -574,8 +574,6 @@ class DanceEventController
 
     session_start();
     $userId=$_SESSION['userId'];
-   
-    
       $this->userTicketService->addUserTicket($danceTicket,$userId); ///
     //   echo json_encode(['message' => 'Ticket added successfully']);
     } catch (Exception $e) {
