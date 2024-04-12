@@ -167,8 +167,7 @@ class FestPlanController
             ];
             $line_items[] = $item;
             $totalAmount = $ticket->getPrice() * $quantity;
-             $this->orderService->addOrder($ticket->getTicketId(), $totalAmount);
-
+            $this->orderService->addOrder($ticket->getTicketId(), $totalAmount);
         }
 
         $checkout_session = $this->stripe->checkout->sessions->create([
