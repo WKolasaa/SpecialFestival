@@ -75,6 +75,14 @@ class UserTicketRepository extends Repository
         $stmt->execute();
     }
 
+    public function deleteQrCode(int $ticketId): void
+    {
+        $sql = "DELETE FROM qr WHERE user_ticket_id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
     public function generateShareToken(int $userId): string {
         $token = substr(bin2hex(random_bytes(3)), 0, 5);
         $sql = "INSERT INTO share_personal_program (user_id, share_token) VALUES (:userId, :token)";

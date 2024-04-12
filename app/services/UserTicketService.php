@@ -63,6 +63,7 @@ class UserTicketService
 
     public function deleteTicket(int $ticketId, int $userId): void
     {
+        $this->userTicketRepository->deleteQrCode($ticketId);
         $this->userTicketRepository->deleteTicket($ticketId, $userId);
     }
 
@@ -78,5 +79,11 @@ class UserTicketService
 
     public function getUserIdByShareToken(string $token): int {
         return $this->userTicketRepository->getUserIdByShareToken($token);
+    }
+
+    public function updateTicketAvailability(int $userId, int $amount) {
+        $ticketIds = $this->userTicketRepository->getTicketIdsByUserId($userId);
+
+        $this->ticketRepository->updateTicketAvailability($ticketIds, $amount);
     }
 }

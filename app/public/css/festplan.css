@@ -57,11 +57,6 @@ table {
     table-layout: fixed;
 }
 
-.quantity-controls {
-    display: flex;
-    align-items: center;
-}
-
 #checkoutButton {
     float: right;
     background-color: #0f9d58;
@@ -72,4 +67,10 @@ table {
 
 #calendar {
     margin-top: 100px;
+}
+
+.quantity-controls {
+    background-color: #0f9d58;
+    border-radius: 50%;
+    color: black;
 }

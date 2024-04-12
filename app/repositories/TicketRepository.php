@@ -12,7 +12,7 @@ class TicketRepository extends Repository
 {
     public function getTicketById(int $id): ?Ticket
     {
-        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date FROM ticket WHERE id = :id";
+        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available FROM ticket WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -24,9 +24,19 @@ class TicketRepository extends Repository
         return $this->rowToTicket($row);
     }
 
+    public function updateTicketAvailability(array $ticketIds, int $amount) {
+        foreach ($ticketIds as $ticketId) {
+            $sql = "UPDATE ticket SET available = available + :amount WHERE id = :ticketId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+            $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
     public function getAllTickets()
     {
-        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date FROM ticket";
+        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available FROM ticket";
         $rows = $this->executeQuery($sql);
         if (!$rows) {
             echo "No tickets found.";
@@ -47,7 +57,8 @@ class TicketRepository extends Repository
                 $row['description'],
                 $row['price'],
                 new DateTime($row['start_date']),
-                new DateTime($row['end_date'])
+                new DateTime($row['end_date']),
+                $row['available']
             );
         } catch (Exception $e) {
             echo "Error creating ticket: " . $e->getMessage();

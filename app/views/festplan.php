@@ -66,12 +66,12 @@ $tokenIsSet = isset($_GET['token']);
                     <td><?= $userTicket->ticket->getPrice() ?></td>
                     <td>
                         <?php if (!$tokenIsSet): ?>
-                            <button class="quantity-increase">+</button>
+                            <button class="btn btn-primary quantity-controls quantity-increase">+</button>
                         <?php endif; ?>
                         <span class="quantity"><?= $userTicket->quantity ?></span>
                         <?php if (!$tokenIsSet): ?>
-                            <button class="quantity-decrease">-</button>
-                            <button class="delete-ticket">Delete</button>
+                            <button class="btn btn-primary quantity-controls quantity-decrease">-</button>
+                            <button class="btn btn-danger delete-ticket">Delete</button>
                         <?php endif; ?>
                     </td>
                 </tr>
