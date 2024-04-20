@@ -129,7 +129,7 @@ class YummyReservationController
         $endDate = DateTime::createFromFormat($format, $endDateString);
         $lastID = $this->restaurantService->getLastReservationID();
 
-        return new Ticket($lastID, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate);
+        return new Ticket($lastID, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate,20); // I added 20 hard coded value for available tickets
     }
 
 

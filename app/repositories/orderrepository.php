@@ -74,6 +74,14 @@ class OrderRepository extends Repository
     }
   }
 
+  public function deleteOrder($ticketId): void
+  {
+    $sql = "DELETE FROM `order` WHERE ticket_id = :ticketId";
+    $stmt = $this->connection->prepare($sql);
+    $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+    $stmt->execute();
+  }
+
 
   public function getOrderInfo($ticketId)
   {
@@ -89,22 +97,5 @@ class OrderRepository extends Repository
   }
 
 
-  /*
-  private function mapToArtistObjects($rows)
-    {
-        $artists = [];
-        foreach ($rows as $row) {
-
-            $artistId = $row['artistId'];
-            $artistName = $row['artistName'];
-            $style = $row['style'];
-            $description = $row['description'];
-            $title = $row['title'];
-            $participationDate = $row['participationDate'];
-            $imageName = $row['imageName'];
-            $artist = new Artist($artistId, $artistName, $style, $description, $title, $participationDate, $imageName);
-            $artists[] = $artist;
-        }
-        return $artists;
-    }*/
+  
 }

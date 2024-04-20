@@ -6,16 +6,20 @@ use App\Models\Ticket;
 use App\Models\UserTicket;
 use App\Repositories\TicketRepository;
 use App\Repositories\UserTicketRepository;
+use App\Repositories\OrderRepository;
 
 class UserTicketService
 {
     private UserTicketRepository $userTicketRepository;
     private TicketRepository $ticketRepository;
+    private OrderRepository $orderRepository;
 
     function __construct()
     {
         $this->userTicketRepository = new UserTicketRepository();
         $this->ticketRepository = new TicketRepository();
+        $this->orderRepository = new OrderRepository();
+
     }
 
     public function getAllUserTicketsByUserId(int $userId, bool $paid): array
@@ -61,7 +65,10 @@ class UserTicketService
     public function deleteTicket(int $ticketId, int $userId): void
     {
         $this->userTicketRepository->deleteQrCode($ticketId);
+        $this->orderRepository->deleteOrder($ticketId);
         $this->userTicketRepository->deleteTicket($ticketId, $userId);
+        $this->ticketRepository->deleteTicket($ticketId);
+
     }
 
     public function generateShareToken(int $userId): string {

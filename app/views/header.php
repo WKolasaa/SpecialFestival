@@ -46,6 +46,12 @@ include 'head.php';
                             <li class="nav-item">
                                 <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
+                            <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
+                            <!-- Employee navigation -->
+                            <li class="nav-item active">
+                            <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
+                            </li>
+
                         <?php else: ?>
                             <!-- Regular navigation -->
                             <li class="nav-item active">

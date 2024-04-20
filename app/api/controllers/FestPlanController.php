@@ -1,6 +1,6 @@
 <?php
 
-namespace App\api\controllers;
+namespace App\Controllers;
 
 use App\Services\UserTicketService;
 use Exception;

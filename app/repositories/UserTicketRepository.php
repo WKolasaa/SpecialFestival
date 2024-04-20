@@ -39,15 +39,8 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
         $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
 
-        $stmt->execute();
-        // echo $userId;
-//        if($stmt->rowCount()>0)
-//        {
-//            echo "Ticket added successfully";
-//        }else
-//        {
-//            echo "Ticket not added";
-//        }
+         $stmt->execute();
+
     }
 
     public function addTicketQuantity(int $ticketId, int $userId, int $quantity): void

@@ -363,7 +363,8 @@ class DanceEventService
             $ticketDescription,          // description
             $sessionData['sessionPrice'],// price
             $startDateTime,              // start_date
-            $endDateTime                 // end_date
+            $endDateTime,                // end_date
+            20               
         );
         return $ticket;
     }

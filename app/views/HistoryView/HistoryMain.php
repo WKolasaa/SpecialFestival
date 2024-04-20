@@ -20,7 +20,7 @@
 
         <div class="locations-container">
             <!-- Adriaan Windmill -->
-            <a href="historymain/windmill" class="location-item">
+            <a href="HistoryMain/windmill" class="location-item">
             <div class="location-image-container">
                 <?php
                 $adriaanWindmillImagePath = $service->getContent("History Main", "Adriaan Windmill Image");
@@ -33,7 +33,7 @@
             </a>
 
             <!-- Amsterdam Port -->
-            <a href="historymain/port" class="location-item">
+            <a href="HistoryMain/port" class="location-item">
                 <div class="location-image-container">
                 <?php
                     $amsterdamPortImagePath = $service->getContent("History Main", "Amsterdam Port Image");

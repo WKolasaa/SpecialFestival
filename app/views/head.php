@@ -65,9 +65,10 @@ if (session_status() === PHP_SESSION_NONE)
             case 'DanceEvent/artist':
                 $cssFile = 'Dance/artist.css';
                 break;
-            case 'YummyMain':
-                $cssFile = 'YummyMain.css';
-                break;
+                case 'yummy':
+                    case 'restaurants':
+                        $cssFile = 'YummyMain.css';
+                        break;
             case 'AdminView/yummy':
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;

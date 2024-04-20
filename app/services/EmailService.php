@@ -81,7 +81,7 @@ class EmailService
             $ticketRepository = new TicketRepository();
             $userTicketRepository = new UserTicketRepository();
             $pdfService = new PDFService();
-            session_start();
+            // session_start();
             $userID = $_SESSION['userId'];
             $userTickets = $userTicketRepository->getTicketByUserID($userID); //TODO: change the hardcoded shit
             $ticketsObjects = [];

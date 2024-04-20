@@ -1,8 +1,8 @@
 <?php 
-    include __DIR__ . '/../header.php';
+include __DIR__ . '/../header.php';
 ?>
 
-
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="/css/YummyMain.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</head>
-<body class="YummyBody">
+</head> -->
+<div class="YummyBody">
     <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
         <div class="overlay">
             <h1 class="display-4">Explore Haarlem's Culinary Delights at</h1>
@@ -109,10 +109,10 @@
         </div>
     </div>
 
-</body>
-</html>
+</div>
+<!-- </html> -->
 
-<?php
-    include __DIR__ . '/../footer.php';
-?>
+<?php include __DIR__ . '/../footer.php'; ?>
 
+
+    

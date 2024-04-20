@@ -5,11 +5,7 @@ use App\Services\HistoryAdminService;
 
 class HistoryMainController{
     private $service;
-    // public function __construct(){
-
-    // $this->service=new HistoryAdminService();
-
-    // }
+  
 
     public function index()
     {

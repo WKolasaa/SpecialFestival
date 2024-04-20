@@ -76,7 +76,7 @@ class TicketRepository extends Repository
     public function addTicket(Ticket $ticket)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ticket (ticketId, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date) VALUES (:ticketId, :event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date)");
+            $stmt = $this->connection->prepare("INSERT INTO ticket (ticketId, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available) VALUES (:ticketId, :event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date, :available)");
             //TODO: we should use getter and setter methods to get the values of the ticket object
             $ticketId= $ticket->getTicketId();
             $event_name = $ticket->getEventName();
@@ -87,6 +87,7 @@ class TicketRepository extends Repository
             $price = $ticket->getPrice();
             $start_date = $ticket->getStartDate()->format('Y-m-d H:i:s');
             $end_date = $ticket->getEndDate()->format('Y-m-d H:i:s');
+            $available = $ticket->getAvailability();
 
             $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
             $stmt->bindParam(':event_name', $event_name, PDO::PARAM_STR);
@@ -97,12 +98,25 @@ class TicketRepository extends Repository
             $stmt->bindParam(':price', $price, PDO::PARAM_INT);
             $stmt->bindParam(':start_date', $start_date, PDO::PARAM_STR);
             $stmt->bindParam(':end_date', $end_date, PDO::PARAM_STR);
+            $stmt->bindParam(':available', $available, PDO::PARAM_INT);
 
             $stmt->execute();
             
             return true;
         } catch (\PDOException $e) {
             throw new \PDOException('Error adding ticket: ' . $e->getMessage());
+        }
+
+    }
+
+    public function deleteTicket(int $ticketId)
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM ticket WHERE id = :ticketId");
+            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error deleting ticket: ' . $e->getMessage());
         }
     }
 
