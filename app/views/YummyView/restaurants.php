@@ -1,17 +1,7 @@
 <?php 
-include __DIR__ . '/../header.php';
+    include __DIR__ . '/../header.php';
 ?>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yummy Restaurants</title>
-  <link rel="stylesheet" href="/css/YummyMain.css">
-  <style>
 
-  </style>
-</head> -->
 <div class="YummyBody">
     <!--Top photo-->
     <section class="hero-section text-white text-center d-flex align-items-center justify-content-center">
