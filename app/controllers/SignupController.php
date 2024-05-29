@@ -80,7 +80,11 @@ class signupcontroller
             }
             else{
                 $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber);
-                $_SESSION['user'] = $userService->loginByUserName($userName, $password);
+                $user = $userService->loginByUserName($userName, $password);
+                $_SESSION['user'] = $user;
+                $_SESSION['userId'] = $user->getId();
+                $_SESSION['Email'] = $user->getEmail();
+                $_SESSION['role'] = $user->getUserRole();
                 header('Location: /');
             }
         }catch (PDOException $e) {
