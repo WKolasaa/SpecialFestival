@@ -163,6 +163,7 @@ class UserRepository extends Repository
         $statement->bindParam(':phoneNumber', $phoneNumber);
         try {
             $statement->execute();
+            
         } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

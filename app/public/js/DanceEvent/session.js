@@ -1,3 +1,6 @@
+// import { showToast } from "/../Toast.js";
+// app/public/js/Toast.js
+// app/public/js/DanceEvent/session.js
 let allSessions = [];
 function loadSessions() {
   fetch("http://localhost/api/danceevent/sessions")
@@ -262,6 +265,11 @@ function displayGoldenTicket(sessions) {
 //////////////////////////Adding Tickets to Cart//////////////////////////
 
 function addToCart(session, button) {
+    // Check if the button text is already "Ticket Added"
+    if (button.textContent === "Ticket Added") {
+      showToast("Ticket is already added to cart!", "#0000FF");
+      return; // Exit the function
+    }
   checkUserSession().then((hasSession) => {
     if (!hasSession) {
       alert("Please log in to add items to the cart.");
@@ -280,6 +288,7 @@ function addToCart(session, button) {
           console.log("Ticket added successfully");
           button.style.backgroundColor = "#1734F7";
           button.textContent = "Ticket Added";
+          showToast("Ticket added to cart!","#008000");
           // button.disabled = true; check it
           return response.text();
         } else {
