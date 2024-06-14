@@ -1,8 +1,6 @@
 <?php 
 include __DIR__ . '/../header.php'; 
-
 ?>
-
     <div class="festival-banner" style="background-image: url('../img/History/AmsterdamPort.png');">
             <div class="festival-info">
                 <h1 class="festival-title"><?= $service->getContent("History Port", "Title") ?></h1>
