@@ -86,3 +86,35 @@ color: white;
   width: 50% !important; /* Adjust as needed */
   overflow: auto;
 }
+/* Footer css */
+.footer {
+  background-color: #0e0e0e; 
+  color:red;
+  border: solid 1px #d1031a;
+  border-bottom: none;
+  margin-top: 40px;
+ width: 100%;
+ max-width: 100%;
+}
+
+.forMoreInfo
+{
+  color:  #ffffff;
+}
+.footer a {
+  color:  #ffffff;;
+}
+
+.footer i {
+  font-size: 1.5em;
+  color:  #ffffff;;
+
+}
+
+.social-icons  {
+  background-color: #000000e2;  
+}
+
+.social-icons i {
+  color:#ffffff;
+}

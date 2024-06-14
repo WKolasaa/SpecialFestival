@@ -272,7 +272,7 @@ function addToCart(session, button) {
     }
   checkUserSession().then((hasSession) => {
     if (!hasSession) {
-      alert("Please log in to add items to the cart.");
+      showToast("Please log in to add items to the cart.", "#FF0000");
       return;
     }
 

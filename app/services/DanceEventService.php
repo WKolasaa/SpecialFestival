@@ -131,7 +131,7 @@ class DanceEventService
             }
         }
         $agenda = new Agenda(
-        // $agendaData['agendaId'],
+            // $agendaData['agendaId'],
             $agendaId,
             $agendaData['artistName'],
             $agendaData['eventDay'],
@@ -364,7 +364,7 @@ class DanceEventService
             $sessionData['sessionPrice'],// price
             $startDateTime,              // start_date
             $endDateTime,                // end_date
-            20               
+            20
         );
         return $ticket;
     }

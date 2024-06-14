@@ -34,7 +34,4 @@
   <?php endforeach; ?>
   <!-- End of loop -->
 </div>
-
-
-
 <?php include __DIR__ . '/../footer.php'; ?>
