@@ -19,7 +19,6 @@ class UserTicketService
         $this->userTicketRepository = new UserTicketRepository();
         $this->ticketRepository = new TicketRepository();
         $this->orderRepository = new OrderRepository();
-
     }
 
     public function getAllUserTicketsByUserId(int $userId, bool $paid): array
