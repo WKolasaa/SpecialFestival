@@ -106,6 +106,7 @@ function generateShareToken() {
             userId: userId,
         }),
     })
+        .then(response => response.json())
         .then(data => {
             const shareUrl = `${window.location.origin}/FestPlan?token=${data.token}`;
 

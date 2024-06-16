@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (recaptcha === "") { // if the reCAPTCHA is not completed
             event.preventDefault(); // prevent the form from being submitted
             alert("Please complete the reCAPTCHA.");
-             // exit the event handler
+            // exit the event handler
         }
 
         // ... rest of your code ...

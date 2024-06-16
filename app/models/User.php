@@ -11,8 +11,8 @@ class User implements JsonSerializable
     private $id;
     private $username;
     private $password;
-        private $userRole; //dateTime
-private $registeredDate;
+    private $userRole; //dateTime
+    private $registeredDate;
     private $firstName;
     private $lastName;
     private $email;
@@ -33,7 +33,6 @@ private $registeredDate;
         $this->phoneNumber = $phoneNumber;
         $this->paymentInProgress = false;
     }
-
 
     public function getId()
     {

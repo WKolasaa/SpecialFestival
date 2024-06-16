@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use JsonSerializable;
 
 class Restaurant implements JsonSerializable
