@@ -97,7 +97,7 @@ $tokenIsSet = isset($_GET['token']);
 
 <?php if (!$tokenIsSet): ?>
     <script>
-        const userId = <?= json_encode($_SESSION['userId']) ?>;
+        const userId = <?php echo $userId ?>;
     </script>
     <script src="js/festplan.js"></script>
 <?php endif; ?>

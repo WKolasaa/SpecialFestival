@@ -50,7 +50,6 @@ function increaseTicketQuantity(ticketId) {
         }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -68,7 +67,6 @@ function decreaseTicketQuantity(ticketId) {
         }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -87,13 +85,18 @@ function deleteTicket(ticketId) {
         }),
     })
         .then(response => response.json())
-        .then(data => console.log(data))
         .catch((error) => {
             console.error('Error:', error);
         });
 }
 
 function generateShareToken() {
+    // Check if the user is logged in
+    if (userId === -1) {
+        alert('Please login to share your FestPlan!');
+        return;
+    }
+
     fetch('/api/FestPlan/generateShareToken', {
         method: 'POST',
         headers: {
@@ -103,13 +106,7 @@ function generateShareToken() {
             userId: userId,
         }),
     })
-        .then(response => response.text())  // Get the response text
-        .then(text => {
-            console.log('Raw response:', text);  // Print the raw response
-            return JSON.parse(text);  // Parse the text as JSON
-        })
         .then(data => {
-            console.log('Data:', data);
             const shareUrl = `${window.location.origin}/FestPlan?token=${data.token}`;
 
             // Copy the share link to the clipboard

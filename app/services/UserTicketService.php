@@ -37,7 +37,6 @@ class UserTicketService
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
-
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket->getId(), $userId);
         } else {
