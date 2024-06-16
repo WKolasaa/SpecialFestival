@@ -3,18 +3,12 @@
 
 namespace App;
 
+use Exception;
+
 class PatternRouter
 {
-    private function stripParameters($uri)
-    {
-        if (str_contains($uri, '?')) {
-            $uri = substr($uri, 0, strpos($uri, '?'));
-        }
-        return $uri;
-    }
-
     public function route($uri)
-    {     
+    {
         // check if we are requesting an api route
         $api = false;
         if (str_starts_with($uri, "api/")) {
@@ -50,7 +44,7 @@ class PatternRouter
         if (file_exists($filename)) {
             require $filename;
             // echo $filename;
-          
+
         } else {
             http_response_code(404);
             die();
@@ -67,12 +61,20 @@ class PatternRouter
         try {
             $controllerObj = new $controllerName();
             $controllerObj->{$methodName}();
-       
-        } catch (\Exception $e) {
+
+        } catch (Exception $e) {
             // Log or handle the error more gracefully
             http_response_code(500);
             die();
         }
+    }
+
+    private function stripParameters($uri)
+    {
+        if (str_contains($uri, '?')) {
+            $uri = substr($uri, 0, strpos($uri, '?'));
+        }
+        return $uri;
     }
 }
 
@@ -97,45 +99,45 @@ class PatternRouter
 
 
 
-    // public function route($uri)
-    // {
-    //     switch ($uri) {
-    //         case '':
-    //             require  'controllers/HomeController.php';
-    //            $controller = new \App\Controllers\HomeController();
-    //             $controller->index();
-    //             break;
+// public function route($uri)
+// {
+//     switch ($uri) {
+//         case '':
+//             require  'controllers/HomeController.php';
+//            $controller = new \App\Controllers\HomeController();
+//             $controller->index();
+//             break;
 
-    //         case 'progress':
+//         case 'progress':
 
-    //             require 'controllers/progresstrackercontoller.php';
-    //             $controller = new \App\Controllers\ProgressTrackerController();
-    //             $controller->index();
-    //             break;
+//             require 'controllers/progresstrackercontoller.php';
+//             $controller = new \App\Controllers\ProgressTrackerController();
+//             $controller->index();
+//             break;
 
-    //         case 'blog':
-    //             require 'controllers/blogcontroller.php';
+//         case 'blog':
+//             require 'controllers/blogcontroller.php';
 
-    //             $controller = new \App\Controllers\BlogController();
-    //             $controller->index();
-    //             break;
+//             $controller = new \App\Controllers\BlogController();
+//             $controller->index();
+//             break;
 
-    //         case 'login';
-    //         require 'controllers/logincontroller.php';
-    //         $controller = new \App\Controllers\LoginController();
-    //         $controller->index();
-    //             break;
-    //         case 'signup';
-    //         require 'controllers/signupcontroller.php';
-    //         $controller = new \App\Controllers\SignUpController();
-    //         $controller->index();
-    //             break;
+//         case 'login';
+//         require 'controllers/logincontroller.php';
+//         $controller = new \App\Controllers\LoginController();
+//         $controller->index();
+//             break;
+//         case 'signup';
+//         require 'controllers/signupcontroller.php';
+//         $controller = new \App\Controllers\SignUpController();
+//         $controller->index();
+//             break;
 
-    //         default:
-    //         echo '404 Error :)';
-    //             break;
-    //     }
-    // }
+//         default:
+//         echo '404 Error :)';
+//             break;
+//     }
+// }
 
 
 /*public function route($uri)
@@ -165,41 +167,41 @@ class PatternRouter
         }
     }*/
 
-     // private function stripParameters($uri)
-    // {
-    //     if (str_contains($uri, '?')) {
-    //         $uri = substr($uri, 0, strpos($uri, '?'));
-    //     }
-    //     return $uri;
-    // }
+// private function stripParameters($uri)
+// {
+//     if (str_contains($uri, '?')) {
+//         $uri = substr($uri, 0, strpos($uri, '?'));
+//     }
+//     return $uri;
+// }
 
-    // public function route($uri)
-    // {
-    //     $uri = $this->stripParameters($uri);
+// public function route($uri)
+// {
+//     $uri = $this->stripParameters($uri);
 
-    //     $explodedUri = explode('/', $uri);
+//     $explodedUri = explode('/', $uri);
 
-    //     if (!isset($explodedUri[0]) || empty($explodedUri[0])) {
-    //         $explodedUri[0] = 'home';
-    //     }
-    //     $controllerName = "App\\Controllers\\" . $explodedUri[0] . "controller";
+//     if (!isset($explodedUri[0]) || empty($explodedUri[0])) {
+//         $explodedUri[0] = 'home';
+//     }
+//     $controllerName = "App\\Controllers\\" . $explodedUri[0] . "controller";
 
-    //     if (!isset($explodedUri[1]) || empty($explodedUri[1])) {
-    //         $explodedUri[1] = 'index';
-    //     }
-    //     $methodName = $explodedUri[1];
+//     if (!isset($explodedUri[1]) || empty($explodedUri[1])) {
+//         $explodedUri[1] = 'index';
+//     }
+//     $methodName = $explodedUri[1];
 
-    //     // Controller/method matching the URL not found
-    //     if(!class_exists($controllerName) || !method_exists($controllerName, $methodName)) {
-    //         http_response_code(404);
-    //         return;
-    //     }
+//     // Controller/method matching the URL not found
+//     if(!class_exists($controllerName) || !method_exists($controllerName, $methodName)) {
+//         http_response_code(404);
+//         return;
+//     }
 
-    //     try {            
-    //         $controllerObj = new $controllerName();
-    //         $controllerObj->$methodName();
-    //     } catch(\Error $e) {
-    //         // For some reason the class/method doesn't work
-    //         http_response_code(500);
-    //     }
-    // }
+//     try {
+//         $controllerObj = new $controllerName();
+//         $controllerObj->$methodName();
+//     } catch(\Error $e) {
+//         // For some reason the class/method doesn't work
+//         http_response_code(500);
+//     }
+// }

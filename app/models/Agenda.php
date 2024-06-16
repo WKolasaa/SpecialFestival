@@ -1,92 +1,129 @@
 <?php
+
 namespace App\Models;
 
-class Agenda implements \JsonSerializable{
-  private $agendaId;
-  private $artistName;
-  private $eventDay;
-  private $eventDate;
-  private $eventTime;
-  private$durationMinutes;
-  private $sessionPrice;
-  private $sessionsAvailable;
-  private $venueAddress;
+use JsonSerializable;
 
-  public function __construct($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $sessionPrice, $sessionsAvailable, $venueAddress) {
-      $this->agendaId = $agendaId;
-      $this->artistName = $artistName;
-      $this->eventDay = $eventDay;
-      $this->eventDate = $eventDate;
-      $this->eventTime = $eventTime;
-      $this->durationMinutes = $durationMinutes;
-      $this->sessionPrice = $sessionPrice;
-      $this->sessionsAvailable = $sessionsAvailable;
-      $this->venueAddress = $venueAddress;
-  }
+class Agenda implements JsonSerializable
+{
+    private $agendaId;
+    private $artistName;
+    private $eventDay;
+    private $eventDate;
+    private $eventTime;
+    private $durationMinutes;
+    private $sessionPrice;
+    private $sessionsAvailable;
+    private $venueAddress;
 
-  public function getAgendaId(){
-    return $this->agendaId;
-  }
-  public function getArtistName(){
-    return $this->artistName;
-  }
+    public function __construct($agendaId, $artistName, $eventDay, $eventDate, $eventTime, $durationMinutes, $sessionPrice, $sessionsAvailable, $venueAddress)
+    {
+        $this->agendaId = $agendaId;
+        $this->artistName = $artistName;
+        $this->eventDay = $eventDay;
+        $this->eventDate = $eventDate;
+        $this->eventTime = $eventTime;
+        $this->durationMinutes = $durationMinutes;
+        $this->sessionPrice = $sessionPrice;
+        $this->sessionsAvailable = $sessionsAvailable;
+        $this->venueAddress = $venueAddress;
+    }
 
-  public function getEventDay(){
-    return $this->eventDay;
-  }
-  public function getEventDate(){
-    return $this->eventDate;
-  }
-  public function getEventTime(){
-    return $this->eventTime;
-  }
-  public function getDurationMinutes(){
-    return $this->durationMinutes;
-  }
-  public function getSessionPrice(){
-    return $this->sessionPrice;
-  }
-  public function getSessionsAvailable(){
-    return $this->sessionsAvailable;
-  }
-  public function getVenueAddress(){
-    return $this->venueAddress;
-  }
-  public function setAgendaId($agendaId){
-    $this->agendaId = $agendaId;
-  }
+    public function getAgendaId()
+    {
+        return $this->agendaId;
+    }
 
-  public function setArtistName($artistName){
-    $this->artistName = $artistName;
-  }
-  public function setEventDay($eventDay){
-    $this->eventDay = $eventDay;
-  }
-  public function setEventDate($eventDate){
-    $this->eventDate = $eventDate;
-  }
-  public function setEventTime($eventTime){
-    $this->eventTime = $eventTime;
-  }
-  public function setDurationMinutes($durationMinutes){
-    $this->durationMinutes = $durationMinutes;
-  }
+    public function setAgendaId($agendaId)
+    {
+        $this->agendaId = $agendaId;
+    }
 
-  public function setSessionPrice($sessionPrice){
-    $this->sessionPrice = $sessionPrice;
-  }
-  public function setSessionsAvailable($sessionsAvailable){
-    $this->sessionsAvailable = $sessionsAvailable;
-  }
-  public function setVenueAddress($venueAddress){
-    $this->venueAddress = $venueAddress;
-  }
+    public function getArtistName()
+    {
+        return $this->artistName;
+    }
 
-  public function jsonSerialize():mixed
-  {
-    $vars=get_object_vars($this);
-    return $vars;
+    public function setArtistName($artistName)
+    {
+        $this->artistName = $artistName;
+    }
 
-  }
+    public function getEventDay()
+    {
+        return $this->eventDay;
+    }
+
+    public function setEventDay($eventDay)
+    {
+        $this->eventDay = $eventDay;
+    }
+
+    public function getEventDate()
+    {
+        return $this->eventDate;
+    }
+
+    public function setEventDate($eventDate)
+    {
+        $this->eventDate = $eventDate;
+    }
+
+    public function getEventTime()
+    {
+        return $this->eventTime;
+    }
+
+    public function setEventTime($eventTime)
+    {
+        $this->eventTime = $eventTime;
+    }
+
+    public function getDurationMinutes()
+    {
+        return $this->durationMinutes;
+    }
+
+    public function setDurationMinutes($durationMinutes)
+    {
+        $this->durationMinutes = $durationMinutes;
+    }
+
+    public function getSessionPrice()
+    {
+        return $this->sessionPrice;
+    }
+
+    public function setSessionPrice($sessionPrice)
+    {
+        $this->sessionPrice = $sessionPrice;
+    }
+
+    public function getSessionsAvailable()
+    {
+        return $this->sessionsAvailable;
+    }
+
+    public function setSessionsAvailable($sessionsAvailable)
+    {
+        $this->sessionsAvailable = $sessionsAvailable;
+    }
+
+    public function getVenueAddress()
+    {
+        return $this->venueAddress;
+    }
+
+    public function setVenueAddress($venueAddress)
+    {
+        $this->venueAddress = $venueAddress;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        $vars = get_object_vars($this);
+        return $vars;
+
+    }
 
 }

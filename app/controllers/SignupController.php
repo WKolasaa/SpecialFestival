@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
 use App\Services\UserService;
 use PDOException;
 
@@ -13,7 +12,8 @@ class signupcontroller
         include __DIR__ . '/../views/signup.php';
     }
 
-    function captcha(){
+    function captcha()
+    {
         require_once __DIR__ . '/../config/captchaconfig.php';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $recaptchaResponse = $_POST['g-recaptcha-response'];
@@ -48,7 +48,7 @@ class signupcontroller
                 if (session_status() == PHP_SESSION_NONE) {
                     session_start();
                 }
-                 // Set a session variable with the error message
+                // Set a session variable with the error message
                 $_SESSION['error'] = 'CAPTCHA verification failed.';
                 header('Location: /signup'); // Redirect back to the signup page
                 exit();
@@ -59,7 +59,8 @@ class signupcontroller
         }
     }
 
-    public function createUser(){
+    public function createUser()
+    {
         $userName = $_POST['userName'];
         $firstName = $_POST['firstName'];
         $lastName = $_POST['lastName'];
@@ -71,15 +72,13 @@ class signupcontroller
         $userService = new UserService();
 
         session_start();
-        try{
-            if($userService->checkForUserName($userName)){
+        try {
+            if ($userService->checkForUserName($userName)) {
                 $this->returnError('Username already exists');
-            }
-            else if($userService->checkForEmail($email)){
+            } else if ($userService->checkForEmail($email)) {
                 $this->returnError('Email already exists');
-            }
-            else{
-                $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber);
+            } else {
+                $userService->addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber);
                 $user = $userService->loginByUserName($userName, $password);
                 $_SESSION['user'] = $user;
                 $_SESSION['userId'] = $user->getId();
@@ -87,13 +86,14 @@ class signupcontroller
                 $_SESSION['role'] = $user->getUserRole();
                 header('Location: /');
             }
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo '<div class="alert alert-danger">An error occurred during registration.</div>';
             return "An error occurred during registration";
         }
     }
 
-    private function returnError($message){
+    private function returnError($message)
+    {
         $_SESSION['error'] = $message;
         header('Location: /signup'); // Redirect back to the signup page
         exit();

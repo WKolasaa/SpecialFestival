@@ -1,13 +1,14 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Ticket;
+use Exception;
 use PDO;
-use App\Models\QrCode;
 
 class UserTicketRepository extends Repository
 {
-    public function getAllUserTicketsByUserId(int $userId, bool $paid) : array
+    public function getAllUserTicketsByUserId(int $userId, bool $paid): array
     {
         if ($paid) {
             $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId";
@@ -39,8 +40,23 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
         $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
 
-         $stmt->execute();
+        $stmt->execute();
 
+    }
+
+    private function getTicketId(Ticket $ticket)
+    {
+        $sql = "SELECT id FROM ticket WHERE ticketId = :ticketId AND event_name = :eventName AND ticket_name = :ticketName AND price = :price ";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->bindValue(':eventName', $ticket->getEventName(), PDO::PARAM_STR);
+        $stmt->bindValue(':ticketName', $ticket->getTicketName(), PDO::PARAM_STR);
+        $stmt->bindValue(':price', $ticket->getPrice(), PDO::PARAM_INT);
+
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $id = $row['id'];
+        return $id;
     }
 
     public function addTicketQuantity(int $ticketId, int $userId, int $quantity): void
@@ -61,7 +77,7 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch();
-        return (bool) $row;
+        return (bool)$row;
     }
 
     public function markTicketsAsPaid(int $userId, array $userTickets): void
@@ -92,7 +108,8 @@ class UserTicketRepository extends Repository
         $stmt->execute();
     }
 
-    public function generateShareToken(int $userId): string {
+    public function generateShareToken(int $userId): string
+    {
         $token = substr(bin2hex(random_bytes(3)), 0, 5);
         $sql = "INSERT INTO share_personal_program (user_id, share_token) VALUES (:userId, :token)";
         $stmt = $this->connection->prepare($sql);
@@ -102,7 +119,8 @@ class UserTicketRepository extends Repository
         return $token;
     }
 
-    public function getShareTokenByUserId(int $userId): ?string {
+    public function getShareTokenByUserId(int $userId): ?string
+    {
         $sql = "SELECT share_token FROM share_personal_program WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
@@ -110,27 +128,13 @@ class UserTicketRepository extends Repository
         return $stmt->fetchColumn();
     }
 
-    public function getUserIdByShareToken(string $token): ?int {
+    public function getUserIdByShareToken(string $token): ?int
+    {
         $sql = "SELECT user_id FROM share_personal_program WHERE share_token = :token";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':token', $token, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchColumn();
-    }
-
-    private function getTicketId(Ticket $ticket)
-    {
-        $sql = "SELECT id FROM ticket WHERE ticketId = :ticketId AND event_name = :eventName AND ticket_name = :ticketName AND price = :price ";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
-        $stmt->bindValue(':eventName', $ticket->getEventName(), PDO::PARAM_STR);
-        $stmt->bindValue(':ticketName', $ticket->getTicketName(), PDO::PARAM_STR);
-        $stmt->bindValue(':price', $ticket->getPrice(), PDO::PARAM_INT);
-
-        $stmt->execute();
-        $row = $stmt->fetch();
-        $id = $row['id'];
-        return $id;
     }
 
     public function checkAndGenerateQrForPaidTicket(int $ticketId)
@@ -152,11 +156,12 @@ class UserTicketRepository extends Repository
 
         } else {
             // The ticket is not paid or does not exist, return an error
-            throw new \Exception("Ticket with id $ticketId does not exist or is not paid");
+            throw new Exception("Ticket with id $ticketId does not exist or is not paid");
         }
     }
 
-    public function getTicketByUserID($userID){
+    public function getTicketByUserID($userID)
+    {
         $sql = "SELECT * FROM user_tickets WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userID, PDO::PARAM_INT);
@@ -167,7 +172,6 @@ class UserTicketRepository extends Repository
         }
         return $result;
     }
-
 
 
 }

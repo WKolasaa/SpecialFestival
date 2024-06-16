@@ -1,6 +1,10 @@
 <?php
+
 namespace App\Models;
-class Restaurant implements \JsonSerializable {
+use JsonSerializable;
+
+class Restaurant implements JsonSerializable
+{
     private $id;
     private $name;
     private $address;
@@ -15,107 +19,133 @@ class Restaurant implements \JsonSerializable {
     private $images = [];
     private $events = [];
 
-    public function __construct() {
+    public function __construct()
+    {
 
     }
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getAddress() {
+    public function getAddress()
+    {
         return $this->address;
     }
 
-    public function setAddress($address) {
+    public function setAddress($address)
+    {
         $this->address = $address;
     }
 
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $type;
     }
 
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
     }
 
-    public function getReduced() {
+    public function getReduced()
+    {
         return $this->reduced;
     }
 
-    public function setReduced($reduced) {
+    public function setReduced($reduced)
+    {
         $this->reduced = $reduced;
     }
 
-    public function getStars() {
+    public function getStars()
+    {
         return $this->stars;
     }
 
-    public function setStars($stars) {
+    public function setStars($stars)
+    {
         $this->stars = $stars;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getPhoneNumber() {
+    public function getPhoneNumber()
+    {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber($phoneNumber) {
+    public function setPhoneNumber($phoneNumber)
+    {
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getWebsite() {
+    public function getWebsite()
+    {
         return $this->website;
     }
 
-    public function setWebsite($website) {
+    public function setWebsite($website)
+    {
         $this->website = $website;
     }
 
-    public function getChef() {
+    public function getChef()
+    {
         return $this->chef;
     }
 
-    public function setChef($chef) {
+    public function setChef($chef)
+    {
         $this->chef = $chef;
     }
 
-    public function addImage($restaurantImage) {
+    public function addImage($restaurantImage)
+    {
         $this->images[] = $restaurantImage;
     }
 
-    public function getImages() {
+    public function getImages()
+    {
         return $this->images;
     }
 
-    public function getImagesAsArray() {
+    public function getImagesAsArray()
+    {
         $images = [];
         foreach ($this->images as $image) {
             array_push($images, $image->toArray());
@@ -123,7 +153,8 @@ class Restaurant implements \JsonSerializable {
         return $images;
     }
 
-    public function getImagesByType($type) {
+    public function getImagesByType($type)
+    {
         $images = [];
         foreach ($this->images as $image) {
             if ($image->getImageType() == $type) {
@@ -133,15 +164,18 @@ class Restaurant implements \JsonSerializable {
         return $images;
     }
 
-    public function addEvent($restaurantSession) {
+    public function addEvent($restaurantSession)
+    {
         $this->events[] = $restaurantSession;
     }
 
-    public function getEvents() {
+    public function getEvents()
+    {
         return $this->events;
     }
 
-    public function getEventsAsArray() {
+    public function getEventsAsArray()
+    {
         $events = [];
         foreach ($this->events as $event) {
             array_push($events, $event->toArray());
@@ -149,7 +183,8 @@ class Restaurant implements \JsonSerializable {
         return $events;
     }
 
-    public function getEventByRestaurantId($id) {
+    public function getEventByRestaurantId($id)
+    {
         $events = [];
         foreach ($this->events as $event) {
             if ($event->getRestaurantId() == $id) {
@@ -159,7 +194,7 @@ class Restaurant implements \JsonSerializable {
         return $events;
     }
 
-    public function jsonSerialize():mixed
+    public function jsonSerialize(): mixed
     {
         $vars = get_object_vars($this);
         return $vars;

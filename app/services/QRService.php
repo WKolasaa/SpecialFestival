@@ -2,20 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\Ticket;
 use App\Repositories\TicketRepository;
 use chillerlan\QRCode\QRCode;
-use chillerlan\QRCode\QROptions;
 use Exception;
 
 class QRService
 {
-    public function generateQRCode($ticket){ //TODO: handle Exception
-        $data = 'TicketID='. $ticket->getTicketId() . '/UserID='. $_SESSION['userId'];
+    public function generateQRCode($ticket)
+    { //TODO: handle Exception
+        $data = 'TicketID=' . $ticket->getTicketId() . '/UserID=' . $_SESSION['userId'];
 
         $hash = hash('sha256', $data);
         $ticketRepository = new TicketRepository();
-        if($ticketRepository->addQRCodeTicket($ticket->getTicketId(), $hash)){
+        if ($ticketRepository->addQRCodeTicket($ticket->getTicketId(), $hash)) {
             return (new QRCode)->render($hash);
         }
 
@@ -23,23 +22,27 @@ class QRService
 
     }
 
-    public function scanQRCode($userTicketID){
+    public function scanQRCode($userTicketID)
+    {
         $ticketRepository = new TicketRepository();
         return $ticketRepository->scanQRCode($userTicketID);
     }
 
-    public function qrCodeScanned($userTicketID){
+    public function qrCodeScanned($userTicketID)
+    {
         $ticketRepository = new TicketRepository();
 
         return $ticketRepository->qrCodeScanned($userTicketID);
     }
 
-    public function getQrCode($userTicketID){
+    public function getQrCode($userTicketID)
+    {
         $ticketRepository = new TicketRepository();
         return $ticketRepository->getQrCode($userTicketID);
     }
 
-    public function getQRIDByCode($code){
+    public function getQRIDByCode($code)
+    {
         $ticketRepository = new TicketRepository();
         return $ticketRepository->getQRIDByCode($code);
     }

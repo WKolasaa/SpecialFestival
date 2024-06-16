@@ -1,17 +1,24 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Services\HistoryAdminService;
 
-class HistoryMainController{
+class HistoryMainController
+{
     private $service;
-  
+
 
     public function index()
     {
         $service = $this->getHistoryAdminService();
         include '../views/HistoryView/HistoryMain.php';
 
+    }
+
+    private function getHistoryAdminService()
+    {
+        return new HistoryAdminService();
     }
 
     public function port()
@@ -40,10 +47,5 @@ class HistoryMainController{
         $service = $this->getHistoryAdminService();
         include '../views/HistoryView/EditTimeslots.php';
 
-    }
-
-    private function getHistoryAdminService()
-    {
-        return new HistoryAdminService();
     }
 }

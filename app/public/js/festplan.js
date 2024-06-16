@@ -1,5 +1,5 @@
-document.querySelectorAll('.quantity-increase').forEach(function(button) {
-    button.addEventListener('click', function() {
+document.querySelectorAll('.quantity-increase').forEach(function (button) {
+    button.addEventListener('click', function () {
         const row = button.parentElement.parentElement;
         const quantityElement = row.querySelector('.quantity');
         const priceElement = row.querySelector('.price');
@@ -10,8 +10,8 @@ document.querySelectorAll('.quantity-increase').forEach(function(button) {
     });
 });
 
-document.querySelectorAll('.quantity-decrease').forEach(function(button) {
-    button.addEventListener('click', function() {
+document.querySelectorAll('.quantity-decrease').forEach(function (button) {
+    button.addEventListener('click', function () {
         const row = button.parentElement.parentElement;
         const quantityElement = row.querySelector('.quantity');
         const quantity = parseInt(quantityElement.textContent, 10);
@@ -26,15 +26,15 @@ document.querySelectorAll('.quantity-decrease').forEach(function(button) {
     });
 });
 
-document.querySelectorAll('.delete-ticket').forEach(function(button) {
-    button.addEventListener('click', function() {
+document.querySelectorAll('.delete-ticket').forEach(function (button) {
+    button.addEventListener('click', function () {
         const row = button.parentElement.parentElement;
         row.parentElement.removeChild(row);
         deleteTicket(row.dataset.ticketId);
     });
 });
 
-document.querySelector('.share-btn').addEventListener('click', function() {
+document.querySelector('.share-btn').addEventListener('click', function () {
     generateShareToken();
 });
 
@@ -113,9 +113,9 @@ function generateShareToken() {
             const shareUrl = `${window.location.origin}/FestPlan?token=${data.token}`;
 
             // Copy the share link to the clipboard
-            navigator.clipboard.writeText(shareUrl).then(function() {
+            navigator.clipboard.writeText(shareUrl).then(function () {
                 alert('Share link copied to clipboard!');
-            }, function(err) {
+            }, function (err) {
                 console.error('Could not copy text: ', err);
             });
         })

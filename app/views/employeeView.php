@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/header.php';
+include __DIR__ . '/header.php';
 ?>
 
 <div class="container">
@@ -36,5 +36,5 @@
 <script src="https://unpkg.com/@zxing/library@latest"></script>
 
 <?php
-    include __DIR__ . '/footer.php';
+include __DIR__ . '/footer.php';
 ?>

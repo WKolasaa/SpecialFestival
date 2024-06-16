@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Models;
 
-class UserTicket {
-  public Ticket $ticket;
-  public int $quantity;
-  public bool $paid;
+class UserTicket
+{
+    public Ticket $ticket;
+    public int $quantity;
+    public bool $paid;
 }

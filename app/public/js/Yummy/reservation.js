@@ -5,7 +5,7 @@ function updateSessions(selectedDay) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ restaurantID: restaurantID })
+        body: JSON.stringify({restaurantID: restaurantID})
     })
         .then(response => response.json())
         .then(data => {
@@ -40,7 +40,7 @@ function validateForm() {
     const eventID = sessionSelect.value;
     const specialRequests = document.getElementById('specialRequests').value;
 
-    if(regularTickets < 0 || reducedTickets < 0) {
+    if (regularTickets < 0 || reducedTickets < 0) {
         showMessage("Please enter a valid number of tickets.", 'alert-danger');
         return false;
     }

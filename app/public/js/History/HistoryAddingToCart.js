@@ -1,5 +1,5 @@
 // waiting until the HTML doc is fully loaded before executing the script
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Select all elements with the class 'timeslot'
     const timeslots = document.querySelectorAll('.timeslot');
 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 ////////////////// handling 'Add to Cart' button click event //////////////////
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     //select all timeslot elements 
     const timeslots = document.querySelectorAll('.timeslot');
 
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert("Please log in to add items to the cart.");
                     return; // Stop further execution if the user is not logged in.
                 }
-            
+
                 // Gather necessary data from the timeslot to send tco the server
                 const price = timeslot.querySelector('.ticket-type:checked').value; // selected price
                 const language = timeslot.querySelector('.language:checked').value; // selected language
@@ -53,23 +53,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 const day = timeslot.querySelector('.day').textContent;
 
                 const date = day;
-            
-                const start_date = `${date} ${startTime}`;  
+
+                const start_date = `${date} ${startTime}`;
                 const end_date = `${date} ${endTime}`;
-            
+
                 const selectedTicketType = timeslot.querySelector('.ticket-type:checked').getAttribute('data-ticket-type'); // Get ticket type
                 let description; // Use 'let' for variables that will be reassigned.
-                if(selectedTicketType == 'Family') {
+                if (selectedTicketType == 'Family') {
                     description = language + ', Family ticket';
-                } else {            
-                    description = language+', Regular ticket';
+                } else {
+                    description = language + ', Regular ticket';
                 }
 
                 const event_name = 'History Event';
                 const ticket_name = 'History Tour Ticket';
                 const location = 'Grote Markt 22, 2011 RD Haarlem';
 
-                console.log(startTime, endTime, date,  start_date, end_date, price, description, event_name, ticket_name, location);
+                console.log(startTime, endTime, date, start_date, end_date, price, description, event_name, ticket_name, location);
                 // Send the collected data to the server via POST request.
                 fetch('http://localhost/api/historyadmin/addToCart', {
                     method: 'POST',
@@ -87,20 +87,20 @@ document.addEventListener("DOMContentLoaded", function() {
                         location
                     }),
                 })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if(data.success) {
-                        alert('Ticket added to cart successfully!');
-                    } else {
-                        alert('Failed to add ticket to cart.');
-                    }
-                })
-                
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            alert('Ticket added to cart successfully!');
+                        } else {
+                            alert('Failed to add ticket to cart.');
+                        }
+                    })
+
             });
         });
     });
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
 ////////////////// function to check if the user is logged in //////////////////
 function checkUserSession() {
     return fetch("http://localhost/api/historyadmin/checkUser")
-      .then((response) => response.json())
-      .then((data) => data.hasSession);
-  }
+        .then((response) => response.json())
+        .then((data) => data.hasSession);
+}
 

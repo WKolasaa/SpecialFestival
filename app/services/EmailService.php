@@ -6,7 +6,6 @@ use App\Repositories\TicketRepository;
 use App\Repositories\UserTicketRepository;
 use Dompdf\Exception;
 use Resend;
-use App\Models\Ticket;
 
 class EmailService
 {
@@ -37,7 +36,7 @@ class EmailService
                               <tbody>
                                 <tr>
                                   <td>
-                                    <p style="font-size:16px;line-height:26px;margin:16px 0;font-family:&#x27;Open Sans&#x27;, &#x27;HelveticaNeue-Light&#x27;, &#x27;Helvetica Neue Light&#x27;, &#x27;Helvetica Neue&#x27;, Helvetica, Arial, &#x27;Lucida Grande&#x27;, sans-serif;font-weight:300;color:#404040">Hi <!-- -->'.$userEmail.'<!-- -->,</p>
+                                    <p style="font-size:16px;line-height:26px;margin:16px 0;font-family:&#x27;Open Sans&#x27;, &#x27;HelveticaNeue-Light&#x27;, &#x27;Helvetica Neue Light&#x27;, &#x27;Helvetica Neue&#x27;, Helvetica, Arial, &#x27;Lucida Grande&#x27;, sans-serif;font-weight:300;color:#404040">Hi <!-- -->' . $userEmail . '<!-- -->,</p>
                                     <p style="font-size:16px;line-height:26px;margin:16px 0;font-family:&#x27;Open Sans&#x27;, &#x27;HelveticaNeue-Light&#x27;, &#x27;Helvetica Neue Light&#x27;, &#x27;Helvetica Neue&#x27;, Helvetica, Arial, &#x27;Lucida Grande&#x27;, sans-serif;font-weight:300;color:#404040">Someone recently requested a password change for your Haarlem Festival account. If this was you, you can set a new password here:</p><a href="http://localhost/changepassword?email=' . $userEmail . '&token=' . $token . '" style="background-color:#007ee6;border-radius:4px;color:#fff;font-family:&#x27;Open Sans&#x27;, &#x27;Helvetica Neue&#x27;, Arial;font-size:15px;text-decoration:none;text-align:center;display:inline-block;width:210px;padding:14px 7px 14px 7px;line-height:100%;max-width:100%" target="_blank"><span><!--[if mso]><i style="letter-spacing: 7px;mso-font-width:-100%;mso-text-raise:21" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:10.5px">Reset password</span><span><!--[if mso]><i style="letter-spacing: 7px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a>
                                     <p style="font-size:16px;line-height:26px;margin:16px 0;font-family:&#x27;Open Sans&#x27;, &#x27;HelveticaNeue-Light&#x27;, &#x27;Helvetica Neue Light&#x27;, &#x27;Helvetica Neue&#x27;, Helvetica, Arial, &#x27;Lucida Grande&#x27;, sans-serif;font-weight:300;color:#404040">If you don&#x27;t want to change your password or didn&#x27;t request this, just ignore and delete this message.</p>
                                     <p style="font-size:16px;line-height:26px;margin:16px 0;font-family:&#x27;Open Sans&#x27;, &#x27;HelveticaNeue-Light&#x27;, &#x27;Helvetica Neue Light&#x27;, &#x27;Helvetica Neue&#x27;, Helvetica, Arial, &#x27;Lucida Grande&#x27;, sans-serif;font-weight:300;color:#404040">To keep your account secure, please don&#x27;t forward this email to anyone.</p>
@@ -57,7 +56,8 @@ class EmailService
         ]);
     }
 
-    public function sendInvoice($pdfContent){
+    public function sendInvoice($pdfContent)
+    {
         $resend = Resend::client('re_DF4R1gUB_CFNiNU9FrxGhNdDUCFxaK6NN');
 
         $resend->emails->send([
@@ -76,8 +76,9 @@ class EmailService
         ]);
     }
 
-    public function sendTickets(){ //TODO: CAll this method in checkout
-        try{
+    public function sendTickets()
+    { //TODO: CAll this method in checkout
+        try {
             $ticketRepository = new TicketRepository();
             $userTicketRepository = new UserTicketRepository();
             $pdfService = new PDFService();
@@ -86,8 +87,8 @@ class EmailService
             $userTickets = $userTicketRepository->getTicketByUserID($userID); //TODO: change the hardcoded shit
             $ticketsObjects = [];
 
-            foreach ($userTickets as $ticket){
-                if($ticket['paid'] == 1){
+            foreach ($userTickets as $ticket) {
+                if ($ticket['paid'] == 1) {
                     $ticketsObjects[] = $ticketRepository->getTicketById($ticket['ticket_id']);
                 }
             }
@@ -233,7 +234,7 @@ class EmailService
                 ',
                 'attachments' => $pdfs,
             ]);
-        } catch (Exception $e){
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
 

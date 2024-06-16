@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\TicketType;
 use App\Services\restaurantservice;
 use DateTime;
+use Exception;
 
 class YummyReservationController
 {
@@ -17,15 +18,16 @@ class YummyReservationController
         $this->restaurantService = new RestaurantService();
     }
 
-    public function getRestaurantEvents(){
+    public function getRestaurantEvents()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
-        if($jsonData !== null && isset($jsonData['restaurantID'])){
+        if ($jsonData !== null && isset($jsonData['restaurantID'])) {
             $restaurantID = intval($jsonData['restaurantID']);
-            $restaurant =  $this->restaurantService->getRestaurantByID($restaurantID);
+            $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
 
             // Check if the restaurant object is not null before accessing its events
-            if($restaurant !== null) {
+            if ($restaurant !== null) {
                 //var_dump($restaurant->getEvents());
                 $eventArray = [];
                 foreach ($restaurant->getEventsAsArray() as $event) {
@@ -48,7 +50,7 @@ class YummyReservationController
 
     public function reserve()
     {
-        try{
+        try {
             $jsonData = file_get_contents('php://input');
             $jsonData = json_decode($jsonData, true);
 
@@ -85,17 +87,18 @@ class YummyReservationController
                 http_response_code(500); // Internal Server Error
                 echo json_encode(['error' => 'Reservation not created']);
             }
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             http_response_code(500); // Internal Server Error
             echo json_encode(['error' => 'Reservation not created from catch']);
         }
     }
 
-    public function addTicket(){
+    public function addTicket()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
         //var_dump($jsonData);
-        if($jsonData !== null && isset($jsonData['restaurantID'], $jsonData['eventID'], $jsonData['regularTickets'], $jsonData['reducedTickets'], $jsonData['specialRequests'])){
+        if ($jsonData !== null && isset($jsonData['restaurantID'], $jsonData['eventID'], $jsonData['regularTickets'], $jsonData['reducedTickets'], $jsonData['specialRequests'])) {
             $restaurantID = intval($jsonData['restaurantID']);
             $regularTickets = intval($jsonData['regularTickets']);
             $reducedTickets = intval($jsonData['reducedTickets']);
@@ -103,7 +106,7 @@ class YummyReservationController
             $eventID = intval($jsonData['eventID']);
 
             $ticket = $this->createTicket($restaurantID, $eventID, $regularTickets, $reducedTickets, $specialRequests);
-            if($this->restaurantService->addTicket($ticket)){
+            if ($this->restaurantService->addTicket($ticket)) {
                 echo json_encode(['success' => 'Ticket added']);
             } else {
                 echo json_encode(['error' => 'Ticket not added']);
@@ -129,7 +132,7 @@ class YummyReservationController
         $endDate = DateTime::createFromFormat($format, $endDateString);
         $lastID = $this->restaurantService->getLastReservationID();
 
-        return new Ticket($lastID, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate,20); // I added 20 hard coded value for available tickets
+        return new Ticket($lastID, $ticketName, $ticketType, "YUMMY EVENT", $location, $description, $price, $startDate, $endDate, 20); // I added 20 hard coded value for available tickets
     }
 
 

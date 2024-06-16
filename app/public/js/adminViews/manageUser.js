@@ -1,5 +1,5 @@
 // Define an array to hold all users
-let allUsers = []; 
+let allUsers = [];
 
 // Function to load data and initialize the user list
 function loadData() {
@@ -51,8 +51,6 @@ function displayUsers(users) {
     });
 }
 
-
-   
 
 // Function to filter users based on their roles
 function filterUsers(role) {
@@ -130,7 +128,7 @@ function handleEditUser(event) {
             cell.innerHTML = `<div class="input-group input-group-sm mb-2">
                 <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="${currentValue}" style="height:30px; ">
             </div>`;
-           
+
         }
     });
 
@@ -144,7 +142,7 @@ function handleEditUser(event) {
 }
 
 loadData();
-initSorting();   
+initSorting();
 
 function constructUserObject(id, username, userRole) {
     return {
@@ -153,6 +151,7 @@ function constructUserObject(id, username, userRole) {
         userRole: userRole,
     };
 }
+
 // Function to handle saving changes
 function saveChanges(event) {
     const row = event.target.closest('tr');
@@ -170,7 +169,7 @@ function saveChanges(event) {
     }
     if (cells.length > 2) {
         const userRoleSelect = cells[2].querySelector('select');
-        userRole = userRoleSelect ? userRoleSelect.value : '';        
+        userRole = userRoleSelect ? userRoleSelect.value : '';
 
     }
     if (!username || !userRole) {
@@ -182,19 +181,19 @@ function saveChanges(event) {
     const updatedUser = constructUserObject(id, username, userRole);
 
 /////////////////////////update user info//////////////////////////////
- // Send the updated data to the server using a POST request
-fetch('http://localhost/api/manageuser/updateUser', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedUser)
-        })
+    // Send the updated data to the server using a POST request
+    fetch('http://localhost/api/manageuser/updateUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+    })
         .then(response => {
             if (response.ok) {
                 alert('User information updated successfully!');
                 loadData();
-               // Reset the table to its original state
+                // Reset the table to its original state
                 resetTable()
             } else {
                 // Handle error response
@@ -206,7 +205,7 @@ fetch('http://localhost/api/manageuser/updateUser', {
             console.error('Error updating user information:', error);
             alert('An error occurred while updating user information.');
         });
-    }
+}
 
 // Function to reset the table to its original state
 function resetTable() {
@@ -225,7 +224,7 @@ function resetTable() {
         editButton.classList.add('btn', 'btn-secondary', 'edit-button');
         editButton.style.cssText = '--bs-btn-padding-y: .75rem; --bs-btn-padding-x: .75rem; --bs-btn-font-size: 1rem; margin-right: 5px; border-radius: 10px;';
         editButton.innerHTML = '<i class="fas fa-edit"></i>';
-        
+
         const deleteButton = document.createElement('button');
         deleteButton.setAttribute('type', 'button');
         deleteButton.classList.add('btn', 'btn-danger', 'delete-button');
@@ -253,7 +252,7 @@ function resetTable() {
 }
 
 /////////////////////////Delete user /////////////////////////////
- // Function to handle delete button click
+// Function to handle delete button click
 document.addEventListener('DOMContentLoaded', () => {
     // Step 1: Select all delete buttons
     const deleteButtons = document.querySelectorAll('.delete-button');
@@ -263,9 +262,8 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', handleDeleteButtonClick);
     });
 
-  
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const deleteButton = event.target.closest('.delete-button');
 
         if (deleteButton) {
@@ -276,13 +274,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Step 3: Define the event handler for delete button click
 function handleDeleteButtonClick(event) {
-    
+
 
     // Step 4: Extract user ID from the clicked row
     const row = event.target.closest('tr'); // Find the closest row element
-    const idCell = row.querySelector('.id-column'); 
+    const idCell = row.querySelector('.id-column');
     const id = idCell.textContent; // Get the user ID from the cell content
-    
+
     // Extract username and userRole
     const usernameCell = row.querySelector('.username-column');
     const username = usernameCell.textContent;
@@ -306,20 +304,20 @@ function handleDeleteButtonClick(event) {
         body: JSON.stringify(deletedUser)
 
     })
-    .then(response => {
-        //console.log(updatedUser);
-        if (response.ok) {
-            // console.log("User ID:", id)
-            alert('User deleted successfully!');
-            loadData();
-        } else {
-            alert('Failed to delete user. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error deleting user:', error);
-        alert('An error occurred while deleting user.');
-    });
+        .then(response => {
+            //console.log(updatedUser);
+            if (response.ok) {
+                // console.log("User ID:", id)
+                alert('User deleted successfully!');
+                loadData();
+            } else {
+                alert('Failed to delete user. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting user:', error);
+            alert('An error occurred while deleting user.');
+        });
 }
 
 /////////////////////////Create user /////////////////////////////
@@ -327,10 +325,10 @@ function handleDeleteButtonClick(event) {
 function AddUser() {
 
     const userList = document.getElementById('userList');
-     const idHeader = document.querySelector('.id-column');
-     const usernameHeader = document.querySelector('.userName-column');
-     idHeader.innerHTML = 'Username';
-     usernameHeader.innerHTML = 'Password';
+    const idHeader = document.querySelector('.id-column');
+    const usernameHeader = document.querySelector('.userName-column');
+    idHeader.innerHTML = 'Username';
+    usernameHeader.innerHTML = 'Password';
     userList.innerHTML = '';
 
     // Display form fields for adding a new user
@@ -352,15 +350,16 @@ function AddUser() {
         </button>
             </td>
         </tr>
-    `;    
+    `;
     userList.innerHTML = addUserForm;
 
     const registrationDateHeader = document.querySelector('.registrationDate-column');
     if (registrationDateHeader) {
         registrationDateHeader.textContent = 'Action';
     }
-   
+
 }
+
 function saveNewUser() {
     // Get the input values
     const newUsername = document.getElementById('newUsername').value;
@@ -388,22 +387,21 @@ function saveNewUser() {
         },
         body: JSON.stringify(newUser)
     })
-    .then(response => {
-        if (response.ok) {
-            alert('User created successfully!');
-            loadData(); // Reload the user data
-            restoreHeaders();
+        .then(response => {
+            if (response.ok) {
+                alert('User created successfully!');
+                loadData(); // Reload the user data
+                restoreHeaders();
 
-        } else {
-            alert('Failed to create user. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error creating user:', error);
-        alert('An error occurred while creating user.');
-    });
+            } else {
+                alert('Failed to create user. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error creating user:', error);
+            alert('An error occurred while creating user.');
+        });
 }
-
 
 
 // event listener to the "Save" button for adding a new user
@@ -414,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-  
+
 function restoreHeaders() {
     const idHeader = document.querySelector('.id-column');
     const usernameHeader = document.querySelector('.userName-column');

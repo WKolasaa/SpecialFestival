@@ -17,14 +17,16 @@ include 'head.php';
             </button>
 
             <!-- Offcanvas Menu, now aligned to end -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        
+
                         <!-- Additional navigation links with PHP condition for ADMINISTRATOR -->
                         <?php if (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "ADMINISTRATOR"): ?>
                             <!-- Admin navigation -->
@@ -46,10 +48,10 @@ include 'head.php';
                             <li class="nav-item">
                                 <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
-                            <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
+                        <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
                             <!-- Employee navigation -->
                             <li class="nav-item active">
-                            <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
                             </li>
 
                         <?php else: ?>
@@ -99,7 +101,8 @@ include 'head.php';
                         <?php endif; ?>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user"></i>
                             </a>

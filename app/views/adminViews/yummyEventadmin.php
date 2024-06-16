@@ -1,5 +1,5 @@
 <?php
-    include __DIR__ . '/../header.php';
+include __DIR__ . '/../header.php';
 ?>
 
 
@@ -12,7 +12,6 @@
         <a href="#" onclick="showImages()">Images</a>
         <a href="#" onclick="showReservations()">Reservations</a>
     </div>
-
 
 
     <div class="container mt-5">
@@ -28,7 +27,7 @@
 
         </div>
 
-<!--    Sessions-->
+        <!--    Sessions-->
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
@@ -36,16 +35,17 @@
                         <h2 class="text-center">Sessions</h2>
                         <div class="form-group">
                             <label for="restaurantList">Select Restaurant:</label>
-                            <select name="restaurantList" id="restaurantList" class="form-control" onchange="fetchRestaurantSessions(this.value)" required>
+                            <select name="restaurantList" id="restaurantList" class="form-control"
+                                    onchange="fetchRestaurantSessions(this.value)" required>
                                 <option value="0">Select Restaurant</option>
                                 <?php
-                                    foreach ($restaurants as $restaurant) {
-                                        ?>
-                                        <option value="<?php echo htmlspecialchars($restaurant->getId()); ?>">
-                                            <?php echo htmlspecialchars($restaurant->getName()); ?>
-                                        </option>
-                                        <?php
-                                    }
+                                foreach ($restaurants as $restaurant) {
+                                    ?>
+                                    <option value="<?php echo htmlspecialchars($restaurant->getId()); ?>">
+                                        <?php echo htmlspecialchars($restaurant->getName()); ?>
+                                    </option>
+                                    <?php
+                                }
                                 ?>
                             </select>
                         </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-<!--    Images-->
+        <!--    Images-->
         <div id="imagesContainer" style="display: none">
             <div class="container mt-5">
                 <div class="card text-center">
@@ -66,7 +66,8 @@
                         <form>
                             <div class="form-group">
                                 <label for="restaurantImages"><strong>Select Restaurant:</strong></label>
-                                <select id="restaurantImages" name="restaurantImages" class="form-control" onchange="displayImages(this.value)">
+                                <select id="restaurantImages" name="restaurantImages" class="form-control"
+                                        onchange="displayImages(this.value)">
                                     <?php
                                     foreach ($restaurants as $restaurant) {
                                         echo '<option value="' . $restaurant->getId() . '">' . $restaurant->getName() . '</option>';
@@ -81,7 +82,8 @@
 
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-success" onclick="updateImages()">Update Images</button>
+                            <button type="button" class="btn btn-success" onclick="updateImages()">Update Images
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -89,7 +91,7 @@
         </div>
 
 
-<!--    Reservations-->
+        <!--    Reservations-->
         <div id="reservationsContainer" style="Display: none">
 
         </div>
@@ -98,10 +100,10 @@
 
         </div>
 
-</div>
+    </div>
 
 
-<?php
+    <?php
     include __DIR__ . '/../footer.php';
-?>
+    ?>
 

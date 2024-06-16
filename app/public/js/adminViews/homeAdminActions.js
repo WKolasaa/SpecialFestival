@@ -1,4 +1,3 @@
-
 function editEntry(id) {
     let entryRow = document.getElementById('entry-' + id);
     let entryType = entryRow.getAttribute('data-entry-type');
@@ -115,7 +114,6 @@ function editEntry(id) {
 }
 
 
-
 function deleteEntry(id) {
     fetch(`/api/homeadmin/delete?id=${id}`)
         .then(() => document.getElementById(`entry-${id}`).remove())
@@ -125,7 +123,7 @@ function deleteEntry(id) {
         })
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var entryTypeSelect = document.getElementById('entryTypeSelect');
     var contentInput = document.getElementById('contentInput');
     var imageInput = document.getElementById('imageInput');
@@ -143,17 +141,17 @@ document.addEventListener('DOMContentLoaded', function() {
             imageInput.style.display = ''; // Show image input  
         }
     }
-    
+
     // Initial check to set the correct state when the page loads
     toggleInputFields();
 
     // Event listener for when the entry type changes
-    entryTypeSelect.addEventListener('change', function() {
+    entryTypeSelect.addEventListener('change', function () {
         toggleInputFields();
     });
 });
 
-document.getElementById('imageInput').addEventListener('change', function() {
+document.getElementById('imageInput').addEventListener('change', function () {
     var fileInput = this;
     var contentInput = document.getElementById('contentInput');
 

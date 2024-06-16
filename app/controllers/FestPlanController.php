@@ -4,17 +4,9 @@ namespace App\Controllers;
 
 use App\Models\UserTicket;
 use App\Services\EmailService;
+use App\Services\OrderService;
 use App\Services\TicketService;
 use App\Services\UserTicketService;
-use App\Services\OrderService;
-use Stripe\Checkout\Session;
-use Stripe\Customer;
-use Stripe\Exception\ApiErrorException;
-use Stripe\Invoice;
-use Stripe\InvoiceItem;
-use Stripe\Price;
-use Stripe\Product;
-use Stripe\Stripe;
 use Stripe\StripeClient;
 
 class FestPlanController
@@ -24,7 +16,7 @@ class FestPlanController
     private TicketService $ticketService;
     private OrderService $orderService;
     private EmailService $emailService;
-    private String $serverUrl;
+    private string $serverUrl;
     private int $userId;
 
     public function __construct()
@@ -56,7 +48,7 @@ class FestPlanController
     public function checkoutSuccess(): void
     {
         $items = $this->stripe->checkout->sessions->allLineItems(
-            $_GET['session_id'], ['expand' => ['data.price.product']] );
+            $_GET['session_id'], ['expand' => ['data.price.product']]);
 
         $tickets = [];
 

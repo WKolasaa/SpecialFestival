@@ -4,8 +4,8 @@ namespace App\Models;
 
 class QrCode
 {
-   private $user_ticket_Id;
-   private $scan;
+    private $user_ticket_Id;
+    private $scan;
 
     public function __construct($user_ticket_Id, $scan)
     {
@@ -17,9 +17,10 @@ class QrCode
     {
         return $this->user_ticket_Id;
     }
+
     public function getScan()
     {
         return $this->scan;
-    } 
+    }
 
 }

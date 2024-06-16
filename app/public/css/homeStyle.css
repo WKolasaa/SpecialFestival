@@ -7,77 +7,80 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Open+Sans', sans-serif;
-  color: white ;
+    font-family: 'Open+Sans', sans-serif;
+    color: white;
 }
 
 .header-image {
-  width: 100%;
+    width: 100%;
 }
+
 .festival-intro {
-  background-color: #FFD756; 
-  font-family: 'Almarai', sans-serif; 
-  padding: 2rem;
+    background-color: #FFD756;
+    font-family: 'Almarai', sans-serif;
+    padding: 2rem;
 }
+
 .festival-intro h1 {
-  font-weight: bold;  
-  font-size: 2rem;
-  color: #13238C;
-  text-align: center;
-  /* padding-top: 1rem; */
+    font-weight: bold;
+    font-size: 2rem;
+    color: #13238C;
+    text-align: center;
+    /* padding-top: 1rem; */
 }
 
 .festival-intro p {
-  text-align: center;
-  color: #13238C;
-  line-height: 1.6;
-  padding: 0 1rem;
+    text-align: center;
+    color: #13238C;
+    line-height: 1.6;
+    padding: 0 1rem;
 }
 
 .event-highlights {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 348px)); /* Setting maximum width of the columns */
-  justify-content: center; /* Centering the grid */
-  gap: 1rem;
-  padding: 1rem;
-  margin: 0 auto; /* Centering the container */
-  max-width: 740px; /* Maximum width of the container with the gap included */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 348px)); /* Setting maximum width of the columns */
+    justify-content: center; /* Centering the grid */
+    gap: 1rem;
+    padding: 1rem;
+    margin: 0 auto; /* Centering the container */
+    max-width: 740px; /* Maximum width of the container with the gap included */
 }
 
 .event {
-  position: relative;
-  text-align: center;
-  overflow: hidden; /* Ensure that the scaled image does not overflow the container */
-  margin: 0 auto;
-  max-width: 348px;
-  transition: transform 0.3s ease; /* Smooth transition for scaling */
+    position: relative;
+    text-align: center;
+    overflow: hidden; /* Ensure that the scaled image does not overflow the container */
+    margin: 0 auto;
+    max-width: 348px;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
 }
 
 .event:hover {
-  transform: scale(1.05); /* Slightly scale up the event container on hover */
+    transform: scale(1.05); /* Slightly scale up the event container on hover */
 }
+
 .event-image {
-  width: 348px;
-  height: 231.5px;
-  object-fit: cover;
-  border-radius: 0.25rem;
-  margin-bottom: 0.5rem;
-  transition: transform 0.3s ease; /* Smooth transition for the image */
+    width: 348px;
+    height: 231.5px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease; /* Smooth transition for the image */
 }
 
 .event-title {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-  width: calc(100% - 2rem);
-  box-sizing: border-box;
-  transition: background-color 0.3s ease; /* Smooth transition for the background */
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    width: calc(100% - 2rem);
+    box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Smooth transition for the background */
 }
 
 /* Less transparent background on hover */
@@ -86,12 +89,12 @@ body {
 } */
 
 @media (max-width: 768px) {
-  .event-highlights {
-    grid-template-columns: 1fr; /* Single column for smaller screens */
-  }
+    .event-highlights {
+        grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
 
-  .event-image {
-    width: 100%; /* Full width on smaller screens */
-    height: auto; /* Adjust height automatically */
-  }
+    .event-image {
+        width: 100%; /* Full width on smaller screens */
+        height: auto; /* Adjust height automatically */
+    }
 }

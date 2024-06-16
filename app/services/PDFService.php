@@ -7,7 +7,8 @@ use Dompdf\Options;
 
 class PDFService
 {
-    public function generatePDF($ticket){ //TODO: Change the HTML for this
+    public function generatePDF($ticket)
+    { //TODO: Change the HTML for this
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
@@ -56,15 +57,15 @@ class PDFService
             </head>
             <body>
                 <div class="ticket-header">
-                    <h2>Ticket for '. htmlspecialchars($ticket->getTicketName()) .'</h2>
+                    <h2>Ticket for ' . htmlspecialchars($ticket->getTicketName()) . '</h2>
                 </div>
-                <img src="'. htmlspecialchars($image) .'" alt="Ticket Image" class="ticket-img">
+                <img src="' . htmlspecialchars($image) . '" alt="Ticket Image" class="ticket-img">
                 <div class="customer-info">
                     <p>Customer name: <b>' . htmlspecialchars($_SESSION['user']->getFirstName()) . ' ' . htmlspecialchars($_SESSION['user']->getLastName()) . '</b></p>
                 </div>
                 <div class="date-info">
-                    <p>Start Date: <b>'. htmlspecialchars($ticket->getStartDate()->format('Y-m-d')) .'</b></p>
-                    <p>Start Time: <b>' . htmlspecialchars($ticket->getStartDate()->format('H:i:s')) .'</b></p>
+                    <p>Start Date: <b>' . htmlspecialchars($ticket->getStartDate()->format('Y-m-d')) . '</b></p>
+                    <p>Start Time: <b>' . htmlspecialchars($ticket->getStartDate()->format('H:i:s')) . '</b></p>
                 </div>
             </body>
             </html>

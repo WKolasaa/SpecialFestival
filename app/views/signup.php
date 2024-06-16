@@ -2,9 +2,9 @@
 include __DIR__ . '/header.php';
 require __DIR__ . '/../config/captchaconfig.php';
 
-if(isset($_SESSION['user'])){ //checking of the user logged in or not
+if (isset($_SESSION['user'])) { //checking of the user logged in or not
     $user = $_SESSION['user'];
-}else{
+} else {
     $user = null;
 }
 // var_dump($user);
@@ -22,8 +22,8 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                     <div id="message" class="alert alert-light"></div>
                     <form id="signupForm" action=/signup/captcha method="POST">
                         <div class="form-group">
-                        <input type="hidden" id="userId" name="id">
-                        <input type="hidden" id="userRole" name="userRole">
+                            <input type="hidden" id="userId" name="id">
+                            <input type="hidden" id="userRole" name="userRole">
                             <label for="userName">Username:</label>
                             <input type="text" class="form-control" id="userName" name="userName" required>
                         </div>
@@ -56,7 +56,8 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                         <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
                         <button class="btn btn-primary" type="submit" id="submitButton">
-                        Submit </button>
+                            Submit
+                        </button>
                         <?php
                         if ($user) {
                             // If the user is logged in, load the user.js file
@@ -87,6 +88,6 @@ if (isset($_SESSION['error'])) {
 
 
 <?php
-    include __DIR__ . '/footer.php';
+include __DIR__ . '/footer.php';
 ?>
 

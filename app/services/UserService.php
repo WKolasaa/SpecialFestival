@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Services;
 
-use App\Repositories\UserRepository;
 use App\Models\User;
+use App\Repositories\UserRepository;
+use Exception;
 
 class UserService
 {
@@ -20,10 +22,10 @@ class UserService
     }
 
 
-    public function addUser($userName, $firstName, $lastName, $email, $password, $photo,$phoneNumber)
+    public function addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber)
     {
         $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo,$phoneNumber);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo, $phoneNumber);
     }
 
     public function loginByEmail($email, $password)
@@ -66,107 +68,16 @@ class UserService
                 $user->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
             }
             return $this->userRepository->updateUser($user);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Handle the exception (log, show an error message, etc.)
-            throw new \Exception('Error updating user information: ' . $e->getMessage());
+            throw new Exception('Error updating user information: ' . $e->getMessage());
         }
 
-    }
-
-    public function deleteUser($userId)
-    {
-        try {
-            return $this->userRepository->deleteUser($userId);
-        } catch (\Exception $e) {
-            // Handle the exception (log, show an error message, etc.)
-            throw new \Exception('Error deleting user information: ' . $e->getMessage());
-        }
-    }
-
-
-    ///////////////////////////ADMIN////////////////////////
-
-    public function updateUserByAdmin(array $userData)
-    {
-        try {
-            $user = $this->convertArrayToUserByAdminSide($userData);
-
-            $this->userRepository->updateUserByAdmin($user);
-
-
-        } catch (\Exception $e) {
-            // Handle the exception (log, show an error message, etc.)
-            throw new \Exception('Error updating user information: ' . $e->getMessage());
-        }
-    }
-
-    public function deleteUserByAdmin(array $userData)
-    {
-        try {
-            // var_dump($userData);
-            $user = $this->convertArrayToUserByAdminSide($userData);
-
-            // Now you can pass $user to the repository layer for updating
-            $this->userRepository->deleteUserByAdmin($user);
-
-
-        } catch (\Exception $e) {
-            // Handle the exception (log, show an error message, etc.)
-            throw new \Exception('Error deleting user information: ' . $e->getMessage());
-        }
-    }
-
-    public function createUserByAdmin(array $userData)
-    {
-        try {
-            $user = $this->convertArrayToUserByAdminSide($userData);
-            // var_dump($user);
-            $hashpassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-            $user->setPassword($hashpassword);
-            $this->userRepository->createUserByAdmin($user);
-        } catch (\Exception $e) {
-            // Handle the exception (log, show an error message, etc.)
-            throw new \Exception('Error creating user: ' . $e->getMessage());
-        }
-    }
-
-
-    private function convertArrayToUserByAdminSide(array $userData): User
-    {
-        $requiredKeys = ['username', 'userRole'];
-        foreach ($requiredKeys as $key) {
-            if (!array_key_exists($key, $userData)) {
-                throw new \Exception("Missing key in user data: $key");
-            }
-        }
-        // Check if password is provided
-        $password = isset($userData['password']) ? $userData['password'] : null;
-        $id = isset($userData['id']) ? $userData['id'] : null;
-        //add the registration date
-        $firstName = isset($userData['firstName']) ? $userData['firstName'] : null;
-        $lastName = isset($userData['lastName']) ? $userData['lastName'] : null;
-        $email = isset($userData['email']) ? $userData['email'] : null;
-        $photo = isset($userData['photo']) ? $userData['photo'] : null;
-        $phoneNumber= isset($userData['phoneNumber']) ? $userData['phoneNumber'] : null;
-
-        $user = new User(
-            $id,
-            $userData['username'],
-            $password, // Password is not being updated, so set it to null
-            $userData['userRole'],
-            null, // Registration date is not being updated, so set it to null
-            $userData['firstName'],
-            $userData['lastName'],
-            $userData['email'],
-            $userData['photo'],
-            $userData['phoneNumber']
-        );
-        return $user;
     }
 
     private function convertArrayToUser(array $userInfo): User
     {
-        $requiredKeys = ['id', 'userName', 'password', 'firstName', 'lastName', 'email','phoneNumber'];
+        $requiredKeys = ['id', 'userName', 'password', 'firstName', 'lastName', 'email', 'phoneNumber'];
         $id = isset($userInfo['id']) ? $userInfo['id'] : null;
         $userRole = isset($userInfo['userRole']) ? $userInfo['userRole'] : null;
         $photo = isset($userInfo['photo']) ? $userInfo['photo'] : null;
@@ -174,7 +85,7 @@ class UserService
 
         foreach ($requiredKeys as $key) {
             if (!array_key_exists($key, $userInfo)) {
-                throw new \Exception("Missing key in user data: $key");
+                throw new Exception("Missing key in user data: $key");
             }
         }
         $user = new User(
@@ -191,6 +102,96 @@ class UserService
         );
         return $user;
 
+    }
+
+
+    ///////////////////////////ADMIN////////////////////////
+
+    public function deleteUser($userId)
+    {
+        try {
+            return $this->userRepository->deleteUser($userId);
+        } catch (Exception $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new Exception('Error deleting user information: ' . $e->getMessage());
+        }
+    }
+
+    public function updateUserByAdmin(array $userData)
+    {
+        try {
+            $user = $this->convertArrayToUserByAdminSide($userData);
+
+            $this->userRepository->updateUserByAdmin($user);
+
+
+        } catch (Exception $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new Exception('Error updating user information: ' . $e->getMessage());
+        }
+    }
+
+    private function convertArrayToUserByAdminSide(array $userData): User
+    {
+        $requiredKeys = ['username', 'userRole'];
+        foreach ($requiredKeys as $key) {
+            if (!array_key_exists($key, $userData)) {
+                throw new Exception("Missing key in user data: $key");
+            }
+        }
+        // Check if password is provided
+        $password = isset($userData['password']) ? $userData['password'] : null;
+        $id = isset($userData['id']) ? $userData['id'] : null;
+        //add the registration date
+        $firstName = isset($userData['firstName']) ? $userData['firstName'] : null;
+        $lastName = isset($userData['lastName']) ? $userData['lastName'] : null;
+        $email = isset($userData['email']) ? $userData['email'] : null;
+        $photo = isset($userData['photo']) ? $userData['photo'] : null;
+        $phoneNumber = isset($userData['phoneNumber']) ? $userData['phoneNumber'] : null;
+
+        $user = new User(
+            $id,
+            $userData['username'],
+            $password, // Password is not being updated, so set it to null
+            $userData['userRole'],
+            null, // Registration date is not being updated, so set it to null
+            $userData['firstName'],
+            $userData['lastName'],
+            $userData['email'],
+            $userData['photo'],
+            $userData['phoneNumber']
+        );
+        return $user;
+    }
+
+    public function deleteUserByAdmin(array $userData)
+    {
+        try {
+            // var_dump($userData);
+            $user = $this->convertArrayToUserByAdminSide($userData);
+
+            // Now you can pass $user to the repository layer for updating
+            $this->userRepository->deleteUserByAdmin($user);
+
+
+        } catch (Exception $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new Exception('Error deleting user information: ' . $e->getMessage());
+        }
+    }
+
+    public function createUserByAdmin(array $userData)
+    {
+        try {
+            $user = $this->convertArrayToUserByAdminSide($userData);
+            // var_dump($user);
+            $hashpassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+            $user->setPassword($hashpassword);
+            $this->userRepository->createUserByAdmin($user);
+        } catch (Exception $e) {
+            // Handle the exception (log, show an error message, etc.)
+            throw new Exception('Error creating user: ' . $e->getMessage());
+        }
     }
 
     public function updatePassword($password, $email)

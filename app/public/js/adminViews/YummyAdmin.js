@@ -823,7 +823,7 @@ function removeReservation(id) { //TODO: Finish this method
     }
 }
 
-function createAddReservationForm(){
+function createAddReservationForm() {
     hideAll();
     document.getElementById('addReservationContainer').style.display = "block";
     document.getElementById('addReservationContainer').innerHTML = `

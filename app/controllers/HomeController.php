@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Services\HomeContentService;
 
-class HomeController{
+class HomeController
+{
     private HomeContentService $service;
 
-    public function __construct(){
+    public function __construct()
+    {
 
-        $this->service=new HomeContentService();
+        $this->service = new HomeContentService();
     }
 
     public function index()

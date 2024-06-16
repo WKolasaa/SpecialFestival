@@ -26,6 +26,11 @@ class TicketService
         return $this->ticketRepository->getTicketById($id);
     }
 
+    public function updateTicketAvailability(int $ticketId, int $amount)
+    {
+        $this->ticketRepository->updateTicketAvailability($ticketId, $amount);
+    }
+
     private function convertArrayToTicket(array $ticketData): Ticket //why this method not used?
     { //change the array to object
         $requiredKeys = ['event_name', 'ticket_Type', 'ticket_name', 'location', 'description', 'price', 'start_date', 'end_date'];
@@ -57,10 +62,6 @@ class TicketService
         );
         return $ticket;
 
-    }
-
-    public function updateTicketAvailability(int $ticketId, int $amount) {
-        $this->ticketRepository->updateTicketAvailability($ticketId, $amount);
     }
 
 }

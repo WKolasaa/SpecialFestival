@@ -49,13 +49,13 @@ document.getElementById('startButton').addEventListener('click', () => {
                 }
             })
         })
-    .catch((err) => {
-        console.error(err);
-        alert('Error initializing camera: ' + err.message);
-    })
+        .catch((err) => {
+            console.error(err);
+            alert('Error initializing camera: ' + err.message);
+        })
 });
 
-function displayTicketInformation(){
+function displayTicketInformation() {
     fetch('/api/employee/getTicketInformation', {
         method: 'GET',
         headers: {
@@ -80,7 +80,7 @@ function displayTicketInformation(){
         });
 }
 
-function populateForm(data){
+function populateForm(data) {
     const ticketInfoCard = document.getElementById('ticketInfoCard');
     ticketInfoCard.innerHTML = ''; // Clear existing content
     ticketInfoCard.classList.add('container'); // Add Bootstrap container class
