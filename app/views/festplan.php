@@ -1,4 +1,6 @@
-<?php include __DIR__ . '/header.php';
+<?php use App\Models\TicketType;
+
+include __DIR__ . '/header.php';
 $tokenIsSet = isset($_GET['token']);
 ?>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
@@ -65,12 +67,14 @@ $tokenIsSet = isset($_GET['token']);
                     <td><?= $userTicket->ticket->getTicketName() ?></td>
                     <td><?= $userTicket->ticket->getPrice() ?></td>
                     <td>
-                        <?php if (!$tokenIsSet): ?>
+                        <?php if (!$tokenIsSet && $userTicket->ticket->getTicketType() != TicketType::Yummy): ?>
                             <button class="btn btn-primary quantity-controls quantity-increase">+</button>
                         <?php endif; ?>
                         <span class="quantity"><?= $userTicket->quantity ?></span>
-                        <?php if (!$tokenIsSet): ?>
+                        <?php if (!$tokenIsSet && $userTicket->ticket->getTicketType() != TicketType::Yummy): ?>
                             <button class="btn btn-primary quantity-controls quantity-decrease">-</button>
+                        <?php endif; ?>
+                        <?php if (!$tokenIsSet): ?>
                             <button class="btn btn-danger delete-ticket">Delete</button>
                         <?php endif; ?>
                     </td>
