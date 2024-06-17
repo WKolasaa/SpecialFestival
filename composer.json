@@ -1,15 +1,5 @@
 {
-    "name": "abdelrahmanghonim/special-festival",
-    "autoload": {
-        "psr-4": {
-            "Abdelrahmanghonim\\SpecialFestival\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Abdelrahman Ghonim",
-            "email": "bodyghonim345@gmail.com"
-        }
-    ],
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^2.1"
+    }
 }

@@ -46,6 +46,12 @@ include 'head.php';
                             <li class="nav-item">
                                 <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
+                            <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
+                            <!-- Employee navigation -->
+                            <li class="nav-item active">
+                            <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
+                            </li>
+
                         <?php else: ?>
                             <!-- Regular navigation -->
                             <li class="nav-item active">
@@ -115,8 +121,3 @@ include 'head.php';
         </div>
     </div>
 </nav>
-
-<!-- Bootstrap Bundle with Popper -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

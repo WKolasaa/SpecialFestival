@@ -1,18 +1,21 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Services\HistoryAdminService;
 use App\Models\HistoryEntryTypeEnum;
 use Exception;
 
-class HistoryAdminController{
+class HistoryAdminController
+{
   private $historyAdminService;
 
-  public function __construct(){
+  public function __construct()
+  {
     $this->historyAdminService = new HistoryAdminService();
   }
 
-  
+
   public function index()
   {
     $entries = $this->historyAdminService->getAll();

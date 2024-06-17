@@ -1,5 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_NONE)
+if (session_status() === PHP_SESSION_NONE)
 {
     session_start();
 }
@@ -12,13 +12,15 @@ if (session_status() == PHP_SESSION_NONE)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haarlem Festival</title>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <!-- Toastify CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <link rel="stylesheet" href="/css/festival.css">
 
     <?php
-    $currentPage = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    $currentPage = trim($_SERVER["REQUEST_URI"], '/');
-    // echo $currentPage;
+    $currentPage = explode('?', $_SERVER["REQUEST_URI"], 2)[0];
+    $currentPage = trim($currentPage, '/');
     
     // loadTime is way faster
     if (!str_starts_with($currentPage, 'api/')) {
@@ -66,9 +68,10 @@ if (session_status() == PHP_SESSION_NONE)
             case 'DanceEvent/artist':
                 $cssFile = 'Dance/artist.css';
                 break;
-            case 'YummyMain':
-                $cssFile = 'YummyMain.css';
-                break;
+                case 'yummy':
+                    case 'restaurants':
+                        $cssFile = 'YummyMain.css';
+                        break;
             case 'AdminView/yummy':
                 $cssFile = 'admin/danceAdminEvent.css';
                 break;

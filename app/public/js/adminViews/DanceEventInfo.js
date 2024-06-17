@@ -166,6 +166,64 @@ document
     loadOverviews();
   });
 
+
+
+  function validateAgendaForm() {
+    const venue = document.getElementById('new-event-venueAddress').value;
+    const ticketsAvailable = document.getElementById('new-event-ticketsAvailable').value;
+    const time = document.getElementById('new-event-time').value;
+    const duration = document.getElementById('new-event-duration').value;
+    const price = document.getElementById('new-event-ticketPrice').value;
+  
+    if (typeof venue !== 'string' || venue.trim() === '') {
+      alert('Venue must be a string and cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(ticketsAvailable) || ticketsAvailable <= 0) {
+      alert('Tickets Available must be a positive number');
+      return false;
+    }
+  
+    if (time === '') {
+      alert('Time cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(duration) || duration <= 0) {
+      alert('Duration must be a positive number');
+      return false;
+    }
+  
+    if (isNaN(price) || price <= 0) {
+      alert('Price must be a positive number');
+      return false;
+    }
+  
+    // Add more validations as needed
+  
+    return true;
+  }
+  
+  function validateSessionForm() {
+    const sessionType = document.getElementById('new-ticket-sessionType').value;
+    const price = document.getElementById('new-ticket-price').value;
+  
+    if (typeof sessionType !== 'string' || sessionType.trim() === '') {
+      alert('Session Type must be a string and cannot be empty');
+      return false;
+    }
+  
+    if (isNaN(price) || price <= 0) {
+      alert('Price must be a positive number');
+      return false;
+    }
+  
+    // Add more validations as needed
+  
+    return true;
+  }
+
 //////////////////////fetch data///////////////////////
 
 let allArtists = [];
@@ -297,21 +355,34 @@ function displayArtists(artists) {
     const artistDate = document.createElement("select");
     artistDate.id = `artist-date-${artist.artistId}`;
 
-    const dates = ["2024-07-26", "2024-07-27", "2024-07-28"];
-    dates.forEach((date) => {
-      const option = document.createElement("option");
-      option.value = date;
+    // const dates = ["2024-07-26", "2024-07-27", "2024-07-28"]; //TODO: once you finished testing remove this comments
+    // dates.forEach((date) => {
+    //   const option = document.createElement("option");
+    //   option.value = date;
       
-      const [year, month, day] = date.split("-");
-      option.text = `${day}-${month}-${year}`;
+    //   const [year, month, day] = date.split("-");
+    //   option.text = `${day}-${month}-${year}`;
 
-      if (date === artist.participationDate) {
-        option.selected = true;
-      }
-      artistDate.appendChild(option);
-    });
+    //   if (date === artist.participationDate) {
+    //     option.selected = true;
+    //   }
+    //   artistDate.appendChild(option);
+    // });
+    // artistDateLabel.appendChild(artistDate);
+
+ // Fetch options from the HTML select element
+    const selectElement = document.getElementById('new-artist-date');
+    const options = selectElement.innerHTML;
+    artistDate.innerHTML = options;
+
+    // Set the selected option based on artist's participationDate
+    artistDate.value = artist.participationDate;
 
     artistDateLabel.appendChild(artistDate);
+
+    // Add artistCard to artistContainer
+    artistContainer.appendChild(artistCard);
+
 
     const saveButton = document.createElement("button");
     saveButton.className = "btn btn-success buttons";
@@ -500,6 +571,7 @@ function displayAgenda(agendas) {
   const agendaContainer = document.getElementById("agenda-container");
   agendaContainer.innerHTML = ""; // Clear existing content
   agendaContainer.classList.add("container"); // Add Bootstrap container class
+  const dateSelectHTML = document.getElementById('new-event-date').innerHTML;
 
   const heading = document.createElement("h2");
   heading.textContent = "Agendas"; // Set the heading text
@@ -526,18 +598,11 @@ function displayAgenda(agendas) {
           <option value="Sunday" ${
             agenda.eventDay === "Sunday" ? "selected" : ""
           }>Sunday</option>
-        </select>
-          Date: <select id="agenda-date-${agenda.agendaId}">
-          <option value="2024-07-26" ${
-            agenda.eventDate === "2024-07-26" ? "selected" : ""
-          }>26-07-2024</option>
-          <option value="2024-07-27" ${
-            agenda.eventDate === "2024-07-27" ? "selected" : ""
-          }>27-07-2024</option>
-          <option value="2024-07-28" ${
-            agenda.eventDate === "2024-07-28" ? "selected" : ""
-          }>28-07-2024</option>
-        </select>
+         </select>
+         Date: <select id="agenda-date-${agenda.agendaId}">         //TODO: Test the dates very well
+         ${dateSelectHTML}
+       </select>
+
           Time: <span contenteditable="true" id="agenda-time-${
             agenda.agendaId
           }">${agenda.eventTime}</span>
@@ -715,6 +780,8 @@ function displayTickets(tickets) {
   const ticketContainer = document.getElementById("tickets-container");
   ticketContainer.innerHTML = ""; 
   ticketContainer.classList.add("container"); 
+  const dateTicketSelectHTML = document.getElementById('new-ticket-sessionDate').innerHTML;
+
 
   const heading = document.createElement("h2");
   heading.textContent = "Sessions"; 
@@ -738,16 +805,8 @@ function displayTickets(tickets) {
             ticket.sessionId
           }" value="${ticket.endSession}">
           Date: <select id="ticket-date-${ticket.sessionId}">
-                  <option value="2024-07-26" ${
-                    ticket.sessionDate === "2024-07-26" ? "selected" : ""
-                  }>26-07-2024</option>
-                  <option value="2024-07-27" ${
-                    ticket.sessionDate === "2024-07-27" ? "selected" : ""
-                  }>27-07-2024</option>
-                  <option value="2024-07-28" ${
-                    ticket.sessionDate === "2024-07-28" ? "selected" : ""
-                  }>28-07-2024</option>
-                </select>
+         ${dateTicketSelectHTML}
+       </select>
           Venue: <span contenteditable="true" id="ticket-venue-${
             ticket.sessionId
           }">${ticket.venue}</span>

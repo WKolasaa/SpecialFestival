@@ -84,16 +84,12 @@ class UserService
     }
 
 
-
-
-
     ///////////////////////////ADMIN////////////////////////
 
     public function updateUserByAdmin(array $userData)
     {
         try {
             $user = $this->convertArrayToUserByAdminSide($userData);
-            //    echo "user data converted successfully". $user;
 
             $this->userRepository->updateUserByAdmin($user);
 
@@ -109,8 +105,6 @@ class UserService
         try {
             // var_dump($userData);
             $user = $this->convertArrayToUserByAdminSide($userData);
-            var_dump($user);
-            echo $user->getId() . "TEsting the user id";
 
             // Now you can pass $user to the repository layer for updating
             $this->userRepository->deleteUserByAdmin($user);
@@ -172,7 +166,6 @@ class UserService
 
     private function convertArrayToUser(array $userInfo): User
     {
-        // var_dump($userInfo);
         $requiredKeys = ['id', 'userName', 'password', 'firstName', 'lastName', 'email','phoneNumber'];
         $id = isset($userInfo['id']) ? $userInfo['id'] : null;
         $userRole = isset($userInfo['userRole']) ? $userInfo['userRole'] : null;

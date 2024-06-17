@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 
 use App\Services\UserService;
+use Resend\Email;
 
 class LoginController
 {
@@ -37,7 +38,15 @@ class LoginController
             session_start();
             $_SESSION['user'] = $user;
             $_SESSION['userId'] = $user->getId();
-            header('Location: /');
+            $_SESSION['Email'] = $user->getEmail();
+            $_SESSION['role'] = $user->getUserRole();
+            if ($_SESSION['role'] == "ADMINISTRATOR") {
+                header('Location: /AdminView');
+            } else if ($_SESSION['role'] == "EMPLOYEE") {
+                header('Location: /employee');
+            } else {
+                header('Location: /');
+            }
         } else {
             echo "Wrong username or password";
             var_dump($user);

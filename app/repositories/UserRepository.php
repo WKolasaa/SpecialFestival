@@ -61,7 +61,6 @@ class UserRepository extends Repository
 
     public function deleteUserByAdmin(User $user)
     {
-        // var_dump($user);
         try {
             // Use a prepared statement to delete the user by username
             $stmt = $this->connection->prepare("DELETE FROM user WHERE id = :id");
@@ -164,6 +163,7 @@ class UserRepository extends Repository
         $statement->bindParam(':phoneNumber', $phoneNumber);
         try {
             $statement->execute();
+            
         } catch (\PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -197,7 +197,7 @@ class UserRepository extends Repository
         if (!$row) {
             return null;
         }
-        if (password_verify($password, $row['password'])) { //TODO: fix this thing here. its making the login not work properly
+        if (password_verify($password, $row['password'])) { 
             $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
             return $user;
         }
@@ -281,9 +281,6 @@ class UserRepository extends Repository
             $statement->execute($params);
             $rowCount = $statement->rowCount();
 
-            // Display the SQL query with actual values
-            // $queryWithValues = $this->interpolateQuery($sql, $params);
-            // echo "SQL query with values: " . $queryWithValues . "\n";
 
             if ($rowCount > 0) {
                 return $user;

@@ -21,8 +21,12 @@ class TicketService
         return $this->ticketRepository->getAllTickets();
     }
 
+    public function getTicketById(int $id): ?Ticket
+    {
+        return $this->ticketRepository->getTicketById($id);
+    }
 
-    private function convertArrayToTicket(array $ticketData): Ticket
+    private function convertArrayToTicket(array $ticketData): Ticket //why this method not used?
     { //change the array to object
         $requiredKeys = ['event_name', 'ticket_Type', 'ticket_name', 'location', 'description', 'price', 'start_date', 'end_date'];
         $id = isset($ticketData['id']) ? $ticketData['id'] : null;
@@ -48,39 +52,15 @@ class TicketService
             $description,
             $price,
             $start_date,
-            $end_date
+            $end_date,
+            20 // Joris, It should be a constant value or what? TODO: Check with Joris
         );
         return $ticket;
 
     }
 
-    public function getTicketById($id)
-    {
-        return $this->ticketRepository->getTicketById($id);
+    public function updateTicketAvailability(int $ticketId, int $amount) {
+        $this->ticketRepository->updateTicketAvailability($ticketId, $amount);
     }
 
 }
-
-/*
-  private function convertArrayToDanceOverview(array $danceOverviewData): DanceOverview
-  {
-    $requiredKeys = [ 'text'];
-    $id= isset($danceOverviewData['id']) ? $danceOverviewData['id'] : null;
-    $header= isset($danceOverviewData['header']) ? $danceOverviewData['header'] : null;
-    $subHeader= isset($danceOverviewData['subHeader']) ? $danceOverviewData['subHeader'] : null;
-    $imageName= isset($danceOverviewData['imageName']) ? $danceOverviewData['imageName'] : null;
-    foreach ($requiredKeys as $key) {
-      if (!array_key_exists($key, $danceOverviewData)) {
-        throw new \Exception("Missing key in dance overview data: $key");
-      }
-    }
-    $danceOverview = new DanceOverview(
-      $id,
-      $header,
-      $subHeader,
-      $danceOverviewData['text'],
-      $danceOverviewData['imageName']
-    );
-    return $danceOverview;
-  }
-*/ 

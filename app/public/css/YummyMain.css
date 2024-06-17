@@ -5,57 +5,55 @@
 .hero-section {
     background: url('/img/Yummy/YummyEvent.jpg') no-repeat center center;
     background-size: cover;
-    height: 50vh; /* Adjust the height as needed */
+    height: 50vh;
 
 }
   
 .hero-section .overlay {
-    /*background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for text contrast */
     padding: 100px;
 }
-  
-  /* Custom styles for your headings */
+
 .hero-section h1 {
-    font-size: 3rem; /* Adjust the size as needed */
+    font-size: 3rem;
     margin-bottom: 0.5rem;
     color: white;
 }
   
 .hero-section h2 {
-    font-size: 4rem; /* Adjust the size as needed */
+    font-size: 4rem;
     font-weight: bold;
-    color: white; /* Pick color to match the design */
+    color: white;
 }
 
 .header-section {
     position: relative;
     color: #fff;
-    padding: 40px; /* Example padding */
+    padding: 40px;
 }
 
 .header-content {
-    max-width: 1140px; /* Assuming Bootstrap's container max-width */
+    max-width: 1140px;
     margin: auto;
     color: #fff;
     text-align: center;
 }
 
 .date-range {
-    font-size: 8rem; /* Example font-size */
+    font-size: 8rem;
     font-weight: bold;
     color: rgba(117, 115, 115, 1);
     margin-bottom: 50px;
 }
 
 .header-content h1 {
-    font-size: 3rem; /* Larger font-size for the main title */
+    font-size: 3rem;
     font-weight: bold;
     color: #fff;
     margin-bottom: 25px;
 }
 
 .festival-description {
-    font-size: 1.25rem; /* Slightly larger font-size for description */
+    font-size: 1.25rem;
     margin-bottom: 20px;
     color: #fff;
 }
@@ -91,18 +89,17 @@
 }
 
 .card-title {
-    font-size: 1.5rem; /* Adjust size as needed */
+    font-size: 1.5rem;
 }
 
 .card-text {
-    font-size: 1rem; /* Adjust size as needed */
+    font-size: 1rem;
 }
 
 .checked {
     color: orange;
 }
 
-/* Custom star styling if you're not using a library like Font Awesome */
 .fa-star {
     display: inline-block;
     font-style: normal;
@@ -111,8 +108,6 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* Ensure to style the rest of the card and other elements as needed */
-
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     filter: invert(100%);
@@ -120,63 +115,62 @@
 }
 
 .carousel-item {
-    padding: 0px; /* Add padding if needed */
+    padding: 0px;
 }
 
 
 .btn-primary {
-    background-color: #521900; /* Customize the color */
-    border: none; /* Removes the default border */
+    background-color: #521900;
+    border: none;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-    background-color: #521900; /* Darker shade for hover state */
+    background-color: #521900;
 }
 
-/* contact form */
 .contact-section {
-    color: #fff; /* White text */
-    padding: 40px; /* Some padding */
+    color: #fff;
+    padding: 40px;
 }
 
 .contact-section h2 {
-    color: #fff; /* White text */
+    color: #fff;
     text-align: center;
     margin-bottom: 40px;
 }
 
 .contact-form .form-control {
-    background-color: #555; /* Lighter background for inputs */
+    background-color: #555;
     border: none;
-    color: #fff; /* White text */
+    color: #fff;
     margin-bottom: 20px;
 }
 
 .contact-form .form-control::placeholder {
-    color: #fff; /* White placeholder text */
+    color: #fff;
 }
 
 .contact-form .btn-send {
-    background-color: #521900; /* Orange background for the button */
+    background-color: #521900;
     border: none;
     padding: 10px 20px;
-    font-size: 1.2rem; /* Bigger font size */
-    border-radius: 20px; /* Rounded borders */
-    width: 100%; /* Full width */
-    cursor: pointer; /* Cursor pointer on hover */
+    font-size: 1.2rem;
+    border-radius: 20px;
+    width: 100%;
+    cursor: pointer;
 }
 
 .contact-form .btn-send:hover {
-    background-color: #521900; /* Slightly lighter orange on hover */
+    background-color: #521900;
 }
 
-/* restaurant card TODO: change that to different css file */
+/* restaurant card */
 .custom-border {
-    border-color: #521900; /* Custom color */
-    border-width: 2px; /* Custom width */
-    border-style: solid; /* Custom style */
+    border-color: #521900;
+    border-width: 2px;
+    border-style: solid;
 }
 
 .custom-border h2 {
@@ -188,8 +182,8 @@
 }
 
 .btn-reserve{
-    background-color: #521900; /* Custom color */
-    border: none; /* Removes the default border */
+    background-color: #521900;
+    border: none;
     color: white;
     margin-bottom: 10px;
     padding-right: 200px;
@@ -207,18 +201,61 @@
     color: white;
 }
 
-/*TEST*/
-
-/* Custom CSS for carousel control buttons */
 .carousel-control-prev,
 .carousel-control-next {
-    color: #FFFFFF; /* Set the color to white */
-    background-color: transparent; /* Set background color to transparent */
-    border: none; /* Remove border */
+    color: #FFFFFF;
+    background-color: transparent;
+    border: none;
 }
 
-/* Optionally, you can style the carousel indicators as well */
 .carousel-indicators .active {
-    background-color: #FFFFFF; /* Set background color of active indicator to white */
-    border-color: #FFFFFF; /* Set border color of active indicator to white */
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
 }
+
+.img-fluid-cover {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.full-height-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-details {
+    font-size: 16px;
+    color: #333;
+    padding: 10px;
+    margin-top: 20px;
+}
+/* Footer css */
+.footer {
+    background-color: #0e0e0e; 
+    color:red;
+    border: solid 1px #d1031a;
+    border-bottom: none;
+  }
+  
+  .forMoreInfo
+  {
+    color:  #ffffff;
+  }
+  .footer a {
+    color:  #ffffff;;
+  }
+  
+  .footer i {
+    font-size: 1.5em;
+    color:  #ffffff;;
+  
+  }
+  
+  .social-icons  {
+    background-color: #000000e2;  
+  }
+  
+  .social-icons i {
+    color:#ffffff;
+  }

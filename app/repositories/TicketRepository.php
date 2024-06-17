@@ -12,7 +12,7 @@ class TicketRepository extends Repository
 {
     public function getTicketById(int $id): ?Ticket
     {
-        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date FROM ticket WHERE id = :id";
+        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available FROM ticket WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -24,9 +24,17 @@ class TicketRepository extends Repository
         return $this->rowToTicket($row);
     }
 
+    public function updateTicketAvailability(int $ticketId, int $amount) {
+        $sql = "UPDATE ticket SET available = available + :amount WHERE id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->bindParam(':amount', $amount, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
     public function getAllTickets()
     {
-        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date FROM ticket";
+        $sql = "SELECT id, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available FROM ticket";
         $rows = $this->executeQuery($sql);
         if (!$rows) {
             echo "No tickets found.";
@@ -47,7 +55,8 @@ class TicketRepository extends Repository
                 $row['description'],
                 $row['price'],
                 new DateTime($row['start_date']),
-                new DateTime($row['end_date'])
+                new DateTime($row['end_date']),
+                $row['available']
             );
         } catch (Exception $e) {
             echo "Error creating ticket: " . $e->getMessage();
@@ -67,7 +76,7 @@ class TicketRepository extends Repository
     public function addTicket(Ticket $ticket)
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO ticket (ticketId, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date) VALUES (:ticketId, :event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date)");
+            $stmt = $this->connection->prepare("INSERT INTO ticket (ticketId, event_name, ticket_Type, ticket_name, location, description, price, start_date, end_date, available) VALUES (:ticketId, :event_name, :ticket_Type, :ticket_name, :location, :description, :price, :start_date, :end_date, :available)");
             //TODO: we should use getter and setter methods to get the values of the ticket object
             $ticketId= $ticket->getTicketId();
             $event_name = $ticket->getEventName();
@@ -78,6 +87,7 @@ class TicketRepository extends Repository
             $price = $ticket->getPrice();
             $start_date = $ticket->getStartDate()->format('Y-m-d H:i:s');
             $end_date = $ticket->getEndDate()->format('Y-m-d H:i:s');
+            $available = $ticket->getAvailability();
 
             $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
             $stmt->bindParam(':event_name', $event_name, PDO::PARAM_STR);
@@ -88,12 +98,25 @@ class TicketRepository extends Repository
             $stmt->bindParam(':price', $price, PDO::PARAM_INT);
             $stmt->bindParam(':start_date', $start_date, PDO::PARAM_STR);
             $stmt->bindParam(':end_date', $end_date, PDO::PARAM_STR);
+            $stmt->bindParam(':available', $available, PDO::PARAM_INT);
 
             $stmt->execute();
             
             return true;
         } catch (\PDOException $e) {
             throw new \PDOException('Error adding ticket: ' . $e->getMessage());
+        }
+
+    }
+
+    public function deleteTicket(int $ticketId)
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM ticket WHERE id = :ticketId");
+            $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            throw new \PDOException('Error deleting ticket: ' . $e->getMessage());
         }
     }
 

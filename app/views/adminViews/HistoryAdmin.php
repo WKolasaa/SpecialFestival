@@ -75,7 +75,7 @@ foreach ($entries as $entry) {
             <input type="number" name="english_tour" min="0" required>
             <input type="number" name="dutch_tour" min="0" required>
             <input type="number" name="chinese_tour" min="0" required>
-            <button type="submit">Add Timeslot</button>
+            <button class="btn btn-success" type="submit">Add Timeslot</button>
         </form>
 
         <?php foreach ($groupedEntries as $page => $pageEntries) : ?>

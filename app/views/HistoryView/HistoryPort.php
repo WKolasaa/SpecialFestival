@@ -1,6 +1,5 @@
 <?php 
 include __DIR__ . '/../header.php'; 
-
 ?>
 
     <div class="festival-banner" style="position: relative;">

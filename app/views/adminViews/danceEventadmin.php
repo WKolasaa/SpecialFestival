@@ -43,9 +43,7 @@ include __DIR__ . '/../header.php';
                     <div class="mb-3">
                         <label for="new-artist-date" class="form-label">Participation Date</label>
                         <select id="new-artist-date" name="participationDate" class="form-control" required>
-                            <option value="2024-07-26">26-07-2024</option>
-                            <option value="2024-07-27">27-07-2024</option>
-                            <option value="2024-07-28">28-07-2024</option>
+                        <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -80,9 +78,7 @@ include __DIR__ . '/../header.php';
                 <div class="mb-3">
                     <label for="new-event-date" class="form-label">Event Date</label>
                     <select id="new-event-date" class="form-control" required>
-                        <option value="2024-07-26">26-07-2024</option>
-                        <option value="2024-07-27">27-07-2024</option>
-                        <option value="2024-07-28">28-07-2024</option>
+                    <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -105,7 +101,8 @@ include __DIR__ . '/../header.php';
                     <label for="new-event-venueAddress" class="form-label">Venue Address</label>
                     <input type="text" id="new-event-venueAddress" class="form-control" required>
                 </div>
-                <button class="btn btn-success" onclick="addEvent()">Submit</button>
+                <!-- <button class="btn btn-success" onclick="addEvent()">Submit</button> -->
+                <button class="btn btn-success" onclick="if(validateAgendaForm()) { addEvent(); }">Submit</button>
             </div>
         </div>
     </div>
@@ -130,9 +127,7 @@ include __DIR__ . '/../header.php';
                 <div class="mb-3">
                     <label for="new-ticket-sessionDate" class="form-label">Session Date</label>
                     <select id="new-ticket-sessionDate" name="sessionDate" class="form-control" required>
-                        <option value="2024-07-26">26-07-2024</option>
-                        <option value="2024-07-27">27-07-2024</option>
-                        <option value="2024-07-28">28-07-2024</option>
+                    <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
                     </select>           
                 </div>
                 <div class="mb-3">
@@ -148,7 +143,8 @@ include __DIR__ . '/../header.php';
                     <label for="new-ticket-sessionType" class="form-label">Session Type</label>
                     <input type="text" id="new-ticket-sessionType" name="sessionType" class="form-control" required>
                 </div>
-                <button class="btn btn-success" onclick="addTicket()">Submit</button>
+                <!-- <button class="btn btn-success" onclick="addTicket()">Submit</button> -->
+                <button class="btn btn-success" onclick="if(validateSessionForm()) { addTicket(); }">Submit</button>
             </div>
         </div>
     </div>

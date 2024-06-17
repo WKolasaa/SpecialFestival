@@ -16,10 +16,9 @@ class Ticket implements \JsonSerializable
   private int $price;
   private DateTime $start_date;
   private DateTime $end_date;
+  private int $available;
 
-  public int $cart_id;
-
-  public function __construct(int $ticketId, string $event_name, TicketType $ticket_Type, string $ticket_name, string $location,string $description, int $price, DateTime $start_date, DateTime $end_date)
+  public function __construct(int $ticketId, string $event_name, TicketType $ticket_Type, string $ticket_name, string $location,string $description, int $price, DateTime $start_date, DateTime $end_date, int $available)
   {
     $this->ticketId = $ticketId;
     $this->event_name = $event_name;
@@ -30,6 +29,7 @@ class Ticket implements \JsonSerializable
     $this->price = $price;
     $this->start_date = $start_date;
     $this->end_date = $end_date;
+    $this->available = $available;
   }
 
   public  function getId()
@@ -126,7 +126,10 @@ class Ticket implements \JsonSerializable
     $this->end_date = $end_date;
   }
 
-
+  public function getAvailability(): int
+  {
+      return $this->available;
+  }
 
   public function jsonSerialize(): mixed
   {

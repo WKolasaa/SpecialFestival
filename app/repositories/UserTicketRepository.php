@@ -9,10 +9,19 @@ class UserTicketRepository extends Repository
 {
     public function getAllUserTicketsByUserId(int $userId, bool $paid) : array
     {
-        $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId AND paid = :paid";
+        if ($paid) {
+            $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId";
+        } else {
+            $sql = "SELECT ticket_id, quantity, paid FROM user_tickets WHERE user_id = :userId AND paid = :paid";
+        }
+
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindParam(':paid', $paid, PDO::PARAM_BOOL);
+
+        if (!$paid) {
+            $stmt->bindParam(':paid', $paid, PDO::PARAM_BOOL);
+        }
+
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -30,23 +39,16 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
         $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
 
-        $stmt->execute();
-        // echo $userId;
-//        if($stmt->rowCount()>0)
-//        {
-//            echo "Ticket added successfully";
-//        }else
-//        {
-//            echo "Ticket not added";
-//        }
+         $stmt->execute();
+
     }
 
-    public function addTicketQuantity(Ticket $ticket, int $userId, int $quantity): void
+    public function addTicketQuantity(int $ticketId, int $userId, int $quantity): void
     {
         $sql = "UPDATE user_tickets SET quantity = quantity + :quantity WHERE user_id = :userId AND ticket_id = :ticketId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->execute();
     }
@@ -62,12 +64,58 @@ class UserTicketRepository extends Repository
         return (bool) $row;
     }
 
-    public function markTicketsAsPaid(int $userId): void
+    public function markTicketsAsPaid(int $userId, array $userTickets): void
     {
-        $sql = "UPDATE user_tickets SET paid = true WHERE user_id = :userId";
+        foreach ($userTickets as $userTicket) {
+            $sql = "UPDATE user_tickets SET paid = 1 WHERE user_id = :userId AND ticket_id = :ticketId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->bindValue(':ticketId', $userTicket->ticket->getTicketId(), PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
+    public function deleteTicket(int $ticketId, int $userId): void
+    {
+        $sql = "DELETE FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function deleteQrCode(int $ticketId): void
+    {
+        $sql = "DELETE FROM qr WHERE user_ticket_id = :ticketId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':ticketId', $ticketId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function generateShareToken(int $userId): string {
+        $token = substr(bin2hex(random_bytes(3)), 0, 5);
+        $sql = "INSERT INTO share_personal_program (user_id, share_token) VALUES (:userId, :token)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        return $token;
+    }
+
+    public function getShareTokenByUserId(int $userId): ?string {
+        $sql = "SELECT share_token FROM share_personal_program WHERE user_id = :userId";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function getUserIdByShareToken(string $token): ?int {
+        $sql = "SELECT user_id FROM share_personal_program WHERE share_token = :token";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     private function getTicketId(Ticket $ticket)
@@ -84,7 +132,6 @@ class UserTicketRepository extends Repository
         $id = $row['id'];
         return $id;
     }
-
 
     public function checkAndGenerateQrForPaidTicket(int $ticketId)
     {
