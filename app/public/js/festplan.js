@@ -93,7 +93,7 @@ function deleteTicket(ticketId) {
 function generateShareToken() {
     // Check if the user is logged in
     if (userId === -1) {
-        alert('Please login to share your FestPlan!');
+        showToast('Please login to share your FestPlan!');
         return;
     }
 
@@ -112,7 +112,7 @@ function generateShareToken() {
 
             // Copy the share link to the clipboard
             navigator.clipboard.writeText(shareUrl).then(function () {
-                alert('Share link copied to clipboard!');
+                showToast('Share link copied to clipboard!');
             }, function (err) {
                 console.error('Could not copy text: ', err);
             });
