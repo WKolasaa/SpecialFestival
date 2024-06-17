@@ -5,14 +5,6 @@ namespace App;
 
 class PatternRouter
 {
-    private function stripParameters($uri)
-    {
-        if (str_contains($uri, '?')) {
-            $uri = substr($uri, 0, strpos($uri, '?'));
-        }
-        return $uri;
-    }
-
     public function route($uri)
     {
         // check if we are requesting an api route
@@ -73,5 +65,13 @@ class PatternRouter
             http_response_code(500);
             die();
         }
+    }
+
+    private function stripParameters($uri)
+    {
+        if (str_contains($uri, '?')) {
+            $uri = substr($uri, 0, strpos($uri, '?'));
+        }
+        return $uri;
     }
 }

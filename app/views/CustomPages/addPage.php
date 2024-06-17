@@ -6,7 +6,8 @@ if (!isset($_SESSION)) {
 include __DIR__ . '/../header.php';
 ?>
 <head>
-    <script src="https://cdn.tiny.cloud/1/jxxp173pvquef8fmhviuik8fzu8gtyya33sqkapg2d5kke7p/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/jxxp173pvquef8fmhviuik8fzu8gtyya33sqkapg2d5kke7p/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
 </head>
 <div class="container mt-5">
     <a class="text-dark" href="/PageManagement"><i class="fa-solid fa-angles-left text-dark"></i> Back</a>

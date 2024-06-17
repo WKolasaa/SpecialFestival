@@ -4,6 +4,7 @@ function loadPages(): false|array|null
     $pageManagementService = new App\Services\PageManagementService();
     return $pageManagementService->getAllPages();
 }
+
 $pages = loadPages();
 include 'head.php';
 ?>
@@ -103,13 +104,15 @@ include 'head.php';
                             </li>
                             <?php if (!empty($pages)): ?> <!-- Check if there are any custom pages -->
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCustomPages" role="button"
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCustomPages"
+                                       role="button"
                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Information Pages
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownCustomPages">
                                         <?php foreach ($pages as $page): ?>
-                                            <a class="dropdown-item" href="/PageManagement/showPage?pageId=<?= $page['pageId']; ?>">
+                                            <a class="dropdown-item"
+                                               href="/PageManagement/showPage?pageId=<?= $page['pageId']; ?>">
                                                 <?= $page['pageTitle'] ?>
                                             </a>
                                         <?php endforeach; ?>

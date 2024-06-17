@@ -6,7 +6,7 @@
             foreach ($section['images'] as $image): ?>
                 <img src="<?php echo $image['imagePath']; ?>" alt="<?php echo $image['imageName']; ?>">
             <?php endforeach;
-            endif; ?>
+        endif; ?>
     <?php endif; ?>
 
     <?php if (!empty($section['paragraphs'])): ?>
