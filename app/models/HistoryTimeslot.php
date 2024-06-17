@@ -2,7 +2,6 @@
 namespace App\Models;
 
 class HistoryTimeslot {
-
     private $id;
     private $day;
     private $start_time;
@@ -11,73 +10,65 @@ class HistoryTimeslot {
     private $dutch_tour;
     private $chinese_tour;
 
-    public function __construct($id, $day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
-        $this->id = $id;
-        $this->day = $day;
-        $this->start_time = $start_time;
-        $this->end_time = $end_time;
-        $this->english_tour = $english_tour;
-        $this->dutch_tour = $dutch_tour;
-        $this->chinese_tour = $chinese_tour;
+    // Пустой конструктор
+    public function __construct() {
     }
 
-  // Getters
-  public function getId() {
-    return $this->id;
-}
+    // Геттеры
+    public function getId() {
+        return $this->id;
+    }
 
-public function getDay() {
-    return $this->day;
-}
+    public function getDay() {
+        return $this->day;
+    }
 
-public function getStartTime() {
-    return $this->start_time;
-}
+    public function getStartTime() {
+        return $this->start_time;
+    }
 
-public function getEndTime() {
-    return $this->end_time;
-}
+    public function getEndTime() {
+        return $this->end_time;
+    }
 
-public function getEnglishTour() {
-    return $this->english_tour;
-}
+    public function getEnglishTour() {
+        return $this->english_tour;
+    }
 
-public function getDutchTour() {
-    return $this->dutch_tour;
-}
+    public function getDutchTour() {
+        return $this->dutch_tour;
+    }
 
-public function getChineseTour() {
-    return $this->chinese_tour;
-}
+    public function getChineseTour() {
+        return $this->chinese_tour;
+    }
 
-// Setters
-public function setId($id) {
-    $this->id = $id;
-}
+    // Сеттеры
+    public function setId($id) {
+        $this->id = $id;
+    }
 
-public function setDay($day) {
-    $this->day = $day;
-}
+    public function setDay($day) {
+        $this->day = $day;
+    }
 
-public function setStartTime($start_time) {
-    $this->start_time = $start_time;
-}
+    public function setStartTime($start_time) {
+        $this->start_time = $start_time;
+    }
 
-public function setEndTime($end_time) {
-    $this->end_time = $end_time;
-}
+    public function setEndTime($end_time) {
+        $this->end_time = $end_time;
+    }
 
-public function setEnglishTour($english_tour) {
-    $this->english_tour = $english_tour;
-}
+    public function setEnglishTour($english_tour) {
+        $this->english_tour = $english_tour;
+    }
 
-public function setDutchTour($dutch_tour) {
-    $this->dutch_tour = $dutch_tour;
-}
+    public function setDutchTour($dutch_tour) {
+        $this->dutch_tour = $dutch_tour;
+    }
 
-public function setChineseTour($chinese_tour) {
-    $this->chinese_tour = $chinese_tour;
-}
-
-
+    public function setChineseTour($chinese_tour) {
+        $this->chinese_tour = $chinese_tour;
+    }
 }

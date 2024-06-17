@@ -36,4 +36,25 @@ private $homeContentRepository;
     return $this->homeContentRepository->getEntryContent($id);
 }
 
+public function getEventsByDate($date) {
+  return $this->homeContentRepository->getEventsByDate($date);
+}
+
+public function addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime) {
+  return $this->homeContentRepository->addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime);
+}
+
+public function getAllEvents() {
+  return $this->homeContentRepository->getAllEvents(); // This method should query the database and return an array of events
+}
+
+// Update an event
+public function updateEvent($id, $name, $description, $date, $startTime, $endTime) {
+  return $this->homeContentRepository->updateEvent($id, $name, $description, $date, $startTime, $endTime);
+}
+
+// Delete an event
+public function deleteEvent($id) {
+  return $this->homeContentRepository->deleteEvent($id);
+}
 }

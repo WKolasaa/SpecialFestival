@@ -68,4 +68,46 @@ class HomeAdminController{
     }
     exit();
     }
+
+    public function getEventsByDate() {
+        $date = $_GET['date']; // Or handle date input validation more robustly
+        $events = $this->homeContentService->getEventsByDate($date);
+    
+        header('Content-Type: application/json');
+        echo json_encode($events);
+        exit();
+    }
+
+    // Update an event
+    public function updateEvent() {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $success = $this->homeContentService->updateEvent(
+            $data['id'],
+            $data['name'],
+            $data['description'],
+            $data['date'],
+            $data['startTime'],
+            $data['endTime']
+        );
+
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $success]);
+    }
+
+    public function deleteEvent() {
+        error_log("Delete function called");
+        $eventId = $_GET['id']; // Ensure this value is being correctly retrieved
+        error_log("Attempting to delete event with ID: " . $eventId);
+    
+        if ($this->homeContentService->deleteEvent($eventId)) {
+            error_log("Delete successful for ID: " . $eventId);
+            echo json_encode(['success' => true, 'message' => 'Event deleted successfully.']);
+        } else {
+            http_response_code(500);
+            error_log("Delete failed for ID: " . $eventId);
+            echo json_encode(['success' => false, 'message' => 'Failed to delete event.']);
+        }
+    }
+    
+
 }

@@ -1,11 +1,17 @@
 <?php 
 include __DIR__ . '/../header.php'; 
 ?>
-    <div class="festival-banner" style="background-image: url('../img/History/AmsterdamPort.png');">
-            <div class="festival-info">
-                <h1 class="festival-title"><?= $service->getContent("History Port", "Title") ?></h1>
-            </div>
+
+    <div class="festival-banner" style="position: relative;">
+        <?php
+            $SecondImagePath = $service->getContent("History Port", "Amsterdam Port Intro Image");
+        ?>
+        <img src="<?= htmlspecialchars($SecondImagePath) ?>" alt="Adriaan Windmill Image" style="width: 100%; height: auto; display: block;">
+        <div class="festival-info" style="position: absolute; bottom: 0; left: 0; padding: 10px; color: white; text-align: left;">
+            <h1 class="festival-title"><?= $service->getContent("History Port", "Title") ?></h1>
+        </div>
     </div>
+
 
     <!-- Back Button -->
     <div class="back-button-container">
