@@ -3,6 +3,7 @@
 namespace App\Repositories;
 use App\Models\HomeCMSEntry; // importing classes and exceptions
 use App\Models\HistoryEntryTypeEnum;
+use App\Models\HomeEvent;
 
 use PDOException;
 use PDO;
@@ -10,29 +11,29 @@ use PDO;
 class HomeContentRepository extends Repository
 {
 
-    public function getAll() {
-      $sql = "SELECT id, content_name, content_type, content FROM home_contents";
-      $statement = $this->connection->prepare($sql);
-      $entries = [];
+  public function getAll() {
+    $sql = "SELECT id, content_name, content_type, content FROM home_contents";
+    $statement = $this->connection->prepare($sql);
+    $entries = [];
 
-      try {
+    try {
         $statement->execute();
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {
-          $content_type = $row["content_type"] == "TEXT" ? HistoryEntryTypeEnum::Text : HistoryEntryTypeEnum::Image;
-          $entries[] = new HomeCMSEntry(
-            $row["id"], 
-            $row["content_name"], 
-            $content_type, 
-            $row["content"]);
+            $content_type = $row["content_type"] == "TEXT" ? HistoryEntryTypeEnum::Text : HistoryEntryTypeEnum::Image;
+            $entry = new HomeCMSEntry();
+            $entry->setId($row["id"]);
+            $entry->setContentName($row["content_name"]);
+            $entry->setContentType($content_type);
+            $entry->setContent($row["content"]);
+            $entries[] = $entry;
         }
-        
-      } catch (PDOException $e) {
+    } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
-      }
-      return $entries;
     }
+    return $entries;
+}
 
     public function getContent($content_name) {
       $sql = "SELECT content FROM home_contents WHERE content_name = :content_name";
@@ -111,6 +112,69 @@ class HomeContentRepository extends Repository
         echo "Error: " . $e->getMessage();
         return null;
     }
+}
+
+public function getEventsByDate($date) {
+  $sql = "SELECT event_name, event_description, start_time, end_time FROM festival_events WHERE event_date = :event_date ORDER BY start_time ASC";
+  $statement = $this->connection->prepare($sql);
+  $statement->bindParam(':event_date', $date, PDO::PARAM_STR);
+  $events = [];
+
+  try {
+      $statement->execute();
+      $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($rows as $row) {
+          $events[] = $row;
+      }
+  } catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+  }
+  return $events;
+}
+
+public function addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime) {
+  $sql = "INSERT INTO festival_events (event_name, event_description, event_date, start_time, end_time) VALUES (?, ?, ?, ?, ?)";
+  $statement = $this->connection->prepare($sql);
+  return $statement->execute([$eventName, $eventDescription, $eventDate, $startTime, $endTime]);
+}
+
+public function getAllEvents() {
+  $sql = "SELECT id, event_name, event_description, event_date, start_time, end_time FROM festival_events ORDER BY event_date, start_time ASC";
+  $statement = $this->connection->prepare($sql);
+  $events = [];
+
+  try {
+      $statement->execute();
+      $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($rows as $row) {
+          $event = new HomeEvent();
+          $event->setId($row["id"]);
+          $event->setName($row["event_name"]);
+          $event->setDescription($row["event_description"]);
+          $event->setDate($row["event_date"]);
+          $event->setStartTime($row["start_time"]);
+          $event->setEndTime($row["end_time"]);
+          $events[] = $event;
+      }
+  } catch (PDOException $e) {
+      error_log('PDOException - ' . $e->getMessage(), 0);
+  }
+
+  return $events;
+}
+
+// Update an event in the database
+public function updateEvent($id, $name, $description, $date, $startTime, $endTime) {
+  $sql = "UPDATE festival_events SET event_name = ?, event_description = ?, event_date = ?, start_time = ?, end_time = ? WHERE id = ?";
+  $statement = $this->connection->prepare($sql);
+  return $statement->execute([$name, $description, $date, $startTime, $endTime, $id]);
+}
+
+// Delete an event from the database
+public function deleteEvent($id) {
+  $sql = "DELETE FROM festival_events WHERE id = ?";
+  $statement = $this->connection->prepare($sql);
+  return $statement->execute([$id]);
 }
 
 }

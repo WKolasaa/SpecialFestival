@@ -85,6 +85,59 @@ body {
   background-color: rgba(0, 0, 0, 0.9); 
 } */
 
+/* Overall styling for the festival calendar section */
+.festival-calendar {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.day-events {
+  margin-bottom: 20px;
+}
+
+.day-events h2 {
+  background-color: #FFD756;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.day-events ul {
+  list-style: none;
+  padding: 0;
+}
+
+.day-events ul li {
+  background-color: #f2f2f2;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.day-events ul li h3 {
+  color: #333;
+  margin: 0 0 5px 0;
+}
+
+.day-events ul li p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px 0;
+}
+
+.day-events ul li span {
+  font-weight: bold;
+  color: #007BFF;
+}
+
+
 @media (max-width: 768px) {
   .event-highlights {
     grid-template-columns: 1fr; /* Single column for smaller screens */

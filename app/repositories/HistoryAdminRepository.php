@@ -3,9 +3,11 @@
 namespace App\Repositories;
 use App\Models\HistoryCMSEntry;
 use App\Models\HistoryEntryTypeEnum;
+use App\Models\HistoryTimeslot;
 
 use PDOException;
 use PDO;
+use Exception;
 
 class HistoryAdminRepository extends Repository
 {
@@ -25,12 +27,15 @@ class HistoryAdminRepository extends Repository
         //initializing empty array to store instances of HistoryCMSEntry objects
         $entries = [];
         foreach ($rows as $row) {
-          // Determines the entry_type by comparing the value in $row["entry_type"].
           $entry_type = $row["entry_type"] == "TEXT" ? HistoryEntryTypeEnum::Text : HistoryEntryTypeEnum::Image;
-          // Creates a new instance of HistoryCMSEntry with the data from the current row and adds it to the $entries array
-          $entries[] = new HistoryCMSEntry($row["id"], $row["page_name"], $row["entry_name"], $entry_type, $row["content"]);
+          $entry = new HistoryCMSEntry();
+          $entry->setId($row["id"]);
+          $entry->setPageName($row["page_name"]);
+          $entry->setEntryName($row["entry_name"]);
+          $entry->setEntryType($entry_type);
+          $entry->setContent($row["content"]);
+          $entries[] = $entry;
         }
-        
         // returns array of HistoryCMSEntry objects
         return $entries;
       } catch (PDOException $e) {
@@ -102,28 +107,57 @@ class HistoryAdminRepository extends Repository
   } 
 
   ////////////////// Inserts a new timeslot (each day has 3 timeslots) into the history_timeslots table //////////////////
-  public function addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
-    $sql = "INSERT INTO history_timeslots (day, start_time, end_time, english_tour, dutch_tour, chinese_tour) VALUES (:day, :start_time, :end_time, :english_tour, :dutch_tour, :chinese_tour);";
+  public function timeslotExists($day, $start_time, $end_time) {
+    $sql = "SELECT COUNT(*) FROM history_timeslots WHERE day = :day AND start_time = :start_time AND end_time = :end_time";
     $statement = $this->connection->prepare($sql);
+    $statement->execute([
+        ':day' => $day,
+        ':start_time' => $start_time,
+        ':end_time' => $end_time
+    ]);
+    return $statement->fetchColumn() > 0;
+}
 
-    //These lines bind the method parameters to the corresponding placeholders in the SQL statement    $statement->bindParam(":day", $day);
-    $statement->bindParam(":start_time", $start_time);
-    $statement->bindParam(":end_time", $end_time);
-    $statement->bindParam(":english_tour", $english_tour);
-    $statement->bindParam(":dutch_tour", $dutch_tour);
-    $statement->bindParam(":chinese_tour", $chinese_tour);
-
-    $statement->execute();
+public function addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
+  if ($this->timeslotExists($day, $start_time, $end_time)) {
+    return false; // Return false if the timeslot exists
   }
+
+  $sql = "INSERT INTO history_timeslots (day, start_time, end_time, english_tour, dutch_tour, chinese_tour) VALUES (:day, :start_time, :end_time, :english_tour, :dutch_tour, :chinese_tour);";
+  $statement = $this->connection->prepare($sql);
+  $success = $statement->execute([
+      ':day' => $day,
+      ':start_time' => $start_time,
+      ':end_time' => $end_time,
+      ':english_tour' => $english_tour,
+      ':dutch_tour' => $dutch_tour,
+      ':chinese_tour' => $chinese_tour
+  ]);
+}
+
+
+
 
   ////////////////// Retrieves all timeslots from the history_timeslots table //////////////////
   public function getAllTimeslots() {
     $sql = "SELECT id, day, start_time, end_time, english_tour, dutch_tour, chinese_tour FROM history_timeslots ORDER BY id ASC;";
     $statement = $this->connection->prepare($sql);
-    //Executes the prepared SQL statement. Since there are no parameters to bind in this query, the execute method is called without arguments.
     $statement->execute();
-    return $statement->fetchAll(PDO::FETCH_ASSOC);
-  }
+    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $timeslots = [];
+    foreach ($rows as $row) {
+        $timeslot = new HistoryTimeslot();
+        $timeslot->setId($row["id"]);
+        $timeslot->setDay($row["day"]);
+        $timeslot->setStartTime($row["start_time"]);
+        $timeslot->setEndTime($row["end_time"]);
+        $timeslot->setEnglishTour($row["english_tour"]);
+        $timeslot->setDutchTour($row["dutch_tour"]);
+        $timeslot->setChineseTour($row["chinese_tour"]);
+        $timeslots[] = $timeslot;
+    }
+    return $timeslots;
+}
 
   ////////////////// Updates the details of a specific timeslot in the history_timeslots table //////////////////
   public function updateTimeslot($id, $day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour) {
@@ -144,13 +178,27 @@ class HistoryAdminRepository extends Repository
   }
 
   ////////////////// Retrieves a specific timeslot by its ID from the history_timeslots table //////////////////
+  ////////////////// Retrieves a specific timeslot by its ID from the history_timeslots table //////////////////
   public function getTimeslotById($id) {
     $sql = "SELECT * FROM history_timeslots WHERE id = :id";
     $statement = $this->connection->prepare($sql);
     $statement->bindParam(':id', $id, PDO::PARAM_INT);
     $statement->execute();
-    return $statement->fetch(PDO::FETCH_ASSOC); 
-  }
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $timeslot = new HistoryTimeslot();
+        $timeslot->setId($row["id"]);
+        $timeslot->setDay($row["day"]);
+        $timeslot->setStartTime($row["start_time"]);
+        $timeslot->setEndTime($row["end_time"]);
+        $timeslot->setEnglishTour($row["english_tour"]);
+        $timeslot->setDutchTour($row["dutch_tour"]);
+        $timeslot->setChineseTour($row["chinese_tour"]);
+        return $timeslot;
+    } else {
+        return null;
+    }
+}
 
   ////////////////// Deletes a timeslot from the history_timeslots table using its ID //////////////////
   public function deleteTimeslot($id) {

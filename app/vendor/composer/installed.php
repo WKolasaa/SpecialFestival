@@ -3,7 +3,7 @@
         'name' => 'group6/festivalproject',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd379d64a72ab2736b24af8a6883b97a74999e6a9',
+        'reference' => '15a14a3db786c2c5969825b64d5ae179d4c76018',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'chillerlan/php-qrcode' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b57d1703f6b1becb418d00a21ee327f028d9dd94',
+            'reference' => '181e12c70c90f27be928f55067b4861d988c5c7c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../chillerlan/php-qrcode',
             'aliases' => array(
@@ -42,7 +42,7 @@
         'group6/festivalproject' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd379d64a72ab2736b24af8a6883b97a74999e6a9',
+            'reference' => '15a14a3db786c2c5969825b64d5ae179d4c76018',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

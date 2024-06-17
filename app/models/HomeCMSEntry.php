@@ -2,17 +2,46 @@
 namespace App\Models;
 
 class HomeCMSEntry {
-  public $id;
-  public $content_name;
-  public $content_type; // 'TEXT' or 'IMAGE'
-  public $content;
+    private $id;
+    private $content_name;
+    private $content_type; // 'TEXT' или 'IMAGE'
+    private $content;
 
-  public function __construct($id, $content_name, $content_type, $content) {
-    $this->id = $id;
-    $this->content_name = $content_name;
-    $this->content_type = $content_type;
-    $this->content = $content;
-  }
+    // Пустой конструктор
+    public function __construct() {
+    }
 
-  //private and getter and setters
+    // Геттеры
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getContentName() {
+        return $this->content_name;
+    }
+
+    public function getContentType() {
+        return $this->content_type;
+    }
+
+    public function getContent() {
+        return $this->content;
+    }
+
+    // Сеттеры
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setContentName($content_name) {
+        $this->content_name = $content_name;
+    }
+
+    public function setContentType($content_type) {
+        $this->content_type = $content_type;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
+    }
 }

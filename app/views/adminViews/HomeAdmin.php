@@ -18,61 +18,84 @@ use App\Models\HistoryEntryTypeEnum;
                 <th>Actions</th>
             </tr>
         </thead>
-            <tbody>
-                <?php foreach ($entries as $entry) : ?>
-                    <tr id="entry-<?= $entry->id ?>" data-entry-type="<?= $entry->content_type ?>"> 
-                        <td><?= htmlspecialchars($entry->content_name) ?></td>
-                        <td><?= $entry->content_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
-                        <td class="editable-content">
-                            <?php if ($entry->content_type == HistoryEntryTypeEnum::Image): ?>
-                                <!-- Show image preview -->
-                                <img src="<?= htmlspecialchars($entry->content) ?>" style="max-width: 200px; max-height: 200px;">
-                            <?php else: ?>
-                                <!-- For TEXT content, simply display it within a div -->
-                                <div><?= $entry->content ?></div>
-                            <?php endif; ?>
-                            <!-- Hidden textarea for edit mode -->
-                            <textarea style="display: none;"><?= htmlspecialchars($entry->content) ?></textarea>
-                        </td>
-                        <td class="action-buttons">
-                            <!-- Adjust the onclick functions to your corresponding JavaScript functions for editing and deleting -->
-                            <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
-                            <button onclick="deleteEntry(<?= $entry->id ?>)">Delete</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+        <tbody>
+            <?php foreach ($entries as $entry) : ?>
+                <tr id="entry-<?= htmlspecialchars($entry->getId()) ?>" data-entry-type="<?= htmlspecialchars($entry->getContentType()) ?>"> 
+                    <td><?= htmlspecialchars($entry->getContentName()) ?></td>
+                    <td><?= $entry->getContentType() == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
+                    <td class="editable-content">
+                        <?php if ($entry->getContentType() == HistoryEntryTypeEnum::Image): ?>
+                            <img src="<?= htmlspecialchars($entry->getContent()) ?>" style="max-width: 200px; max-height: 200px;">
+                        <?php else: ?>
+                            <div><?= htmlspecialchars($entry->getContent()) ?></div>
+                        <?php endif; ?>
+                        <textarea style="display: none;"><?= htmlspecialchars($entry->getContent()) ?></textarea>
+                    </td>
+                    <td class="action-buttons">
+                        <button onclick="editEntry(<?= htmlspecialchars($entry->getId()) ?>)">Edit</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 
-    <form action="/HomeAdmin/addEntry" method="POST" class="add-entry-form" enctype="multipart/form-data">
+    <h2>Event Calendar</h2>
+    <table class="event-table">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($events as $event): ?>
+                <tr id="event-<?= htmlspecialchars($event->getId()) ?>">
+                    <td><?= htmlspecialchars($event->getName()) ?></td>
+                    <td><?= htmlspecialchars($event->getDescription()) ?></td>
+                    <td><?= htmlspecialchars($event->getDate()) ?></td>
+                    <td><?= htmlspecialchars($event->getStartTime()) ?></td>
+                    <td><?= htmlspecialchars($event->getEndTime()) ?></td>
+                    <td>
+                        <button class="edit-button" onclick="editEvent(<?= htmlspecialchars($event->getId()) ?>)">Edit</button>
+                        <button class="delete-button" data-event-id="<?= htmlspecialchars($event->getId()) ?>">Delete</button>                    
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <form action="/HomeAdmin/addEvent" method="POST" class="add-event-form">
         <label>
-            Content Name:
-            <input name="content_name" value="" />
+            Event Name:
+            <input type="text" name="event_name" required />
         </label>
 
         <label>
-            Content Type:
-            <select name="content_type" id="entryTypeSelect">
-                <option value="TEXT">Text</option>
-                <option value="IMAGE">Image</option>
-            </select>
+            Description:
+            <textarea name="event_description" required></textarea>
         </label>
 
-        <!-- Separated Entry Content Label -->
-        <div id="entryContentLabel" style="flex-grow: 1;">
-            Content:
-        </div>
+        <label>
+            Date:
+            <input type="date" name="event_date" required />
+        </label>    
 
-        <!-- Entry Content Inputs -->
-        <label id="entryContentInputs">
-            <input type="text" name="content" id="contentInput" value="" /> <!-- For text entries -->
-            <input type="file" name="image" id="imageInput" accept="image/*" style="display: none;"> 
+        <label>
+            Start Time:
+            <input type="time" name="start_time" required />
         </label>
 
+        <label>
+            End Time:
+            <input type="time" name="end_time" required />
+        </label>
 
-        <button type="submit">Add Content</button>
+        <button type="submit">Add Event</button>
     </form>
-
 </div>
 
 <script src="/js/adminViews/homeAdminActions.js"></script>

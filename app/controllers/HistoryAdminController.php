@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Services\HistoryAdminService;
 use App\Models\HistoryEntryTypeEnum;
+use Exception;
 
 class HistoryAdminController{
   private $historyAdminService;
@@ -26,17 +27,16 @@ class HistoryAdminController{
       
     }
   
-  public function addTimeslot() {
-    $day = $_POST['day'];
-    $start_time = $_POST['start_time'];
-    $end_time = $_POST['end_time'];
-    $english_tour = $_POST['english_tour'];
-    $dutch_tour = $_POST['dutch_tour'];
-    $chinese_tour = $_POST['chinese_tour'];
-
-    $this->historyAdminService->addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour);
-
-    header("Location: /AdminView/history"); // Redirect back to the admin panel
-  }
-
+    public function addTimeslot() {
+      $day = $_POST['day'];
+      $start_time = $_POST['start_time'];
+      $end_time = $_POST['end_time'];
+      $english_tour = $_POST['english_tour'];
+      $dutch_tour = $_POST['dutch_tour'];
+      $chinese_tour = $_POST['chinese_tour'];
+  
+      $this->historyAdminService->addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_tour, $chinese_tour);
+  
+      header("Location: /AdminView/history"); // Redirect back to the admin panel
+    }
 }

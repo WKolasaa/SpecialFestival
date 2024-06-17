@@ -2,20 +2,55 @@
 namespace App\Models;
 
 class HistoryCMSEntry {
-  public $id;
-  public $page_name;
-  public $entry_name;
-  public $entry_type;
+    private $id;
+    private $page_name;
+    private $entry_name;
+    private $entry_type;
+    private $content;
 
-  public $content;
+    // Пустой конструктор
+    public function __construct() {
+    }
 
-    public function __construct($id, $page_name, $entry_name, $entry_type, $content) {
-      $this->id = $id;
-      $this->page_name = $page_name;
-      $this->entry_name = $entry_name;
-      $this->entry_type = $entry_type;  
-      $this->content = $content;
+    // Геттеры
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getPageName() {
+        return $this->page_name;
+    }
+
+    public function getEntryName() {
+        return $this->entry_name;
+    }
+
+    public function getEntryType() {
+        return $this->entry_type;
+    }
+
+    public function getContent() {
+        return $this->content;
+    }
+
+    // Сеттеры
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setPageName($page_name) {
+        $this->page_name = $page_name;
+    }
+
+    public function setEntryName($entry_name) {
+        $this->entry_name = $entry_name;
+    }
+
+    public function setEntryType($entry_type) {
+        $this->entry_type = $entry_type;
+    }
+
+    public function setContent($content) {
+        $this->content = $content;
     }
 }
-
-

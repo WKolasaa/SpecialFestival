@@ -130,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var contentInput = document.getElementById('contentInput');
     var imageInput = document.getElementById('imageInput');
     var entryContentLabel = document.getElementById('entryContentLabel');
-    var entryContentInputs = document.getElementById('entryContentInputs');
 
     function toggleInputFields() {
         if (entryTypeSelect.value === 'TEXT') {
@@ -146,23 +145,140 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initial check to set the correct state when the page loads
     toggleInputFields();
-
     // Event listener for when the entry type changes
-    entryTypeSelect.addEventListener('change', function() {
-        toggleInputFields();
+    entryTypeSelect.addEventListener('change', toggleInputFields);
+    
+    document.querySelector('.event-table').addEventListener('click', function(event) {
+        const target = event.target;
+        if (!target) return; // Early exit if no target is found
+
+        const closestTr = target.closest('tr');
+        if (!closestTr) return; // Early exit if no table row is found
+
+        const eventId = closestTr.id.replace('event-', '');
+        if (target.classList.contains('edit-button')) {
+            editEvent(eventId);
+        } else if (target.classList.contains('delete-button')) {
+            deleteEvent(eventId);
+        }
     });
+    imageInput.addEventListener('change', handleImageInputChange);
 });
 
-document.getElementById('imageInput').addEventListener('change', function() {
-    var fileInput = this;
-    var contentInput = document.getElementById('contentInput');
+function handleImageInputChange() {
+    const fileInput = this;
+    const contentInput = document.getElementById('contentInput');
 
     if (fileInput.files && fileInput.files[0]) {
-        // Specify the directory path where the file will be stored
-        var directoryPath = 'img/Home/';
-        // Extract the file name
-        var fileName = this.files[0].name;
-        // Update the content input with the file name
+        const directoryPath = 'img/Home/';
+        const fileName = this.files[0].name;
         contentInput.value = directoryPath + fileName;
     }
+}
+
+function editEvent(eventId) {
+    const tr = document.getElementById(`event-${eventId}`);
+    if (!tr) {
+        console.error('No table row found for the given ID');
+        return;
+    }
+
+    const editables = tr.querySelectorAll('td:not(:last-child)');
+    editables.forEach((td, index) => {
+        const inputType = (index === 2) ? 'date' : (index > 2 ? 'time' : 'text');
+        const input = createInput(inputType, td.innerText);
+        td.innerHTML = '';
+        td.appendChild(input);
+    });
+
+    const actionCell = tr.querySelector('td:last-child');
+    if (actionCell) {
+        actionCell.innerHTML = createSaveCancelButton(eventId);
+    } else {
+        console.error('No actions cell found');
+    }
+}
+
+function createInput(type, value) {
+    const input = document.createElement('input');
+    input.type = type;
+    input.value = value;
+    return input;
+}
+
+function createSaveCancelButton(eventId) {
+    return `<button onclick="saveEvent(${eventId})">Save</button>
+            <button onclick="deleteEvent(${eventId})">Delete</button>`;
+}
+
+function saveEvent(eventId) {
+    const tr = document.getElementById(`event-${eventId}`);
+    const inputs = tr.querySelectorAll('input');
+    const data = {
+        id: eventId,
+        name: inputs[0].value,
+        description: inputs[1].value,
+        date: inputs[2].value,
+        startTime: inputs[3].value,
+        endTime: inputs[4].value
+    };
+
+    fetch('/api/homeadmin/updateEvent', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            inputs.forEach((input, index) => {
+                const td = input.parentElement;
+                td.innerText = input.value;
+            });
+            const actionCell = tr.querySelector('td:last-child');
+            actionCell.innerHTML = `<button onclick="editEvent(${eventId})">Edit</button><button onclick="deleteEvent(${eventId})">Delete</button>`;
+        } else {
+            alert('Failed to update event.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating event.');
+    });
+}
+
+function deleteEvent(eventId) {
+    if (confirm("Are you sure you want to delete this event?")) {
+        fetch(`/api/homeadmin/deleteEvent?id=${eventId}`, {
+            method: 'GET'  // Using GET as the method as set up in your PHP controller
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove the event from the DOM
+                document.getElementById(`event-${eventId}`).remove();
+                alert("Event deleted successfully.");
+            } else {
+                alert("Failed to delete event: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error deleting event: " + error.message);
+        });
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.event-table').addEventListener('click', function(event) {
+        const target = event.target;
+        if (target.classList.contains('edit-button')) {
+            const eventId = target.closest('tr').id.replace('event-', '');
+            editEvent(eventId);
+        } else if (target.classList.contains('delete-button')) {
+            const eventId = target.closest('tr').id.replace('event-', '');
+            deleteEvent(eventId);
+        }
+    });
 });

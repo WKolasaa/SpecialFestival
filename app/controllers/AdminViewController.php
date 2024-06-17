@@ -24,6 +24,7 @@ class AdminViewController
    }
    public function index()
    {
+      $events = $this->homeContentService->getAllEvents(); 
       $entries = $this->homeContentService->getAll();
       include '../views/adminViews/HomeAdmin.php';
    }

@@ -6,7 +6,7 @@ use App\Models\HistoryEntryTypeEnum;
 // Group entries by page
 $groupedEntries = [];
 foreach ($entries as $entry) {
-    $groupedEntries[$entry->page_name][] = $entry;
+    $groupedEntries[$entry->getPageName()][] = $entry;
 }
 
 ?>
@@ -29,33 +29,32 @@ foreach ($entries as $entry) {
                         <th>Chinese Tour</th>
                     </tr>
                 </thead>
-                <!-- (timeslot->getId()) -->
                 <tbody>
                     <?php foreach ($timeslots as $timeslot): ?>
-                        <tr data-timeslot-id="<?= htmlspecialchars($timeslot['id']) ?>"> 
+                        <tr data-timeslot-id="<?= htmlspecialchars($timeslot->getId()) ?>"> 
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['day']) ?></span>
-                                <input class="edit" type="date" value="<?= htmlspecialchars($timeslot['day']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getDay()) ?></span>
+                                <input class="edit" type="date" value="<?= htmlspecialchars($timeslot->getDay()) ?>" style="display:none;">
                             </td>
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['start_time']) ?></span>
-                                <input class="edit" type="time" value="<?= htmlspecialchars($timeslot['start_time']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getStartTime()) ?></span>
+                                <input class="edit" type="time" value="<?= htmlspecialchars($timeslot->getStartTime()) ?>" style="display:none;">
                             </td>
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['end_time']) ?></span>
-                                <input class="edit" type="time" value="<?= htmlspecialchars($timeslot['end_time']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getEndTime()) ?></span>
+                                <input class="edit" type="time" value="<?= htmlspecialchars($timeslot->getEndTime()) ?>" style="display:none;">
                             </td>
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['english_tour']) ?></span>
-                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot['english_tour']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getEnglishTour()) ?></span>
+                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot->getEnglishTour()) ?>" style="display:none;">
                             </td>
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['dutch_tour']) ?></span>
-                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot['dutch_tour']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getDutchTour()) ?></span>
+                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot->getDutchTour()) ?>" style="display:none;">
                             </td>
                             <td>
-                                <span class="view"><?= htmlspecialchars($timeslot['chinese_tour']) ?></span>
-                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot['chinese_tour']) ?>" style="display:none;">
+                                <span class="view"><?= htmlspecialchars($timeslot->getChineseTour()) ?></span>
+                                <input class="edit" type="number" value="<?= htmlspecialchars($timeslot->getChineseTour()) ?>" style="display:none;">
                             </td>
                             <td>
                                 <button class="edit-btn" onclick="toggleEdit(this)">Edit</button>
@@ -69,7 +68,7 @@ foreach ($entries as $entry) {
             </table>
         </div>
 
-        <form action="/HistoryAdmin/addTimeslot" method="POST">
+        <form action="/historyAdmin/addTimeslot" method="POST">
             <input type="date" name="day" required>
             <input type="time" name="start_time" required>
             <input type="time" name="end_time" required>
@@ -80,7 +79,7 @@ foreach ($entries as $entry) {
         </form>
 
         <?php foreach ($groupedEntries as $page => $pageEntries) : ?>
-            <h2><?= $page ?></h2>
+            <h2><?= htmlspecialchars($page) ?></h2>
             <table class="content-table">
                 <thead>
                     <tr>
@@ -92,20 +91,20 @@ foreach ($entries as $entry) {
                 </thead>
                 <tbody>
                     <?php foreach ($pageEntries as $entry) : ?>
-                        <tr id="entry-<?= $entry->id ?>" data-entry-type="<?= $entry->entry_type ?>">
-                            <td><?= $entry->entry_name ?></td>
-                            <td><?= $entry->entry_type == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
+                        <tr id="entry-<?= htmlspecialchars($entry->getId()) ?>" data-entry-type="<?= htmlspecialchars($entry->getEntryType()) ?>">
+                            <td><?= htmlspecialchars($entry->getEntryName()) ?></td>
+                            <td><?= $entry->getEntryType() == HistoryEntryTypeEnum::Text ? 'TEXT' : 'IMAGE' ?></td>
                             <td class="editable-content">
-                                <?php if ($entry->entry_type == HistoryEntryTypeEnum::Image) : ?>
+                                <?php if ($entry->getEntryType() == HistoryEntryTypeEnum::Image) : ?>
                                     <!-- Show image preview -->
-                                    <img src="<?= htmlspecialchars($entry->content) ?>" style="max-width: 200px; max-height: 200px;">
+                                    <img src="<?= htmlspecialchars($entry->getContent()) ?>" style="max-width: 200px; max-height: 200px;">
                                 <?php else : ?>
-                                    <div><?= $entry->content ?></div>
+                                    <div><?= htmlspecialchars($entry->getContent()) ?></div>
                                 <?php endif; ?>
-                                <textarea style="display: none;"><?= $entry->content ?></textarea>
+                                <textarea style="display: none;"><?= htmlspecialchars($entry->getContent()) ?></textarea>
                             </td>
                             <td class="action-buttons">
-                                <button onclick="editEntry(<?= $entry->id ?>)">Edit</button>
+                                <button onclick="editEntry(<?= htmlspecialchars($entry->getId()) ?>)">Edit</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>

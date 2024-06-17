@@ -20,37 +20,37 @@
         color: #0056b3;
     }
 
-    .content-table {
+    .content-table, .event-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
     }
-
-    .content-table th,
-    .content-table td {
+    
+    .content-table th, .content-table td,
+    .event-table th, .event-table td {
         padding: 12px 15px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
-
-    .content-table th {
+    
+    .content-table th, .event-table th {
         background-color: #009879;
         color: #ffffff;
         font-weight: 600;
     }
-
-    .content-table tr:nth-of-type(even) {
+    
+    .content-table tr:nth-of-type(even), .event-table tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
-
-    .content-table tr:hover {
+    
+    .content-table tr:hover, .event-table tr:hover {
         background-color: #f2f2f2;
         cursor: default;
     }
-
-    .add-entry-form {
+    
+    .add-entry-form, .add-event-form {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -61,75 +61,49 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
-        /* Align items left to right */
         align-items: center;
-        /* Center items vertically */
         gap: 10px;
-        /* Space between elements */
         z-index: 1000;
     }
-
-    .add-entry-form label {
+    
+    .add-entry-form label, .add-event-form label {
         margin: 0;
         flex-grow: 1;
-        /* Allow each field to grow */
     }
-
-    .add-entry-form input,
-    .add-entry-form select,
-    .add-entry-form button {
+    
+    .add-entry-form input, .add-entry-form select, .add-entry-form button,
+    .add-event-form input, .add-event-form select, .add-event-form button {
         padding: 8px;
-        margin: 0;
-        /* Remove default margin */
         border-radius: 5px;
         border: 1px solid #ddd;
         flex-grow: 1;
-        /* Allow each input/button to grow */
     }
-
+    
     .action-buttons {
         display: flex;
         flex-direction: column;
-        /* Aligns children (buttons) vertically */
         align-items: center;
-        /* Centers buttons horizontally within the container */
         gap: 5px;
-        /* Space between buttons */
     }
-
+    
     .action-buttons button {
         background-color: #28a745;
-        /* Green background */
         color: white;
         padding: 8px 15px;
-        /* Uniform padding */
         border: none;
         border-radius: 5px;
         cursor: pointer;
         width: 90px;
-        /* Fixed width for uniformity */
         height: 38px;
-        /* Fixed height for uniformity */
-        /* Removed margin-bottom as gap property is now being used for spacing */
     }
-
-    /* Remove the bottom margin from the last button to avoid extra space at the end */
-    .action-buttons button:last-child {
-        margin-bottom: 0;
-    }
-
+    
     .action-buttons button:hover {
         background-color: #218838;
-        /* Darker green on hover */
     }
-
+    
     .editable-content textarea {
         width: 100%;
-        /* Full width of its parent container */
         height: 100%;
-        /* Full height of its parent container */
         box-sizing: border-box;
-        /* Includes padding and border in the element's size */
         display: none;
-        /* Initially hidden */
     }
