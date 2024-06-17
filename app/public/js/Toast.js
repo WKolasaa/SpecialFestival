@@ -6,8 +6,9 @@ function showToast(message,color) {
       close: true,
       gravity: "top", // `top` or `bottom`
       position: "right", // `left`, `center` or `right`
-      backgroundColor: color,
-      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: color
+      },      stopOnFocus: true, // Prevents dismissing of toast on hover
   }).showToast();
   
 }

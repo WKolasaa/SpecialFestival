@@ -1,6 +1,3 @@
-// import { showToast } from "/../Toast.js";
-// app/public/js/Toast.js
-// app/public/js/DanceEvent/session.js
 let allSessions = [];
 function loadSessions() {
   fetch("http://localhost/api/danceevent/sessions")
@@ -14,9 +11,11 @@ function loadSessions() {
       console.error("Error fetching items:", error);
     });
 }
+// loadSessions();
+// loadArtists();
+
 
 function displaySessions(sessions) {
-  //TODO: check the method again
   // Get the template for the sessions
   const template = document.querySelector(".ticket");
 
@@ -83,6 +82,7 @@ function displaySessions(sessions) {
     row.querySelector(".session").textContent = session.sessionType;
     row.querySelector(".location");
     const sessionName = row.querySelector(".artist-name");
+    //DOM manipulation for UI purposes
     if (venueText.length > 50) {
       // applying some DOM manipulation for UI purposes
       venueText =
@@ -125,8 +125,6 @@ function displaySessions(sessions) {
   template.remove();
 }
 
-loadSessions();
-
 
 let allArtists = [];
 function loadArtists() {
@@ -135,23 +133,24 @@ function loadArtists() {
     .then((data) => {
       allArtists = data; // Store all users in the array
       console.log(allArtists);
-
     })
     .catch((error) => {
       console.error("Error fetching items:", error);
     });
 }
-loadArtists();
+
 
 function getImagePath(sessionArtistName) {
   // Find the artist in the allArtists array
-  const artist = allArtists.find(a => a.artistName.toLowerCase() === sessionArtistName.toLowerCase());
-  console.log(artist +"and " + sessionArtistName);
+  const artist = allArtists.find(
+    (a) => a.artistName.toLowerCase() === sessionArtistName.toLowerCase()
+  );
+  console.log(artist + "and " + sessionArtistName);
   // console.log(allArtists);
- // If the sessionArtistName is "Golden Ticket", return the image path for the golden ticket
- if (sessionArtistName.toLowerCase() === "golden ticket") {
-  return `../../img/DanceEvent/Golden Ticket.jpeg`;
-}
+  // If the sessionArtistName is "Golden Ticket", return the image path for the golden ticket
+  if (sessionArtistName.toLowerCase() === "golden ticket") {
+    return `../../img/DanceEvent/Golden Ticket.jpeg`;
+  }
   // If the artist was found and has an artistImage property, return the image path
   if (artist && artist.imageName) {
     return `../../img/DanceEvent/${artist.imageName}`;
@@ -159,25 +158,34 @@ function getImagePath(sessionArtistName) {
   // If the artist was not found or doesn't have an artistImage property, return a default image path
   return "../../img/DanceEvent/Default.jpeg";
 }
+document.addEventListener('DOMContentLoaded',() => {
+  loadSessions();
+  loadArtists();
+});
 
 function filterSessions(day) {
   const filteredSessions = allSessions.filter((session) => {
     const date = new Date(session.sessionDate);
-    return date.getDate() === day;
+    return date.getDate() === Number(day);
   });
 
   displaySessions(filteredSessions);
 }
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("DOMContentLoaded", (event) => { //TODO: check it again
+  const day1 = document.querySelector('.friday-262024').getAttribute('data-date').split('-')[0];
+  const day2 = document.querySelector('.saturday-272024').getAttribute('data-date').split('-')[0];
+  const day3 = document.querySelector('.sunday-282024').getAttribute('data-date').split('-')[0];
+
+
   document
     .querySelector(".buttonDay1")
-    .addEventListener("click", () => filterSessions(26));
+    .addEventListener("click", () => filterSessions(day1));
   document
     .querySelector(".buttonDay2")
-    .addEventListener("click", () => filterSessions(27));
+    .addEventListener("click", () => filterSessions(day2));
   document
     .querySelector(".buttonDay3")
-    .addEventListener("click", () => filterSessions(28));
+    .addEventListener("click", () => filterSessions(day3));
 });
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -192,7 +200,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
       // Filter sessions
-      filterSessions(26 + index);
+      filterSessions(String(26 + index));
 
       // Remove 'selectedDay' class from all buttons
       buttons.forEach((button) => button.classList.remove("selectedDay"));
@@ -265,16 +273,17 @@ function displayGoldenTicket(sessions) {
 //////////////////////////Adding Tickets to Cart//////////////////////////
 
 function addToCart(session, button) {
-    // Check if the button text is already "Ticket Added"
-    if (button.textContent === "Ticket Added") {
-      showToast("Ticket is already added to cart!", "#0000FF");
-      return; // Exit the function
-    }
+  // Check if the button text is already "Ticket Added"
+  if (button.textContent === "Ticket Added") {
+    showToast("Ticket is already added to cart!", "#0000FF");
+    return; // Exit the function
+  }
   checkUserSession().then((hasSession) => {
     if (!hasSession) {
       showToast("Please log in to add items to the cart.", "#FF0000");
       return;
     }
+
 
     fetch("http://localhost/api/danceevent/addTicket", {
       method: "POST",
@@ -288,7 +297,7 @@ function addToCart(session, button) {
           console.log("Ticket added successfully");
           button.style.backgroundColor = "#1734F7";
           button.textContent = "Ticket Added";
-          showToast("Ticket added to cart!","#008000");
+          showToast("Ticket added to cart!", "#008000");
           // button.disabled = true; check it
           return response.text();
         } else {

@@ -42,8 +42,13 @@ include __DIR__ . '/../header.php';
                     </div>
                     <div class="mb-3">
                         <label for="new-artist-date" class="form-label">Participation Date</label>
+                        <!-- <select id="new-artist-date" name="participationDate" class="form-control" required>
+                            <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
+                        </select> -->
                         <select id="new-artist-date" name="participationDate" class="form-control" required>
-                        <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
+                            <?php foreach ($dates as $date): ?>
+                                <option value="<?= date('Y-m-d', strtotime($date)) ?>"><?= $date ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -77,8 +82,13 @@ include __DIR__ . '/../header.php';
                 </div>
                 <div class="mb-3">
                     <label for="new-event-date" class="form-label">Event Date</label>
-                    <select id="new-event-date" class="form-control" required>
+                    <!-- <select id="new-event-date" class="form-control" required>
+                    </select> -->
                     <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
+                    <select id="new-event-date" class="form-control" required>
+                        <?php foreach ($dates as $date): ?>
+                            <option value="<?= date('Y-m-d', strtotime($date)) ?>"><?= $date ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -126,9 +136,14 @@ include __DIR__ . '/../header.php';
                 </div>
                 <div class="mb-3">
                     <label for="new-ticket-sessionDate" class="form-label">Session Date</label>
-                    <select id="new-ticket-sessionDate" name="sessionDate" class="form-control" required>
+                    <!-- <select id="new-ticket-sessionDate" name="sessionDate" class="form-control" required>
+                    </select> -->
                     <?php include __DIR__ . '/../../config/danceEventSchedule.php'; ?>
-                    </select>           
+                    <select id="new-ticket-sessionDate" name="sessionDate" class="form-control" required>
+                        <?php foreach ($dates as $date): ?>
+                            <option value="<?= date('Y-m-d', strtotime($date)) ?>"><?= $date ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="new-ticket-venue" class="form-label">Venue</label>
@@ -169,7 +184,7 @@ include __DIR__ . '/../header.php';
                     </div>
                     <div class="mb-3">
                         <label for="new-overview-image" class="form-label">Image</label>
-                        <input type="file" id="new-overview-image" name="image" class="form-control" accept="image/*">
+                        <input type="file" id="new-overview-image" name="image" class="form-control" accept="image/*" required>
                     </div>
                     <button class="btn btn-success" type="submit" name="submit">Submit</button>
                 </form>
