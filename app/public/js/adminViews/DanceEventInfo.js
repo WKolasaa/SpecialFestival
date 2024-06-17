@@ -8,7 +8,7 @@ function showArtists() {
   document.getElementById("artists-container").style.display = "flex";
   document.getElementById("agenda-container").style.display = "none";
   document.getElementById("tickets-container").style.display = "none";
-  document.getElementById("danceOverview-container").style.display="none";
+  document.getElementById("danceOverview-container").style.display = "none";
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Artist`;
   addButton.onclick = showAddArtistForm; // Assign the onclick handler here
@@ -20,7 +20,7 @@ function showAgenda() {
   document.getElementById("artists-container").style.display = "none";
   document.getElementById("agenda-container").style.display = "block";
   document.getElementById("tickets-container").style.display = "none";
-  document.getElementById("danceOverview-container").style.display="none";
+  document.getElementById("danceOverview-container").style.display = "none";
 
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Event`;
@@ -33,7 +33,7 @@ function showTickets() {
   document.getElementById("artists-container").style.display = "none";
   document.getElementById("agenda-container").style.display = "none";
   document.getElementById("tickets-container").style.display = "block";
-  document.getElementById("danceOverview-container").style.display="none";
+  document.getElementById("danceOverview-container").style.display = "none";
 
   const addButton = document.getElementById("add-btn");
   addButton.innerText = `Add Ticket`;
@@ -54,7 +54,6 @@ function showOverview() {
 }
 ////////////////////End of SideBar//////////////////////////
 
-
 //////////////////////Adjusting the Form///////////////////////
 function showAddArtistForm() {
   // Get the modal
@@ -65,19 +64,18 @@ function showAddArtistForm() {
 
   span.onclick = function () {
     modal.style.display = "none";
-    form.style.display = "none"; 
+    form.style.display = "none";
   };
 
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      form.style.display = "none"; 
+      form.style.display = "none";
     }
   };
   modal.style.display = "block";
   form.style.display = "block";
 }
-
 
 function showAddAgendaForm() {
   var modal = document.getElementById("add-agenda-modal");
@@ -122,28 +120,23 @@ function showAddTicketForm() {
 }
 
 function showAddOverviewForm() {
- 
   var modal = document.getElementById("add-overview-modal");
   var form = document.getElementById("add-overview-form");
 
-  
   var span = modal.getElementsByClassName("close")[0];
 
-  
   span.onclick = function () {
     modal.style.display = "none";
-    form.style.display = "none"; 
+    form.style.display = "none";
   };
 
-  
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
-      form.style.display = "none"; 
+      form.style.display = "none";
     }
   };
 
-  
   modal.style.display = "block";
   form.style.display = "block";
 }
@@ -151,78 +144,76 @@ function showAddOverviewForm() {
 document
   .getElementById("artistForm")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); 
-    addArtist(); 
-    loadArtists(); 
+    event.preventDefault();
+    addArtist();
+    loadArtists();
   });
-
-
 
 document
   .getElementById("overviewForm")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); 
-    addOverview(); 
+    event.preventDefault();
+    addOverview();
     loadOverviews();
   });
 
+function validateAgendaForm() {
+  const venue = document.getElementById("new-event-venueAddress").value;
+  const ticketsAvailable = document.getElementById(
+    "new-event-ticketsAvailable"
+  ).value;
+  const time = document.getElementById("new-event-time").value;
+  const duration = document.getElementById("new-event-duration").value;
+  const price = document.getElementById("new-event-ticketPrice").value;
 
+  if (typeof venue !== "string" || venue.trim() === "") {
+    alert("Venue must be a string and cannot be empty");
+    return false;
+  }
 
-  function validateAgendaForm() {
-    const venue = document.getElementById('new-event-venueAddress').value;
-    const ticketsAvailable = document.getElementById('new-event-ticketsAvailable').value;
-    const time = document.getElementById('new-event-time').value;
-    const duration = document.getElementById('new-event-duration').value;
-    const price = document.getElementById('new-event-ticketPrice').value;
-  
-    if (typeof venue !== 'string' || venue.trim() === '') {
-      alert('Venue must be a string and cannot be empty');
-      return false;
-    }
-  
-    if (isNaN(ticketsAvailable) || ticketsAvailable <= 0) {
-      alert('Tickets Available must be a positive number');
-      return false;
-    }
-  
-    if (time === '') {
-      alert('Time cannot be empty');
-      return false;
-    }
-  
-    if (isNaN(duration) || duration <= 0) {
-      alert('Duration must be a positive number');
-      return false;
-    }
-  
-    if (isNaN(price) || price <= 0) {
-      alert('Price must be a positive number');
-      return false;
-    }
-  
-    // Add more validations as needed
-  
-    return true;
+  if (isNaN(ticketsAvailable) || ticketsAvailable <= 0) {
+    alert("Tickets Available must be a positive number");
+    return false;
   }
-  
-  function validateSessionForm() {
-    const sessionType = document.getElementById('new-ticket-sessionType').value;
-    const price = document.getElementById('new-ticket-price').value;
-  
-    if (typeof sessionType !== 'string' || sessionType.trim() === '') {
-      alert('Session Type must be a string and cannot be empty');
-      return false;
-    }
-  
-    if (isNaN(price) || price <= 0) {
-      alert('Price must be a positive number');
-      return false;
-    }
-  
-    // Add more validations as needed
-  
-    return true;
+
+  if (time === "") {
+    alert("Time cannot be empty");
+    return false;
   }
+
+  if (isNaN(duration) || duration <= 0) {
+    alert("Duration must be a positive number");
+    return false;
+  }
+
+  if (isNaN(price) || price <= 0) {
+    alert("Price must be a positive number");
+    return false;
+  }
+
+  // Add more validations as needed
+
+  return true;
+}
+
+function validateSessionForm() {
+  const sessionType = document.getElementById("new-ticket-sessionType").value;
+  const price = document.getElementById("new-ticket-price").value;
+
+  if (typeof sessionType !== "string" || sessionType.trim() === "") {
+    alert("Session Type must be a string and cannot be empty");
+    return false;
+  }
+
+  if (isNaN(price) || price <= 0) {
+    alert("Price must be a positive number");
+    return false;
+  }
+
+  // Add more validations as needed
+
+  return true;
+}
 
 //////////////////////fetch data///////////////////////
 
@@ -246,7 +237,6 @@ function loadAgenda() {
       return response.json();
     })
     .then((data) => {
-     
       allAgenda = data;
       displayAgenda(allAgenda);
     })
@@ -359,7 +349,7 @@ function displayArtists(artists) {
     // dates.forEach((date) => {
     //   const option = document.createElement("option");
     //   option.value = date;
-      
+
     //   const [year, month, day] = date.split("-");
     //   option.text = `${day}-${month}-${year}`;
 
@@ -370,8 +360,8 @@ function displayArtists(artists) {
     // });
     // artistDateLabel.appendChild(artistDate);
 
- // Fetch options from the HTML select element
-    const selectElement = document.getElementById('new-artist-date');
+    // Fetch options from the HTML select element
+    const selectElement = document.getElementById("new-artist-date");
     const options = selectElement.innerHTML;
     artistDate.innerHTML = options;
 
@@ -382,7 +372,6 @@ function displayArtists(artists) {
 
     // Add artistCard to artistContainer
     artistContainer.appendChild(artistCard);
-
 
     const saveButton = document.createElement("button");
     saveButton.className = "btn btn-success buttons";
@@ -426,18 +415,6 @@ function saveArtist(artistId) {
     participationDate: artistDateElement.value,
     image: artistImageElement.files[0],
   };
-  console.log(artistImageElement);
-  console.log(artistImageElement.files[0]);
-  console.log(
-    "testing: " +
-      updatedArtist.artistId +
-      updatedArtist.artistName +
-      updatedArtist.style +
-      updatedArtist.description +
-      updatedArtist.title +
-      updatedArtist.participationDate +
-      updatedArtist.image
-  );
 
   // Create a FormData object to hold the updated artist details
 
@@ -461,7 +438,9 @@ function saveArtist(artistId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Artist updated successfully");
+        // console.log("Artist updated successfully");
+        showToast("Artist updated successfully", "#008000");
+        //     showToast("Ticket is already added to cart!", "#0000FF");
 
         if (artistImageElement.files.length > 0) {
           const updatedImage = document.querySelector(
@@ -509,8 +488,7 @@ function deleteArtist(artistId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Artist deleted successfully");
-        // loadArtists(); // Reload artists to reflect changes
+        showToast("Artist Deleted successfully", "#008000");
       } else {
         throw new Error("Failed to delete artist");
       }
@@ -534,21 +512,15 @@ async function addArtist(event) {
       method: "POST",
       body: formData,
     });
-    console.log("Received response", response);
-
     if (!response.ok) {
       throw new Error("Failed to add artist");
     }
-    console.log("Received response", response);
     const responseText = await response.text();
-    console.log("Response text:", responseText);
     const data = JSON.parse(responseText); // Parse JSON response
 
-    // const data = await response.json(); // Parse JSON response
-    console.log("Parsed JSON response", data); // Debugging: Log parsed JSON
 
     if (data.success) {
-      alert(data.message); // Show success message
+      showToast("Artist added successfully", "#008000");
     } else {
       throw new Error(data.error || "Unknown error occurred");
     }
@@ -564,14 +536,13 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("artistForm").addEventListener("submit", addArtist);
 });
 
-
 //////////////////////////CRUD Agenda data//////////////////////////
 
 function displayAgenda(agendas) {
   const agendaContainer = document.getElementById("agenda-container");
   agendaContainer.innerHTML = ""; // Clear existing content
   agendaContainer.classList.add("container"); // Add Bootstrap container class
-  const dateSelectHTML = document.getElementById('new-event-date').innerHTML;
+  const dateSelectHTML = document.getElementById("new-event-date").innerHTML;
 
   const heading = document.createElement("h2");
   heading.textContent = "Agendas"; // Set the heading text
@@ -599,7 +570,9 @@ function displayAgenda(agendas) {
             agenda.eventDay === "Sunday" ? "selected" : ""
           }>Sunday</option>
          </select>
-         Date: <select id="agenda-date-${agenda.agendaId}">         //TODO: Test the dates very well
+         Date: <select id="agenda-date-${
+           agenda.agendaId
+         }">         //TODO: Test the dates very well
          ${dateSelectHTML}
        </select>
 
@@ -653,9 +626,9 @@ function saveAgenda(agendaId) {
   const selectedDate = updatedAgenda.eventDate;
 
   if (getDayOfWeek(selectedDate) !== selectedDay) {
-    alert(
+    showToast(
       "The selected day does not match the selected date. Please select a matching day and date."
-    );
+    , "#FF0000");
     return; // Exit the function early if the day and date don't match
   }
 
@@ -670,7 +643,7 @@ function saveAgenda(agendaId) {
     .then((response) => {
       if (response.ok) {
         console.log("Agenda updated successfully");
-        alert("Event updated successfully");
+        showToast("Event updated successfully", "#008000");
       } else {
         throw new Error("Failed to update agenda");
       }
@@ -706,8 +679,8 @@ function deleteAgenda(agendaId) {
   })
     .then((response) => {
       if (response.ok) {
-        alert("Event Deleted successfully");
-        loadAgenda(); 
+        showToast("Event Deleted successfully", "#008000");
+        loadAgenda();
       } else {
         throw new Error("Failed to delete agenda");
       }
@@ -731,16 +704,17 @@ function addEvent() {
   };
   const selectedDay = eventData.eventDay;
   const selectedDate = eventData.eventDate;
-  const artistExists=allArtists.some(artist=>artist.artistName===eventData.artistName); //check if artist exists
-  if(!artistExists)
-  {
-    alert("Artist doesn't exist, please provide correct artist name.")
+  const artistExists = allArtists.some(
+    (artist) => artist.artistName === eventData.artistName
+  ); //check if artist exists
+  if (!artistExists) {
+    showToast("Artist doesn't exist, please provide correct artist name.", "#FF0000");
     return;
   }
 
   if (getDayOfWeek(selectedDate) !== selectedDay) {
-    alert(
-      "The selected day does not match the selected date. Please select a matching day and date."
+    showToast(
+      "The selected day does not match the selected date. Please select a matching day and date.","#FF0000"
     );
     return; // Exit the function early if the day and date don't match
   }
@@ -753,8 +727,8 @@ function addEvent() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Event added successfully:", data);
-      alert("Event added successfully");
+    
+      showToast("Event added successfully", "#008000");
       showAgenda(); // Reload events list
     })
     .catch((error) => console.error("Error adding event:", error));
@@ -778,51 +752,36 @@ function getDayOfWeek(date) {
 
 function displayTickets(tickets) {
   const ticketContainer = document.getElementById("tickets-container");
-  ticketContainer.innerHTML = ""; 
-  ticketContainer.classList.add("container"); 
-  const dateTicketSelectHTML = document.getElementById('new-ticket-sessionDate').innerHTML;
-
+  ticketContainer.innerHTML = "";
+  ticketContainer.classList.add("container");
+  const dateTicketSelectHTML = document.getElementById(
+    "new-ticket-sessionDate"
+  ).innerHTML;
 
   const heading = document.createElement("h2");
-  heading.textContent = "Sessions"; 
-  heading.classList.add("my-3"); 
+  heading.textContent = "Sessions";
+  heading.classList.add("my-3");
   ticketContainer.appendChild(heading);
 
   tickets.forEach((ticket) => {
     const ticketItem = document.createElement("div");
-    ticketItem.classList.add("cardTicket", "mb-3"); 
+    ticketItem.classList.add("cardTicket", "mb-3");
 
     ticketItem.innerHTML = `
       <div class="card-body">
-        <h5 class="card-title"><span contenteditable="true" id="ticket-artistName-${
-          ticket.sessionId
-        }">${ticket.artistName}</span></h5>
+        <h5 class="card-title"><span contenteditable="true" id="ticket-artistName-${ticket.sessionId}">${ticket.artistName}</span></h5>
         <p class="card-text">
-        Start Session: <input type="time" id="ticket-startSession-${
-            ticket.sessionId
-          }" value="${ticket.startSession}">
-          End Session: <input type="time" id="ticket-endSession-${
-            ticket.sessionId
-          }" value="${ticket.endSession}">
+        Start Session: <input type="time" id="ticket-startSession-${ticket.sessionId}" value="${ticket.startSession}">
+          End Session: <input type="time" id="ticket-endSession-${ticket.sessionId}" value="${ticket.endSession}">
           Date: <select id="ticket-date-${ticket.sessionId}">
          ${dateTicketSelectHTML}
        </select>
-          Venue: <span contenteditable="true" id="ticket-venue-${
-            ticket.sessionId
-          }">${ticket.venue}</span>
-          Price: €<span contenteditable="true" id="ticket-price-${
-            ticket.sessionId
-          }">${ticket.sessionPrice}</span>
-          Session Type: <span contenteditable="true" id="ticket-sessionType-${
-            ticket.sessionId
-          }">${ticket.sessionType}</span>
+          Venue: <span contenteditable="true" id="ticket-venue-${ticket.sessionId}">${ticket.venue}</span>
+          Price: €<span contenteditable="true" id="ticket-price-${ticket.sessionId}">${ticket.sessionPrice}</span>
+          Session Type: <span contenteditable="true" id="ticket-sessionType-${ticket.sessionId}">${ticket.sessionType}</span>
         </p>
-        <button class="btn btn-success btnTicket" onclick="saveTicket(${
-          ticket.sessionId
-        })">Save</button>
-        <button class="btn btn-danger btnTicket" onclick="deleteTicket(${
-          ticket.sessionId
-        })">Delete</button>
+        <button class="btn btn-success btnTicket" onclick="saveTicket(${ticket.sessionId})">Save</button>
+        <button class="btn btn-danger btnTicket" onclick="deleteTicket(${ticket.sessionId})">Delete</button>
       </div>
     `;
 
@@ -841,7 +800,7 @@ function saveTicket(sessionId) {
     venue: document.getElementById(`ticket-venue-${sessionId}`).textContent,
     sessionPrice: document.getElementById(`ticket-price-${sessionId}`)
       .textContent,
-    
+
     sessionType: document.getElementById(`ticket-sessionType-${sessionId}`)
       .textContent,
     endSession: document.getElementById(`ticket-endSession-${sessionId}`).value, //change
@@ -856,8 +815,8 @@ function saveTicket(sessionId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Ticket updated successfully");
-        alert("Session updated successfully");
+        // console.log("Ticket updated successfully");
+        showToast("Session updated successfully", "#008000");
       } else {
         throw new Error("Failed to update ticket");
       }
@@ -893,9 +852,9 @@ function deleteTicket(sessionId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Ticket deleted successfully");
-        alert("Session deleted successfully");
-        loadTickets(); 
+        // console.log("Ticket deleted successfully");
+        showToast("Session deleted successfully", "#008000");
+        loadTickets();
       } else {
         throw new Error("Failed to delete ticket");
       }
@@ -913,15 +872,14 @@ function addTicket() {
     sessionType: document.getElementById("new-ticket-sessionType").value,
     endSession: document.getElementById("new-ticket-endSession").value,
   };
-  console.log("Ticket data:", ticketData);
-const artistExists=allArtists.some(artist=>artist.artistName===ticketData.artistName); //check if artist exists
-if(!artistExists)
-{
-  alert("Artist doesn't exist, please provide correct artist name.")
-  return;
-}
-
-
+  // console.log("Ticket data:", ticketData);
+  const artistExists = allArtists.some(
+    (artist) => artist.artistName === ticketData.artistName
+  ); //check if artist exists
+  if (!artistExists) {
+    showToast("Artist doesn't exist, please provide correct artist name.", "#FF0000");
+    return;
+  }
 
   fetch("http://localhost/api/danceevent/addSession", {
     method: "POST",
@@ -932,8 +890,8 @@ if(!artistExists)
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Ticket added successfully:", data);
-      alert("Session added successfully");
+      // console.log("Ticket added successfully:", data);
+      showToast("Session added successfully", "#008000");
       const modal = document.getElementById("add-ticket-modal");
       modal.style.display = "none";
       loadTickets(); // Reload tickets to reflect changes
@@ -941,13 +899,9 @@ if(!artistExists)
     .catch((error) => console.error("Error adding ticket:", error));
 }
 
-
-
 //////////////////////////CRUD Overview data//////////////////////////
 
 function displayOverviews(overviews) {
-
-  
   const overviewContainer = document.getElementById("danceOverview-container");
   overviewContainer.innerHTML = "";
   overviewContainer.className = "row";
@@ -1042,7 +996,6 @@ function displayOverviews(overviews) {
   });
 }
 
-
 function decodeHtmlEntities(str) {
   var textArea = document.createElement("textarea");
   textArea.innerHTML = str;
@@ -1066,9 +1019,9 @@ function saveOverview(id) {
     text: overviewTextElement.textContent,
     image: overviewImageElement.files[0],
   };
-  console.log(
-    updatedOverview.id + updatedOverview.text + updatedOverview.image
-  );
+  // console.log(
+  //   updatedOverview.id + updatedOverview.text + updatedOverview.image
+  // );
 
   const formData = new FormData();
   formData.append("id", id);
@@ -1086,13 +1039,14 @@ function saveOverview(id) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Overview updated successfully");
+        showToast("Overview updated successfully", "#008000");
       } else {
         throw new Error("Failed to update overview");
       }
     })
     .catch((error) => {
       console.error("Error updating overview:", error);
+      showToast("File size is too large", "#FF0000");
     });
 }
 
@@ -1109,7 +1063,8 @@ function deleteOverview(id) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Overview deleted successfully");
+         showToast("Overview deleted successfully", "#008000");
+      
         //  loadOverviews(); // Reload overviews to reflect changes
       } else {
         throw new Error("Failed to delete overview");
@@ -1122,10 +1077,10 @@ async function addOverview(event) {
   event.preventDefault(); // Prevent the default form submission behavior
   const formData = new FormData(document.getElementById("overviewForm"));
 
-  console.log("FormData contents:");
-  for (let [key, value] of formData.entries()) {
-    console.log(`${key}: ${value}`);
-  }
+  // console.log("FormData contents:");
+  // for (let [key, value] of formData.entries()) {
+  //   console.log(`${key}: ${value}`);
+  // }
   try {
     const response = await fetch(
       "http://localhost/api/danceevent/addDanceOverview",
@@ -1142,7 +1097,7 @@ async function addOverview(event) {
     const data = await response.json(); // Parse JSON response
 
     if (data.success) {
-      alert(data.message); // Show success message
+      showToast("Overview Add successfully","#008000"); // Show success message
     } else {
       throw new Error(data.error || "Unknown error occurred");
     }

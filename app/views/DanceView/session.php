@@ -105,22 +105,25 @@
   </div>
   <div class="row">
     <div class="col-4 text-center">
+      <?php include __DIR__ . '/../../config/danceEventSchedule.php';
+       ?>
+
       <div class="friday-262024-parent">
-        <div class="friday-262024">Friday 26,2024</div>
-      </div>
+      <div class="friday-262024" data-date="<?php echo $dates[0] ?>">Friday <?php echo $dates[0] ?></div>
+          </div>
     </div>
     <div class="col-4 text-center">
       <div class="day-2-parent">
-        <div class="saturday-272024">Saturday 27,2024</div>
+        <div class="saturday-272024"  data-date="<?php echo $dates[1] ?>">Saturday <?php echo $dates[1] ?></div>
       </div>
     </div>
     <div class="col-4 text-center">
       <div class="day-3-parent">
-        <div class="saturday-272024">Sunday 28,2024</div>
+        <div class="sunday-282024"  data-date="<?php echo $dates[2] ?>">Sunday <?php echo $dates[2] ?></div>
       </div>
     </div>
   </div>
-
+</div>
 <div class="goldenTicketContainer">
 </div>
 </div>

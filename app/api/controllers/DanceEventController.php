@@ -240,9 +240,9 @@ class DanceEventController extends BaseController
 
             // Check the file size (5MB max)
             $fileSize = $_FILES['image']['size'];
-            if ($fileSize > 5 * 255 * 255) { // 5MB in bytes
+            if ($fileSize > 10 * 1024 * 1024) { // 10MB in bytes
                 http_response_code(400);
-                echo json_encode(['error' => 'File is too large. Maximum size is 5MB.']);
+                echo json_encode(['error' => 'File is too large. Maximum size is 10MB.']);
                 return;
             }
 
