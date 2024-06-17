@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-//handling 'Add to Cart' button click event
+////////////////// handling 'Add to Cart' button click event //////////////////
 document.addEventListener("DOMContentLoaded", function() {
     //select all timeslot elements 
     const timeslots = document.querySelectorAll('.timeslot');
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+////////////////// function to check if the user is logged in //////////////////
 function checkUserSession() {
     return fetch("http://localhost/api/historyadmin/checkUser")
       .then((response) => response.json())

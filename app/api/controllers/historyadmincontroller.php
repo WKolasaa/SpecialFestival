@@ -22,7 +22,7 @@ class HistoryAdminController{
     public function update() {
     $entry_id = $_POST["entry_id"];
     $content = $_POST["content"];
-
+    
     // Call to service layer to update the entry in the database
     $this->historyAdminService->updateEntry($entry_id, $content);
 
