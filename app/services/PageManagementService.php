@@ -33,7 +33,7 @@ class PageManagementService
         return $this->pageManagementRepository->getSectionContent($sectionId);
     }
 
-    public function getParagraphsBySection($sectionId): false|array|null
+    public function getParagraphsBySection($sectionId): array
     {
         return $this->pageManagementRepository->getParagraphsBySection($sectionId);
     }
@@ -63,7 +63,7 @@ class PageManagementService
         $this->pageManagementRepository->addImage($sectionId, $imageName, $imagePath);
     }
 
-    public function getImagesBySection($sectionId): false|array|null
+    public function getImagesBySection($sectionId): array
     {
         return $this->pageManagementRepository->getImagesBySection($sectionId);
     }

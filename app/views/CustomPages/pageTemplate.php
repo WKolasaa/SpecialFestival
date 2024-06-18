@@ -1,57 +1,32 @@
-<?php include __DIR__ . '/../header.php'; ?>
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/customPages.css">
-</head>
-<div>
-    <?php
+<?php
+include __DIR__ . '/../header.php';
 
+function includeSection($sections, $type): void
+{
     foreach ($sections as $section) {
-        if ($section['type'] === 'header') {
+        if ($section['type'] === $type) {
             include __DIR__ . '/../components/' . $section['type'] . '.php';
         }
     }
-    ?>
-</div>
-<div class="row">
-    <div class="col-8">
-        <?php
-        foreach ($sections as $section) {
-            if ($section['type'] === 'subsection' || $section['type'] === 'introduction') {
-                include __DIR__ . '/../components/' . $section['type'] . '.php';
-            }
-        }
-        ?>
+}
+
+?>
+
+    <div>
+        <?php includeSection($sections, 'header'); ?>
     </div>
 
-    <div class="col-4">
-        <?php
-        foreach ($sections as $section) {
-            if ($section['type'] === 'imageSection') {
-                include __DIR__ . '/../components/' . $section['type'] . '.php';
-                break;
-            }
-        }
-        ?>
+    <div class="row">
+        <div class="col-8">
+            <?php
+            includeSection($sections, 'subsection');
+            includeSection($sections, 'introduction');
+            ?>
+        </div>
+
+        <div class="col-4">
+            <?php includeSection($sections, 'imageSection'); ?>
+        </div>
     </div>
-</div>
 
 <?php include __DIR__ . '/../footer.php'; ?>
-
-<script>
-    if (document.getElementById('photo-col')) {
-        document.getElementById('photo-col').style.display = "block";
-    }
-    var elements = document.querySelectorAll('.container.subsection');
-
-    elements.forEach(function (element) {
-        element.style.display = 'block';
-    });
-</script>
-
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-</style>

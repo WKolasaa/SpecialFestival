@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script src="https://cdn.tiny.cloud/1/jxxp173pvquef8fmhviuik8fzu8gtyya33sqkapg2d5kke7p/tinymce/6/tinymce.min.js"
-            referrerpolicy="origin"></script>
-</head>
 <body>
+
 <div class="modal fade" id="sectionEditorModal" tabindex="-1" aria-labelledby="sectionEditorModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -28,3 +25,6 @@
 </div>
 </body>
 </html>
+
+<script src="https://cdn.tiny.cloud/1/jxxp173pvquef8fmhviuik8fzu8gtyya33sqkapg2d5kke7p/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>

@@ -1,21 +1,20 @@
-<div class="container introduction col-10">
-    <?php if (!empty($section['heading'])): ?>
-
-        <?php echo $section['heading'];
-        if (!empty($section['images'])):
+<section class="container introduction col-10">
+    <?php if ($section['heading'] ?? false): ?>
+        <h2><?= $section['heading'] ?></h2>
+        <?php if ($section['images'] ?? false):
             foreach ($section['images'] as $image): ?>
-                <img src="<?php echo $image['imagePath']; ?>" alt="<?php echo $image['imageName']; ?>">
+                <img src="<?= $image['imagePath'] ?>" alt="<?= $image['imageName'] ?>">
             <?php endforeach;
         endif; ?>
     <?php endif; ?>
 
-    <?php if (!empty($section['paragraphs'])): ?>
+    <?php if ($section['paragraphs'] ?? false): ?>
         <?php foreach ($section['paragraphs'] as $paragraph): ?>
-            <?php echo $paragraph['text']; ?>
+            <p><?= $paragraph['text'] ?></p>
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if (!empty($section['linkText'])): ?>
-        <a id="readMoreLink" href="#"><?php echo $section['linkText']; ?></a>
+    <?php if ($section['linkText'] ?? false): ?>
+        <a id="readMoreLink" href="#"><?= $section['linkText'] ?></a>
     <?php endif; ?>
-</div>
+</section>

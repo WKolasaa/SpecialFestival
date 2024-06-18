@@ -1,37 +1,44 @@
+<?php
+function getColumnClass($num_images): string
+{
+    return match ($num_images) {
+        1 => 'col-12',
+        2 => 'col-6',
+        default => 'col-4',
+    };
+}
+
+function displaySectionContent($content): void
+{
+    if (!empty($content)) {
+        echo $content;
+    }
+}
+
+?>
+
 <div class="header">
     <div class="row">
         <?php
         if (!empty($section['images'])):
-            $num_images = count($section['images']);
-            $col_class = match ($num_images) {
-                1 => 'col-12',
-                2 => 'col-6',
-                default => 'col-4',
-            };
+            $col_class = getColumnClass(count($section['images']));
 
             foreach ($section['images'] as $image):?>
-                <div class="<?php echo $col_class; ?> g-0 header-img">
-                    <img class="img-fluid" src="<?php echo $image['imagePath']; ?>"
-                         alt="<?php echo $image['imageName']; ?>" style="min-width: 100%;">
+                <div class="<?= $col_class; ?> g-0 header-img">
+                    <img class="img-fluid" src="<?= htmlspecialchars($image['imagePath']); ?>"
+                         alt="<?= htmlspecialchars($image['imageName']); ?>" style="min-width: 100%;">
                 </div>
-            <?php endforeach;
-        endif; ?>
+            <?php endforeach; endif; ?>
     </div>
     <div class="col-8">
         <div class="container col-10">
-            <?php if (!empty($section['heading'])): ?>
-                <?php echo($section['heading']); ?>
-            <?php endif; ?>
-
-            <?php if (!empty($section['subTitle'])): ?>
-                <?php echo($section['subTitle']); ?>
-            <?php endif; ?>
+            <?php displaySectionContent($section['heading']); ?>
+            <?php displaySectionContent($section['subTitle']); ?>
 
             <?php if (!empty($section['paragraphs'])):
-                foreach ($section['paragraphs'] as $paragraph):?>
-                    <?php echo($paragraph['text']); ?>
-                <?php endforeach; endif; ?>
+                foreach ($section['paragraphs'] as $paragraph):
+                    displaySectionContent($paragraph['text']);
+                endforeach; endif; ?>
         </div>
     </div>
 </div>
-

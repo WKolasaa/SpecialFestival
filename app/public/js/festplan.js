@@ -5,7 +5,6 @@ document.querySelectorAll('.quantity-increase').forEach(function (button) {
         const priceElement = row.querySelector('.price');
         const quantity = parseInt(quantityElement.textContent, 10);
         quantityElement.textContent = quantity + 1;
-        priceElement
         increaseTicketQuantity(row.dataset.ticketId);
     });
 });

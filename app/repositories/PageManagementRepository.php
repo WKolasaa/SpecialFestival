@@ -77,29 +77,29 @@ class PageManagementRepository extends Repository
 
     }
 
-    public function getParagraphsBySection($sectionId): false|array|null
+    public function getParagraphsBySection($sectionId): array
     {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM Paragraph WHERE sectionId = :sectionId");
             $stmt->bindParam(':sectionId', $sectionId);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?? [];
         } catch (PDOException $e) {
             error_log("Error retrieving paragraphs: " . $e->getMessage());
-            return null;
+            return [];
         }
     }
 
-    public function getImagesBySection($sectionId): false|array|null
+    public function getImagesBySection($sectionId): array
     {
         try {
             $stmt = $this->connection->prepare("SELECT * FROM Images WHERE sectionId = :sectionId");
             $stmt->bindParam(':sectionId', $sectionId);
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?? [];
         } catch (PDOException $e) {
             error_log("Error retrieving images: " . $e->getMessage());
-            return null;
+            return [];
         }
     }
 

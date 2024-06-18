@@ -79,6 +79,9 @@ if (session_status() === PHP_SESSION_NONE) {
             case 'FestPlan':
                 $cssFile = 'festplan.css';
                 break;
+            case 'PageManagement/showPage':
+                $cssFile = 'customPages.css';
+                break;
             default:
                 $defaultCssFile = 'festival.css';
                 $cssFile = $defaultCssFile;
