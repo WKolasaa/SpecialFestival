@@ -40,8 +40,12 @@ public function getEventsByDate($date) {
   return $this->homeContentRepository->getEventsByDate($date);
 }
 
-public function addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime) {
-  return $this->homeContentRepository->addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime);
+public function addEvent($name, $description, $date, $startTime, $endTime) {
+  return $this->homeContentRepository->addEvent($name, $description, $date, $startTime, $endTime);
+}
+
+public function getLastInsertId() {
+  return $this->homeContentRepository->getLastInsertId();
 }
 
 public function getAllEvents() {

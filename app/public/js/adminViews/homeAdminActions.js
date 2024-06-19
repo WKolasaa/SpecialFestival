@@ -1,4 +1,108 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // This function runs when the DOM is fully loaded
 
+    const entryTypeSelect = document.getElementById('entryTypeSelect');
+    const contentInput = document.getElementById('contentInput');
+    const imageInput = document.getElementById('imageInput');
+    const entryContentLabel = document.getElementById('entryContentLabel');
+
+    // Function to toggle between content input and image input based on entry type selection
+    function toggleInputFields() {
+        if (entryTypeSelect.value === 'TEXT') {
+            entryContentLabel.style.display = ''; // Show the "Entry Content:" label
+            contentInput.style.display = ''; // Show content input
+            imageInput.style.display = 'none'; // Hide image input
+        } else if (entryTypeSelect.value === 'IMAGE') {
+            entryContentLabel.style.display = 'none'; // Hide the "Entry Content:" label
+            contentInput.style.display = 'none'; // Hide content input
+            imageInput.style.display = ''; // Show image input
+        }
+    }
+
+    if (entryTypeSelect) {
+        // Initial check to set the correct state when the page loads
+        toggleInputFields();
+        // Event listener for when the entry type changes
+        entryTypeSelect.addEventListener('change', toggleInputFields);
+    }
+
+    // Add event listeners only once for the event table
+    const eventTable = document.querySelector('.event-table');
+    if (eventTable) {
+        eventTable.addEventListener('click', function(event) {
+            const target = event.target;
+            if (target.classList.contains('edit-button')) {
+                const eventId = target.closest('tr').id.replace('event-', '');
+                editEvent(eventId);
+            } else if (target.classList.contains('delete-button')) {
+                const eventId = target.closest('tr').id.replace('event-', '');
+                deleteEvent(eventId);
+            }
+        });
+    }
+
+    // Add event listener for the add event form
+    const addEventForm = document.getElementById('add-event-form');
+    if (addEventForm) {
+        addEventForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(addEventForm);
+
+            fetch('/api/homeadmin/addEvent', { 
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    //alert(data.message);
+                    // Add new event to the table without reloading the page
+                    const newRow = document.createElement('tr');
+                    newRow.id = 'event-' + data.eventId; 
+                    newRow.innerHTML = `
+                        <td>${formData.get('event_name')}</td>
+                        <td>${formData.get('event_description')}</td>
+                        <td>${formData.get('event_date')}</td>
+                        <td>${formData.get('start_time')}</td>
+                        <td>${formData.get('end_time')}</td>
+                        <td>
+                            <button class="edit-button" onclick="editEvent(${data.eventId})">Edit</button>
+                            <button class="delete-button" onclick="deleteEvent(${data.eventId})">Delete</button>
+                        </td>
+                    `;
+                    document.querySelector('.event-table tbody').appendChild(newRow);
+                    addEventForm.reset(); // Reset form after successful addition
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to add event. Error: ' + error.message);
+            });
+        });
+    }
+
+    // Handle image input change for content
+    if (imageInput) {
+        imageInput.addEventListener('change', handleImageInputChange);
+    }
+});
+
+// This function updates the content input field with the path of the selected image file when the image input changes
+function handleImageInputChange() {
+    const fileInput = this;
+    const contentInput = document.getElementById('contentInput');
+
+    if (fileInput.files && fileInput.files[0]) {
+        const directoryPath = 'img/Home/';
+        const fileName = this.files[0].name;
+        contentInput.value = directoryPath + fileName;
+    }
+}
+
+// Handles the editing of entries. It allows the user to edit either text or image entries and updates the server with the new content
 function editEntry(id) {
     let entryRow = document.getElementById('entry-' + id);
     let entryType = entryRow.getAttribute('data-entry-type');
@@ -38,7 +142,7 @@ function editEntry(id) {
             // Attempt to save image changes
             if (fileInput && fileInput.files.length > 0) {
                 let formData = new FormData();
-                formData.append('id', id);// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                formData.append('id', id);
                 formData.append('image', fileInput.files[0]);
 
                 fetch('/api/homeadmin/updateImage', {
@@ -67,7 +171,6 @@ function editEntry(id) {
             }
         }
     } else {
-
         if (editButton.innerText === 'Edit') {
             // Switch to edit mode for text
             contentContainer.style.display = 'none';
@@ -110,72 +213,31 @@ function editEntry(id) {
                 alert("Failed to update entry. Error: " + error.toString());
             });
         }
-
     }
 }
 
-
-
-function deleteEntry(id) {
-    fetch(`/api/homeadmin/delete?id=${id}`)
-        .then(() => document.getElementById(`entry-${id}`).remove())
-        .catch((error) => {
-            console.error(error);
-            alert("Failed to remove entry!");
+// Confirms the deletion of an event, then sends a request to the server to delete the event. If successful, it removes the event row from the DOM.
+function deleteEvent(eventId) {
+        fetch(`/api/homeadmin/deleteEvent?id=${eventId}`, {
+            method: 'GET'
         })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove the event from the DOM
+                const eventRow = document.getElementById(`event-${eventId}`);
+                if (eventRow) {
+                    eventRow.remove();
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error deleting event: " + error.message);
+        });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var entryTypeSelect = document.getElementById('entryTypeSelect');
-    var contentInput = document.getElementById('contentInput');
-    var imageInput = document.getElementById('imageInput');
-    var entryContentLabel = document.getElementById('entryContentLabel');
-
-    function toggleInputFields() {
-        if (entryTypeSelect.value === 'TEXT') {
-            entryContentLabel.style.display = ''; // Show the "Entry Content:" label
-            contentInput.style.display = ''; // Show content input
-            imageInput.style.display = 'none'; // Hide image input
-        } else if (entryTypeSelect.value === 'IMAGE') {
-            entryContentLabel.style.display = 'none'; // Hide the "Entry Content:" label
-            contentInput.style.display = 'none'; // Hide content input
-            imageInput.style.display = ''; // Show image input  
-        }
-    }
-    
-    // Initial check to set the correct state when the page loads
-    toggleInputFields();
-    // Event listener for when the entry type changes
-    entryTypeSelect.addEventListener('change', toggleInputFields);
-    
-    document.querySelector('.event-table').addEventListener('click', function(event) {
-        const target = event.target;
-        if (!target) return; // Early exit if no target is found
-
-        const closestTr = target.closest('tr');
-        if (!closestTr) return; // Early exit if no table row is found
-
-        const eventId = closestTr.id.replace('event-', '');
-        if (target.classList.contains('edit-button')) {
-            editEvent(eventId);
-        } else if (target.classList.contains('delete-button')) {
-            deleteEvent(eventId);
-        }
-    });
-    imageInput.addEventListener('change', handleImageInputChange);
-});
-
-function handleImageInputChange() {
-    const fileInput = this;
-    const contentInput = document.getElementById('contentInput');
-
-    if (fileInput.files && fileInput.files[0]) {
-        const directoryPath = 'img/Home/';
-        const fileName = this.files[0].name;
-        contentInput.value = directoryPath + fileName;
-    }
-}
-
+// Prepares the event row for editing by replacing the current content with input fields
 function editEvent(eventId) {
     const tr = document.getElementById(`event-${eventId}`);
     if (!tr) {
@@ -199,6 +261,7 @@ function editEvent(eventId) {
     }
 }
 
+// Creates and returns an input element of the specified type and value. Used in editEvent function.
 function createInput(type, value) {
     const input = document.createElement('input');
     input.type = type;
@@ -206,11 +269,13 @@ function createInput(type, value) {
     return input;
 }
 
+// Creates and returns the HTML for the Save and Delete buttons for event editing. Used in editEvent function.
 function createSaveCancelButton(eventId) {
     return `<button onclick="saveEvent(${eventId})">Save</button>
             <button onclick="deleteEvent(${eventId})">Delete</button>`;
 }
 
+// Saves the edited event by sending a request to the server with the updated event data. If successful, it updates the table row with the new data
 function saveEvent(eventId) {
     const tr = document.getElementById(`event-${eventId}`);
     const inputs = tr.querySelectorAll('input');
@@ -246,39 +311,3 @@ function saveEvent(eventId) {
         alert('Error updating event.');
     });
 }
-
-function deleteEvent(eventId) {
-    if (confirm("Are you sure you want to delete this event?")) {
-        fetch(`/api/homeadmin/deleteEvent?id=${eventId}`, {
-            method: 'GET'  // Using GET as the method as set up in your PHP controller
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Remove the event from the DOM
-                document.getElementById(`event-${eventId}`).remove();
-                alert("Event deleted successfully.");
-            } else {
-                alert("Failed to delete event: " + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Error deleting event: " + error.message);
-        });
-    }
-}
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('.event-table').addEventListener('click', function(event) {
-        const target = event.target;
-        if (target.classList.contains('edit-button')) {
-            const eventId = target.closest('tr').id.replace('event-', '');
-            editEvent(eventId);
-        } else if (target.classList.contains('delete-button')) {
-            const eventId = target.closest('tr').id.replace('event-', '');
-            deleteEvent(eventId);
-        }
-    });
-});

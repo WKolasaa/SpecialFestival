@@ -24,7 +24,7 @@
         <img src="<?= $service->getContent('Dance Event Image'); ?>" alt="Dance Event" class="event-image">
         <h2 class="event-title"><?= $service->getContent('Dance Event Title'); ?></h2>
       </a>
-      <a href="/YummyMain" class="event">
+      <a href="/yummy" class="event">
         <img src="<?= $service->getContent('Yummy Event Image'); ?>" alt="Yummy Event" class="event-image">
         <h2 class="event-title"><?= $service->getContent('Yummy Event Title'); ?></h2>
       </a>

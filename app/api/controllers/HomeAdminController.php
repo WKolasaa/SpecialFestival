@@ -109,5 +109,23 @@ class HomeAdminController{
         }
     }
     
-
+    public function addEvent() {
+        $eventName = $_POST['event_name'];
+        $eventDescription = $_POST['event_description'];
+        $eventDate = $_POST['event_date'];
+        $startTime = $_POST['start_time'];
+        $endTime = $_POST['end_time'];
+    
+        $success = $this->homeContentService->addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime);
+    
+        header('Content-Type: application/json');
+        if ($success) {
+            $newEventId = $this->homeContentService->getLastInsertId(); // Предполагается, что вы можете получить ID последнего вставленного события
+            echo json_encode(['success' => true, 'message' => 'Event added successfully.', 'eventId' => $newEventId]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Failed to add event.']);
+        }
+        exit();
+      }
 }
