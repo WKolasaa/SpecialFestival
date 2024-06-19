@@ -10,12 +10,22 @@ use Exception;
 
 class QRService
 {
+    private $ticketRepository;
+
+    public function __construct()
+    {
+        $this->ticketRepository = new TicketRepository();
+    }
+
     public function generateQRCode($ticket){ //TODO: handle Exception
-        $data = 'TicketID='. $ticket->getTicketId() . '/UserID='. $_SESSION['userId'];
+        $data = $this->generateQRCodeData();
+
+        while(!$this->checkForQRExistance($data)){
+            $data = $this->generateQRCodeData();
+        }
 
         $hash = hash('sha256', $data);
-        $ticketRepository = new TicketRepository();
-        if($ticketRepository->addQRCodeTicket($ticket->getTicketId(), $hash)){
+        if($this->ticketRepository->addQRCodeTicket($ticket->getTicketId(), $hash)){
             return (new QRCode)->render($hash);
         }
 
@@ -24,23 +34,30 @@ class QRService
     }
 
     public function scanQRCode($userTicketID){
-        $ticketRepository = new TicketRepository();
-        return $ticketRepository->scanQRCode($userTicketID);
+        return $this->ticketRepository->scanQRCode($userTicketID);
     }
 
     public function qrCodeScanned($userTicketID){
-        $ticketRepository = new TicketRepository();
-
-        return $ticketRepository->qrCodeScanned($userTicketID);
+        return $this->ticketRepository->qrCodeScanned($userTicketID);
     }
 
     public function getQrCode($userTicketID){
-        $ticketRepository = new TicketRepository();
-        return $ticketRepository->getQrCode($userTicketID);
+        return $this->ticketRepository->getQrCode($userTicketID);
     }
 
     public function getQRIDByCode($code){
-        $ticketRepository = new TicketRepository();
-        return $ticketRepository->getQRIDByCode($code);
+        return $this->ticketRepository->getQRIDByCode($code);
+    }
+
+    private function generateQRCodeData($length = 32){
+        return bin2hex(random_bytes($length / 2));
+    }
+
+    private function checkForQRExistance($data){
+        if($this->ticketRepository->getQRIDByCode($data) === null){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

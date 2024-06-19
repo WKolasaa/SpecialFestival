@@ -83,7 +83,7 @@ class EmailService
             $pdfService = new PDFService();
             // session_start();
             $userID = $_SESSION['userId'];
-            $userTickets = $userTicketRepository->getTicketByUserID($userID); //TODO: change the hardcoded shit
+            $userTickets = $userTicketRepository->getTicketByUserID($userID);
             $ticketsObjects = [];
 
             foreach ($userTickets as $ticket){
@@ -233,6 +233,8 @@ class EmailService
                 ',
                 'attachments' => $pdfs,
             ]);
+
+            header("/thankyoupage");
         } catch (Exception $e){
             throw new Exception($e->getMessage());
         }

@@ -10,6 +10,7 @@ document.getElementById('startButton').addEventListener('click', () => {
             codeReader.decodeFromVideoDevice(firstDeviceId, 'video', (result, err) => {
                 if (result) {
                     console.log(result)
+                    codeReader.reset();
                     fetch('/api/employee/handleQRData', {
                         method: 'POST',
                         headers: {
@@ -27,14 +28,11 @@ document.getElementById('startButton').addEventListener('click', () => {
                                 if (data.scanned) {
                                     // Ticket already scanned
                                     scanned = true;
-                                    displayTicketInformation();
-                                    // Perform additional actions if needed
                                 } else {
                                     // Ticket scanned for the first time
                                     scanned = false;
-                                    displayTicketInformation();
-                                    // Perform additional actions if needed
                                 }
+                                displayTicketInformation();
                             }
                         })
                         .catch(error => {
@@ -44,8 +42,10 @@ document.getElementById('startButton').addEventListener('click', () => {
                         });
                 }
                 if (err && !(err instanceof ZXing.NotFoundException)) {
-                    console.error(err)
-                    alert('Error scanning QR Code: ' + err.message)
+                    if(err !== 'undefined'){
+                        console.error(err)
+                        //alert('Error scanning QR Code 111: ' + err.message)
+                    }
                 }
             })
         })

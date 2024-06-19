@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Services\UserService;
+use ReflectionFunctionAbstract;
 
 class UserController
 {
@@ -101,5 +102,40 @@ public function delete()
 
     }
     return $data;
+  }
+
+  public function login(){
+    $jsonData = file_get_contents('php://input');
+    $decodedData = json_decode($jsonData, true);
+    $loginInput = $decodedData['loginInput'];
+    $password = $decodedData['password'];
+    $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+    $userService = new UserService();
+    if (filter_var($loginInput, FILTER_VALIDATE_EMAIL)) {
+      $user = $userService->loginByEmail($loginInput, $hashPassword);
+    } else {
+      $user = $userService->loginByUserName($loginInput, $hashPassword);
+    }
+
+    if ($user) {
+      session_start();
+      $_SESSION['user'] = $user;
+      $_SESSION['userId'] = $user->getId();
+      $_SESSION['Email'] = $user->getEmail();
+      $_SESSION['role'] = $user->getUserRole();
+      if ($_SESSION['role'] == "ADMINISTRATOR") {
+        //header('Location: /AdminView');
+        echo json_encode(['success' => 'Logged as Admin in successfully']);
+      } else if ($_SESSION['role'] == "EMPLOYEE") {
+        //header('Location: /employee');
+        echo json_encode(['success' => 'Logged as Employee in successfully']);
+      } else {
+        //header('Location: /');
+        echo json_encode(['success' => 'Logged as User in successfully']);
+      }
+    } else {
+      echo json_encode(['error' => 'Wrong username or password']);
+      var_dump($user);
+    }
   }
 }
