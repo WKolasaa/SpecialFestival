@@ -65,7 +65,7 @@ body, html {
     margin: 20px;
     background-color: #161A30; /* Or any other suitable background color */
     border-radius: 8px;
-    overflow: hidden;
+    overflow:visible;
     /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
 }
 
@@ -201,6 +201,7 @@ body, html {
     font-weight: bold;
     color: #FFD700; /* This is a gold color, commonly perceived as warm-yellow */
 }
+
 /* Footer css */
 .footer {
     background-color: #0e0e0e; 
