@@ -173,7 +173,7 @@ $events = $restaurant->getEvents();
 
                     <div class="row justify-content-center mt-4">
                         <div class="col-auto">
-                            <button type="button" class="btn btn-reserve" onclick="validateForm()">Reserve</button>
+                            <button type="button" class="btn btn-reserve" onclick="isLoggedIn()">Reserve</button>
                         </div>
                     </div>
 
@@ -186,7 +186,8 @@ $events = $restaurant->getEvents();
     </div>
 </div>
 
-<script src="js/Yummy/reservation.js"></script>
+<script src="/js/Yummy/reservation.js"></script>
+
 </body>
 
 

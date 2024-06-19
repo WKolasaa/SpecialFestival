@@ -11,7 +11,7 @@ include __DIR__ . '/header.php';
                         Login
                     </div>
                     <div class="card-body">
-                        <form action="/login/login" method="POST">
+                        <form>
                             <div class="form-group">
                                 <label for="username">Username or Email:</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -24,13 +24,15 @@ include __DIR__ . '/header.php';
                                 Forgot password? <a href="/RestorePassword">Click here</a>
                             </div>
                             <p></p>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-primary" onclick="login()">Login</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/login.js"></script>
+
 
 <?php
 include __DIR__ . '/footer.php';
