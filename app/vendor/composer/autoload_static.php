@@ -4,80 +4,160 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09
+class ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778
 {
+    public static $files = array (
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        '0754989a10baadda533479884b399278' => __DIR__ . '/..' . '/resend/resend-php/src/Resend.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'c' => 
+        array (
+            'chillerlan\\Settings\\' => 20,
+            'chillerlan\\QRCode\\' => 18,
+        ),
         'S' => 
         array (
-            'Services\\' => 9,
+            'Svg\\' => 4,
+            'Stripe\\' => 7,
+            'Sabberworm\\CSS\\' => 15,
         ),
         'R' => 
         array (
-            'Routers\\' => 8,
-            'Repositories\\' => 13,
+            'Resend\\' => 7,
+        ),
+        'P' => 
+        array (
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
         ),
         'M' => 
         array (
-            'Models\\' => 7,
+            'Masterminds\\' => 12,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
-            'Firebase\\JWT\\' => 13,
+            'FontLib\\' => 8,
         ),
-        'C' => 
+        'D' => 
         array (
-            'Controllers\\' => 12,
+            'Dompdf\\' => 7,
+        ),
+        'A' => 
+        array (
+            'App\\Views\\' => 10,
+            'App\\Services\\' => 13,
+            'App\\Repositories\\' => 17,
+            'App\\Models\\' => 11,
+            'App\\Controllers\\' => 16,
+            'App\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Services\\' => 
+        'chillerlan\\Settings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
+        ),
+        'chillerlan\\QRCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
+        ),
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
+        ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
+        'Resend\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/resend/resend-php/src',
+        ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+        ),
+        'Psr\\Http\\Client\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
+        ),
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+        'App\\Views\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/views',
+        ),
+        'App\\Services\\' => 
         array (
             0 => __DIR__ . '/../..' . '/services',
         ),
-        'Routers\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/routers',
-        ),
-        'Repositories\\' => 
+        'App\\Repositories\\' => 
         array (
             0 => __DIR__ . '/../..' . '/repositories',
         ),
-        'Models\\' => 
+        'App\\Models\\' => 
         array (
             0 => __DIR__ . '/../..' . '/models',
         ),
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
-        ),
-        'Controllers\\' => 
+        'App\\Controllers\\' => 
         array (
             0 => __DIR__ . '/../..' . '/controllers',
         ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'B' => 
+        'App\\' => 
         array (
-            'Bramus' => 
-            array (
-                0 => __DIR__ . '/..' . '/bramus/router/src',
-            ),
+            0 => __DIR__ . '/../..' . '/',
         ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit2a5b000460c064a9c32fe6ac415cfb09::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3632ad4f81deb0f33a4c563bcbe40778::$classMap;
 
         }, null, ClassLoader::class);
     }

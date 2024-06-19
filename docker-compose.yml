@@ -13,12 +13,15 @@ services:
             dockerfile: PHP.Dockerfile
         volumes:
             - ./app:/app
-    mysql:
+        environment:
+            - secretKeyCaptcha = "6LdMtIEpAAAAAMuB5xeiQnbtHZ97L14-TZyEtUPJ";
+            - sideKey = "6LdMtIEpAAAAAItp4USCkfo9OHBPXjlxo1mz-hVI";
+    mysql: 
         image: mariadb:latest
         environment:
-            MYSQL_ROOT_PASSWORD: 'secret123'
+            MYSQL_ROOT_PASSWORD: 'festival123'
             MYSQL_USER: 'developer'
-            MYSQL_PASSWORD: 'secret123'
+            MYSQL_PASSWORD: 'festival123'
             MYSQL_DATABASE: 'developmentdb'
         volumes:
             - mysqldata:/var/lib/mysql
