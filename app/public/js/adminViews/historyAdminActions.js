@@ -270,7 +270,7 @@ function deleteTimeslot(button) {
             .then(data => {
                 if (data.success) {
                     tr.remove();  // Remove the row from the table on successful deletion
-                    alert("Timeslot deleted successfully.");
+                    showToast("Timeslot deleted successfully.", "#008000");
                 } else {
                     throw new Error('Failed to delete timeslot: ' + data.message);
                 }
