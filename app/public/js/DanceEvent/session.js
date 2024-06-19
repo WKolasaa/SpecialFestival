@@ -279,7 +279,7 @@ function addToCart(session, button) {
     }
 
 
-    fetch("api/DanceEvent/addTicket", {
+    fetch("/api/DanceEvent/addTicket", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

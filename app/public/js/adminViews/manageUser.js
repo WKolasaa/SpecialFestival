@@ -1,6 +1,6 @@
 let allUsers = [];
 function loadData() {
-  fetch("http://localhost/api/manageuser")
+  fetch("/api/ManageUser")
     .then((response) => response.json())
     .then((data) => {
       allUsers = data; // Store all users in the array
@@ -177,7 +177,7 @@ function saveChanges(event) {
 
   /////////////////////////update user info//////////////////////////////
   // Send the updated data to the server using a POST request
-  fetch("http://localhost/api/manageuser/updateUser", {
+  fetch("/api/ManageUser/updateUser", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -290,7 +290,7 @@ function handleDeleteButtonClick(event) {
   const deletedUser = constructUserObject(id, username, userRole);
 
   // Step 6: Send DELETE request to server
-  fetch(`http://localhost/api/manageuser/deleteUserByAdmin`, {
+  fetch(`/api/ManageUser/deleteUserByAdmin`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -372,7 +372,7 @@ function saveNewUser() {
   };
 
   // Send the new user data to the server using a POST request
-  fetch("http://localhost/api/manageuser/createUserByAdmin", {
+  fetch("/api/ManageUser/createUserByAdmin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

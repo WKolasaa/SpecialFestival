@@ -124,7 +124,7 @@
     <?php endforeach; ?>
 
     <div class="buy-tickets-button-container">
-        <a href="/historymain/cart" class="buy-tickets-button">BUY TICKETS</a>
+        <a href="/HistoryMain/cart" class="buy-tickets-button">BUY TICKETS</a>
     </div>
 </div>
 

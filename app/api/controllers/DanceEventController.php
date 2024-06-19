@@ -12,8 +12,8 @@ require_once 'basecontroller.php';
 
 class DanceEventController extends BaseController
 {
-    private $danceEventService;
-    private $userTicketService;
+    private DanceEventService $danceEventService;
+    private UserTicketService $userTicketService;
 
     function __construct()
     {

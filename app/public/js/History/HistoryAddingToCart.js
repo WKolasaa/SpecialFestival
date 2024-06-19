@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 console.log(startTime, endTime, date,  start_date, end_date, price, description, event_name, ticket_name, location);
                 // Send the collected data to the server via POST request.
-                fetch('http://localhost/api/historyadmin/addToCart', {
+                fetch('/api/HistoryAdmin/addToCart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 ////////////////// function to check if the user is logged in //////////////////
 function checkUserSession() {
-    return fetch("http://localhost/api/historyadmin/checkUser")
+    return fetch("/api/HistoryAdmin/checkUser")
       .then((response) => response.json())
       .then((data) => data.hasSession);
   }

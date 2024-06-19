@@ -61,7 +61,7 @@ function updateButton(action) {
 }
 
 function fetchRestaurantsReturn() {
-    return fetch('http://localhost/api/yummyadmin/getAllRestaurants')
+    return fetch('/api/YummyAdmin/getAllRestaurants')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -137,7 +137,7 @@ function updateRestaurant(restaurantId) {
         chef: document.getElementById(`restaurant-chef-${restaurantId}`).textContent
     };
     console.log(restaurant);
-    fetch('http://localhost/api/yummyadmin/updateRestaurant', {
+    fetch('/api/YummyAdmin/updateRestaurant', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -159,7 +159,7 @@ function updateRestaurant(restaurantId) {
 
 function deleteRestaurant(restaurantId) { //TODO: Finish it (only url here was pasted). Do it when add works properly
     if (confirm('Are you sure you want to delete this restaurant?')) {
-        fetch('http://localhost/api/yummyadmin/deleteRestaurant', {
+        fetch('/api/YummyAdmin/deleteRestaurant', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -211,10 +211,10 @@ function fetchRestaurantSessions(restaurantId) {
     // Check if restaurantId is null or undefined
     if (restaurantId === null || restaurantId === undefined) {
         // If restaurantId is null or undefined, fetch data from a different API endpoint
-        apiUrl = 'http://localhost/api/yummyadmin/getAllRestaurantsEvents';
+        apiUrl = '/api/YummyAdmin/getAllRestaurantsEvents';
     } else {
         // If restaurantId is set, fetch data from the specified API endpoint
-        apiUrl = 'http://localhost/api/yummyadmin/getRestaurantsEventsById';
+        apiUrl = '/api/YummyAdmin/getRestaurantsEventsById';
     }
 
     fetch(apiUrl, {
@@ -304,7 +304,7 @@ function saveSession(eventId) {
         seats_left: document.getElementById(`event-seats-left-${eventId}`).textContent
     };
 
-    fetch('http://localhost/api/yummyadmin/updateEvent', {
+    fetch('/api/YummyAdmin/updateEvent', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -324,7 +324,7 @@ function saveSession(eventId) {
 
 function removeSession(eventId) { //TODO: Change method to remove
     if (confirm('Are you sure you want to delete this session?')) {
-        fetch('http://localhost/api/yummyadmin/deleteSession', {
+        fetch('/api/YummyAdmin/deleteSession', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -419,7 +419,7 @@ function addingRestaurant() { //TODO: Find here is a problem here (console says 
         chef: document.getElementById('Chef-addRestaurant').textContent
     };
 
-    fetch('http://localhost/api/yummyadmin/addRestaurant', {
+    fetch('/api/YummyAdmin/addRestaurant', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -561,7 +561,7 @@ function addSession() { //TODO: finish this method cos it goes to weird page
         seats_left: document.getElementById('eventSeatsAvailable-addSession').textContent
     };
 
-    fetch('http://localhost/api/yummyadmin/addSession', {
+    fetch('/api/YummyAdmin/addSession', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -580,7 +580,7 @@ function addSession() { //TODO: finish this method cos it goes to weird page
 }
 
 function displayImages(restaurantID) {
-    fetch('http://localhost/api/yummyadmin/getAllImagesByRestaurantId', {
+    fetch('/api/YummyAdmin/getAllImagesByRestaurantId', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -697,7 +697,7 @@ function updateImages(id, imageInput) {
 
         console.log(formData.get('id'), formData.get('image'));
 
-        fetch(`http://localhost/api/yummyadmin/updateImage`, {
+        fetch(`/api/YummyAdmin/updateImage`, {
             method: 'POST',
             body: formData,
         })
@@ -716,7 +716,7 @@ function updateImages(id, imageInput) {
 }
 
 function fetchReservations() {
-    fetch('http://localhost/api/yummyadmin/getAllReservations')
+    fetch('/api/YummyAdmin/getAllReservations')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -784,7 +784,7 @@ function saveReservation(id) {
 
     console.log(reservation);
 
-    fetch('http://localhost/api/yummyadmin/updateReservation', {
+    fetch('/api/YummyAdmin/updateReservation', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -804,7 +804,7 @@ function saveReservation(id) {
 
 function removeReservation(id) { //TODO: Finish this method
     if (confirm('Are you sure you want to delete this reservation?')) {
-        fetch('http://localhost/api/yummyadmin/deleteReservation', {
+        fetch('/api/YummyAdmin/deleteReservation', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -862,7 +862,7 @@ function addReservation() {
         specialRequests: document.getElementById('specialRequests-Reservation').value
     };
 
-    fetch('http://localhost/api/yummyadmin/addReservation', {
+    fetch('/api/YummyAdmin/addReservation', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

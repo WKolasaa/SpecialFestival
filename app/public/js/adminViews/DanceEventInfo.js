@@ -247,7 +247,7 @@ function loadAgenda() {
 
 let allTickets = [];
 function loadTickets() {
-  fetch("api/DanceEvent/sessions")
+  fetch("/api/DanceEvent/sessions")
     .then((response) => response.json())
     .then((data) => {
       allTickets = data; // Store all users in the array

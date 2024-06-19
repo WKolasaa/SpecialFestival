@@ -40,7 +40,7 @@ function editEntry(entryId) {
                 formData.append('entry_id', entryId);
                 formData.append('image', fileInput.files[0]);
 
-                fetch('/api/historyadmin/updateImage', {
+                fetch('/api/HistoryAdmin/updateImage', {
                     method: 'POST',
                     body: formData
                 }).then(response => {
@@ -79,7 +79,7 @@ function editEntry(entryId) {
             formData.append('entry_id', entryId);
             formData.append('content', contentTextarea.value);
 
-            fetch('/api/historyadmin/update', {
+            fetch('/api/HistoryAdmin/update', {
                 method: 'POST',
                 body: formData
             }).then(response => {
@@ -114,7 +114,7 @@ function editEntry(entryId) {
 }
 
 function deleteEntry(entryId) {
-    fetch(`/api/historyadmin/delete?entry_id=${entryId}`)
+    fetch(`/api/HistoryAdmin/delete?entry_id=${entryId}`)
         .then(() => document.getElementById(`entry-${entryId}`).remove())
         .catch((error) => {
             console.error(error);
@@ -213,7 +213,7 @@ function saveTimeslot(button) {
     };
 
     // Send the data to the server using fetch API
-    fetch('/api/historyadmin/updateTimeslot', {
+    fetch('/api/HistoryAdmin/updateTimeslot', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ function deleteTimeslot(button) {
     const timeslotId = tr.getAttribute('data-timeslot-id');
 
     if (confirm("Are you sure you want to delete this timeslot?")) {
-        fetch(`/api/historyadmin/deleteTimeslot?id=${timeslotId}`, {
+        fetch(`/api/HistoryAdmin/deleteTimeslot?id=${timeslotId}`, {
             method: 'GET'  // Or 'POST', if your server endpoint requires it
         })
             .then(response => {
