@@ -60,7 +60,7 @@ function addAnotherSection() {
 
 function savePage() {
     const pageTitle = document.getElementById('pageTitleInput').value;
-    if (!pageTitle) {
+    if (!pageTitle || pageTitle.trim() === '') {
         document.getElementById('message-container').innerHTML = '<div class="alert alert-danger mt-3">Please enter a title for the page.</div>';
         return;
     }
