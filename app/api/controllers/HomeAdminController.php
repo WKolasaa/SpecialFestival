@@ -12,12 +12,10 @@ class HomeAdminController{
     }
 
     public function update() {
-        // echo "update";
     $id = $_POST["id"];
     $content = $_POST["content"];
 
-    // Assume updateEntry method returns true on success, false on failure
-    $result = $this->homeContentService->updateEntry($id, $content);
+    $this->homeContentService->updateEntry($id, $content);
 
     header('Content-Type: application/json');
 
@@ -56,7 +54,7 @@ class HomeAdminController{
             // Constructing a relative URL to the uploaded image to return to the client
             $relativeUrl = '/img/Home/' . $uniqueFileName;
             $this->homeContentService->updateEntry($id, $relativeUrl);
-            // Ensure you return the full URL or a correct relative path that the client can resolve
+            
             echo json_encode(['success' => true, 'imageUrl' => $relativeUrl, 'message' => 'Image updated successfully.']);
         } else {
             http_response_code(500); // Internal Server Error
@@ -70,7 +68,7 @@ class HomeAdminController{
     }
 
     public function getEventsByDate() {
-        $date = $_GET['date']; // Or handle date input validation more robustly
+        $date = $_GET['date']; 
         $events = $this->homeContentService->getEventsByDate($date);
     
         header('Content-Type: application/json');
@@ -96,7 +94,7 @@ class HomeAdminController{
 
     public function deleteEvent() {
         error_log("Delete function called");
-        $eventId = $_GET['id']; // Ensure this value is being correctly retrieved
+        $eventId = $_GET['id']; 
         error_log("Attempting to delete event with ID: " . $eventId);
     
         if ($this->homeContentService->deleteEvent($eventId)) {
@@ -120,7 +118,7 @@ class HomeAdminController{
     
         header('Content-Type: application/json');
         if ($success) {
-            $newEventId = $this->homeContentService->getLastInsertId(); // Предполагается, что вы можете получить ID последнего вставленного события
+            $newEventId = $this->homeContentService->getLastInsertId(); 
             echo json_encode(['success' => true, 'message' => 'Event added successfully.', 'eventId' => $newEventId]);
         } else {
             http_response_code(500);

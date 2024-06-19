@@ -7,11 +7,11 @@ class HomeCMSEntry {
     private $content_type; // 'TEXT' или 'IMAGE'
     private $content;
 
-    // Пустой конструктор
+    // empty constructor
     public function __construct() {
     }
 
-    // Геттеры
+    // Getters
     public function getId() {
         return $this->id;
     }
@@ -28,7 +28,8 @@ class HomeCMSEntry {
         return $this->content;
     }
 
-    // Сеттеры
+    // setters
+    
     public function setId($id) {
         $this->id = $id;
     }

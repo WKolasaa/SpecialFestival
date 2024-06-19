@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\HomeCMSEntry; // importing classes and exceptions
+use App\Models\HomeCMSEntry; 
 use App\Models\HistoryEntryTypeEnum;
 use App\Models\HomeEvent;
 

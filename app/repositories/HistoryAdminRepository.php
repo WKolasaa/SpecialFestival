@@ -184,7 +184,6 @@ public function addTimeslot($day, $start_time, $end_time, $english_tour, $dutch_
   }
 
   ////////////////// Retrieves a specific timeslot by its ID from the history_timeslots table //////////////////
-  ////////////////// Retrieves a specific timeslot by its ID from the history_timeslots table //////////////////
   public function getTimeslotById($id) {
     $sql = "SELECT * FROM history_timeslots WHERE id = :id";
     $statement = $this->connection->prepare($sql);

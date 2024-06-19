@@ -9,11 +9,11 @@ class HomeEvent {
     private $startTime;
     private $endTime;
 
-    // Пустой конструктор
+    // empty constructor
     public function __construct() {
     }
 
-    // Геттеры
+    // getters
     public function getId() {
         return $this->id;
     }
@@ -38,7 +38,7 @@ class HomeEvent {
         return $this->endTime;
     }
 
-    // Сеттеры
+    // Setters
     public function setId($id) {
         $this->id = $id;
     }

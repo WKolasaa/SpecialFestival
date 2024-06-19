@@ -10,11 +10,11 @@ class HistoryTimeslot {
     private $dutch_tour;
     private $chinese_tour;
 
-    // Пустой конструктор
+    // empty constructor
     public function __construct() {
     }
 
-    // Геттеры
+    // Getters
     public function getId() {
         return $this->id;
     }
@@ -43,7 +43,7 @@ class HistoryTimeslot {
         return $this->chinese_tour;
     }
 
-    // Сеттеры
+    // Setters
     public function setId($id) {
         $this->id = $id;
     }
