@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(addEventForm);
 
-            fetch('/api/homeadmin/addEvent', { 
+            fetch('/api/HomeAdmin/addEvent', {
                 method: 'POST',
                 body: formData,
             })
@@ -145,7 +145,7 @@ function editEntry(id) {
                 formData.append('id', id);
                 formData.append('image', fileInput.files[0]);
 
-                fetch('/api/homeadmin/updateImage', {
+                fetch('/api/HomeAdmin/updateImage', {
                     method: 'POST',
                     body: formData
                 }).then(response => {
@@ -183,7 +183,7 @@ function editEntry(id) {
             formData.append('id', id);
             formData.append('content', contentTextarea.value);
 
-            fetch('/api/homeadmin/update', {
+            fetch('/api/HomeAdmin/update', {
                 method: 'POST',
                 body: formData
             }).then(response => {
@@ -218,7 +218,7 @@ function editEntry(id) {
 
 // Confirms the deletion of an event, then sends a request to the server to delete the event. If successful, it removes the event row from the DOM.
 function deleteEvent(eventId) {
-        fetch(`/api/homeadmin/deleteEvent?id=${eventId}`, {
+        fetch(`/api/HomeAdmin/deleteEvent?id=${eventId}`, {
             method: 'GET'
         })
         .then(response => response.json())
@@ -288,7 +288,7 @@ function saveEvent(eventId) {
         endTime: inputs[4].value
     };
 
-    fetch('/api/homeadmin/updateEvent', {
+    fetch('/api/HomeAdmin/updateEvent', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
