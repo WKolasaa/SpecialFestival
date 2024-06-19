@@ -65,8 +65,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     description = language+', Regular ticket';
                 }
 
-                const event_name = 'Haarlem Tour';
-                const ticket_name = 'HISTORY EVENT';
+                const event_name = 'HISTORY EVENT';
+                const ticket_name = 'Haarlem Tour';
                 const location = 'Grote Markt 22, 2011 RD Haarlem';
                 
                 console.log(startTime, endTime, date,  start_date, end_date, price, description, event_name, ticket_name, location);
