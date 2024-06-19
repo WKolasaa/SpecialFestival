@@ -24,7 +24,25 @@ function updateSessions(selectedDay) {
         })
         .catch(error => {
             console.log('Error:', error);
-            showMessage('Error fetching restaurant data', 'alert-danger');
+            showToast('Error fetching restaurant data', 'red');
+            //showMessage('Error fetching restaurant data', 'alert-danger');
+        });
+}
+
+function isLoggedIn(){
+    fetch('/api/User/userLoggedIn')
+        .then(response => response.json())
+        .then(data => {
+            //console.log(data);
+            if (data.success) {
+                validateForm();
+            } else {
+                showToast('Please log in to make a reservation', 'red');
+                //showMessage('Please log in to make a reservation', 'alert-danger')
+            }
+        })
+        .catch((error) => {
+            showToast('Something went wrong :(', 'red');
         });
 }
 
@@ -41,17 +59,20 @@ function validateForm() {
     const specialRequests = document.getElementById('specialRequests').value;
 
     if (regularTickets < 0 || reducedTickets < 0) {
-        showMessage("Please enter a valid number of tickets.", 'alert-danger');
+        showToast('Please enter a valid number of tickets.', 'red');
+        //showMessage("Please enter a valid number of tickets.", 'alert-danger');
         return false;
     }
 
     if (daySelect === "" || sessionSelect.value === "") {
-        showMessage("Please select both a day and a session.", 'alert-danger');
+        showToast('Please select both a day and a session.', 'red');
+        //showMessage("Please select both a day and a session.", 'alert-danger');
         return false;
     }
 
     if (totalTickets > seatsLeft) {
-        showMessage(`Only ${seatsLeft} seats left for the selected session. You have requested ${totalTickets} tickets.`, 'alert-danger');
+        showToast(`Only ${seatsLeft} seats left for the selected session. You have requested ${totalTickets} tickets.`, 'red');
+        //showMessage(`Only ${seatsLeft} seats left for the selected session. You have requested ${totalTickets} tickets.`, 'alert-danger');
         return false;
     }
 
@@ -73,12 +94,14 @@ function validateForm() {
             if (data.success) {
                 reserve(restaurantId, eventID, regularTickets, reducedTickets, specialRequests, daySelect);
             } else {
-                showMessage('Error reserving seats', 'alert-danger');
+                showToast('Error reserving seats', 'red');
+                //showMessage('Error reserving seats', 'alert-danger');
             }
         })
         .catch(error => {
             console.log('Error:', error);
-            showMessage('Error reserving seats', 'alert-danger');
+            showToast('Error reserving seats', 'red');
+            //showMessage('Error reserving seats', 'alert-danger');
         });
 
 }
@@ -94,7 +117,7 @@ function reserve(restaurantID, eventID, regularTickets, reducedTickets, specialR
         specialRequests: specialRequests
     };
 
-    console.log(array);
+    //console.log(array);
 
     fetch('/api/YummyReservation/addTicket', {
         method: 'POST',
@@ -106,17 +129,20 @@ function reserve(restaurantID, eventID, regularTickets, reducedTickets, specialR
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                showMessage('Reservation successful', 'alert-success');
+                showToast('Reservation successful', 'green');
+                //showMessage('Reservation successful', 'alert-success');
                 setTimeout(() => {
                     updateSessions(daySelect);
                 }, 1000);
             } else {
-                showMessage('Error reserving seats ADD TICKET', 'alert-danger');
+                showToast('Error reserving seats', 'red');
+                //showMessage('Error reserving seats ADD TICKET', 'alert-danger');
             }
         })
         .catch(error => {
-            console.log('Error:', error);
-            showMessage('Error reserving seats CATCH ADD TICKET', 'alert-danger');
+            //console.log('Error:', error);
+            showToast('Error reserving seats', 'red');
+            //showMessage('Error reserving seats', 'alert-danger');
         });
 }
 

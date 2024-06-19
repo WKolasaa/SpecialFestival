@@ -125,17 +125,27 @@ public function delete()
       $_SESSION['role'] = $user->getUserRole();
       if ($_SESSION['role'] == "ADMINISTRATOR") {
         //header('Location: /AdminView');
-        echo json_encode(['success' => 'Logged as Admin in successfully']);
+        echo json_encode(['success' => 'Admin']);
       } else if ($_SESSION['role'] == "EMPLOYEE") {
         //header('Location: /employee');
-        echo json_encode(['success' => 'Logged as Employee in successfully']);
+        echo json_encode(['success' => 'Employee']);
       } else {
         //header('Location: /');
-        echo json_encode(['success' => 'Logged as User in successfully']);
+        echo json_encode(['success' => 'User']);
       }
     } else {
-      echo json_encode(['error' => 'Wrong username or password']);
-      var_dump($user);
+      echo json_encode(['error' => 'Wrong username/email or password!']);
+      //var_dump($user);
     }
+  }
+
+  public function userLoggedIn(){
+        session_start();
+      if(isset($_SESSION['user'])){
+          echo json_encode(['success' => 'User logged in']);
+      }
+      else{
+          echo json_encode(['error' => 'User not logged in']);
+      }
   }
 }
