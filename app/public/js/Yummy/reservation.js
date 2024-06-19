@@ -1,6 +1,6 @@
 function updateSessions(selectedDay) {
     const restaurantID = document.getElementById('restaurant').textContent;
-    fetch('http://localhost/api/yummyreservation/getRestaurantEvents', {
+    fetch('/api/YummyReservation/getRestaurantEvents', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ function validateForm() {
         return false;
     }
 
-    fetch('http://localhost/api/yummyreservation/reserve', {
+    fetch('/api/YummyReservation/reserve', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ function reserve(restaurantID, eventID, regularTickets, reducedTickets, specialR
 
     console.log(array);
 
-    fetch('http://localhost/api/yummyreservation/addTicket', {
+    fetch('/api/YummyReservation/addTicket', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

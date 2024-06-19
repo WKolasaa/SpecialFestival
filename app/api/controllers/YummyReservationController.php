@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\restaurantReservation;
+use App\Models\RestaurantReservation;
 use App\Models\Ticket;
 use App\Models\TicketType;
-use App\Services\restaurantservice;
+use App\Services\RestaurantService;
 use DateTime;
 use Exception;
 

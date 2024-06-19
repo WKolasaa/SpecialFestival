@@ -32,7 +32,7 @@ foreach ($event as $e) {
                 with
                 electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
             </p>
-            <a href="/danceevent/session">
+            <a href="/DanceEvent/session">
                 <button class="btn btn-danger day1">Get Tickets</button>
             </a>
         </div>
@@ -109,7 +109,7 @@ foreach ($event as $e) {
                 filled with
                 electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
             </p>
-            <a href="/danceevent/session">
+            <a href="/DanceEvent/session">
                 <button class="btn btn-danger day2">Get Tickets</button>
             </a>
         </div>
@@ -129,7 +129,7 @@ foreach ($event as $e) {
                 with
                 electrifying performances and events. Don't miss out – check the schedule and secure your tickets now.
             </p>
-            <a href="/danceevent/session">
+            <a href="/DanceEvent/session">
                 <button class="btn btn-danger day3">Get Tickets</button>
             </a>
         </div>
