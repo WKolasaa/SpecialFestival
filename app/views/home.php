@@ -15,7 +15,7 @@
       <p><?= $service->getContent('Intro Text'); ?></p>
     </section>
     <section class="event-highlights">
-      <a href="somePage.php" class="event">
+      <a href="#" class="event">
         <img src="<?= $service->getContent('Teylers Event Image'); ?>" alt="Teyler's app" class="event-image">
         <h2 class="event-title"><?= $service->getContent('Teylers Event Title'); ?></h2>
       </a>

@@ -19,7 +19,7 @@ class PageManagementController
     {
         try {
             $pages = $this->pageManagementService->getAllPages();
-            require __DIR__ . '/../views/CustomPages/pageEditor.php';
+            require __DIR__ . '/../views/CustomPages/listPage.php';
         } catch (Exception $e) {
             $this->handleException($e, "Error retrieving pages");
         }
@@ -39,7 +39,7 @@ class PageManagementController
             $pageId = $this->sanitizeInput($_GET['pageId'] ?? null, FILTER_SANITIZE_NUMBER_INT);
             $pageTitle = $this->pageManagementService->getPageTitle($pageId);
             $sections = $this->pageManagementService->getSectionsByPage($pageId);
-            require __DIR__ . '/../views/CustomPages/sectionEditor.php';
+            require __DIR__ . '/../views/CustomPages/listSections.php';
         } catch (Exception $e) {
             $this->handleException($e, "Error retrieving sections");
         }
@@ -67,7 +67,7 @@ class PageManagementController
                     $sections[$key]['images'] = $this->pageManagementService->getImagesBySection((int)$section['sectionId']);
                     $sections[$key]['paragraphs'] = $this->pageManagementService->getParagraphsBySection((int)$section['sectionId']);
                 }
-                require __DIR__ . '/../views/CustomPages/pageTemplate.php';
+                require __DIR__ . '/../views/CustomPages/templatePage.php';
             }
         } catch (Exception $e) {
             $this->handleException($e, "Error showing the page");

@@ -172,9 +172,6 @@ class PageManagementController
             $sectionId = $this->sanitizeInput($_POST['sectionId'], FILTER_SANITIZE_NUMBER_INT);
             $content = $_POST['content'];
 
-            list($heading, $subTitle) = $this->extractHeadingAndSubTitle($content);
-            $this->pageManagementService->updateSection($sectionId, $heading, $subTitle);
-
             $paragraphs = $this->extractParagraphs($content);
             $this->updateParagraphs($paragraphs, $sectionId);
 

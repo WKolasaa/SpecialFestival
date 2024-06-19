@@ -33,7 +33,7 @@ include __DIR__ . '/../header.php';
     <button class="btn btn-primary float-end" onclick="openSectionModal()">Add Section</button>
 </div>
 
-<?php include __DIR__ . '/editorModal.php'; ?>
+<?php include __DIR__ . '/editSection.php'; ?>
 <?php include __DIR__ . '/addSection.php'; ?>
 <?php include __DIR__ . '/../foot.php'; ?>
 
