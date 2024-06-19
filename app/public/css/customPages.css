@@ -16,10 +16,6 @@ h1 {
     font-family: 'Aleo', sans-serif;
 }
 
-.container.subsection {
-    display: none;
-}
-
 #image-col {
     display: block;
     width: 100%;

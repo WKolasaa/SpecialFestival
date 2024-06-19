@@ -71,8 +71,7 @@ class PageManagementController
                     $sectionType = $this->sanitizeInput($section['sectionType'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     $content = $section['content'];
 
-                    list($heading, $subTitle) = $this->extractHeadingAndSubTitle($content);
-                    $sectionId = $this->pageManagementService->addSection($pageId, $sectionType, $heading, $subTitle);
+                    $sectionId = $this->pageManagementService->addSection($pageId, $sectionType);
 
                     $paragraphs = $this->extractParagraphs($content);
                     foreach ($paragraphs as $paragraph) {
@@ -136,7 +135,7 @@ class PageManagementController
         try {
             foreach ($imageNames as $key => $imageName) {
                 $imageTmpName = $imageTmpNames[$key];
-                $this->uploadImage($imageTmpName, $imageName, $sectionId);
+                $this->uploadImage($imageTmpName, $imageName, $key, $sectionId);
             }
         } catch (Exception $e) {
             throw new Exception("Error uploading images: " . $e->getMessage());
