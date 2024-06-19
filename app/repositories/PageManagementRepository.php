@@ -37,7 +37,7 @@ class PageManagementRepository extends Repository
     public function getPageTitle($pageId)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT pageTitle FROM pages WHERE pageId = :pageId");
+            $stmt = $this->connection->prepare("SELECT pageTitle FROM Pages WHERE pageId = :pageId");
             $stmt->bindParam(':pageId', $pageId);
             $stmt->execute();
 
@@ -183,12 +183,11 @@ class PageManagementRepository extends Repository
         }
     }
 
-    public function addPage($pageTitle, $pageLink): false|string|null
+    public function addPage($pageTitle): false|string|null
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO Pages (pageTitle, pageLink) VALUES (:pageTitle, :pageLink)");
+            $stmt = $this->connection->prepare("INSERT INTO Pages (pageTitle) VALUES (:pageTitle)");
             $stmt->bindParam(':pageTitle', $pageTitle);
-            $stmt->bindParam(':pageLink', $pageLink);
             $stmt->execute();
             return $this->connection->lastInsertId();
         } catch (PDOException $e) {
@@ -197,14 +196,12 @@ class PageManagementRepository extends Repository
         }
     }
 
-    public function addSection($pageId, $sectionType, $heading, $subTitle): false|string|null
+    public function addSection($pageId, $sectionType): false|string|null
     {
         try {
-            $stmt = $this->connection->prepare("INSERT INTO Sections (pageId, type, heading, subTitle) VALUES (:pageId, :sectionType, :heading, :subTitle)");
+            $stmt = $this->connection->prepare("INSERT INTO Sections (pageId, type) VALUES (:pageId, :sectionType)");
             $stmt->bindParam(':pageId', $pageId);
             $stmt->bindParam(':sectionType', $sectionType);
-            $stmt->bindParam(':heading', $heading);
-            $stmt->bindParam(':subTitle', $subTitle);
             $stmt->execute();
             return $this->connection->lastInsertId();
         } catch (PDOException $e) {
@@ -272,37 +269,6 @@ class PageManagementRepository extends Repository
         } catch (PDOException $e) {
             error_log("Error deleting page: " . $e->getMessage());
             return false;
-        }
-
-    }
-
-    public function getPageByLink($pageLink)
-    {
-        try {
-            $stmt = $this->connection->prepare("SELECT pageId FROM Pages WHERE pageLink = :pageLink");
-            $stmt->bindParam(':pageLink', $pageLink);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($result) {
-                return $result['pageId'];
-            } else {
-                return null;
-            }
-        } catch (PDOException $e) {
-            error_log("Error retrieving page: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public function nav(): false|array|null
-    {
-        try {
-            $stmt = $this->connection->prepare("SELECT * FROM Pages WHERE pageLink IS NOT NULL");
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error retrieving navigation: " . $e->getMessage());
-            return null;
         }
     }
 }

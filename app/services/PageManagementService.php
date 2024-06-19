@@ -78,9 +78,9 @@ class PageManagementService
         return $this->pageManagementRepository->addPage($pageTitle, $pageLink);
     }
 
-    public function addSection($pageId, $sectionType, $heading, $subTitle): false|string|null
+    public function addSection($pageId, $sectionType): false|string|null
     {
-        return $this->pageManagementRepository->addSection($pageId, $sectionType, $heading, $subTitle);
+        return $this->pageManagementRepository->addSection($pageId, $sectionType);
     }
 
     public function deleteSection($sectionId): bool
@@ -91,16 +91,6 @@ class PageManagementService
     public function deletePage($pageId): bool
     {
         return $this->pageManagementRepository->deletePage($pageId);
-    }
-
-    public function getPageByLink($pageLink)
-    {
-        return $this->pageManagementRepository->getPageByLink($pageLink);
-    }
-
-    public function nav(): false|array|null
-    {
-        return $this->pageManagementRepository->nav();
     }
 
     public function deleteParagraphsBySection($sectionId): void

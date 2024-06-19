@@ -23,6 +23,7 @@ function openEditorModal(sectionId) {
             if (data.section.heading) {
                 htmlContent += data.section.heading;
             }
+
             if (data.section.subTitle) {
                 htmlContent += data.section.subTitle;
             }
@@ -44,8 +45,8 @@ function openEditorModal(sectionId) {
                 imageUpload.accept = 'image/*';
                 imageUpload.dataset.imageId = image.imageId;
                 imageUpload.addEventListener('change', function (event) {
-                    var file = event.target.files[0];
-                    var imageId = event.target.dataset.imageId;
+                    const file = event.target.files[0];
+                    const imageId = event.target.dataset.imageId;
                     // Get the uploaded file
                     if (file) {
                         updateCurrentImage(imageId, URL.createObjectURL(file));
@@ -71,7 +72,6 @@ function updateCurrentImage(imageId, imagePath) {
     }
 }
 
-//save changes
 function saveContent() {
     const newContent = tinyMCE.activeEditor.getContent("editor");
     const formData = new FormData();
@@ -105,10 +105,6 @@ function saveContent() {
                     }
                     messageContainer.innerHTML = '';
                 }, 1000);
-
-                /* setTimeout(() => {
-                     window.location.reload();
-                 }, 1500);*/
             } else {
                 const messageContainer = document.getElementById('message-container-edit');
                 messageContainer.innerHTML = '<div class="alert alert-danger mt-3">Failed to save changes. Please try again.</div>';
@@ -132,7 +128,6 @@ function openSectionModal() {
 
 function addSection() {
     const formData = new FormData();
-    const pageId = pageId;
     const sectionType = document.querySelector('select').value;
     const textEditorId = 'sectionModal';
     const sectionContent = tinyMCE.activeEditor.getContent("editorNewSection");
@@ -147,7 +142,6 @@ function addSection() {
         formData.append(`section[images][${i}]`, file);
     }
     const formDataObject = Object.fromEntries(formData);
-    console.log(formDataObject);
     saveSection(formData);
 }
 

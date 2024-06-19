@@ -104,31 +104,6 @@ class PageManagementController
     /**
      * @throws Exception
      */
-    private function extractHeadingAndSubTitle(string $content): array
-    {
-        try {
-            $dom = new DOMDocument();
-            @$dom->loadHTML($content);
-            $headings = [];
-
-            for ($i = 1; $i <= 6; $i++) {
-                foreach ($dom->getElementsByTagName("h$i") as $currentHeading) {
-                    $headings[] = $currentHeading;
-                }
-            }
-
-            $heading = !empty($headings) ? $dom->saveHTML($headings[0]) : "";
-            $subTitle = count($headings) > 1 ? $dom->saveHTML($headings[1]) : "";
-
-            return [$heading, $subTitle];
-        } catch (Exception $e) {
-            throw new Exception("Error extracting content: " . $e->getMessage());
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
     private function extractParagraphs(string $content): array
     {
         try {
@@ -253,8 +228,7 @@ class PageManagementController
             if (!empty($section['content'])) {
                 $content = $section['content'];
 
-                list($heading, $subTitle) = $this->extractHeadingAndSubTitle($content);
-                $sectionId = $this->pageManagementService->addSection($pageId, $sectionType, $heading, $subTitle);
+                $sectionId = $this->pageManagementService->addSection($pageId, $sectionType);
 
                 $paragraphs = $this->extractParagraphs($content);
                 foreach ($paragraphs as $paragraph) {

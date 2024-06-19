@@ -19,8 +19,7 @@ function includeSection($sections, $type): void
     <div class="row">
         <div class="col-8">
             <?php
-            includeSection($sections, 'subsection');
-            includeSection($sections, 'introduction');
+            includeSection($sections, 'section');
             ?>
         </div>
 

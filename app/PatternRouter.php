@@ -3,6 +3,8 @@
 
 namespace App;
 
+use Exception;
+
 class PatternRouter
 {
     public function route($uri)
@@ -60,7 +62,7 @@ class PatternRouter
             $controllerObj = new $controllerName();
             $controllerObj->{$methodName}();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log or handle the error more gracefully
             http_response_code(500);
             die();

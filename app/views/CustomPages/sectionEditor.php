@@ -12,16 +12,14 @@ include __DIR__ . '/../header.php';
         <tr>
             <th>#</th>
             <th>Type</th>
-            <th>Title</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($sections as $section): ?>
             <tr>
-                <td><?php echo $section['sectionId'] ?></td>
-                <td><?php echo $section['type'] ?></td>
-                <td><?php echo !empty($section['heading']) ? strip_tags($section['heading']) : '' ?></td>
+                <td><?= $section['sectionId'] ?></td>
+                <td><?= $section['type'] ?></td>
                 <td>
                     <a href="#" onclick="openEditorModal(<?= $section['sectionId']; ?>)"><i class="fa-solid fa-pen"></i></a>
                     <a class="ms-3"
@@ -36,7 +34,7 @@ include __DIR__ . '/../header.php';
 </div>
 
 <?php include __DIR__ . '/editorModal.php'; ?>
-<?php include __DIR__ . '/sectionModal.php'; ?>
+<?php include __DIR__ . '/addSection.php'; ?>
 <?php include __DIR__ . '/../foot.php'; ?>
 
 <script>

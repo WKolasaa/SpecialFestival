@@ -5,11 +5,11 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sectionModalLabel">Section Creator</h5>
+                <h5 class="modal-title" id="sectionModalLabel">Add Section</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="messageContainer"></div>
+                <div id="message-container"></div>
                 <label class="form-label" for="typeSelector">Choose the type of section: </label>
                 <select class="form-control mb-3" name="typeSelector" id="typeSelector" required></select>
 
@@ -27,6 +27,6 @@
 </div>
 <script src="https://cdn.tiny.cloud/1/jxxp173pvquef8fmhviuik8fzu8gtyya33sqkapg2d5kke7p/tinymce/6/tinymce.min.js"
         referrerpolicy="origin"></script>
-<script src="/../js/CustomPages/sectionModal.js"></script>
+<script src="/../js/CustomPages/addSection.js"></script>
 </body>
 </html>

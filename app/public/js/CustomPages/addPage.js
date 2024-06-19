@@ -60,6 +60,10 @@ function addAnotherSection() {
 
 function savePage() {
     const pageTitle = document.getElementById('pageTitleInput').value;
+    if (!pageTitle) {
+        document.getElementById('message-container').innerHTML = '<div class="alert alert-danger mt-3">Please enter a title for the page.</div>';
+        return;
+    }
     const sections = document.querySelectorAll('[id^=section]');
     const formData = new FormData();
     sections.forEach((section, index) => {
@@ -89,7 +93,6 @@ function saveToDatabase(formData) {
             if (!response.ok) {
                 document.getElementById('message-container').innerHTML = '<div class="alert alert-danger mt-3">Failed to save changes. Please try again.</div>';
             } else {
-                console.log('Page saved successfully');
                 document.getElementById('message-container').innerHTML = '<div class="alert alert-success mt-3">Changes were saved successfully.</div>';
                 setTimeout(() => {
                     window.location.href = '/PageManagement';
