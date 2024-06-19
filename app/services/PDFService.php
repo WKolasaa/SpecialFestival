@@ -7,7 +7,7 @@ use Dompdf\Options;
 
 class PDFService
 {
-    public function generatePDF($ticket){ //TODO: Change the HTML for this
+    public function generatePDF($ticket){ 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);

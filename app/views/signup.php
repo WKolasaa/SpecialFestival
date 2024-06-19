@@ -20,7 +20,7 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                 <div class="card-body">
                     <!-- Registration Form -->
                     <div id="message" class="alert alert-light"></div>
-                    <form id="signupForm" action=/signup/captcha method="POST">
+                    <form id="signupForm">
                         <div class="form-group">
                         <input type="hidden" id="userId" name="id">
                         <input type="hidden" id="userRole" name="userRole">
@@ -55,8 +55,7 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
 
                         <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
-                        <button class="btn btn-primary" type="submit" id="submitButton">
-                        Submit </button>
+                        <button class="btn btn-primary" type="button" id="submitButton" onclick="onSubmit()"> Submit </button>
                         <?php
                         if ($user) {
                             // If the user is logged in, load the user.js file
@@ -70,17 +69,8 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
         </div>
     </div>
 </div>
-<?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 
-if (isset($_SESSION['error'])) {
-    echo '<script>alert("' . $_SESSION['error'] . '");</script>'; // Show an alert with the error message
-    unset($_SESSION['error']); // Unset the session variable so the message doesn't keep showing up
-}
-?>
-
+<script src="js/signup.js"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <!-- <script src="js/signup.js"></script> -->

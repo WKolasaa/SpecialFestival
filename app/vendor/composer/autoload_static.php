@@ -19,10 +19,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
             'chillerlan\\Settings\\' => 20,
             'chillerlan\\QRCode\\' => 18,
         ),
-        'Z' => 
-        array (
-            'ZipStream\\' => 10,
-        ),
         'S' => 
         array (
             'Svg\\' => 4,
@@ -35,14 +31,11 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         ),
         'P' => 
         array (
-            'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
-            'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'M' => 
         array (
-            'Matrix\\' => 7,
             'Masterminds\\' => 12,
         ),
         'G' => 
@@ -58,10 +51,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         'D' => 
         array (
             'Dompdf\\' => 7,
-        ),
-        'C' => 
-        array (
-            'Complex\\' => 8,
         ),
         'A' => 
         array (
@@ -83,10 +72,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         array (
             0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
         ),
-        'ZipStream\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
-        ),
         'Svg\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-svg-lib/src/Svg',
@@ -103,10 +88,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         array (
             0 => __DIR__ . '/..' . '/resend/resend-php/src',
         ),
-        'Psr\\SimpleCache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
-        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-factory/src',
@@ -115,14 +96,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
-        ),
-        'PhpOffice\\PhpSpreadsheet\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
-        ),
-        'Matrix\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
         'Masterminds\\' => 
         array (
@@ -147,10 +120,6 @@ class ComposerStaticInit8b2a52af5db9a26e2c338de15b8e0bd3
         'Dompdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
-        ),
-        'Complex\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
         ),
         'App\\Views\\' => 
         array (

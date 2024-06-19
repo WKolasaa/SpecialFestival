@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body">
                         <!-- Login Form -->
-                        <form action="/login/login" method="POST">
+                        <form>
                             <div class="form-group">
                                 <label for="username">Username or Email:</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
@@ -25,14 +25,14 @@
                                 Forgot password? <a href="/RestorePassword">Click here</a>
                             </div>
                             <p></p>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-primary" onclick="onSubmit()">Login</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <script src="js/login.js"></script>
 <?php
     include __DIR__ . '/footer.php';
 ?>
