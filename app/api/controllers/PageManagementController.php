@@ -106,6 +106,10 @@ class PageManagementController
      */
     private function extractParagraphs(string $content): array
     {
+        if (empty($content)) {
+            return [];
+        }
+
         try {
             $dom = new DOMDocument();
             @$dom->loadHTML($content);
@@ -142,23 +146,34 @@ class PageManagementController
     /**
      * @throws Exception
      */
-    private function uploadImage(string $imageTmpName, string $imageName, int $sectionId): void
+    private function uploadImage(string $imageTmpName, string $imageName, int $imageId, int $sectionId): void
     {
         try {
-            $imagePath = "/img/CustomPages/" . $sectionId . "/" . $imageName;
-            $uploadPath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
+            $existingImages = $this->pageManagementService->getImageById($imageId);
+            if ($existingImages) {
+                foreach ($existingImages as $existingImage) {
+                    $imagePath = "/img/CustomPages/" . $sectionId . "/" . $existingImage['imageName'];
+                    $uploadPath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
+                    $imageId = $existingImage['imageId'];
+                    move_uploaded_file($imageTmpName, $uploadPath);
+                    $this->pageManagementService->updateImage($imageId, $imagePath);
+                }
+            } else {
+                $imagePath = "/img/CustomPages/" . $sectionId . "/" . $imageName;
+                $uploadPath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
 
-            // Ensure the target directory exists
-            $directory = dirname($uploadPath);
-            if (!is_dir($directory)) {
-                mkdir($directory, 0777, true);
+                // Ensure the target directory exists
+                $directory = dirname($uploadPath);
+                if (!is_dir($directory)) {
+                    mkdir($directory, 0777, true);
+                }
+
+                if (!move_uploaded_file($imageTmpName, $uploadPath)) {
+                    throw new Exception("Failed to move uploaded file to $uploadPath");
+                }
+
+                $this->pageManagementService->addImage($sectionId, $imageName, $imagePath);
             }
-
-            if (!move_uploaded_file($imageTmpName, $uploadPath)) {
-                throw new Exception("Failed to move uploaded file to $uploadPath");
-            }
-
-            $this->pageManagementService->addImage($sectionId, $imageName, $imagePath);
         } catch (Exception $e) {
             throw new Exception("Error uploading image: " . $e->getMessage());
         }
@@ -205,9 +220,8 @@ class PageManagementController
     private function uploadImages(array $uploadedImages, int $sectionId): void
     {
         try {
-            echo json_encode($uploadedImages);
             foreach ($uploadedImages['tmp_name'] as $key => $tmp_name) {
-                $this->uploadImage($tmp_name, $uploadedImages['name'][$key], $sectionId);
+                $this->uploadImage($tmp_name, $uploadedImages['name'][$key], $key, $sectionId);
             }
         } catch (Exception $e) {
             throw new Exception("Error uploading images: " . $e->getMessage());

@@ -94,7 +94,6 @@ function saveContent() {
     })
         .then(response => {
             if (response.ok) {
-                console.log(formData);
                 const messageContainer = document.getElementById('message-container-edit');
                 messageContainer.innerHTML = '<div class="alert alert-success mt-3">Changes were saved successfully.</div>';
                 setTimeout(() => {

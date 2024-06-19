@@ -129,20 +129,6 @@ class PageManagementRepository extends Repository
         }
     }
 
-    public function updateSection($sectionId, $heading, $subTitle)
-    {
-        try {
-            $stmt = $this->connection->prepare("UPDATE Sections SET heading = :heading, subTitle = :subTitle WHERE sectionId = :sectionId");
-            $stmt->bindParam(':heading', $heading);
-            $stmt->bindParam(':subTitle', $subTitle);
-            $stmt->bindParam(':sectionId', $sectionId);
-            $stmt->execute();
-        } catch (PDOException $e) {
-            error_log("Error updating section: " . $e->getMessage());
-            return null;
-        }
-    }
-
     public function updateImage($imageId, $imagePath)
     {
         try {
