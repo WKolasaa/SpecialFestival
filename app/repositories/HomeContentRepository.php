@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\HomeCMSEntry; // importing classes and exceptions
+use App\Models\HomeCMSEntry; 
 use App\Models\HistoryEntryTypeEnum;
 use App\Models\HomeEvent;
 
@@ -135,8 +135,14 @@ public function getEventsByDate($date) {
 public function addEvent($eventName, $eventDescription, $eventDate, $startTime, $endTime) {
   $sql = "INSERT INTO festival_events (event_name, event_description, event_date, start_time, end_time) VALUES (?, ?, ?, ?, ?)";
   $statement = $this->connection->prepare($sql);
-  return $statement->execute([$eventName, $eventDescription, $eventDate, $startTime, $endTime]);
+  $success = $statement->execute([$eventName, $eventDescription, $eventDate, $startTime, $endTime]);
+  return $success ? $this->connection->lastInsertId() : false;
 }
+
+public function getLastInsertId() {
+  return $this->connection->lastInsertId();
+}
+
 
 public function getAllEvents() {
   $sql = "SELECT id, event_name, event_description, event_date, start_time, end_time FROM festival_events ORDER BY event_date, start_time ASC";

@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             checkUserSession().then(hasSession => {
                 if (!hasSession) {
-                    alert("Please log in to add items to the cart.");
+                    showToast("Please log in to add items to the cart.", "#FF0000");
                     return; // Stop further execution if the user is not logged in.
                 }
             
@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     description = language+', Regular ticket';
                 }
 
-                const event_name = 'History Event';
-                const ticket_name = 'History Tour Ticket';
+                const event_name = 'HISTORY EVENT';
+                const ticket_name = 'Haarlem Tour';
                 const location = 'Grote Markt 22, 2011 RD Haarlem';
-
+                
                 console.log(startTime, endTime, date,  start_date, end_date, price, description, event_name, ticket_name, location);
                 // Send the collected data to the server via POST request.
                 fetch('http://localhost/api/historyadmin/addToCart', {
@@ -87,6 +87,15 @@ document.addEventListener("DOMContentLoaded", function() {
                         location
                     }),
                 })
+                .then((response) => {
+                    if (response.ok) {
+                      console.log("Ticket added successfully");
+                      showToast("Ticket added to cart!","#008000");
+                      return response.text();
+                    } else {
+                      console.error("Error:", response.status, response.statusText);
+                    }
+                  })
             });
         });
     });

@@ -8,11 +8,11 @@ class HistoryCMSEntry {
     private $entry_type;
     private $content;
 
-    // Пустой конструктор
+    // empty constructor
     public function __construct() {
     }
 
-    // Геттеры
+    // Getters
     public function getId() {
         return $this->id;
     }
@@ -33,7 +33,7 @@ class HistoryCMSEntry {
         return $this->content;
     }
 
-    // Сеттеры
+    // Setters
     public function setId($id) {
         $this->id = $id;
     }

@@ -68,7 +68,7 @@ use App\Models\HistoryEntryTypeEnum;
         </tbody>
     </table>
 
-    <form action="/HomeAdmin/addEvent" method="POST" class="add-event-form">
+    <form id="add-event-form" class="add-event-form">
         <label>
             Event Name:
             <input type="text" name="event_name" required />

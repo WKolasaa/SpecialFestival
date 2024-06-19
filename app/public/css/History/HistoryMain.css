@@ -262,8 +262,9 @@ body, html {
 
 
 .buy-tickets-button-container {
-    text-align: center;
-    width: calc(100% - 40px); /* Subtract the padding from the total width */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     padding: 20px 0; /* Padding on top and bottom only */
 }
 
