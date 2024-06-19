@@ -26,17 +26,13 @@ class DanceEventController extends BaseController
         try {
             $this->setHeaders();
 
-
             $danceEvent = $this->danceEventService->getAllArtists();
 
             echo json_encode($danceEvent);
-
         } catch (Exception $e) {
             // Debugging: Log any exceptions
-
             echo json_encode(['error' => 'An error occurred while fetching danceEvent data.']);
         }
-
     }
 
     public function agenda()

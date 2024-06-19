@@ -1,7 +1,7 @@
 let overviews = [];
 
 function loadOverviews() {
-    fetch("http://localhost/api/danceevent/danceOverviews") //remove the localhost to the config file
+    fetch("/api/DanceEvent/danceOverviews") //remove the localhost to the config file
         .then((response) => response.json())
         .then((data) => {
             overviews = data;
@@ -19,7 +19,7 @@ loadOverviews();
 let allArtists = [];
 
 function loadArtists() {
-    fetch("http://localhost/api/danceevent/Artists")
+    fetch("/api/DanceEvent/Artists")
         .then((response) => response.json())
         .then((data) => {
             allArtists = data; // Store all users in the array

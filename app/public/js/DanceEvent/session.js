@@ -1,6 +1,6 @@
 let allSessions = [];
 function loadSessions() {
-  fetch("http://localhost/api/danceevent/sessions")
+  fetch("/api/DanceEvent/sessions")
     .then((response) => response.json())
     .then((data) => {
       allSessions = data;
@@ -11,9 +11,6 @@ function loadSessions() {
       console.error("Error fetching items:", error);
     });
 }
-// loadSessions();
-// loadArtists();
-
 
 function displaySessions(sessions) {
   // Get the template for the sessions
@@ -128,24 +125,21 @@ function displaySessions(sessions) {
 
 let allArtists = [];
 function loadArtists() {
-  fetch("http://localhost/api/danceevent/Artists")
+  fetch("/api/DanceEvent/Artists")
     .then((response) => response.json())
     .then((data) => {
       allArtists = data; // Store all users in the array
-      console.log(allArtists);
     })
     .catch((error) => {
       console.error("Error fetching items:", error);
     });
 }
 
-
 function getImagePath(sessionArtistName) {
   // Find the artist in the allArtists array
   const artist = allArtists.find(
     (a) => a.artistName.toLowerCase() === sessionArtistName.toLowerCase()
   );
-  console.log(artist + "and " + sessionArtistName);
   // console.log(allArtists);
   // If the sessionArtistName is "Golden Ticket", return the image path for the golden ticket
   if (sessionArtistName.toLowerCase() === "golden ticket") {
@@ -285,7 +279,7 @@ function addToCart(session, button) {
     }
 
 
-    fetch("http://localhost/api/danceevent/addTicket", {
+    fetch("api/DanceEvent/addTicket", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -310,7 +304,7 @@ function addToCart(session, button) {
 }
 
 function checkUserSession() {
-  return fetch("http://localhost/api/danceevent/checkUser")
+  return fetch("/api/DanceEvent/checkUser")
     .then((response) => response.json())
     .then((data) => data.hasSession);
 }

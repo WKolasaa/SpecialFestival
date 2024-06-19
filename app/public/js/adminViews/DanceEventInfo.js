@@ -219,7 +219,7 @@ function validateSessionForm() {
 
 let allArtists = [];
 function loadArtists() {
-  fetch("http://localhost/api/danceevent/Artists")
+  fetch("/api/DanceEvent/Artists")
     .then((response) => response.json())
     .then((data) => {
       allArtists = data; // Store all users in the array
@@ -232,7 +232,7 @@ function loadArtists() {
 
 let allAgenda = [];
 function loadAgenda() {
-  fetch("http://localhost/api/danceevent/Agenda")
+  fetch("/api/DanceEvent/Agenda")
     .then((response) => {
       return response.json();
     })
@@ -247,7 +247,7 @@ function loadAgenda() {
 
 let allTickets = [];
 function loadTickets() {
-  fetch("http://localhost/api/danceevent/sessions")
+  fetch("api/DanceEvent/sessions")
     .then((response) => response.json())
     .then((data) => {
       allTickets = data; // Store all users in the array
@@ -260,7 +260,7 @@ function loadTickets() {
 
 let overviews = [];
 function loadOverviews() {
-  fetch("http://localhost/api/danceevent/danceOverviews")
+  fetch("/api/DanceEvent/danceOverviews")
     .then((response) => response.json())
     .then((data) => {
       overviews = data; // Store all users in the array
@@ -432,7 +432,7 @@ function saveArtist(artistId) {
     formData.append("image", artistImageElement.files[0]);
   }
   // Send POST request with the updated content of the updatedArtist
-  fetch("http://localhost/api/danceevent/updateArtist", {
+  fetch("/api/DanceEvent/updateArtist", {
     method: "POST",
     body: formData,
   })
@@ -479,7 +479,7 @@ function deleteArtist(artistId) {
   const DeletedArtist = {
     artistId: artistId,
   };
-  fetch(`http://localhost/api/danceevent/deleteArtist`, {
+  fetch(`/api/DanceEvent/deleteArtist`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -508,7 +508,7 @@ async function addArtist(event) {
 
   try {
     console.log("Sending request to add artist");
-    const response = await fetch("http://localhost/api/danceevent/addArtist", {
+    const response = await fetch("api/DanceEvent/addArtist", {
       method: "POST",
       body: formData,
     });
@@ -633,7 +633,7 @@ function saveAgenda(agendaId) {
   }
 
   // Send POST request with the updated content of the updatedAgenda
-  fetch("http://localhost/api/danceevent/updateAgenda", {
+  fetch("/api/DanceEvent/updateAgenda", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -670,7 +670,7 @@ function deleteAgenda(agendaId) {
     venueAddress: document.getElementById(`agenda-venue-${agendaId}`)
       .textContent,
   };
-  fetch(`http://localhost/api/danceevent/deleteAgenda`, {
+  fetch(`/api/DanceEvent/deleteAgenda`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -718,7 +718,7 @@ function addEvent() {
     );
     return; // Exit the function early if the day and date don't match
   }
-  fetch("http://localhost/api/danceevent/addEvent", {
+  fetch("/api/DanceEvent/addEvent", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -806,7 +806,7 @@ function saveTicket(sessionId) {
     endSession: document.getElementById(`ticket-endSession-${sessionId}`).value, //change
   };
 
-  fetch("http://localhost/api/danceevent/updateSession", {
+  fetch("/api/DanceEvent/updateSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -843,7 +843,7 @@ function deleteTicket(sessionId) {
     endSession: document.getElementById(`ticket-endSession-${sessionId}`)
       .textContent,
   };
-  fetch(`http://localhost/api/danceevent/deleteSession`, {
+  fetch(`/api/DanceEvent/deleteSession`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -881,7 +881,7 @@ function addTicket() {
     return;
   }
 
-  fetch("http://localhost/api/danceevent/addSession", {
+  fetch("/api/DanceEvent/addSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -1033,7 +1033,7 @@ function saveOverview(id) {
     formData.append("image", overviewImageElement.files[0]);
   }
 
-  fetch("http://localhost/api/danceevent/updateDanceOverView", {
+  fetch("/api/DanceEvent/updateDanceOverView", {
     method: "POST",
     body: formData,
   })
@@ -1054,7 +1054,7 @@ function deleteOverview(id) {
   const DeleteOverview = {
     id: id,
   };
-  fetch(`http://localhost/api/danceevent/deleteDanceOverview`, {
+  fetch(`/api/DanceEvent/deleteDanceOverview`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -1083,7 +1083,7 @@ async function addOverview(event) {
   // }
   try {
     const response = await fetch(
-      "http://localhost/api/danceevent/addDanceOverview",
+      "/api/DanceEvent/addDanceOverview",
       {
         method: "POST",
         body: formData,
