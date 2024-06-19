@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Jun 19, 2024 at 07:18 PM
+-- Generation Time: Jun 19, 2024 at 08:23 PM
 -- Server version: 11.1.2-MariaDB-1:11.1.2+maria~ubu2204
 -- PHP Version: 8.2.12
 
@@ -165,7 +165,7 @@ INSERT INTO `festival_events` (`id`, `event_name`, `event_description`, `event_d
                                                                                                                     (85, 'aferg', 'aergerg', '2024-07-07', '02:08:00', '07:39:00'),
                                                                                                                     (86, 'zaebalsa', 'jaafeeraferfsfgrsaregar', '2024-07-07', '17:07:00', '08:09:00'),
                                                                                                                     (87, '524', '2342376747667', '2024-07-07', '03:04:00', '04:03:00'),
-                                                                                                                    (88, 'ear', 'gfease', '2024-07-07', '17:08:00', '07:06:00'),
+                                                                                                                    (88, 'abeme', 'man', '2024-07-07', '17:08:00', '07:06:00'),
                                                                                                                     (89, '1472', 'rgthy', '2024-07-07', '02:08:00', '03:07:00');
 
 -- --------------------------------------------------------
@@ -330,12 +330,12 @@ CREATE TABLE `home_contents` (
 --
 
 INSERT INTO `home_contents` (`id`, `content_name`, `content_type`, `content`) VALUES
-                                                                                  (8, 'Teylers Event Image', 'IMAGE', '/img/Home/img_667308870aafd.png'),
+                                                                                  (8, 'Teylers Event Image', 'IMAGE', '/img/Home/img_66733dac132c6.png'),
                                                                                   (9, 'Header Image', 'IMAGE', '/img/Home/img_6670635e2a8db.png'),
                                                                                   (10, 'Dance Event Image', 'IMAGE', '/img/Home/img_66720379c898d.jpg'),
                                                                                   (11, 'Yummy Event Image', 'IMAGE', '/img/Home/img_667222d91a110.jpg'),
                                                                                   (12, 'History Event Image', 'IMAGE', '/img/Home/img_667209807bcb4.jpg'),
-                                                                                  (13, 'Intro Title', 'TEXT', 'Welcome to the Haarlem Festival 2024 ! f'),
+                                                                                  (13, 'Intro Title', 'TEXT', 'Welcome to the Haarlem Festival 2024 !'),
                                                                                   (14, 'Intro Text', 'TEXT', 'Immerse yourself in the heart of Haarlem\'s vibrant social scene at the Grote Markt, surrounded by historic facades and lively cafes. The festival kicks off with \"Yummy!\" from July 25 to 28, where local restaurants showcase special Festival menus at reduced prices. Then, from July 26 to 28, join \"DANCE!\" – a dynamic addition featuring top DJs in Back2Back sessions and experimental club sessions. Don\'t miss \"A Stroll through History\" from July 26 to 28, offering guided tours through Haarlem\'s historic sites. Explore the rich tapestry of Haarlem\'s culinary, musical, and historical delights. Check the Festival Excel program for details on sessions, timetables, and prices. We invite you to make the most of your summer at the Haarlem Festival!'),
                                                                                   (15, 'Teylers Event Title', 'TEXT', 'Teyler\'sEvent'),
                                                                                   (16, 'Dance Event Title', 'TEXT', 'Dance Event'),
@@ -576,7 +576,7 @@ CREATE TABLE `restaurant_events` (
 
 INSERT INTO `restaurant_events` (`id`, `restaurant_id`, `event_date`, `event_day`, `event_time_start`, `event_time_end`, `seats_total`, `seats_left`) VALUES
                                                                                                                                                           (1, 1, '2024-07-25', 'Thursday', '17:00:00', '19:00:00', 45, 0),
-                                                                                                                                                          (2, 1, '2024-07-25', 'Thursday', '19:00:00', '21:00:00', 20, 16),
+                                                                                                                                                          (2, 1, '2024-07-25', 'Thursday', '19:00:00', '21:00:00', 20, 14),
                                                                                                                                                           (3, 1, '2024-07-25', 'Thursday', '21:00:00', '23:00:00', 50, 30),
                                                                                                                                                           (4, 1, '2024-07-26', 'Friday', '17:00:00', '19:00:00', 40, 0),
                                                                                                                                                           (5, 1, '2024-07-26', 'Friday', '19:00:00', '21:00:00', 20, 0),
@@ -711,7 +711,9 @@ INSERT INTO `restaurant_reservations` (`id`, `restaurantId`, `eventID`, `regular
                                                                                                                                                                           (61, 1, 6, 1, 0, '', 1, '2024-06-17 18:41:03', '2024-06-17 18:41:03'),
                                                                                                                                                                           (62, 1, 6, 1, 0, '', 1, '2024-06-17 18:41:36', '2024-06-17 18:41:36'),
                                                                                                                                                                           (63, 1, 2, 1, 0, '', 1, '2024-06-19 15:13:10', '2024-06-19 15:13:10'),
-                                                                                                                                                                          (64, 1, 2, 1, 0, '', 1, '2024-06-19 15:14:02', '2024-06-19 15:14:02');
+                                                                                                                                                                          (64, 1, 2, 1, 0, '', 1, '2024-06-19 15:14:02', '2024-06-19 15:14:02'),
+                                                                                                                                                                          (65, 1, 2, 1, 0, '', 1, '2024-06-19 19:18:57', '2024-06-19 19:18:57'),
+                                                                                                                                                                          (66, 1, 2, 1, 0, '', 1, '2024-06-19 19:55:57', '2024-06-19 19:55:57');
 
 -- --------------------------------------------------------
 
@@ -932,7 +934,8 @@ INSERT INTO `ticket` (`id`, `ticketId`, `event_name`, `ticket_type`, `ticket_nam
                                                                                                                                                                    (274, 1, 'HISTORY EVENT', 3, 'Haarlem Tour', 'Grote Markt 22, 2011 RD Haarlem', 'English, Regular ticket', 17, '2024-07-25 10:00:00', '2024-07-25 12:30:00', 20),
                                                                                                                                                                    (275, 7, 'Afrojack', 1, 'DANCE EVENT', 'Jopenkerk', '', 60, '2024-07-27 22:00:00', '2024-07-27 23:30:00', 20),
                                                                                                                                                                    (276, 7, 'Afrojack', 1, 'DANCE EVENT', 'Jopenkerk', '', 60, '2024-07-27 22:00:00', '2024-07-27 23:30:00', 20),
-                                                                                                                                                                   (277, 2, 'HISTORY EVENT', 3, 'Haarlem Tour', 'Grote Markt 22, 2011 RD Haarlem', 'English, Regular ticket', 17, '2024-07-25 13:00:00', '2024-07-25 15:30:00', 20);
+                                                                                                                                                                   (277, 2, 'HISTORY EVENT', 3, 'Haarlem Tour', 'Grote Markt 22, 2011 RD Haarlem', 'English, Regular ticket', 17, '2024-07-25 13:00:00', '2024-07-25 15:30:00', 20),
+                                                                                                                                                                   (278, 65, 'Ratatouille', 2, 'YUMMY EVENT', 'Spaarne 96, 2011 CL Haarlem, Nederland', '1/0/', 10, '2024-07-25 19:00:00', '2024-07-25 21:00:00', 20);
 
 -- --------------------------------------------------------
 
@@ -1252,7 +1255,7 @@ ALTER TABLE `danceOverview`
 -- AUTO_INCREMENT for table `festival_events`
 --
 ALTER TABLE `festival_events`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `history_contents`
@@ -1264,7 +1267,7 @@ ALTER TABLE `history_contents`
 -- AUTO_INCREMENT for table `history_timeslots`
 --
 ALTER TABLE `history_timeslots`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `home_contents`
@@ -1330,7 +1333,7 @@ ALTER TABLE `restaurant_images`
 -- AUTO_INCREMENT for table `restaurant_reservations`
 --
 ALTER TABLE `restaurant_reservations`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `Sections`
@@ -1348,7 +1351,7 @@ ALTER TABLE `session`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=278;
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
 
 --
 -- AUTO_INCREMENT for table `user`
