@@ -1,4 +1,11 @@
 <?php
+function loadPages(): false|array|null
+{
+    $pageManagementService = new App\Services\PageManagementService();
+    return $pageManagementService->getAllPages();
+}
+
+$pages = loadPages();
 include 'head.php';
 ?>
 <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,14 +24,15 @@ include 'head.php';
             </button>
 
             <!-- Offcanvas Menu, now aligned to end -->
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        
                         <!-- Additional navigation links with PHP condition for ADMINISTRATOR -->
                         <?php if (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "ADMINISTRATOR"): ?>
                             <!-- Admin navigation -->
@@ -46,10 +54,13 @@ include 'head.php';
                             <li class="nav-item">
                                 <a class="nav-link" href="/AdminView/manageUser">Users</a>
                             </li>
-                            <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/PageManagement">Custom Pages</a>
+                            </li>
+                        <?php elseif (isset ($_SESSION['user']) && $_SESSION['user']->getUserRole() == "EMPLOYEE"): ?>
                             <!-- Employee navigation -->
                             <li class="nav-item active">
-                            <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/employee">Scan <span class="sr-only">(current)</span></a>
                             </li>
 
                         <?php else: ?>
@@ -69,7 +80,6 @@ include 'head.php';
                                     <a class="dropdown-item" href="/DanceEvent/session">Tickets</a>
                                 </div>
                             </li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownYummy" role="button"
                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -92,14 +102,31 @@ include 'head.php';
                                     <a class="dropdown-item" href="/HistoryMain/windmill">Windmill</a>
                                 </div>
                             </li>
-
+                            <?php if (!empty($pages)): ?> <!-- Check if there are any custom pages -->
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCustomPages"
+                                       role="button"
+                                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Information Pages
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCustomPages">
+                                        <?php foreach ($pages as $page): ?>
+                                            <a class="dropdown-item"
+                                               href="/PageManagement/showPage?pageId=<?= $page['pageId']; ?>">
+                                                <?= $page['pageTitle'] ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <a id="festPlan" class="nav-link" href="/FestPlan">FestPlan</a>
                             </li>
                         <?php endif; ?>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user"></i>
                             </a>

@@ -6,7 +6,6 @@ use App\Repositories\TicketRepository;
 use App\Repositories\UserTicketRepository;
 use Dompdf\Exception;
 use Resend;
-use App\Models\Ticket;
 
 class EmailService
 {
@@ -57,27 +56,53 @@ class EmailService
         ]);
     }
 
-    public function sendInvoice($pdfContent){
+    /**
+     * @throws Exception
+     */
+    public function sendInvoice($pdfUrl): void
+    {
         $resend = Resend::client('re_DF4R1gUB_CFNiNU9FrxGhNdDUCFxaK6NN');
-
         $resend->emails->send([
             'from' => 'onboarding@resend.dev',
             'to' => '695344@student.inholland.nl',
             'subject' => 'Invoice',
             'html' => '
-                <h1>Hey, this is your invoice!</h1>
-            ',
-            'attachments' => [
+            <h1>Hey, this is your invoice!</h1>
+        ', 'attachments' => [
                 [
                     'filename' => 'invoice.pdf',
-                    'content' => '/PDF/invoice.pdf'
+                    'content' => $this->downloadPDF($pdfUrl)
                 ]
             ],
         ]);
     }
 
-    public function sendTickets(){ //TODO: CAll this method in checkout
-        try{
+    /**
+     * @throws Exception
+     */
+    public function downloadPDF($pdfUrl): bool|string
+    {
+        // Initialize cURL to download the PDF
+        $ch = curl_init($pdfUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        // Execute cURL request
+        $pdfData = curl_exec($ch);
+        $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Check for cURL errors
+        if ($pdfData === false || $httpStatus != 200) {
+            throw new Exception('Error: Unable to download PDF.');
+        }
+        curl_close($ch);
+
+        return chunk_split(base64_encode($pdfData));
+    }
+
+    public function sendTickets()
+    { //TODO: CAll this method in checkout
+        try {
             $ticketRepository = new TicketRepository();
             $userTicketRepository = new UserTicketRepository();
             $pdfService = new PDFService();

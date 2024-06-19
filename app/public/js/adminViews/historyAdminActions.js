@@ -1,4 +1,3 @@
-
 function editEntry(entryId) {
     let entryRow = document.getElementById('entry-' + entryId);
     let entryType = entryRow.getAttribute('data-entry-type');
@@ -123,7 +122,7 @@ function deleteEntry(entryId) {
         })
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var entryTypeSelect = document.getElementById('entryTypeSelect');
     var contentInput = document.getElementById('contentInput');
     var imageInput = document.getElementById('imageInput');
@@ -146,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleInputFields();
 
     // Event listener for when the entry type changes
-    entryTypeSelect.addEventListener('change', function() {
+    entryTypeSelect.addEventListener('change', function () {
         toggleInputFields();
     });
 });
 
-document.getElementById('imageInput').addEventListener('change', function() {
+document.getElementById('imageInput').addEventListener('change', function () {
     var fileInput = this;
     var contentInput = document.getElementById('contentInput');
 
@@ -191,7 +190,7 @@ function saveTimeslot(button) {
     }
 
     // Check for empty fields
-    if (!dayInput.value.trim() || !startTimeInput.value.trim() || !endTimeInput.value.trim() || 
+    if (!dayInput.value.trim() || !startTimeInput.value.trim() || !endTimeInput.value.trim() ||
         !englishTourInput.value.trim() || !dutchTourInput.value.trim() || !chineseTourInput.value.trim()) {
         alert("Please fill in all the fields before saving.");
         return; // Stop execution if one of the fields is empty
@@ -221,39 +220,39 @@ function saveTimeslot(button) {
         },
         body: JSON.stringify(data),
     })
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            // Update the view spans with new data
-            const viewElements = tr.querySelectorAll('.view');
-            const editInputs = tr.querySelectorAll('.edit');
-            
-            // Assuming the order of inputs and spans matches
-            viewElements[0].textContent = editInputs[0].value; // day
-            viewElements[1].textContent = editInputs[1].value; // start_time
-            viewElements[2].textContent = editInputs[2].value; // end_time
-            viewElements[3].textContent = editInputs[3].value; // english_tour
-            viewElements[4].textContent = editInputs[4].value; // dutch_tour
-            viewElements[5].textContent = editInputs[5].value; // chinese_tour
-            
-            // Toggle visibility
-            editInputs.forEach(input => input.style.display = 'none');
-            viewElements.forEach(span => span.style.display = '');
-            
-            // Toggle button visibility
-            tr.querySelector('.edit-btn').style.display = '';
-            tr.querySelector('.save-btn').style.display = 'none';
-        } else {
-            throw new Error('Failed to update timeslot');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert(error.message);
-    });
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                // Update the view spans with new data
+                const viewElements = tr.querySelectorAll('.view');
+                const editInputs = tr.querySelectorAll('.edit');
+
+                // Assuming the order of inputs and spans matches
+                viewElements[0].textContent = editInputs[0].value; // day
+                viewElements[1].textContent = editInputs[1].value; // start_time
+                viewElements[2].textContent = editInputs[2].value; // end_time
+                viewElements[3].textContent = editInputs[3].value; // english_tour
+                viewElements[4].textContent = editInputs[4].value; // dutch_tour
+                viewElements[5].textContent = editInputs[5].value; // chinese_tour
+
+                // Toggle visibility
+                editInputs.forEach(input => input.style.display = 'none');
+                viewElements.forEach(span => span.style.display = '');
+
+                // Toggle button visibility
+                tr.querySelector('.edit-btn').style.display = '';
+                tr.querySelector('.save-btn').style.display = 'none';
+            } else {
+                throw new Error('Failed to update timeslot');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error.message);
+        });
 }
 
 function deleteTimeslot(button) {
@@ -264,22 +263,22 @@ function deleteTimeslot(button) {
         fetch(`/api/historyadmin/deleteTimeslot?id=${timeslotId}`, {
             method: 'GET'  // Or 'POST', if your server endpoint requires it
         })
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to delete timeslot.');
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                tr.remove();  // Remove the row from the table on successful deletion
-                alert("Timeslot deleted successfully.");
-            } else {
-                throw new Error('Failed to delete timeslot: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Error: " + error.message);
-        });
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to delete timeslot.');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    tr.remove();  // Remove the row from the table on successful deletion
+                    alert("Timeslot deleted successfully.");
+                } else {
+                    throw new Error('Failed to delete timeslot: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error: " + error.message);
+            });
     }
 }
 

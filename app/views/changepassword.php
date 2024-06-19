@@ -1,5 +1,5 @@
 <?php
-    include 'header.php';
+include 'header.php';
 ?>
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -8,7 +8,8 @@
             <form id="changePasswordForm" onsubmit="return false;">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>" readonly>
+                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>"
+                           readonly>
                 </div>
 
                 <div class="form-group">

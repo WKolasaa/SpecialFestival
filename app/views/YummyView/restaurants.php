@@ -1,5 +1,5 @@
-<?php 
-    include __DIR__ . '/../header.php';
+<?php
+include __DIR__ . '/../header.php';
 ?>
 
 <div class="YummyBody">
@@ -13,9 +13,9 @@
 
     <!--Restaurants cards-->
     <?php
-        foreach ($restaurants as $restaurant) {
-             include __DIR__ . '/restaurantCard.php'; // The problem in this line cause when I comment it, the navbar works
-        }
+    foreach ($restaurants as $restaurant) {
+        include __DIR__ . '/restaurantCard.php'; // The problem in this line cause when I comment it, the navbar works
+    }
     ?>
 
 </div>

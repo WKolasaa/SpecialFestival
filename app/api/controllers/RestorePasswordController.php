@@ -5,10 +5,12 @@ namespace App\Controllers;
 use App\Services\EmailService;
 use App\Services\TokenService;
 use App\Services\UserService;
+use Exception;
 
 class RestorePasswordController
 {
-    function index(){
+    function index()
+    {
 
     }
 
@@ -36,13 +38,13 @@ class RestorePasswordController
                         $emailService->sendResetTokenEmail($email, $token);
                         // Return a JSON response indicating success
                         echo json_encode(['success' => true]);
-                        return [ 'success' => true ];
+                        return ['success' => true];
                     } else {
                         // Email does not exist
                         echo json_encode(['error' => 'Email does not exist']);
                         exit();
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     // Log or handle the exception
                     http_response_code(500);
                     echo json_encode(['error' => 'Internal Server Error']);

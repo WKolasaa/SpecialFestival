@@ -1,4 +1,4 @@
-<?php 
+<?php
 include __DIR__ . '/../header.php';
 ?>
 
@@ -19,13 +19,16 @@ include __DIR__ . '/../header.php';
             <h1 class="display-4">Explore Haarlem's Culinary Delights at</h1>
             <h2 class="display-2 font-weight-bold">Yummy</h2>
         </div>
-     </section>
+    </section>
 
     <section class="header-section">
         <div class="header-content">
             <h2 class="date-range">25 July - 28 July</h2>
             <h1>Welcome to Yummy! Culinary Festival</h1>
-            <p class="festival-description">Embark on a culinary adventure in Haarlem! From July 27-31, our city transforms into a food lover's paradise. Explore special Festival menus, reserve your table hassle-free, and savor chef-curated recipes. Join us in celebrating Haarlem's vibrant food culture — where every bite tells a story. Let the feast begin!</p>
+            <p class="festival-description">Embark on a culinary adventure in Haarlem! From July 27-31, our city
+                transforms into a food lover's paradise. Explore special Festival menus, reserve your table hassle-free,
+                and savor chef-curated recipes. Join us in celebrating Haarlem's vibrant food culture — where every bite
+                tells a story. Let the feast begin!</p>
         </div>
     </section>
 
@@ -51,7 +54,7 @@ include __DIR__ . '/../header.php';
                 echo '<div class="card mb-3 mx-auto" style="max-width: 540px;">';
                 echo '<img src="' . htmlspecialchars($restaurant->getImagesAsArray()[0]['imagePath']) . '" class="card-img-top" alt="' . htmlspecialchars($restaurant->getName()) . '">';
                 echo '<div class="card-body">';
-                echo '<h5 class="card-title">' .htmlspecialchars($restaurant->getName()) . '</h5>';
+                echo '<h5 class="card-title">' . htmlspecialchars($restaurant->getName()) . '</h5>';
                 echo '<p class="card-text">' . htmlspecialchars($restaurant->getAddress()) . '</p>';
                 echo '<p class="card-text"><small>Type: ' . htmlspecialchars($restaurant->getType()) . '</small></p>';
                 echo '<p class="card-text">Price: € ' . htmlspecialchars($restaurant->getPrice()) . '</p>';
@@ -77,11 +80,13 @@ include __DIR__ . '/../header.php';
             ?>
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>

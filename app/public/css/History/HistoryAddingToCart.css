@@ -63,7 +63,7 @@ body, html {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px; /* Reduced padding */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 14px; /* Smaller font size for the entire section */
 }
 
@@ -72,7 +72,7 @@ body, html {
     padding: 8px; /* Reduced padding */
     background-color: #5674AE;
     border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .timeslot h3 {

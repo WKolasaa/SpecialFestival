@@ -2,18 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Services\HistoryAdminService;
-use App\Services\CartService;
 use App\Models\HistoryTicket;
-use App\Models\Ticket;
-use App\Models\TicketType;
-use DateTime;
+use App\Services\CartService;
+use App\Services\HistoryAdminService;
 use App\Services\UserTicketService;
+use Exception;
 
 class HistoryAdminController
 {
     private $historyAdminService;
     private $userTicketService;
+
     function __construct()
     {
         $this->userTicketService = new UserTicketService();
@@ -122,7 +121,7 @@ class HistoryAdminController
         try {
             $this->userTicketService->addUserTicket($ticket, $userId);
             echo json_encode(['success' => true, 'message' => 'Ticket added to cart successfully.']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             error_log("Failed to add ticket to cart: " . $e->getMessage());
             echo json_encode(['success' => false, 'message' => 'Failed to add ticket to cart.']);
         }

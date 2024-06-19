@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 
 use App\Services\UserService;
-use Resend\Email;
 
 class LoginController
 {

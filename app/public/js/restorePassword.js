@@ -20,7 +20,7 @@ function checkEmailExists(email) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: email }),
+        body: JSON.stringify({email: email}),
     })
         .then(response => response.json())
         .then(data => {

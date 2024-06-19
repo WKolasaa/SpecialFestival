@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
+use App\Models\Artist;
+use App\Models\DanceOverView;
 use App\Services\DanceEventService;
 use App\Services\UserTicketService;
 use Exception;
-use App\Models\Artist;
-use App\Models\DanceOverView;
 
 require_once 'basecontroller.php';
 
@@ -38,6 +38,7 @@ class DanceEventController extends BaseController
         }
 
     }
+
     public function agenda()
     {
         try {
@@ -153,7 +154,22 @@ class DanceEventController extends BaseController
         }
     }
 
+    private function sanitizeArtistData($artistData) // Use a different name for the parameter to avoid confusion
+    {
 
+        $fields = [
+            'artistId' => FILTER_SANITIZE_NUMBER_INT,
+            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'style' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'description' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'title' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'participationDate' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'imageName' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
+        return $this->sanitizeData($artistData, $fields);
+
+        // return $sanitizedData; // Return the sanitized data
+    }
 
     public function updateAgenda()
     {
@@ -179,6 +195,25 @@ class DanceEventController extends BaseController
             $response = ['error' => $e->getMessage()];
         }
     }
+
+    private function sanitizeAgendaData($agendaData)
+    {
+        $fields = [
+            'agendaId' => FILTER_SANITIZE_NUMBER_INT,
+            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'eventDay' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'eventDate' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'eventTime' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'durationMinutes' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'sessionPrice' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'sessionsAvailable' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'venueAddress' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
+        return $this->sanitizeData($agendaData, $fields);
+    }
+
+
+    ////////////////delete////////////////////////////
 
     public function updateSession()
     {
@@ -211,6 +246,21 @@ class DanceEventController extends BaseController
             http_response_code(500);
             echo json_encode(['error' => 'Failed to update session information']);
         }
+    }
+
+    private function sanitizeSessionData($sessionData)
+    {
+        $fields = [
+            'sessionId' => FILTER_SANITIZE_NUMBER_INT,
+            'sessionType' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'startSession' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'sessionDate' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'venue' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'sessionPrice' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'endSession' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
+        return $this->sanitizeData($sessionData, $fields);
     }
 
     public function updateDanceOverView()
@@ -272,8 +322,22 @@ class DanceEventController extends BaseController
         }
     }
 
+    private function sanitizeDanceOverview($overview)
+    {
 
-    ////////////////delete////////////////////////////
+        $fields = [
+            'id' => FILTER_SANITIZE_NUMBER_INT,
+            'header' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'subHeader' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'text' => FILTER_SANITIZE_SPECIAL_CHARS,
+            'imageName' => FILTER_SANITIZE_SPECIAL_CHARS,
+        ];
+        return $this->sanitizeData($overview, $fields);
+    }
+
+
+    ////////////////add////////////////////////////
+
     public function deleteArtist()
     {
         header('Content-Type: application/json');
@@ -337,6 +401,7 @@ class DanceEventController extends BaseController
             echo json_encode(['error' => 'Failed to delete session']);
         }
     }
+
     public function deleteDanceOverview()
     {
         header('Content-Type: application/json');
@@ -367,8 +432,8 @@ class DanceEventController extends BaseController
     }
 
 
+    //////////////////AddTicket////////////////////////
 
-    ////////////////add////////////////////////////
     public function addArtist()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -427,7 +492,6 @@ class DanceEventController extends BaseController
             echo json_encode(['error' => 'Method not allowed']);
         }
     }
-
 
     public function addEvent()
     {
@@ -535,8 +599,6 @@ class DanceEventController extends BaseController
         }
     }
 
-
-    //////////////////AddTicket////////////////////////
     public function addTicket()
     {
         header('Content-Type: application/json');
@@ -576,68 +638,6 @@ class DanceEventController extends BaseController
         } else {
             echo json_encode(['hasSession' => false]);
         }
-    }
-
-
-    private function sanitizeArtistData($artistData) // Use a different name for the parameter to avoid confusion
-    {
-
-        $fields = [
-            'artistId' => FILTER_SANITIZE_NUMBER_INT,
-            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'style' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'description' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'title' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'participationDate' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'imageName' => FILTER_SANITIZE_SPECIAL_CHARS,
-        ];
-        return $this->sanitizeData($artistData, $fields);
-
-        // return $sanitizedData; // Return the sanitized data
-    }
-
-    private function sanitizeAgendaData($agendaData)
-    {
-        $fields = [
-            'agendaId' => FILTER_SANITIZE_NUMBER_INT,
-            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'eventDay' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'eventDate' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'eventTime' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'durationMinutes' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'sessionPrice' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'sessionsAvailable' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'venueAddress' => FILTER_SANITIZE_SPECIAL_CHARS,
-        ];
-        return $this->sanitizeData($agendaData, $fields);
-    }
-
-    private function sanitizeSessionData($sessionData)
-    {
-        $fields = [
-            'sessionId' => FILTER_SANITIZE_NUMBER_INT,
-            'sessionType' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'artistName' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'startSession' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'sessionDate' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'venue' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'sessionPrice' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'endSession' => FILTER_SANITIZE_SPECIAL_CHARS,
-        ];
-        return $this->sanitizeData($sessionData, $fields);
-    }
-
-    private function sanitizeDanceOverview($overview)
-    {
-
-        $fields = [
-            'id' => FILTER_SANITIZE_NUMBER_INT,
-            'header' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'subHeader' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'text' => FILTER_SANITIZE_SPECIAL_CHARS,
-            'imageName' => FILTER_SANITIZE_SPECIAL_CHARS,
-        ];
-        return $this->sanitizeData($overview, $fields);
     }
 
 }

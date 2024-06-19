@@ -29,26 +29,32 @@ class token
     {
         $this->token = $token;
     }
+
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
+
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
+
     public function getExpiresAt()
     {
         return $this->expiresAt;
     }
+
     public function setExpiresAt($expiresAt)
     {
         $this->expiresAt = $expiresAt;
     }
+
     public function getTokenId()
     {
         return $this->tokenId;
     }
+
     public function setTokenId($tokenId)
     {
         $this->tokenId = $tokenId;

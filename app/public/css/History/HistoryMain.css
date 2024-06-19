@@ -24,7 +24,7 @@ body, html {
     right: 0;
     bottom: 0;
     left: 0;
-    /* background: rgba(0, 0, 0, 0.5); затемнение главного изображения*/ 
+    /* background: rgba(0, 0, 0, 0.5); затемнение главного изображения*/
     z-index: 1;
 }
 
@@ -90,7 +90,7 @@ body, html {
     margin-bottom: 20px; /* Space below each location item */
     overflow: hidden; /* Ensures no content spills out */
     box-shadow: 6px 6px 0 #090732; /* Drop shadow on right and bottom */
-    
+
 }
 
 .location-item {
@@ -112,7 +112,7 @@ body, html {
     background-color: #000; /* In case the image doesn't load */
     overflow: hidden; /* Hide the overflow */
     border-radius: 15px; /* Rounded corners for the container */
-    
+
 }
 
 
@@ -125,7 +125,7 @@ body, html {
     object-fit: cover; /* Ensures the image covers the padding area */
     transform: translate(-50%, -50%); /* Center the image */
     border-radius: 15px; /* Rounded corners for the image */
-    
+
 }
 
 .location-name {
@@ -218,7 +218,7 @@ body, html {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px; /* Reduced padding */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 14px; /* Smaller font size for the entire section */
 }
 
@@ -227,7 +227,7 @@ body, html {
     padding: 8px; /* Reduced padding */
     background-color: #5674AE;
     border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .timeslot h3 {
@@ -410,30 +410,30 @@ body, html {
 
 /* Footer css */
 .footer {
-    background-color: #0e0e0e; 
-    color:red;
+    background-color: #0e0e0e;
+    color: red;
     border: solid 1px #d1031a;
     border-bottom: none;
-  }
-  
-  .forMoreInfo
-  {
-    color:  #ffffff;
-  }
-  .footer a {
-    color:  #ffffff;;
-  }
-  
-  .footer i {
+}
+
+.forMoreInfo {
+    color: #ffffff;
+}
+
+.footer a {
+    color: #ffffff;;
+}
+
+.footer i {
     font-size: 1.5em;
-    color:  #ffffff;;
-  
-  }
-  
-  .social-icons  {
-    background-color: #000000e2;  
-  }
-  
-  .social-icons i {
-    color:#ffffff;
-  }
+    color: #ffffff;;
+
+}
+
+.social-icons {
+    background-color: #000000e2;
+}
+
+.social-icons i {
+    color: #ffffff;
+}

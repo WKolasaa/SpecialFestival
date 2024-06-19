@@ -1,23 +1,26 @@
 <?php
+
 namespace App\Models;
 
-use App\Models\UserRolesEnum;
+use JsonSerializable;
 
-class User implements \JsonSerializable{
+class User implements JsonSerializable
+{
 
-    private  $id;
-    private  $username;
-    private  $password;
-    private  $userRole;
-    private $registeredDate; //dateTime
     public bool $paymentInProgress;
+    private $id;
+    private $username;
+    private $password;
+    private $userRole; //dateTime
+    private $registeredDate;
     private $firstName;
     private $lastName;
     private $email;
     private $photo;
     private $phoneNumber;
 
-    public function __construct($id, $username, $password,$userRole,$registeredDate, $firstName, $lastName, $email, $photo, $phoneNumber){
+    public function __construct($id, $username, $password, $userRole, $registeredDate, $firstName, $lastName, $email, $photo, $phoneNumber)
+    {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -31,40 +34,49 @@ class User implements \JsonSerializable{
         $this->paymentInProgress = false;
     }
 
-
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId(int $id) {
+    public function setId(int $id)
+    {
         $this->id = $id;
     }
 
-    public function getUsername(){
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setUsername(string $username): void {
+    public function setUsername(string $username): void
+    {
         $this->username = $username;
     }
-    public function getPhoneNumber() {
+
+    public function getPhoneNumber()
+    {
         return $this->phoneNumber;
-    }   
-    public function setPhoneNumber($phoneNumber) {
+    }
+
+    public function setPhoneNumber($phoneNumber)
+    {
         $this->phoneNumber = $phoneNumber;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword(string $password): void {
+    public function setPassword(string $password): void
+    {
         $this->password = $password;
     }
 
-   
 
-    public function getUserRole() {
+    public function getUserRole()
+    {
         return $this->userRole;
     }
 
@@ -87,50 +99,62 @@ class User implements \JsonSerializable{
                 break;
         }
     }
-  
-       public function jsonSerialize():mixed
-        {
-            $vars=get_object_vars($this);
-            return $vars;
-        }
-    public function getRegisteredDate() {
+
+    public function jsonSerialize(): mixed
+    {
+        $vars = get_object_vars($this);
+        return $vars;
+    }
+
+    public function getRegisteredDate()
+    {
         return $this->registeredDate;
     }
-    public function setRegisteredDate($registeredDate) {
+
+    public function setRegisteredDate($registeredDate)
+    {
         $this->registeredDate = $registeredDate;
     }
 
-    public function getFirstName() {
+    public function getFirstName()
+    {
         return $this->firstName;
     }
-    public function setFirstName($firstName) {
+
+    public function setFirstName($firstName)
+    {
         $this->firstName = $firstName;
     }
 
-    public function getLastName() {
+    public function getLastName()
+    {
         return $this->lastName;
     }
 
-    public function setLastName($lastName) {
+    public function setLastName($lastName)
+    {
         $this->lastName = $lastName;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getPhoto() {
+    public function getPhoto()
+    {
         return $this->photo;
     }
 
-    public function setPhoto($photo) {
+    public function setPhoto($photo)
+    {
         $this->photo = $photo;
     }
-
 
 
 }

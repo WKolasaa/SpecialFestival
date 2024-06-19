@@ -1,39 +1,40 @@
 version: '3'
 services:
-    nginx:
-        image: nginx:latest
-        ports:
-            - "80:80"
-        volumes:
-            - ./nginx.conf:/etc/nginx/nginx.conf
-            - ./app:/app
-    php:
-        build:
-            context: .
-            dockerfile: PHP.Dockerfile
-        volumes:
-            - ./app:/app
-        environment:
-            - secretKeyCaptcha = "6LdMtIEpAAAAAMuB5xeiQnbtHZ97L14-TZyEtUPJ";
-            - sideKey = "6LdMtIEpAAAAAItp4USCkfo9OHBPXjlxo1mz-hVI";
-    mysql: 
-        image: mariadb:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: 'festival123'
-            MYSQL_USER: 'developer'
-            MYSQL_PASSWORD: 'festival123'
-            MYSQL_DATABASE: 'developmentdb'
-        volumes:
-            - mysqldata:/var/lib/mysql
-            - ./sql:/docker-entrypoint-initdb.d
-        ports:
-            - 3306:3306
-    phpmyadmin:
-        image: phpmyadmin:latest
-        ports:
-            - 8080:80
-        environment:
-            - PMA_HOST=mysql
-        restart: unless-stopped
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./app:/app
+  php:
+    build:
+      context: .
+      dockerfile: PHP.Dockerfile
+    volumes:
+      - ./app:/app
+      - ./vendor:/vendor
+    environment:
+      - secretKeyCaptcha = "6LdMtIEpAAAAAMuB5xeiQnbtHZ97L14-TZyEtUPJ";
+      - sideKey = "6LdMtIEpAAAAAItp4USCkfo9OHBPXjlxo1mz-hVI";
+  mysql:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 'festival123'
+      MYSQL_USER: 'developer'
+      MYSQL_PASSWORD: 'festival123'
+      MYSQL_DATABASE: 'developmentdb'
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+    restart: unless-stopped
 volumes:
-    mysqldata: {}
+  mysqldata: { }

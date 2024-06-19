@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Models\Ticket;
 use App\Models\UserTicket;
+use App\Repositories\OrderRepository;
 use App\Repositories\TicketRepository;
 use App\Repositories\UserTicketRepository;
-use App\Repositories\OrderRepository;
 
 class UserTicketService
 {
@@ -19,7 +19,6 @@ class UserTicketService
         $this->userTicketRepository = new UserTicketRepository();
         $this->ticketRepository = new TicketRepository();
         $this->orderRepository = new OrderRepository();
-
     }
 
     public function getAllUserTicketsByUserId(int $userId, bool $paid): array
@@ -38,11 +37,10 @@ class UserTicketService
 
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
-      
         if ($this->userTicketRepository->hasTicket($ticket, $userId)) {
             $this->increaseTicketQuantity($ticket->getId(), $userId);
         } else {
-            
+
             $this->userTicketRepository->addUserTicket($ticket, $userId);
         }
     }
@@ -71,7 +69,8 @@ class UserTicketService
 
     }
 
-    public function generateShareToken(int $userId): string {
+    public function generateShareToken(int $userId): string
+    {
         $token = $this->userTicketRepository->getShareTokenByUserId($userId);
 
         if ($token == null) {
@@ -81,11 +80,13 @@ class UserTicketService
         }
     }
 
-    public function getUserIdByShareToken(string $token): int {
+    public function getUserIdByShareToken(string $token): int
+    {
         return $this->userTicketRepository->getUserIdByShareToken($token);
     }
 
-    public function getTicketByUserID(int $userID){
+    public function getTicketByUserID(int $userID)
+    {
         return $this->userTicketRepository->getTicketByUserID($userID);
     }
 }

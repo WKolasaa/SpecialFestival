@@ -1,4 +1,4 @@
-.YummyBody{
+.YummyBody {
     background-color: #1A1A1A;
 }
 
@@ -8,7 +8,7 @@
     height: 50vh;
 
 }
-  
+
 .hero-section .overlay {
     padding: 100px;
 }
@@ -18,7 +18,7 @@
     margin-bottom: 0.5rem;
     color: white;
 }
-  
+
 .hero-section h2 {
     font-size: 4rem;
     font-weight: bold;
@@ -72,13 +72,13 @@
 }
 
 /* cards part */
-.card{
+.card {
     background-color: #1A1A1A;
     border: none;
 }
 
 
-.card-body{
+.card-body {
     background-color: #0E0E0E;
     color: white;
 }
@@ -177,11 +177,11 @@
     color: white;
 }
 
-.custom-border p{
+.custom-border p {
     color: white;
 }
 
-.btn-reserve{
+.btn-reserve {
     background-color: #521900;
     border: none;
     color: white;
@@ -196,7 +196,7 @@
     color: white;
 }
 
-.alert-api{
+.alert-api {
     background-color: #1A1A1A;
     color: white;
 }
@@ -230,32 +230,33 @@
     padding: 10px;
     margin-top: 20px;
 }
+
 /* Footer css */
 .footer {
-    background-color: #0e0e0e; 
-    color:red;
+    background-color: #0e0e0e;
+    color: red;
     border: solid 1px #d1031a;
     border-bottom: none;
-  }
-  
-  .forMoreInfo
-  {
-    color:  #ffffff;
-  }
-  .footer a {
-    color:  #ffffff;;
-  }
-  
-  .footer i {
+}
+
+.forMoreInfo {
+    color: #ffffff;
+}
+
+.footer a {
+    color: #ffffff;;
+}
+
+.footer i {
     font-size: 1.5em;
-    color:  #ffffff;;
-  
-  }
-  
-  .social-icons  {
-    background-color: #000000e2;  
-  }
-  
-  .social-icons i {
-    color:#ffffff;
-  }
+    color: #ffffff;;
+
+}
+
+.social-icons {
+    background-color: #000000e2;
+}
+
+.social-icons i {
+    color: #ffffff;
+}

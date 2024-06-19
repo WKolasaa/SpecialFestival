@@ -6,12 +6,12 @@ use App\Models\restaurant;
 use App\Models\restaurantImage;
 use App\Models\restaurantReservation;
 use App\Models\restaurantSession;
-use App\Services\TicketService;
 use PDO;
 
 class RestaurantRepository extends Repository
 {
-    public function getRestaurants(){
+    public function getRestaurants()
+    {
         $sql = "SELECT id, name, address, type, price, reduced, stars, phoneNumber, email, website, chef FROM restaurants";
         $statement = $this->connection->prepare($sql);
         $statement->execute();
@@ -26,25 +26,8 @@ class RestaurantRepository extends Repository
         return $restaurants;
     }
 
-    public function getRestaurantByID($restaurantID){
-        $sql = "SELECT id, name, address, type, price, reduced, stars, phoneNumber, email, website, chef FROM restaurants WHERE id = ?";
-        $statement = $this->connection->prepare($sql);
-        $statement->execute([$restaurantID]);
-        $rows = $statement->fetchAll();
-
-        $restaurants = $this->mapToRestaurants($rows);
-
-        $restaurants = $this->setImages($restaurants);
-
-        $restaurants = $this->setEvents($restaurants);
-
-        $restaurant = new Restaurant();
-        $restaurant = $restaurants[0];
-
-        return $restaurant;
-    }
-
-    private function mapToRestaurants($rows){
+    private function mapToRestaurants($rows)
+    {
         $restaurants = [];
         foreach ($rows as $row) {
             $restaurant = new Restaurant();
@@ -72,7 +55,7 @@ class RestaurantRepository extends Repository
             $sql = "SELECT id, restaurant_id, image_path, image_type FROM restaurant_images WHERE restaurant_id = :restaurant_id";
             $imageStmt = $this->connection->prepare($sql);
             $restaurantID = $restaurant->getId();
-            $imageStmt->bindParam(':restaurant_id',$restaurantID,PDO::PARAM_INT);
+            $imageStmt->bindParam(':restaurant_id', $restaurantID, PDO::PARAM_INT);
             $imageStmt->execute();
             $imageRows = $imageStmt->fetchAll();
 
@@ -89,12 +72,13 @@ class RestaurantRepository extends Repository
         return $restaurants;
     }
 
-    private function setEvents($restaurants){
+    private function setEvents($restaurants)
+    {
         foreach ($restaurants as $restaurant) {
             $sql = "SELECT id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left FROM restaurant_events WHERE restaurant_id = :restaurant_id";
             $eventStmt = $this->connection->prepare($sql);
             $restaurantID = $restaurant->getId();
-            $eventStmt->bindParam(":restaurant_id",$restaurantID,PDO::PARAM_INT);
+            $eventStmt->bindParam(":restaurant_id", $restaurantID, PDO::PARAM_INT);
             $eventStmt->execute();
             $eventRows = $eventStmt->fetchAll();
 
@@ -117,7 +101,27 @@ class RestaurantRepository extends Repository
         return $restaurants;
     }
 
-    public function addRestaurant($restaurant){
+    public function getRestaurantByID($restaurantID)
+    {
+        $sql = "SELECT id, name, address, type, price, reduced, stars, phoneNumber, email, website, chef FROM restaurants WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([$restaurantID]);
+        $rows = $statement->fetchAll();
+
+        $restaurants = $this->mapToRestaurants($rows);
+
+        $restaurants = $this->setImages($restaurants);
+
+        $restaurants = $this->setEvents($restaurants);
+
+        $restaurant = new Restaurant();
+        $restaurant = $restaurants[0];
+
+        return $restaurant;
+    }
+
+    public function addRestaurant($restaurant)
+    {
         $sql = "INSERT INTO restaurants (name, address, type, price, reduced, stars, phoneNumber, email, website, chef) VALUES (:name, :address, :type, :price, :reduced, :stars, :phoneNumber, :email, :website, :chef)";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':name', $restaurant->getName(), PDO::PARAM_STR);
@@ -132,14 +136,15 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':chef', $restaurant->getChef(), PDO::PARAM_STR);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function updateSession($session){ //TODO: Potential SQL Injection
+    public function updateSession($session)
+    { //TODO: Potential SQL Injection
         $sql = "UPDATE restaurant_events SET restaurant_id = :restaurantId, event_date = :eventDate, event_day = :eventDay, event_time_start = :eventTimeStart, event_time_end = :eventTimeEnd, seats_total = :seatsTotal, seats_left = :seatsLeft WHERE id = :id";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':restaurantId', $session->getRestaurantId(), PDO::PARAM_INT);
@@ -152,14 +157,15 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':id', $session->getId(), PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function addSession($restaurantSession){
+    public function addSession($restaurantSession)
+    {
         $sql = "INSERT INTO restaurant_events (restaurant_id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left) VALUES (:restaurantId, :eventDate, :eventDay, :eventTimeStart, :eventTimeEnd, :seatsTotal, :seatsLeft)";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':restaurantId', $restaurantSession->getRestaurantId(), PDO::PARAM_INT);
@@ -171,27 +177,29 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':seatsLeft', $restaurantSession->getSeatsLeft(), PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function deleteSession($sessionID){
+    public function deleteSession($sessionID)
+    {
         $sql = "DELETE FROM restaurant_events WHERE id = :id";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':id', $sessionID, PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function updateRestaurant($restaurant){
+    public function updateRestaurant($restaurant)
+    {
         $sql = "UPDATE restaurants SET name = :name, address = :address, type = :type, price = :price, reduced = :reduced, stars = :stars, phoneNumber = :phoneNumber, email = :email, website = :website, chef = :chef WHERE id = :id";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':name', $restaurant->getName(), PDO::PARAM_STR);
@@ -207,12 +215,13 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':id', $restaurant->getId(), PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;
         }
     }
+
     // TODO: Make method to update images
     public function updateImages($id, $imagePath)
     {
@@ -222,43 +231,15 @@ class RestaurantRepository extends Repository
         $updateStmt->bindParam(':image_path', $imagePath, PDO::PARAM_STR);
         $updateStmt->bindParam(':image_id', $id, PDO::PARAM_STR);
 
-        if($updateStmt->execute()){
+        if ($updateStmt->execute()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function getEventByID($id){
-        $sql = "SELECT id, restaurant_id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left FROM restaurant_events WHERE id = :id";
-        $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
-        $statement->execute();
-        $rows = $statement->fetchAll();
-
-        if (empty($rows)) {
-            return null; // No event found with the provided ID
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
-            $event = new RestaurantSession();
-            $event->setId($row['id']);
-            $event->setRestaurantId($row['restaurant_id']);
-            $event->setEventDate($row['event_date']);
-            $event->setEventDay($row['event_day']);
-            $event->setEventTimeStart($row['event_time_start']);
-            $event->setEventTimeEnd($row['event_time_end']);
-            $event->setSeatsTotal($row['seats_total']);
-            $event->setSeatsLeft($row['seats_left']);
-
-            array_push($events, $event);
-        }
-
-        return $events[0];
-    }
-
-    public function reserve($reservation){
+    public function reserve($reservation)
+    {
         // Get the event and calculate the remaining seats
         $event = $this->getEventByID($reservation->getEventID());
         if ($event === null) {
@@ -316,7 +297,38 @@ class RestaurantRepository extends Repository
         return true;
     }
 
-    public function getAllReservations(){
+    public function getEventByID($id)
+    {
+        $sql = "SELECT id, restaurant_id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left FROM restaurant_events WHERE id = :id";
+        $statement = $this->connection->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        $rows = $statement->fetchAll();
+
+        if (empty($rows)) {
+            return null; // No event found with the provided ID
+        }
+
+        $events = [];
+        foreach ($rows as $row) {
+            $event = new RestaurantSession();
+            $event->setId($row['id']);
+            $event->setRestaurantId($row['restaurant_id']);
+            $event->setEventDate($row['event_date']);
+            $event->setEventDay($row['event_day']);
+            $event->setEventTimeStart($row['event_time_start']);
+            $event->setEventTimeEnd($row['event_time_end']);
+            $event->setSeatsTotal($row['seats_total']);
+            $event->setSeatsLeft($row['seats_left']);
+
+            array_push($events, $event);
+        }
+
+        return $events[0];
+    }
+
+    public function getAllReservations()
+    {
         $sql = "SELECT id, restaurantId, eventID, regularTickets, reducedTickets, specialRequests, enabled FROM restaurant_reservations";
         $statement = $this->connection->prepare($sql);
         $statement->execute();
@@ -331,7 +343,7 @@ class RestaurantRepository extends Repository
             $reservation->setRegularTickets($row['regularTickets']);
             $reservation->setReducedTickets($row['reducedTickets']);
             $reservation->setSpecialRequests($row['specialRequests']);
-            if($row['enabled'] == 1){
+            if ($row['enabled'] == 1) {
                 $reservation->setEnabled(true);
             } else {
                 $reservation->setEnabled(false);
@@ -353,10 +365,11 @@ class RestaurantRepository extends Repository
         return $reservations;
     }
 
-    public function updateReservation($reservation){
+    public function updateReservation($reservation)
+    {
         $sql = "UPDATE restaurant_reservations SET restaurantId = :restaurantId, eventID = :eventID, regularTickets = :regularTickets, reducedTickets = :reducedTickets, specialRequests = :specialRequests, enabled = :enabled WHERE id = :id";
         $statement = $this->connection->prepare($sql);
-        if($reservation->getEnabled()){
+        if ($reservation->getEnabled()) {
             $enabled = 1;
         } else {
             $enabled = 0;
@@ -381,7 +394,8 @@ class RestaurantRepository extends Repository
 
     }
 
-    public function deleteReservation($reservationID){
+    public function deleteReservation($reservationID)
+    {
         $sql = "DELETE FROM restaurant_reservations WHERE id = :id";
         $statement = $this->connection->prepare($sql);
 
@@ -390,7 +404,8 @@ class RestaurantRepository extends Repository
         return $statement->execute();
     }
 
-    public function getLastReservationID(){
+    public function getLastReservationID()
+    {
         $sql = "SELECT id FROM restaurant_reservations ORDER BY id DESC LIMIT 1";
         $statement = $this->connection->prepare($sql);
         $statement->execute();
@@ -406,7 +421,7 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':id', $restaurantID, PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if($success){
+        if ($success) {
             return true;
         } else {
             return false;

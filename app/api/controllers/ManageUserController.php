@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Services\UserService;
+use Exception;
 
 require_once 'basecontroller.php';
 
@@ -25,7 +27,7 @@ class ManageUserController extends BaseController
 
             echo json_encode($user);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Debugging: Log any exceptions
 
             echo json_encode(['error' => 'An error occurred while fetching user.']);
@@ -66,20 +68,32 @@ class ManageUserController extends BaseController
         try {
             $this->userService->updateUserByAdmin($sanitizedData);
             echo json_encode(['message' => 'User information updated successfully']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             http_response_code(500); // Internal server error
             echo json_encode(['error' => 'Failed to update user information']);
         }
     }
+
+    private function sanitizeUserData($data)
+    {
+
+        // $data['id'] = filter_var($data['id'], FILTER_SANITIZE_NUMBER_INT);
+        $data['username'] = filter_var($data['username'], FILTER_SANITIZE_SPECIAL_CHARS);
+        // $data['password'] = filter_var($data['password'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $data['userRole'] = filter_var($data['userRole'], FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = filter_var($data['password'], FILTER_SANITIZE_SPECIAL_CHARS);
+        }
+
+        return $data;
+    }
+
     private function isValidUserData($data)
     {
 
         return isset($data['username']) && isset($data['userRole']);
     }
-
-
-
-
 
     public function deleteUserByAdmin() //delete user by admin
     {
@@ -108,7 +122,7 @@ class ManageUserController extends BaseController
 
             $this->userService->deleteUserByAdmin($decodedData);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Debugging: Log any exceptions
             error_log('Exception: ' . $e->getMessage());
 
@@ -116,8 +130,6 @@ class ManageUserController extends BaseController
         }
 
     }
-
-
 
     public function createUserByAdmin() //add user by admin
     {
@@ -152,24 +164,10 @@ class ManageUserController extends BaseController
             $this->userService->createUserByAdmin($sanitizedData);
             TODO:
             echo json_encode(['message' => 'User added successfully']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             http_response_code(500); // Internal server error
             echo json_encode(['error' => 'Failed to add user']);
         }
-    }
-    private function sanitizeUserData($data)
-    {
-
-        // $data['id'] = filter_var($data['id'], FILTER_SANITIZE_NUMBER_INT);
-        $data['username'] = filter_var($data['username'], FILTER_SANITIZE_SPECIAL_CHARS);
-        // $data['password'] = filter_var($data['password'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $data['userRole'] = filter_var($data['userRole'], FILTER_SANITIZE_SPECIAL_CHARS);
-
-        if (isset($data['password']) && !empty($data['password'])) {
-            $data['password'] = filter_var($data['password'], FILTER_SANITIZE_SPECIAL_CHARS);
-        }
-
-        return $data;
     }
 
 }

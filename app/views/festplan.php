@@ -1,9 +1,11 @@
-<?php include __DIR__ . '/header.php';
+<?php use App\Models\TicketType;
+
+include __DIR__ . '/header.php';
 $tokenIsSet = isset($_GET['token']);
 ?>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
             // Create an array of events from user tickets
@@ -22,13 +24,13 @@ $tokenIsSet = isset($_GET['token']);
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
                 events: events,
-                eventContent: function(arg) {
+                eventContent: function (arg) {
                     var html = '<div class="event">';
                     html += '<div class="event-ticket-name">' + arg.event.extendedProps.eventName + '</div>';
                     html += '<div class="event-location">' + arg.event.extendedProps.location + '</div>';
                     html += '</div>';
 
-                    return { html: html };
+                    return {html: html};
                 }
             });
             calendar.render();
@@ -65,12 +67,14 @@ $tokenIsSet = isset($_GET['token']);
                     <td><?= $userTicket->ticket->getTicketName() ?></td>
                     <td><?= $userTicket->ticket->getPrice() ?></td>
                     <td>
-                        <?php if (!$tokenIsSet): ?>
+                        <?php if (!$tokenIsSet && $userTicket->ticket->getTicketType() != TicketType::Yummy): ?>
                             <button class="btn btn-primary quantity-controls quantity-increase">+</button>
                         <?php endif; ?>
                         <span class="quantity"><?= $userTicket->quantity ?></span>
-                        <?php if (!$tokenIsSet): ?>
+                        <?php if (!$tokenIsSet && $userTicket->ticket->getTicketType() != TicketType::Yummy): ?>
                             <button class="btn btn-primary quantity-controls quantity-decrease">-</button>
+                        <?php endif; ?>
+                        <?php if (!$tokenIsSet): ?>
                             <button class="btn btn-danger delete-ticket">Delete</button>
                         <?php endif; ?>
                     </td>
@@ -81,7 +85,8 @@ $tokenIsSet = isset($_GET['token']);
 
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger">
-                <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+                <?php echo $_SESSION['error'];
+                unset($_SESSION['error']); ?>
             </div>
         <?php endif; ?>
 
@@ -96,7 +101,7 @@ $tokenIsSet = isset($_GET['token']);
 
 <?php if (!$tokenIsSet): ?>
     <script>
-        const userId = <?= json_encode($_SESSION['userId']) ?>;
+        const userId = <?= $userId ?>;
     </script>
     <script src="js/festplan.js"></script>
 <?php endif; ?>

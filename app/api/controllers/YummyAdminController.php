@@ -18,7 +18,7 @@ class YummyAdminController
 
     public function getAllRestaurants()
     {
-        try{
+        try {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Headers: Content-Type");
             header("Access-Control-Allow-Methods: GET, POST Delete, OPTIONS");
@@ -26,26 +26,14 @@ class YummyAdminController
 
             $restaurants = $this->restaurantService->getRestaurants();
             echo json_encode($restaurants);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
-    public function getRestaurantById(){
-        try{
-            $jsonData = file_get_contents('php://input');
-            $jsonData = json_decode($jsonData, true);
-            $restaurantID = intval($jsonData['restaurantId']);
-
-            $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
-            echo json_encode($restaurant);
-        }catch (Exception $e){
-            echo json_encode(['error' => $e->getMessage()]);
-        }
-    }
-
-    public function getAllRestaurantsEvents(){
-        try{
+    public function getAllRestaurantsEvents()
+    {
+        try {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Headers: Content-Type");
             header("Access-Control-Allow-Methods: GET, POST Delete, OPTIONS");
@@ -62,14 +50,14 @@ class YummyAdminController
 
 
             echo json_encode($eventArray);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
-
-    public function getRestaurantsEventsById(){
-        try{
+    public function getRestaurantsEventsById()
+    {
+        try {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Headers: Content-Type");
             header("Access-Control-Allow-Methods: GET, POST Delete, OPTIONS");
@@ -77,7 +65,7 @@ class YummyAdminController
 
             $jsonData = file_get_contents('php://input');
             $jsonData = json_decode($jsonData, true);
-            if($jsonData !== null){
+            if ($jsonData !== null) {
                 $restaurantID = intval($jsonData['restaurantId']);
 
                 $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
@@ -89,16 +77,31 @@ class YummyAdminController
             }
 
             echo json_encode($eventArray);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
-    public function updateEvent(){
+    public function getRestaurantById()
+    {
+        try {
+            $jsonData = file_get_contents('php://input');
+            $jsonData = json_decode($jsonData, true);
+            $restaurantID = intval($jsonData['restaurantId']);
+
+            $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
+            echo json_encode($restaurant);
+        } catch (Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function updateEvent()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $restaurantSession = new RestaurantSession();
             $restaurantSession->setRestaurantId(intval($jsonData['restaurant_id']));
             $restaurantSession->setId(intval($jsonData['id']));
@@ -109,19 +112,20 @@ class YummyAdminController
             $restaurantSession->setSeatsTotal(intval($jsonData['seats_total']));
             $restaurantSession->setSeatsLeft(intval($jsonData['seats_left']));
 
-            if($this->restaurantService->updateSession($restaurantSession)){
+            if ($this->restaurantService->updateSession($restaurantSession)) {
                 echo json_encode(['success' => 'Event updated']);
             }
-            }else{
-                echo json_encode(['error' => 'Invalid data']);
-            }
+        } else {
+            echo json_encode(['error' => 'Invalid data']);
+        }
     }
 
-    public function addRestaurant(){
+    public function addRestaurant()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $restaurant = new Restaurant();
             $restaurant->setName($jsonData['name']);
             $restaurant->setAddress($jsonData['address']);
@@ -134,22 +138,22 @@ class YummyAdminController
             $restaurant->setWebsite($jsonData['website']);
             $restaurant->setCity($jsonData['chef']);
 
-            if($this->restaurantService->addRestaurant($restaurant)){
+            if ($this->restaurantService->addRestaurant($restaurant)) {
                 echo json_encode(['success' => 'Restaurant added']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to add restaurant']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function getAllImagesByRestaurantId(){
-        try{
+    public function getAllImagesByRestaurantId()
+    {
+        try {
             $jsonData = file_get_contents('php://input');
             $jsonData = json_decode($jsonData, true);
-            if($jsonData !== null){
+            if ($jsonData !== null) {
                 $restaurantID = intval($jsonData['restaurantId']);
 
                 $restaurant = $this->restaurantService->getRestaurantByID($restaurantID);
@@ -162,16 +166,17 @@ class YummyAdminController
             }
 
             echo json_encode($images);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
-    public function addSession(){
+    public function addSession()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $restaurantSession = new RestaurantSession();
             $restaurantSession->setRestaurantId(intval($jsonData['restaurant_id']));
             $restaurantSession->setEventDate($jsonData['event_date']);
@@ -181,24 +186,24 @@ class YummyAdminController
             $restaurantSession->setSeatsTotal(intval($jsonData['seats_total']));
             $restaurantSession->setSeatsLeft(intval($jsonData['seats_left']));
 
-            if($this->restaurantService->addSession($restaurantSession)){
+            if ($this->restaurantService->addSession($restaurantSession)) {
                 echo "added";
                 echo json_encode(['success' => 'Event added']);
-            }
-            else{
+            } else {
                 echo "failed";
                 echo json_encode(['error' => 'Failed to add event']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function updateRestaurant(){
+    public function updateRestaurant()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $restaurant = new Restaurant();
             $restaurant->setId(intval($jsonData['id']));
             $restaurant->setName($jsonData['name']);
@@ -212,36 +217,36 @@ class YummyAdminController
             $restaurant->setWebsite($jsonData['website']);
             $restaurant->setChef($jsonData['chef']);
 
-            if($this->restaurantService->updateRestaurant($restaurant)){
+            if ($this->restaurantService->updateRestaurant($restaurant)) {
                 echo json_encode(['success' => 'Restaurant updated']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to update restaurant']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function deleteSession(){
+    public function deleteSession()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $sessionID = $jsonData['id'];
 
-            if($this->restaurantService->deleteSession($sessionID)){
+            if ($this->restaurantService->deleteSession($sessionID)) {
                 echo json_encode(['success' => 'Event deleted']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to delete event']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function updateImage() {
+    public function updateImage()
+    {
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             // Define the directory where the image will be saved
             $uploadDir = 'img/Yummy/';
@@ -269,10 +274,9 @@ class YummyAdminController
 
                 $imagePath = 'img/Yummy/' . $filename; // Assuming the image path is stored in 'img' directory
 
-                if($this->restaurantService->updateImage($_POST['id'], $imagePath)){
+                if ($this->restaurantService->updateImage($_POST['id'], $imagePath)) {
                     echo json_encode(['success' => 'Image updated successfully']);
-                }
-                else {
+                } else {
                     echo json_encode(['error' => 'Failed to update database with the new image path']);
                 }
 
@@ -286,8 +290,9 @@ class YummyAdminController
         }
     }
 
-    public function getAllReservations(){
-        try{
+    public function getAllReservations()
+    {
+        try {
             $reservation = $this->restaurantService->getAllReservations();
 
             $reservations = [];
@@ -296,16 +301,17 @@ class YummyAdminController
             }
 
             echo json_encode($reservations);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
 
-    public function updateReservation(){
+    public function updateReservation()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $reservation = new RestaurantReservation();
             $reservation->setId(intval($jsonData['id']));
             $reservation->setRestaurantId(intval($jsonData['restaurantId']));
@@ -315,40 +321,40 @@ class YummyAdminController
             $reservation->setSpecialRequests($jsonData['specialRequests']);
             $reservation->setEnabled($jsonData['enabled']);
 
-            if($this->restaurantService->updateReservation($reservation)){
+            if ($this->restaurantService->updateReservation($reservation)) {
                 echo json_encode(['success' => 'Reservation updated']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to update reservation']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function deleteReservation(){
+    public function deleteReservation()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $reservationID = $jsonData['reservationId'];
 
-            if($this->restaurantService->deleteReservation($reservationID)){
+            if ($this->restaurantService->deleteReservation($reservationID)) {
                 echo json_encode(['success' => 'Reservation deleted']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to delete reservation']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function addReservation(){
+    public function addReservation()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $reservation = new RestaurantReservation();
             $reservation->setRestaurantId(intval($jsonData['restaurantId']));
             $reservation->setEventID(intval($jsonData['eventID']));
@@ -357,31 +363,30 @@ class YummyAdminController
             $reservation->setSpecialRequests($jsonData['specialRequests']);
             $reservation->setEnabled(true);
 
-            if($this->restaurantService->reserve($reservation)){
+            if ($this->restaurantService->reserve($reservation)) {
                 echo json_encode(['success' => 'Reservation added']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to add reservation']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }
 
-    public function deleteRestaurant(){
+    public function deleteRestaurant()
+    {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
 
-        if($jsonData !== null){
+        if ($jsonData !== null) {
             $restaurantID = $jsonData['restaurantId'];
 
-            if($this->restaurantService->deleteRestaurant($restaurantID)){
+            if ($this->restaurantService->deleteRestaurant($restaurantID)) {
                 echo json_encode(['success' => 'Restaurant deleted']);
-            }
-            else{
+            } else {
                 echo json_encode(['error' => 'Failed to delete restaurant']);
             }
-        }else{
+        } else {
             echo json_encode(['error' => 'Invalid data']);
         }
     }

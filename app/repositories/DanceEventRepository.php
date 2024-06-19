@@ -159,7 +159,7 @@ class DanceEventRepository extends Repository
             $title = $artist->getTitle();
             $participationDate = $artist->getParticipationDate();
             $imageName = $artist->getImageName();
-            
+
             $statement = $this->connection->prepare($sql);
             $statement->bindParam(':artistId', $artistId, PDO::PARAM_INT);
             $statement->bindParam(':artistName', $artistName, PDO::PARAM_STR);
@@ -386,6 +386,7 @@ class DanceEventRepository extends Repository
         }
         return $danceOverView;
     }
+
     ///////////////add/////////////////////
     public function addArtist(Artist $artist)
     {

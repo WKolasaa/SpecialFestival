@@ -1,6 +1,6 @@
 <?php
-    include __DIR__ . '/header.php'; 
- ?>
+include __DIR__ . '/header.php';
+?>
 
 
     <div class="container mt-5">
@@ -34,5 +34,5 @@
     </div>
     <script src="js/login.js"></script>
 <?php
-    include __DIR__ . '/footer.php';
+include __DIR__ . '/footer.php';
 ?>

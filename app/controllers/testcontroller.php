@@ -2,18 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Repositories\TicketRepository;
 use App\Services\EmailService;
-use App\Services\PDFService;
-use chillerlan\QRCode\QRCode;
+use Exception;
 
 class testcontroller //TODO: REMOVE THIS FILE
 {
-    public function index(){
+    public function index()
+    {
         $emailService = new EmailService();
-        try{
+        try {
             $emailService->sendTickets();
-        } catch (\Exception $e){
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
 

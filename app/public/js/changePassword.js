@@ -5,11 +5,9 @@ function onSubmit() {
 
     if (newPassword != confirmPassword) {
         showMessage('Passwords do not match!', 'alert-danger');
-    }
-    else if (newPassword.length < 8) {
+    } else if (newPassword.length < 8) {
         showMessage('Password must be at least 8 characters long!', 'alert-danger');
-    }
-    else {
+    } else {
         const bodyData = {
             newPassword: newPassword,
             confirmPassword: confirmPassword,
@@ -28,7 +26,7 @@ function onSubmit() {
             .then(data => {
                 if (data.success) {
                     showMessage('Password has been successfully changed!', 'alert-success');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = "http://localhost";
                     }, 2000);
                 } else {

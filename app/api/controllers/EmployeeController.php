@@ -11,14 +11,14 @@ class EmployeeController
     {
         $jsonData = file_get_contents('php://input');
         $jsonData = json_decode($jsonData, true);
-        if(isset($jsonData)) {
+        if (isset($jsonData)) {
             $QRService = new QRService();
             $data = json_encode($jsonData['qrData']);
             //echo $data;
             $ticketID = $QRService->getQRIDByCode($jsonData['qrData']);
             //echo "Ticket ID: " . $ticketID;
             session_start();
-            if(isset($ticketID)) {
+            if (isset($ticketID)) {
                 if ($QRService->qrCodeScanned($ticketID)) {
                     $_SESSION['ticketID'] = $ticketID;
                     echo json_encode(['scanned' => true, 'message' => 'Ticket already scanned']);
@@ -42,10 +42,10 @@ class EmployeeController
     {
         session_start();
         $ticketID = $_SESSION['ticketID'];
-        if(isset($ticketID)) {
+        if (isset($ticketID)) {
             $ticketService = new TicketService();
             $ticket = $ticketService->getTicketById($ticketID);
-            if(isset($ticket)) {
+            if (isset($ticket)) {
                 echo json_encode($ticket);
             } else {
                 echo json_encode(['error' => 'Error getting ticket information']);
