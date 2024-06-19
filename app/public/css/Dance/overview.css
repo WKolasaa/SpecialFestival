@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Big+Shoulders+Inline+Text:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400..800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Big+Shoulders+Inline+Text:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@400..800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Big+Shoulders+Inline+Text:wght@100..900&family=Londrina+Shadow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Baloo+Chettan+2:wght@400..800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Big+Shoulders+Inline+Text:wght@100..900&family=Londrina+Shadow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Baloo+Chettan+2:wght@400..800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bellota+Text:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Bellota:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Big+Shoulders+Inline+Text:wght@100..900&family=Londrina+Shadow&display=swap');
+
+body {
+    background-color: #1B1B1F;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.video-background {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+.overlay-text {
+    position: relative;
+    z-index: 1;
+}
+
+
+.festival-title {
+    margin-top: 60%;
+    margin-left: 20px;
+}
+
+.festival-title h1 {
+    font-family: "Big Shoulders Inline Text", sans-serif;
+    font-size: 5em;
+    color: white;
+    width: 500px;
+    padding: 0;
+}
+
+.festival-title h2 {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 7em;
+    color: white;
+}
+
+.festival-date {
+    /* Style for the festival date */
+    font-family: "Barlow Condensed", sans-serif;
+    margin-right: 120px;
+    background-color: #d1031a;
+    border-radius: 20px;
+    opacity: 0.7;
+    padding: 20px;
+}
+
+.festival-date h3 {
+    font-family: "Baloo Chettan 2", sans-serif;
+    font-weight: 400;
+    font-size: 3rem;
+    font-style: normal;
+    color: white;
+    z-index: 9999;
+    opacity: 1;
+
+}
+
+.golden-line {
+    border: 0;
+    height: 3px;
+    background-color: #DAA520; /* Solid golden color */
+    margin: 0 auto; /* Centers the line */
+    opacity: 100%;
+}
+
+.festival-date .overview-subtitle {
+    font-family: "Baloo Chettan 2", sans-serif;
+    font-weight: 200;
+    font-size: 20px;
+    color: white;
+    z-index: 9999;
+    opacity: 1;
+    width: 400px;
+}
+
+.festival-date p {
+    font-family: "Baloo Chettan 2", sans-serif;
+    font-weight: 100;
+    font-size: 20px;
+    color: white;
+    z-index: 9999;
+    opacity: 1;
+    width: 400px;
+}
+
+
+.my-class {
+    margin-top: 10px;
+}
+
+.countdown-title {
+    color: white;
+    text-align: center;
+    font-size: 6em; /* Adjust size as needed */
+    text-shadow: 2px 2px 4px #000000; /* Shadow effect for better readability */
+    font-family: "Londrina Shadow", sans-serif;
+    font-weight: 400;
+
+}
+
+.countdown-subtitle {
+    color: white;
+    text-align: center;
+    padding: 10px 0; /* Add padding as needed */
+    font-family: "Almarai", sans-serif;
+    font-weight: 300;
+
+
+}
+
+.countdown-details {
+    color: rgb(252, 249, 249);
+    font-family: "Almarai", sans-serif;
+}
+
+.countdown-details p {
+    color: rgb(252, 249, 249);
+    margin: 0 auto;
+    width: 50%;
+    align-items: center;
+    text-align: center;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+
+.countdown-dates {
+    width: 1850px;
+    font-weight: 900;
+    position: relative;
+    font-size: 250px;
+    display: inline-block;
+    font-family: Inter;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 6%, rgba(255, 255, 255, 0));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    height: 279.9px;
+    transform: rotate(0.53deg);
+    transform-origin: 0 0;
+    opacity: 0.5;
+}
+
+/* Slider Style */
+.swiper {
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 70px;
+}
+
+.section {
+    position: relative;
+    width: 450px;
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.card {
+    position: relative;
+    background-color: rgb(32, 32, 32);
+    border-radius: 20px 20px 0 0;
+    height: 450px;
+    width: 350px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 30px;
+}
+
+/* This will apply the white color to all text within the artist-container class */
+.artist-container {
+    color: white;
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    z-index: 100;
+}
+
+section .card .image {
+    height: 50%;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+}
+
+section .card .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.artist-container {
+    margin-left: 10px;
+}
+
+.artistDate {
+    margin-top: 5px;
+    font-family: "Bellota Text", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 24px;
+
+}
+
+.artistName {
+    font-family: "Almarai", sans-serif;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.artistInfo {
+    font-size: 14px;
+    font-family: "Almarai", sans-serif;
+    font-weight: 300;
+    font-style: regular;
+    padding: 0 0 10px 0;
+}
+
+.desc {
+    font-size: 14px;
+    font-family: "Almarai", sans-serif;
+    font-weight: 700;
+    padding: 0 0 20px 0;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+
+.swiper-button-prev, .swiper-button-next {
+    color: white; /* Or any color that is visible on your background */
+    z-index: 10; /* Make sure this is higher than the card z-index */
+    position: absolute;
+    top: 50%; /* Adjust this as needed */
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    margin-top: -25px; /* Half of the height to center it vertically */
+    background: #1B1B1F; /* Optional: Adds background to the buttons for visibility */
+    border-radius: 25px; /* Optional: Rounds the corners of the background */
+}
+
+.swiper-button-prev {
+    left: calc(-70px - 20px); /* Adjust as needed */
+}
+
+.swiper-button-next {
+    right: calc(-70px - 20px); /* Adjust as needed */
+}
+
+.swiper-wrapper {
+    margin-left: 0px; /* Space for the prev button */
+    margin-right: 70px; /* Space for the next button */
+}
+
+
+/*  */
+.desc1 {
+    margin-top: 100px;
+}
+
+
+.sessionType {
+    color: white;
+    font-family: "Almarai", sans-serif;
+    font-weight: 900;
+}
+
+.DateAndTime {
+
+    font-family: "Bellota Text", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 24px;
+    color: white;
+}
+
+.sessionDescription {
+    font-family: "Almarai", sans-serif;
+    font-weight: 300;
+    font-style: regular;
+    font-size: 16px;
+    color: white;
+    padding: 0 0 10px 0;
+    width: 50vh;
+}
+
+.image1 {
+    position: absolute;
+    width: 70%; /* Adjust as needed */
+    height: auto;
+    left: 8vh;
+    top: -12vh;
+}
+
+/*  -------------- */
+
+.sessionType2 {
+    color: white;
+    font-family: "Almarai", sans-serif;
+    font-weight: 900;
+}
+
+.DateAndTime2 {
+
+    font-family: "Bellota Text", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 24px;
+    color: white;
+}
+
+.sessionDescription2 {
+    font-family: "Almarai", sans-serif;
+    font-weight: 300;
+    font-style: regular;
+    font-size: 16px;
+    color: white;
+    padding: 0 0 10px 0;
+    width: 50vh;
+}
+
+.image-container {
+    position: relative;
+    margin-top: 40px;
+}
+
+.image22 {
+    border: #d1031a 1px solid;
+    position: absolute;
+    width: 70%; /* Adjust as needed */
+    height: auto;
+    left: 5vh;
+    top: -5vh;
+}
+
+
+/*  -------------- */
+
+.sessionType3 {
+    color: white;
+    font-family: "Almarai", sans-serif;
+    font-weight: 900;
+}
+
+.DateAndTime3 {
+
+    font-family: "Bellota Text", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 24px;
+    color: white;
+}
+
+.sessionDescription3 {
+    font-family: "Almarai", sans-serif;
+    font-weight: 300;
+    font-style: regular;
+    font-size: 16px;
+    color: white;
+    padding: 0 0 10px 0;
+    width: 50vh;
+}
+
+.image-container {
+    position: relative;
+    margin-top: 40px;
+    /* margin-bottom:10vh ; */
+
+}
+
+.image3 {
+    position: absolute;
+    width: 70%; /* Adjust as needed */
+    height: auto;
+    left: 5vh;
+    top: -5vh;
+    margin-bottom: 120vh;
+}
+
+/* Footer css */
+.footer {
+    background-color: #0e0e0e;
+    color: red;
+    margin-top: 20vh;
+    border: solid 1px #d1031a;
+    border-bottom: none;
+}
+
+.forMoreInfo {
+    color: #ffffff;
+}
+
+.footer a {
+    color: #ffffff;;
+}
+
+.footer i {
+    font-size: 1.5em;
+    color: #ffffff;;
+
+}
+
+.social-icons {
+    background-color: #000000e2;
+}
+
+.social-icons i {
+    color: #ffffff;
+}

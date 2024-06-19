@@ -1,0 +1,262 @@
+.YummyBody {
+    background-color: #1A1A1A;
+}
+
+.hero-section {
+    background: url('/img/Yummy/YummyEvent.jpg') no-repeat center center;
+    background-size: cover;
+    height: 50vh;
+
+}
+
+.hero-section .overlay {
+    padding: 100px;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.hero-section h2 {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+}
+
+.header-section {
+    position: relative;
+    color: #fff;
+    padding: 40px;
+}
+
+.header-content {
+    max-width: 1140px;
+    margin: auto;
+    color: #fff;
+    text-align: center;
+}
+
+.date-range {
+    font-size: 8rem;
+    font-weight: bold;
+    color: rgba(117, 115, 115, 1);
+    margin-bottom: 50px;
+}
+
+.header-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.festival-description {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.section-title {
+    color: #333;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+}
+
+.restaurant-section {
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
+
+/* cards part */
+.card {
+    background-color: #1A1A1A;
+    border: none;
+}
+
+
+.card-body {
+    background-color: #0E0E0E;
+    color: white;
+}
+
+.card-img {
+    width: 100%;
+    height: auto;
+}
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.checked {
+    color: orange;
+}
+
+.fa-star {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(100%);
+    color: white;
+}
+
+.carousel-item {
+    padding: 0px;
+}
+
+
+.btn-primary {
+    background-color: #521900;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #521900;
+}
+
+.contact-section {
+    color: #fff;
+    padding: 40px;
+}
+
+.contact-section h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.contact-form .form-control {
+    background-color: #555;
+    border: none;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.contact-form .form-control::placeholder {
+    color: #fff;
+}
+
+.contact-form .btn-send {
+    background-color: #521900;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.contact-form .btn-send:hover {
+    background-color: #521900;
+}
+
+/* restaurant card */
+.custom-border {
+    border-color: #521900;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.custom-border h2 {
+    color: white;
+}
+
+.custom-border p {
+    color: white;
+}
+
+.btn-reserve {
+    background-color: #521900;
+    border: none;
+    color: white;
+    margin-bottom: 10px;
+    padding-right: 200px;
+    padding-left: 200px;
+}
+
+
+/* Reservation part */
+.custom-border label {
+    color: white;
+}
+
+.alert-api {
+    background-color: #1A1A1A;
+    color: white;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    color: #FFFFFF;
+    background-color: transparent;
+    border: none;
+}
+
+.carousel-indicators .active {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.img-fluid-cover {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.full-height-img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-details {
+    font-size: 16px;
+    color: #333;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+/* Footer css */
+.footer {
+    background-color: #0e0e0e;
+    color: red;
+    border: solid 1px #d1031a;
+    border-bottom: none;
+}
+
+.forMoreInfo {
+    color: #ffffff;
+}
+
+.footer a {
+    color: #ffffff;;
+}
+
+.footer i {
+    font-size: 1.5em;
+    color: #ffffff;;
+
+}
+
+.social-icons {
+    background-color: #000000e2;
+}
+
+.social-icons i {
+    color: #ffffff;
+}

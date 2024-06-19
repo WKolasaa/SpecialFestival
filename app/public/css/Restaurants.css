@@ -1,0 +1,31 @@
+.YummyBody {
+    background-color: #1A1A1A;
+    color: white;
+
+}
+
+.container {
+    background-color: #1A1A1A;
+    color: white;
+}
+
+.custom-border {
+    border-color: #521900; /* Custom color */
+    border-width: 2px; /* Custom width */
+    border-style: solid; /* Custom style */
+    background-color: #1A1A1A;
+    color: white;
+}
+
+.custom-border .h2 {
+    color: white;
+}
+
+.fa-star {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+

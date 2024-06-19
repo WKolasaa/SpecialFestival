@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+    body,
+    .admin-panel {
+        font-family: 'Open Sans', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        /* Space for the fixed form */
+    }
+
+    .admin-panel {
+        padding: 20px;
+        margin: 0;
+    }
+
+    h1,
+    h2 {
+        color: #0056b3;
+    }
+
+    .content-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .content-table th,
+    .content-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .content-table th {
+        background-color: #009879;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .content-table tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .content-table tr:hover {
+        background-color: #f2f2f2;
+        cursor: default;
+    }
+
+    .add-entry-form {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f9f9f9;
+        padding: 10px;
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        /* Align items left to right */
+        align-items: center;
+        /* Center items vertically */
+        gap: 10px;
+        /* Space between elements */
+        z-index: 1000;
+    }
+
+    .add-entry-form label {
+        margin: 0;
+        flex-grow: 1;
+        /* Allow each field to grow */
+    }
+
+    .add-entry-form input,
+    .add-entry-form select,
+    .add-entry-form button {
+        padding: 8px;
+        margin: 0;
+        /* Remove default margin */
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        flex-grow: 1;
+        /* Allow each input/button to grow */
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        /* Aligns children (buttons) vertically */
+        align-items: center;
+        /* Centers buttons horizontally within the container */
+        gap: 5px;
+        /* Space between buttons */
+    }
+
+    .action-buttons button {
+        background-color: #28a745;
+        /* Green background */
+        color: white;
+        padding: 8px 15px;
+        /* Uniform padding */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 90px;
+        /* Fixed width for uniformity */
+        height: 38px;
+        /* Fixed height for uniformity */
+        /* Removed margin-bottom as gap property is now being used for spacing */
+    }
+
+    /* Remove the bottom margin from the last button to avoid extra space at the end */
+    .action-buttons button:last-child {
+        margin-bottom: 0;
+    }
+
+    .action-buttons button:hover {
+        background-color: #218838;
+        /* Darker green on hover */
+    }
+
+    .editable-content textarea {
+        width: 100%;
+        /* Full width of its parent container */
+        height: 100%;
+        /* Full height of its parent container */
+        box-sizing: border-box;
+        /* Includes padding and border in the element's size */
+        display: none;
+        /* Initially hidden */
+    }
+
+    .admin-container {
+        display: flex;
+        min-height: 100vh; /* Full height of the viewport */
+    }
+    
+    .sidebar {
+        width: 200px; /* Adjust as needed */
+        background-color: #f0f0f0; /* Light grey, adjust as needed */
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px; /* Space between buttons */
+        background-color: #009879; /* Adjust as needed */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .sidebar-button:hover {
+        background-color: #007861; /* Darker shade for hover effect */
+    }
+    
+    .main-content {
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    .timeslots-section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+    
+    .timeslots-section th, 
+    .timeslots-section td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd; /* Light grey border */
+    }
+    
+    /* Header styling */
+    .timeslots-section th {
+        background-color: #f4f4f4; /* Light grey background */
+        color: #333; /* Dark text for contrast */
+        font-weight: bold;
+    }
+    
+    /* Zebra striping for rows */
+    .timeslots-section tr:nth-child(even){background-color: #fafafa;}
+    
+    /* Hover effect for rows */
+    .timeslots-section tr:hover {background-color: #f5f5f5;}
+    
+    /* Button styling */
+    .timeslots-section .edit-btn,
+    .timeslots-section .delete-btn {
+        text-decoration: none;
+        padding: 6px 12px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 0.8rem;
+    }
+    
+    .timeslots-section .edit-btn {
+        background-color: #4CAF50; /* Green */
+    }
+    
+    .timeslots-section .delete-btn {
+        background-color: #f44336; /* Red */
+    }

@@ -1,0 +1,440 @@
+body, html {
+    background: #161A30; /* Slightly darker for better contrast */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* A more modern font */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+.festival-banner {
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative; /* For pseudo-element */
+    overflow: hidden; /* Hide overflow for pseudo-elements */
+}
+
+.festival-banner::before { /* Dark overlay for better text readability */
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* background: rgba(0, 0, 0, 0.5); затемнение главного изображения*/
+    z-index: 1;
+}
+
+.history-video {
+    width: 100vw;
+}
+
+.festival-info {
+    flex-basis: 50%;
+    padding: 20px;
+}
+
+.festival-title {
+    font-size: 4em; /* Increased size for more impact */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    color: #ffffff;
+
+}
+
+.festival-description {
+    background-size: contain; /* Adjusts this image to fit as well */
+    color: white;
+    text-align: center;
+    padding: 60px;
+    /* min-height: 40vh;  */
+}
+
+.festival-description p {
+    font-size: 1.2em; /* Larger font size for readability */
+    line-height: 1.4; /* Increased line-height for better readability */
+    max-width: 1100px; /* Slightly wider for a comfortable reading line */
+    margin: auto;
+    color: white; /* Set text color to white or any other color that maintains readability */
+}
+
+.locations-section {
+    margin: 20px;
+    text-align: center;
+    color: white;
+}
+
+.locations-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.locations-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch; /* This will ensure that items have the same height */
+    gap: 20px; /* This will create space between the items and the border */
+    padding: 0 80px; /* Add padding to the left and right of the container */
+}
+
+.location-item {
+    background: #1E1A7A;
+    border-radius: 20px;
+    padding: 10px;
+    width: calc(45% - 5px); /* Adjust the width to account for the gap */
+    margin-bottom: 20px; /* Space below each location item */
+    overflow: hidden; /* Ensures no content spills out */
+    box-shadow: 6px 6px 0 #090732; /* Drop shadow on right and bottom */
+
+}
+
+.location-item {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits text color to prevent color changes */
+    display: block; /* Ensures the link takes up the entire space of its container */
+}
+
+.location-item:hover,
+.location-item:focus {
+    text-decoration: none; /* Optional: Removes underline on hover/focus for consistency */
+}
+
+.location-image-container {
+    width: 80%; /* Smaller width */
+    padding-top: 45%; /* Adjust for smaller image, keeping aspect ratio */
+    position: relative; /* For absolute positioning of the image */
+    margin: 0 auto 20px auto; /* Center the image container */
+    background-color: #000; /* In case the image doesn't load */
+    overflow: hidden; /* Hide the overflow */
+    border-radius: 15px; /* Rounded corners for the container */
+
+}
+
+
+.location-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto; /* Adjust width to maintain aspect ratio */
+    height: 100%; /* Full height */
+    object-fit: cover; /* Ensures the image covers the padding area */
+    transform: translate(-50%, -50%); /* Center the image */
+    border-radius: 15px; /* Rounded corners for the image */
+
+}
+
+.location-name {
+    font-size: 1.8em; /* Increased font size */
+    margin-bottom: 10px;
+}
+
+.location-description {
+    font-size: 1em;
+    color: white;
+}
+
+.tickets-section {
+    background: #161A30;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center children horizontally */
+    text-align: center;
+}
+
+.tickets-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.ticket-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow ticket items to wrap */
+    justify-content: space-around; /* Space out the tickets evenly */
+    width: 100%; /* Set the width to full container width */
+}
+
+.ticket {
+    background: #504DCC;
+    border-radius: 80px; /* Rounded corners for the ticket */
+    padding: 20px;
+    display: flex;
+    align-items: center; /* Vertically center the items inside the ticket */
+    box-shadow: 5px 5px 0 #2a2786; /* Drop shadow for the ticket */
+    margin: 10px;
+    flex-basis: 45%; /* Adjust this to manage the ticket width */
+    position: relative; /* For absolute positioning of ticket-info */
+}
+
+
+.ticket-icon {
+    flex: 0 0 60px; /* Do not grow or shrink, but stay at the specified width */
+    padding: 10px; /* Padding around the icon */
+    display: flex; /* To center the image within */
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #2C2F5B;
+    margin-right: 20px; /* Space between the icon and the ticket info */
+}
+
+.ticket-icon img {
+    width: 60px; /* Adjust size as needed */
+    height: auto;
+    display: block; /* Ensure the img is a block element to fill the space */
+}
+
+.ticket-info {
+    position: absolute; /* Absolutely position the ticket-info */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center ticket-info */
+    text-align: center; /* Center align the text */
+    width: calc(100% - 120px); /* Adjust the width, subtracting space taken by the image and padding */
+}
+
+.ticket-type {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.ticket-price, .ticket-drink {
+    font-size: 1em;
+    margin: 5px 0;
+    color: white;
+}
+
+.timeslots-section {
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #D8DFE0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px; /* Smaller font size for the entire section */
+}
+
+.timeslot {
+    margin-bottom: 15px; /* Reduced margin */
+    padding: 8px; /* Reduced padding */
+    background-color: #5674AE;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeslot h3 {
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 20px; /* Smaller title font size */
+}
+
+.timeslot p, .timeslot .languages {
+    color: #ffffff;
+    margin: 4px 0; /* Reduced margin */
+    line-height: 1.4; /* Adjusted line height for compactness */
+    font-size: 16px; /* Smaller paragraph font size */
+}
+
+.languages {
+    display: flex; /* Aligns the language badges in a row */
+    gap: 8px; /* Reduced gap */
+    flex-wrap: wrap;
+}
+
+.timeslot .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px; /* Reduced padding */
+    background-color: #193B53;
+    color: white;
+    border-radius: 12px; /* Adjusted border radius */
+    font-size: 12px; /* Reduced font size */
+}
+
+
+.buy-tickets-button-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 20px 0; /* Padding on top and bottom only */
+}
+
+.buy-tickets-button {
+    background-color: #005483; /* Adjust button color as needed */
+    color: white;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.5em;
+    border-radius: 25px;
+    box-shadow: 4px 4px 0 #090732;
+    transition: background-color 0.3s ease;
+    width: auto; /* Auto width based on content */
+    display: inline-block; /* Allows the button to have auto width */
+}
+
+.buy-tickets-button:hover {
+    background-color: #014871; /* Darker shade on hover */
+}
+
+.route-section {
+    text-align: center;
+    padding: 20px;
+    color: white; /* Set text color */
+}
+
+.route-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.route-content {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: stretch; /* Stretch children to fit the tallest one's height */
+}
+
+.map-wrapper {
+    display: flex; /* Enable flex layout for direct children: map-container and map-legend */
+}
+
+.map-container {
+    margin-right: 0; /* Remove space between map and legend */
+}
+
+.map-image {
+    width: auto; /* Set width to auto to maintain aspect ratio */
+    height: 100%; /* Set height to 100% of its parent container */
+    border-radius: 10px 0 0 10px; /* Remove right side rounded corners */
+    max-width: 600px; /* Limiting the width to ensure it's not too wide */
+}
+
+.map-points .map-point {
+    position: absolute; /* Absolute positioning relative to map-container */
+    background-color: #ff0000; /* Background color for the point */
+    border-radius: 50%; /* Round shape */
+    width: 25px; /* Width of the point */
+    height: 25px; /* Height of the point */
+    color: white; /* Text color */
+    text-align: center;
+    line-height: 25px; /* Align text vertically */
+    /* Additional styles for your points */
+}
+
+.map-legend {
+    padding: 10px;
+    background: #413E96; /* Background color of the legend */
+    border-radius: 0 10px 10px 0; /* Only right side corners rounded */
+    text-align: left;
+    display: flex;
+    flex-direction: column; /* Stack legend items vertically */
+    justify-content: center; /* Center legend content vertically */
+}
+
+.map-legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.map-legend-list li {
+    margin-bottom: 10px;
+}
+
+.start-location-section {
+    text-align: center; /* Center align the text */
+    padding: 20px; /* Add some padding */
+    background: #161A30;
+}
+
+.start-location-title {
+    font-size: 2em; /* Adjust size as needed */
+    color: #ffffff; /* Or any color that fits your design */
+    margin-bottom: 1em; /* Space below the title */
+}
+
+.start-location-image-container {
+    width: 60%; /* Decrease the width */
+    margin: 20px auto 0; /* Increased top margin and center the container */
+    border-radius: 10px 10px 0 0; /* Only round the top corners */
+    overflow: hidden; /* Ensures that the image respects the border-radius */
+    position: relative; /* For absolute positioning of the marker */
+    max-width: 540px; /* Adjust the max-width to control the size */
+}
+
+.start-location-image {
+    width: 100%; /* Fill the container */
+    height: auto; /* Adjust the height automatically */
+    object-fit: cover; /* Cover the area without losing aspect ratio */
+    border-radius: 0; /* Override if there are any rounded corners */
+}
+
+
+.marker-icon {
+    width: 55px; /* Adjust the size of the marker icon if necessary */
+    height: auto; /* Keep the aspect ratio of the icon */
+    position: absolute;
+    top: 88%;
+    left: 31%;
+    transform: translate(-50%, -50%); /* Center the icon */
+}
+
+.start-location-address {
+    background: #413E96; /* Background color for the address box */
+    padding: 10px;
+    border-radius: 0 0 10px 10px; /* Only round the bottom corners */
+    font-size: 1em;
+    color: #161A30; /* Text color */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    width: 60%; /* Match the image container width for consistency */
+    max-width: 540px; /* Adjust the max-width to control the size */
+    margin: 0 auto; /* Center the address block */
+    position: relative; /* Adjust position to sit under the image */
+    top: -1px; /* Overlap the image container by 1px */
+}
+
+.start-location-address p {
+    color: white;
+}
+
+/* Footer css */
+.footer {
+    background-color: #0e0e0e;
+    color: red;
+    border: solid 1px #d1031a;
+    border-bottom: none;
+}
+
+.forMoreInfo {
+    color: #ffffff;
+}
+
+.footer a {
+    color: #ffffff;;
+}
+
+.footer i {
+    font-size: 1.5em;
+    color: #ffffff;;
+
+}
+
+.social-icons {
+    background-color: #000000e2;
+}
+
+.social-icons i {
+    color: #ffffff;
+}

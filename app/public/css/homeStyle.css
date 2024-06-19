@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Inter:wght@400;700&display=swap');
+
+/* sdding Tailwind CSS styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Open+Sans', sans-serif;
+  color: white ;
+}
+
+.header-image {
+  width: 100%;
+}
+.festival-intro {
+  background-color: #FFD756; 
+  font-family: 'Almarai', sans-serif; 
+  padding: 2rem;
+}
+.festival-intro h1 {
+  font-weight: bold;  
+  font-size: 2rem;
+  color: #13238C;
+  text-align: center;
+  /* padding-top: 1rem; */
+}
+
+.festival-intro p {
+  text-align: center;
+  color: #13238C;
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.event-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 348px)); /* Setting maximum width of the columns */
+  justify-content: center; /* Centering the grid */
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0 auto; /* Centering the container */
+  max-width: 740px; /* Maximum width of the container with the gap included */
+}
+
+.event {
+  position: relative;
+  text-align: center;
+  overflow: hidden; /* Ensure that the scaled image does not overflow the container */
+  margin: 0 auto;
+  max-width: 348px;
+  transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.event:hover {
+  transform: scale(1.05); /* Slightly scale up the event container on hover */
+}
+.event-image {
+  width: 348px;
+  height: 231.5px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease; /* Smooth transition for the image */
+}
+
+.event-title {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  width: calc(100% - 2rem);
+  box-sizing: border-box;
+  transition: background-color 0.3s ease; /* Smooth transition for the background */
+}
+
+/* Less transparent background on hover */
+/* .event:hover .event-title {
+  background-color: rgba(0, 0, 0, 0.9); 
+} */
+
+/* Overall styling for the festival calendar section */
+.festival-calendar {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.day-events {
+  margin-bottom: 20px;
+}
+
+.day-events h2 {
+  background-color: #FFD756;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.day-events ul {
+  list-style: none;
+  padding: 0;
+}
+
+.day-events ul li {
+  background-color: #f2f2f2;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.day-events ul li h3 {
+  color: #333;
+  margin: 0 0 5px 0;
+}
+
+.day-events ul li p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 10px 0;
+}
+
+.day-events ul li span {
+  font-weight: bold;
+  color: #007BFF;
+}
+
+
+@media (max-width: 768px) {
+  .event-highlights {
+    grid-template-columns: 1fr; /* Single column for smaller screens */
+  }
+
+  .event-image {
+    width: 100%; /* Full width on smaller screens */
+    height: auto; /* Adjust height automatically */
+  }
+}

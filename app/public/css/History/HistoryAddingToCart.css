@@ -1,0 +1,145 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #161A30; /* Ensure the background covers the whole screen */
+    color: white;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.tour-promotion {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    background-color: #161A30;
+    padding: 20px;
+}
+
+.promotion-text {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.promotion-text h1 {
+    color: #ffffff;
+    font-size: 3em; /* Increased font size */
+    font-weight: 700; /* Bolder font weight */
+    margin: 20px 0 20px 0; /* Removed top margin */
+    padding: 20px 20px 20px 35px;
+}
+
+.promotion-text p {
+    color: #ffffff;
+    font-size: 1.2em;
+    padding: 20px 20px 20px 35px;
+    margin: 0 105px 0 0;
+}
+
+.promotion-image {
+    display: inline-block;
+    vertical-align: top;
+    width: 662px; /* Set fixed width */
+    height: 441px; /* Set fixed height */
+}
+
+.promotion-image img {
+    display: block; /* Ensures the image takes the full size of the container */
+    width: 100%; /* Ensures the image scales to fit the container */
+    height: 100%; /* Ensures the image scales to fit the container */
+    border-radius: 8px;
+    border: 5px solid white; /* Adds a white border */
+}
+
+.ticket-title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+    text-align: center; /* Center the title */
+}
+
+.timeslots-section {
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #D8DFE0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px; /* Smaller font size for the entire section */
+}
+
+.timeslot {
+    margin-bottom: 15px; /* Reduced margin */
+    padding: 8px; /* Reduced padding */
+    background-color: #5674AE;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.timeslot h3 {
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 20px; /* Smaller title font size */
+}
+
+.timeslot p, .timeslot .languages {
+    color: #ffffff;
+    margin: 4px 0; /* Reduced margin */
+    line-height: 1.4; /* Adjusted line height for compactness */
+    font-size: 16px; /* Smaller paragraph font size */
+}
+
+.languages {
+    display: flex; /* Aligns the language badges in a row */
+    gap: 8px; /* Reduced gap */
+    flex-wrap: wrap;
+}
+
+.timeslot .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px; /* Reduced padding */
+    background-color: #007bff;
+    color: white;
+    border-radius: 12px; /* Adjusted border radius */
+    font-size: 12px; /* Reduced font size */
+}
+
+.buy-tickets-button-container {
+    text-align: center;
+    width: calc(100% - 40px); /* Subtract the padding from the total width */
+    padding: 20px 0; /* Padding on top and bottom only */
+}
+
+.buy-tickets-button {
+    background-color: #005483; /* Adjust button color as needed */
+    color: white;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.5em;
+    border-radius: 25px;
+    box-shadow: 4px 4px 0 #090732;
+    transition: background-color 0.3s ease;
+    width: auto; /* Auto width based on content */
+    display: inline-block; /* Allows the button to have auto width */
+}
+
+.buy-tickets-button:hover {
+    background-color: #014871; /* Darker shade on hover */
+}
+
+.ticket-type-selection {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.ticket-type-selection label {
+    margin: 0 10px;
+    color: #fff; /* Adjust based on your background */
+    font-size: 18px;
+}
+
+.ticket-type-selection input[type="radio"] {
+    margin-right: 5px;
+}
