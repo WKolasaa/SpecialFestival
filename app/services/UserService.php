@@ -24,8 +24,8 @@ class UserService
 
     public function addUser($userName, $firstName, $lastName, $email, $password, $photo, $phoneNumber)
     {
-        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashpassword, $photo, $phoneNumber);
+        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->userRepository->addUser($userName, $firstName, $lastName, $email, $hashPassword, $photo, $phoneNumber);
     }
 
     public function loginByEmail($email, $password)
@@ -33,12 +33,12 @@ class UserService
         return $this->userRepository->loginByEmail($email, $password);
     }
 
-    public function loginByUserName($userName, $password)
+    public function loginByUserName($userName, $password): ?User
     {
         return $this->userRepository->loginByUserName($userName, $password);
     }
 
-    public function getUserByEmail($email)
+    public function getUserByEmail($email): ?User
     {
         return $this->userRepository->getUserByEmail($email);
     }

@@ -168,7 +168,7 @@ class UserRepository extends Repository
         }
     }
 
-    public function loginByEmail($email, $password)
+    public function loginByEmail($email, $password): ?User
     {
         $sql = "SELECT id, userName, password, userRole,registrationDate,email,firstName,LastName,photo,phoneNumber FROM user WHERE email = :email";
         $statement = $this->connection->prepare($sql);
@@ -180,13 +180,12 @@ class UserRepository extends Repository
         }
         if (password_verify($password, $row['password'])) {
             $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
-
             return $user;
         }
         return null;
     }
 
-    public function loginByUserName($userName, $password)
+    public function loginByUserName($userName, $password): ?User
     {
         $sql = "SELECT id, userName, password, userRole, registrationDate, email, firstName, lastName, photo,phoneNumber FROM user WHERE userName = :userName";
         $statement = $this->connection->prepare($sql);
@@ -197,10 +196,9 @@ class UserRepository extends Repository
             return null;
         }
         if (password_verify($password, $row['password'])) {
-            $user = new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
-            return $user;
+            return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
         }
-        return new User($row['id'], $row['userName'], $row['password'], $row['userRole'], $row['registrationDate'], $row['firstName'], $row['lastName'], $row['email'], $row['photo'], $row['phoneNumber']);
+        return null;
     }
 
     public function getUserByEmail($email)
