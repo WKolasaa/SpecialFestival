@@ -88,7 +88,7 @@ function saveContent() {
         }
     });
 
-    fetch('/api/PageManagement/saveNewContent', {
+    fetch('/api/PageManagement/updateContent', {
         method: 'POST',
         body: formData,
     })

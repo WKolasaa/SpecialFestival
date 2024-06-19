@@ -164,7 +164,7 @@ class PageManagementController
         }
     }
 
-    public function saveNewContent(): void
+    public function updateContent(): void
     {
         try {
             $this->validateInput($_POST, ['sectionId', 'content']);
@@ -205,6 +205,7 @@ class PageManagementController
     private function uploadImages(array $uploadedImages, int $sectionId): void
     {
         try {
+            echo json_encode($uploadedImages);
             foreach ($uploadedImages['tmp_name'] as $key => $tmp_name) {
                 $this->uploadImage($tmp_name, $uploadedImages['name'][$key], $sectionId);
             }

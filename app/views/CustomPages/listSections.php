@@ -40,4 +40,4 @@ include __DIR__ . '/../header.php';
 <script>
     const pageId = <?= $_GET['pageId']; ?>;
 </script>
-<script src="/../js/CustomPages/sectionEditor.js"></script>
+<script src="/../js/CustomPages/listSection.js"></script>
