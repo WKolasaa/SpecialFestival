@@ -1,7 +1,7 @@
 function onSubmit(){ // TODO: Finish this
     var captchaResponse = document.querySelector('.g-recaptcha-response').value;
     
-    fetch("http://localhost/api/singup/captcha", {
+    fetch("/api/singup/captcha", {
         method: 'POST',
         body: JSON.stringify({captchaResponse: captchaResponse}),
     })

@@ -10,10 +10,12 @@ use Exception;
 class RestaurantService
 {
     private $restaurantRepository;
+    private UserTicketService $userTicketService;
 
     public function __construct()
     {
         $this->restaurantRepository = new RestaurantRepository();
+        $this->userTicketService = new UserTicketService();
     }
 
     public function getRestaurants()
@@ -89,7 +91,7 @@ class RestaurantService
             $ticketRepository->addTicket($ticket);
             $userTicketRepository = new UserTicketRepository();
             $user = $_SESSION['userId'];
-            $userTicketRepository->addUserTicket($ticket, $user);
+            $this->userTicketService->addUserTicket($ticket, $user);
             return true;
         } catch (Exception $e) {
             echo $e->getMessage();

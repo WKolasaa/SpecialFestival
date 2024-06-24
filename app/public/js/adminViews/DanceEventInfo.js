@@ -542,7 +542,7 @@ function displayAgenda(agendas) {
   const agendaContainer = document.getElementById("agenda-container");
   agendaContainer.innerHTML = ""; // Clear existing content
   agendaContainer.classList.add("container"); // Add Bootstrap container class
-  const dateSelectHTML = document.getElementById("new-event-date").innerHTML;
+  let dateSelectHTML = document.getElementById("new-event-date").innerHTML;
 
   const heading = document.createElement("h2");
   heading.textContent = "Agendas"; // Set the heading text
@@ -553,82 +553,87 @@ function displayAgenda(agendas) {
     const agendaItem = document.createElement("div");
     agendaItem.classList.add("cardTicket", "mb-3"); // Use the same custom class as for tickets
 
+    // Function to dynamically set the 'selected' attribute for the agenda's date
+    const customizedDateSelectHTML = customizeDateSelectHTML(
+        dateSelectHTML,
+        agenda.eventDate
+    );
+
     agendaItem.innerHTML = `
       <div class="card-body">
         <h5 class="card-title"><span contenteditable="true" id="agenda-Artist-${
-          agenda.agendaId
-        }">${agenda.artistName}</span></h5>
+        agenda.agendaId
+    }">${agenda.artistName}</span></h5>
         <p class="card-text">
           Event Day: <select id="agenda-day-${agenda.agendaId}">
           <option value="Friday" ${
-            agenda.eventDay === "Friday" ? "selected" : ""
-          }>Friday</option>
+        agenda.eventDay === "Friday" ? "selected" : ""
+    }>Friday</option>
           <option value="Saturday" ${
-            agenda.eventDay === "Saturday" ? "selected" : ""
-          }>Saturday</option>
+        agenda.eventDay === "Saturday" ? "selected" : ""
+    }>Saturday</option>
           <option value="Sunday" ${
-            agenda.eventDay === "Sunday" ? "selected" : ""
-          }>Sunday</option>
+        agenda.eventDay === "Sunday" ? "selected" : ""
+    }>Sunday</option>
          </select>
-         Date: <select id="agenda-date-${
-           agenda.agendaId
-         }">         //TODO: Test the dates very well
-         ${dateSelectHTML}
+         Date: <select id="agenda-date-${agenda.agendaId}">        
+         ${customizedDateSelectHTML}
        </select>
-
           Time: <span contenteditable="true" id="agenda-time-${
-            agenda.agendaId
-          }">${agenda.eventTime}</span>
+        agenda.agendaId
+    }">${agenda.eventTime}</span>
           Duration: <span contenteditable="true" id="agenda-duration-${
-            agenda.agendaId
-          }">${agenda.durationMinutes} min</span>
+        agenda.agendaId
+    }">${agenda.durationMinutes} min</span>
           Price: €<span contenteditable="true" id="agenda-price-${
-            agenda.agendaId
-          }">${agenda.sessionPrice}</span> 
+        agenda.agendaId
+    }">${agenda.sessionPrice}</span> 
           Tickets Available: <span contenteditable="true" id="agenda-tickets-${
-            agenda.agendaId
-          }">${agenda.sessionsAvailable}</span><br>
+        agenda.agendaId
+    }">${agenda.sessionsAvailable}</span><br>
           Venue: <span contenteditable="true" id="agenda-venue-${
-            agenda.agendaId
-          }">${agenda.venueAddress}</span>
+        agenda.agendaId
+    }">${agenda.venueAddress}</span>
         </p>
         <button class="btn btn-success btnTicket" onclick="saveAgenda(${
-          agenda.agendaId
-        })">Save</button>
+        agenda.agendaId
+    })">Save</button>
         <button class="btn btn-danger btnTicket" onclick="deleteAgenda(${
-          agenda.agendaId
-        })">Delete</button>
+        agenda.agendaId
+    })">Delete</button>
       </div>
     `;
 
     agendaContainer.appendChild(agendaItem);
   });
 }
+
 function saveAgenda(agendaId) {
   const updatedAgenda = {
     agendaId: agendaId,
     artistName: document.getElementById(`agenda-Artist-${agendaId}`)
-      .textContent,
+        .textContent,
     eventDay: document.getElementById(`agenda-day-${agendaId}`).value,
     eventDate: document.getElementById(`agenda-date-${agendaId}`).value,
     eventTime: document.getElementById(`agenda-time-${agendaId}`).textContent,
     durationMinutes: document
-      .getElementById(`agenda-duration-${agendaId}`)
-      .textContent.replace(" min", ""),
+        .getElementById(`agenda-duration-${agendaId}`)
+        .textContent.replace(" min", ""),
     sessionPrice: document.getElementById(`agenda-price-${agendaId}`)
-      .textContent,
+        .textContent,
     sessionsAvailable: document.getElementById(`agenda-tickets-${agendaId}`)
-      .textContent,
+        .textContent,
     venueAddress: document.getElementById(`agenda-venue-${agendaId}`)
-      .textContent,
+        .textContent,
   };
   const selectedDay = updatedAgenda.eventDay;
   const selectedDate = updatedAgenda.eventDate;
 
   if (getDayOfWeek(selectedDate) !== selectedDay) {
     showToast(
-      "The selected day does not match the selected date. Please select a matching day and date."
-    , "#FF0000");
+        "The selected day does not match the selected date. Please select a matching day and date.",
+        "#FF0000"
+    );
     return; // Exit the function early if the day and date don't match
   }
 
@@ -640,18 +645,41 @@ function saveAgenda(agendaId) {
     },
     body: JSON.stringify(updatedAgenda),
   })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Agenda updated successfully");
-        showToast("Event updated successfully", "#008000");
-      } else {
-        throw new Error("Failed to update agenda");
-      }
-    })
-    .catch((error) => {
-      console.error("Error updating agenda:", error);
-    });
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Parse the JSON in the response
+        } else {
+          throw new Error("Failed to update agenda");
+        }
+      })
+      .then((data) => {
+        // Display the data or do something with it
+        console.log("Response data:", data);
+        showToast(`Event updated successfully: ${data.message}`, "#008000"); // Example of using a message from the response
+      })
+      .catch((error) => {
+        console.error("Error updating agenda:", error);
+      });
 }
+
+function customizeDateSelectHTML(dateSelectHTML, selectedDate) {
+  // Convert the HTML string to a DOM element to manipulate
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(
+      `<select>${dateSelectHTML}</select>`,
+      "text/html"
+  );
+  const options = doc.querySelectorAll("option");
+  options.forEach((option) => {
+    if (option.value === selectedDate) {
+      option.setAttribute("selected", "selected");
+    } else {
+      option.removeAttribute("selected");
+    }
+  });
+  return doc.body.firstChild.innerHTML;
+}
+
 function deleteAgenda(agendaId) {
   const DeletedAgenda = {
     agendaId: agendaId,

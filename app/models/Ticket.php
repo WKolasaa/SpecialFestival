@@ -34,11 +34,6 @@ class Ticket implements JsonSerializable
         $this->available = $available;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function getTicketId()
     {
         return $this->ticketId;

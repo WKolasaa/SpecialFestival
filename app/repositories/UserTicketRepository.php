@@ -30,18 +30,24 @@ class UserTicketRepository extends Repository
     public function addUserTicket(Ticket $ticket, int $userId): void
     {
         $userTicketId = $this->getTicketId($ticket);
-        //echo $userTicketId;
 
-
-        $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, :quantity, :paid)";
+        $sql = "SELECT ticket_id FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId AND paid = 0";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':ticketId', $userTicketId, PDO::PARAM_INT);
-        $stmt->bindValue(':quantity', 1, PDO::PARAM_INT);
-        $stmt->bindValue(':paid', false, PDO::PARAM_BOOL);
-
         $stmt->execute();
+        $existingRecord = $stmt->fetch();
 
+        if ($existingRecord) {
+            $sql = "UPDATE user_tickets SET quantity = quantity + 1 WHERE user_id = :userId AND ticket_id = :ticketId AND paid = 0";
+        } else {
+            $sql = "INSERT INTO user_tickets (user_id, ticket_id, quantity, paid) VALUES (:userId, :ticketId, 1, 0)";
+        }
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':ticketId', $userTicketId, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     private function getTicketId(Ticket $ticket)
@@ -67,17 +73,6 @@ class UserTicketRepository extends Repository
         $stmt->bindValue(':ticketId', $ticketId, PDO::PARAM_INT);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->execute();
-    }
-
-    public function hasTicket(Ticket $ticket, int $userId): bool
-    {
-        $sql = "SELECT * FROM user_tickets WHERE user_id = :userId AND ticket_id = :ticketId"; //TODO: remove the * to avoid sql injection
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $stmt->bindValue(':ticketId', $ticket->getTicketId(), PDO::PARAM_INT);
-        $stmt->execute();
-        $row = $stmt->fetch();
-        return (bool)$row;
     }
 
     public function markTicketsAsPaid(int $userId, array $userTickets): void

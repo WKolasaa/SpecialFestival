@@ -1,6 +1,6 @@
 //manage user CRUD operations
 function loadUserData() {
-    fetch("http://localhost/api/user")
+    fetch("/api/user")
         .then((response) => response.json())
         .then((data) => {
             console.log("API Response: ", data);
@@ -83,8 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const isUpdate =
             signupForm.querySelector("#submitButton").textContent === "Update";
         const apiEndpoint = isUpdate
-            ? "http://localhost/api/user/update"
-            : "http://localhost/signup/captcha";
+            ? "/api/user/update"
+            : "/signup/captcha";
 
         console.log(formDataObject);
         fetch(apiEndpoint, {
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const userId = document.getElementById("userId").value;
         console.log("User ID: ", userId);
 
-        fetch(`http://localhost/api/user/delete`, {
+        fetch(`/api/user/delete`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
                 if (data.success) {
                     showMessage("User deleted successfully.", "alert-success");
-                    window.location.href = "http://localhost";
+                    window.location.href = "/";
                     // Optionally, clear the form or redirect the user
                 } else {
                     showMessage("Error deleting user. Please try again later.", "alert-danger");

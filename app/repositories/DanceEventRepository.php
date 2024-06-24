@@ -190,27 +190,29 @@ class DanceEventRepository extends Repository
         try {
             // Prepare the SQL statement
             $statement = $this->connection->prepare($sql);
+            $agendaId = $agenda->getAgendaId();
+            $artistName = $agenda->getArtistName();
+            $eventDay = $agenda->getEventDay();
+            $eventDate = $agenda->getEventDate();
+            $eventTime = $agenda->getEventTime();
+            $durationMinutes = $agenda->getDurationMinutes();
+            $sessionPrice = $agenda->getSessionPrice();
+            $sessionsAvailable = $agenda->getSessionsAvailable();
+            $venueAddress = $agenda->getVenueAddress();
 
             // Bind parameters to the prepared statement
-            $statement->bindParam(':agendaId', $agenda->getAgendaId(), PDO::PARAM_INT);
-            $statement->bindParam(':artistName', $agenda->getArtistName(), PDO::PARAM_STR);
-            $statement->bindParam(':eventDay', $agenda->getEventDay(), PDO::PARAM_STR);
-            $statement->bindParam(':eventDate', $agenda->getEventDate(), PDO::PARAM_STR);
-            $statement->bindParam(':eventTime', $agenda->getEventTime(), PDO::PARAM_STR);
-            $statement->bindParam(':durationMinutes', $agenda->getDurationMinutes(), PDO::PARAM_INT);
-            $statement->bindParam(':sessionPrice', $agenda->getSessionPrice(), PDO::PARAM_STR); // Use STR for prices that can have decimals
-            $statement->bindParam(':sessionsAvailable', $agenda->getSessionsAvailable(), PDO::PARAM_INT);
-            $statement->bindParam(':venueAddress', $agenda->getVenueAddress(), PDO::PARAM_STR);
+            $statement->bindParam(':agendaId', $agendaId, PDO::PARAM_INT);
+            $statement->bindParam(':artistName', $artistName, PDO::PARAM_STR);
+            $statement->bindParam(':eventDay', $eventDay, PDO::PARAM_STR);
+            $statement->bindParam(':eventDate', $eventDate, PDO::PARAM_STR);
+            $statement->bindParam(':eventTime', $eventTime, PDO::PARAM_STR);
+            $statement->bindParam(':durationMinutes', $durationMinutes, PDO::PARAM_INT);
+            $statement->bindParam(':sessionPrice', $sessionPrice, PDO::PARAM_STR); // Use STR for prices that can have decimals
+            $statement->bindParam(':sessionsAvailable', $sessionsAvailable, PDO::PARAM_INT);
+            $statement->bindParam(':venueAddress', $venueAddress, PDO::PARAM_STR);
 
-            // Execute the statement and check if it was successful
             $success = $statement->execute();
 
-            if ($success && $statement->rowCount() > 0) {
-                echo "Agenda information updated successfully.\n";
-            } else {
-                // If no rows were affected, it could mean the agendaId does not exist or the data is the same as what's in the database
-                echo "No rows were affected, possibly because the agenda ID was not found or the data is identical.\n";
-            }
         } catch (PDOException $e) {
             // Log the error or handle it as per your needs
             error_log("SQL Error: " . $e->getMessage());

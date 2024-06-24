@@ -15,7 +15,7 @@ function onSubmit() {
         };
 
 
-        fetch('http://localhost/api/changepassword/changePassword', {
+        fetch('/api/changepassword/changePassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ function onSubmit() {
                 if (data.success) {
                     showMessage('Password has been successfully changed!', 'alert-success');
                     setTimeout(function () {
-                        window.location.href = "http://localhost";
+                        window.location.href = "/";
                     }, 2000);
                 } else {
                     showMessage('Error changing password. Please try again later. TEST', 'alert-danger');

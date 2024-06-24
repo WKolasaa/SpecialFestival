@@ -190,6 +190,7 @@ class DanceEventController extends BaseController
             http_response_code($e->getCode() ?: 500);
             $response = ['error' => $e->getMessage()];
         }
+        echo json_encode($response);
     }
 
     private function sanitizeAgendaData($agendaData)

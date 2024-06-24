@@ -15,7 +15,7 @@ function isValidEmail(email) {
 }
 
 function checkEmailExists(email) {
-    fetch('http://localhost/api/restorepassword/checkEmailExistsAndSendToken', {
+    fetch('/api/restorepassword/checkEmailExistsAndSendToken', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
