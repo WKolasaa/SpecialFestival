@@ -146,10 +146,10 @@ function updateRestaurant(restaurantId) {
     })
         .then(response => {
             if (response.ok) {
-                alert('Restaurant updated! successfully');
+                showToast('Restaurant updated successfully', 'green');
                 showRestaurants();
             } else {
-                alert('Error updating restaurant:', response.statusText);
+                showToast('Error updating restaurant:', 'red');
             }
         })
         .catch(error => alert('Error updating restaurant:', error));
@@ -168,7 +168,7 @@ function deleteRestaurant(restaurantId) { //TODO: Finish it (only url here was p
         })
             .then(response => {
                 if (response.ok) {
-                    alert('Restaurant deleted successfully');
+                    showToast('Restaurant deleted successfully', 'green');
                     showRestaurants();
                 } else {
                     console.error('Error deleting restaurant:', response.statusText);
@@ -279,7 +279,7 @@ function displayEditSessionForm(events) {
                 Event day: <span contenteditable="true" id="event-day-${event.id}">${event.event_day}</span><br>
                 Event Start Time: <input type="time" id="event-time-start-${event.id}" value="${event.event_time_start}"><br>
                 Event End Time: <input type="time" id="event-time-end-${event.id}" value="${event.event_time_end}"><br>
-                Event seats total: <span contenteditable="true" id="event-seats-total-${event.id}">${event.seats_total}</span> <br>
+                Event seats: <span contenteditable="true" id="event-seats-total-${event.id}">${event.seats_total}</span> <br>
                 Event seats left: <span contenteditable="true" id="event-seats-left-${event.id}">${event.seats_left}</span><br><br>
             </p>
             <button class="btn btn-success btnTicket" onclick="saveSession(${event.id})">Save</button>
@@ -293,13 +293,20 @@ function displayEditSessionForm(events) {
 }
 
 function saveSession(eventId) {
+    const restaurantIdElement = document.getElementById(`restaurant-id-${eventId}`);
+    let restaurantId = restaurantIdElement.textContent.trim();
+    if (restaurantId.startsWith("Restaurant ID: ")) {
+        restaurantId = restaurantId.replace("Restaurant ID: ", "");
+    }
+    //console.log('Restaurant ID:', restaurantId);
+
     const event = {
         id: eventId,
-        restaurant_id: document.getElementById(`restaurant-id-${eventId}`).textContent,
-        event_date: document.getElementById(`event-date-${eventId}`).textContent,
+        restaurant_id: restaurantId,
+        event_date: document.getElementById(`event-date-${eventId}`).value,
         event_day: document.getElementById(`event-day-${eventId}`).textContent,
-        event_time_start: document.getElementById(`event-time-start-${eventId}`).textContent,
-        event_time_end: document.getElementById(`event-time-end-${eventId}`).textContent,
+        event_time_start: document.getElementById(`event-time-start-${eventId}`).value,
+        event_time_end: document.getElementById(`event-time-end-${eventId}`).value,
         seats_total: document.getElementById(`event-seats-total-${eventId}`).textContent,
         seats_left: document.getElementById(`event-seats-left-${eventId}`).textContent
     };
@@ -313,10 +320,10 @@ function saveSession(eventId) {
     })
         .then(response => {
             if (response.ok) {
-                alert('Session updated successfully');
+                showToast('Session updated successfully', 'green');
                 showSessions();
             } else {
-                alert('Error updating session:', response.statusText);
+                showToast('Error updating session:', 'red');
             }
         })
         .catch(error => alert('Error updating session:', error));
@@ -334,7 +341,7 @@ function removeSession(eventId) { //TODO: Change method to remove
             .then(response => {
                 if (response.ok) {
                     // Refresh the session list after deletion
-                    alert('Session removed successfully');
+                    showToast('Session deleted successfully', 'green');
                     showSessions();
                 } else {
                     console.error('Error deleting session:', response.statusText);
@@ -428,7 +435,7 @@ function addingRestaurant() { //TODO: Find here is a problem here (console says 
     })
         .then(response => {
             if (response.ok) {
-                alert('Restaurant added successfully');
+                showToast('Restaurant added successfully', 'green');
                 showRestaurants();
             } else {
                 alert('Error adding restaurant:', response.statusText);
@@ -458,8 +465,6 @@ function createAddSessionForm() {
 
             // Create the form element
             const form = document.createElement('form');
-            form.setAttribute('method', 'POST');
-            form.setAttribute('action', '/add/session'); // Adjust the action attribute as needed
 
             // Create restaurant select dropdown
             const restaurantLabel = document.createElement('label');
@@ -481,25 +486,10 @@ function createAddSessionForm() {
             const fields = [
                 {label: 'Event Date (DD/MM/YYYY):', type: 'text', name: 'eventDate', id: 'eventDate-addSession'},
                 {label: 'Event Day:', type: 'text', name: 'eventDay', id: 'eventDay-addSession'},
-                {
-                    label: 'Event Start Time (24h):',
-                    type: 'text',
-                    name: 'eventStartTime',
-                    id: 'eventStartTime-addSession'
-                },
+                {label: 'Event Start Time (24h):', type: 'text', name: 'eventStartTime', id: 'eventStartTime-addSession'},
                 {label: 'Event End Time (24h):', type: 'text', name: 'eventEndTime', id: 'eventEndTime-addSession'},
-                {
-                    label: 'Event Seats Total:',
-                    type: 'number',
-                    name: 'eventSeatsTotal',
-                    id: 'eventSeatsTotal-addSession'
-                },
-                {
-                    label: 'Event Seats Available:',
-                    type: 'number',
-                    name: 'eventSeatsAvailable',
-                    id: 'eventSeatsAvailable-addSession'
-                }
+                {label: 'Event Seats Total:', type: 'number', name: 'eventSeatsTotal', id: 'eventSeatsTotal-addSession'},
+                {label: 'Event Seats Available:', type: 'number', name: 'eventSeatsAvailable', id: 'eventSeatsAvailable-addSession'}
             ];
 
             fields.forEach(field => {
@@ -514,6 +504,7 @@ function createAddSessionForm() {
                 input.classList.add('form-control');
                 input.setAttribute('type', field.type);
                 input.setAttribute('name', field.name);
+                input.setAttribute('id', field.id); // Ensure the id is set
                 // Additional attributes for custom date and time formats
                 if (field.name === 'eventDate') {
                     input.setAttribute('placeholder', 'DD/MM/YYYY');
@@ -527,13 +518,27 @@ function createAddSessionForm() {
 
             // Create a submit button
             const submitButton = document.createElement('button');
-            submitButton.setAttribute('type', 'submit');
+            submitButton.setAttribute('type', 'button');
             submitButton.classList.add('btn', 'btn-primary', 'mt-3');
             submitButton.textContent = 'Submit';
             form.appendChild(submitButton);
 
             // Add event listener to the submit button
-            submitButton.addEventListener('click', addSession);
+            submitButton.addEventListener('click', () => {
+                // Collect form data
+                const sessionData = {
+                    restaurantId: document.querySelector('[name="restaurant"]').value,
+                    eventDate: document.getElementById('eventDate-addSession').value,
+                    eventDay: document.getElementById('eventDay-addSession').value,
+                    eventStartTime: document.getElementById('eventStartTime-addSession').value,
+                    eventEndTime: document.getElementById('eventEndTime-addSession').value,
+                    eventSeatsTotal: document.getElementById('eventSeatsTotal-addSession').value,
+                    eventSeatsAvailable: document.getElementById('eventSeatsAvailable-addSession').value
+                };
+
+                // Call addSession method with the collected data
+                addSession(sessionData);
+            });
 
             // Append the form to the card body
             cardBody.appendChild(form);
@@ -550,33 +555,55 @@ function createAddSessionForm() {
 }
 
 
-function addSession() { //TODO: finish this method cos it goes to weird page
-    const session = {
-        restaurant_id: document.getElementById('restaurantList').value,
-        event_date: document.getElementById('eventDate-addSession').textContent,
-        event_day: document.getElementById('eventDay-addSession').textContent,
-        event_time_start: document.getElementById('eventStartTime-addSession').textContent,
-        event_time_end: document.getElementById('eventEndTime-addSession').textContent,
-        seats_total: document.getElementById('eventSeatsTotal-addSession').textContent,
-        seats_left: document.getElementById('eventSeatsAvailable-addSession').textContent
-    };
-
-    fetch('/api/YummyAdmin/addSession', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(session)
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('Session added successfully');
-                showSessions();
-            } else {
-                alert('Error adding session:', response.statusText);
-            }
+function addSession(session) {
+    if(checkSessionData(session)) {
+        fetch('/api/YummyAdmin/addSession', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(session)
         })
-        .catch(error => alert('Error adding session:', error));
+            .then(response => {
+                if (response.ok) {
+                    showToast('Session added successfully', 'green');
+                    showRestaurants();
+                } else {
+                    throw new Error('Error adding session:', response.statusText);
+                }
+            })
+            .catch(error => showToast(error, 'red'));
+    }
+}
+
+function checkSessionData(session) {
+    var checked = true;
+    for (let key in session) {
+        if (session[key] === '' || session[key] === null) {
+            showToast(`Please fill in the ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}.`, "red");
+            return;
+            checked = false;
+        }
+    }
+
+    // Validate that seats are not negative
+    if (session.eventSeatsTotal < 0) {
+        showToast('Event Seats Total cannot be a negative value.', 'red');
+        return;
+        checked = false;
+    }
+    if (session.eventSeatsAvailable < 0) {
+        showToast('Event Seats Available cannot be a negative value.', 'red');
+        return;
+        checked = false;
+    }
+    if(session.eventSeatsAvailable > session.eventSeatsTotal) {
+        showToast('Event Seats Available cannot be greater than Event Seats Total.', 'red');
+        return;
+        checked = false;
+    }
+
+    return checked;
 }
 
 function displayImages(restaurantID) {
@@ -793,7 +820,7 @@ function saveReservation(id) {
     })
         .then(response => {
             if (response.ok) {
-                alert('Reservation updated successfully');
+                showToast('Reservation updated successfully', 'green');
                 showReservations();
             } else {
                 alert('Error updating reservation:', response.statusText);
@@ -813,7 +840,7 @@ function removeReservation(id) { //TODO: Finish this method
         })
             .then(response => {
                 if (response.ok) {
-                    alert('Reservation removed successfully');
+                    showToast('Reservation deleted successfully', 'green');
                     showReservations();
                 } else {
                     console.error('Error deleting reservation:', response.statusText);
@@ -871,7 +898,7 @@ function addReservation() {
     })
         .then(response => {
             if (response.ok) {
-                alert('Reservation added successfully');
+                showToast('Reservation added successfully', 'green');
                 showReservations();
             } else {
                 alert('Error adding reservation:', response.statusText);

@@ -42,7 +42,7 @@ function isLoggedIn(){
             }
         })
         .catch((error) => {
-            showToast('Something went wrong :(', 'red');
+            showToast('Something went wrong', 'red');
         });
 }
 
