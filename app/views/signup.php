@@ -20,7 +20,7 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                 <div class="card-body">
                     <!-- Registration Form -->
                     <div id="message" class="alert alert-light"></div>
-                    <form id="signupForm">
+                    <form id="signupForm" action="signup/captcha" method="POST">
                         <div class="form-group">
                         <input type="hidden" id="userId" name="id">
                         <input type="hidden" id="userRole" name="userRole">
@@ -55,7 +55,7 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
 
                         <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
                         <br/>
-                        <button class="btn btn-primary" type="button" id="submitButton" onclick="onSubmit()"> Submit </button>
+                        <input class="btn btn-primary" type="submit" value="Submit">
                         <?php
                         if ($user) {
                             // If the user is logged in, load the user.js file
