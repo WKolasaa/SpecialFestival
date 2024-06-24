@@ -48,14 +48,14 @@ function displayUserInfo(userData) {
         phoneNumber.value = userData.phoneNumber;
 
 
-        if (userData.username != null) {
-            // console.log("User is found");
-            submitButton.textContent = "Update";
-            submitButton.className = "btn btn-success";
-        } else {
-            // console.log("User not found");
-            submitButton.textContent = "Submit";
-        }
+        // if (userData.username != null) {
+        //     // console.log("User is found");
+        //     submitButton.textContent = "Update";
+        //     submitButton.className = "btn btn-success";
+        // } else {
+        //     // console.log("User not found");
+        //     submitButton.textContent = "Submit";
+        // }
     } else {
         showMessage(
             "Error loading user data. Please try again later.",
@@ -67,32 +67,24 @@ function displayUserInfo(userData) {
 loadUserData();
 
 ///////////////Update User Data////////////////////
-document.addEventListener("DOMContentLoaded", function () {
+function updateUser() {
     const signupForm = document.getElementById("signupForm");
-    signupForm.addEventListener("submit", function (event) {
-        event.preventDefault();
 
         const formData = new FormData(signupForm);
-        const formDataObject = {};
-        formData.forEach((value, key) => {
-            if (key !== 'g-recaptcha-response') {
-                formDataObject[key] = value;
-            }
-        });
 
-        const isUpdate =
-            signupForm.querySelector("#submitButton").textContent === "Update";
-        const apiEndpoint = isUpdate
-            ? "/api/user/update"
-            : "/signup/captcha";
+        //console.log(formData);
 
-        console.log(formDataObject);
-        fetch(apiEndpoint, {
+        const formObject = {};
+        for (let [key, value] of formData.entries()) {
+            formObject[key] = value;
+        }
+
+        fetch("/api/user/update", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(formDataObject),
+            body: JSON.stringify(formObject),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -107,16 +99,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 try {
                     const parsedData = JSON.parse(data);
-                    if (isUpdate) {
-                        showMessage("User updated successfully.", "alert-success");
-                        loadUserData();
-                    }
+                    showToast("User updated successfully!", "green");
                 } catch (error) {
                     console.error(error);
-                    showMessage(
-                        "Error updating user. Please try again later.",
-                        "alert-danger"
-                    );
+                    showToast("Error updating user. Please try again later.", "red");
                 }
             })
             .catch((error) => {
@@ -124,9 +110,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     "There has been a problem with your fetch operation:",
                     error
                 );
+                showToast("Error updating user. Please try again later.", "red");
             });
-    });
-});
+};
 
 function showMessage(message, alertClass) {
     const messageElement = document.getElementById('message');

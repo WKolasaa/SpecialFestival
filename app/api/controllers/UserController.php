@@ -46,7 +46,9 @@ class UserController
         try {
             $updateResult = $this->userService->updateUser($sanitizedData);
             if ($updateResult) {
-                session_start();
+                if(!isset($_SESSION)){
+                    session_start();
+                }
                 $_SESSION['userId'] = $updateResult->getId();
                 echo json_encode(['success' => 'User updated successfully']);
             } else {
