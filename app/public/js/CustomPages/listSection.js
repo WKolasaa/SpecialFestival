@@ -154,9 +154,6 @@ function saveSection(formData) {
                 document.getElementById('message-container').innerHTML = '<div class="alert alert-danger mt-3">Failed to save changes. Please try again.</div>';
             } else {
                 document.getElementById('message-container').innerHTML = '<div class="alert alert-success mt-3">Changes were saved successfully.</div>';
-                setTimeout(() => {
-                    window.location.href = '/PageManagement/sections?pageId=' + pageId;
-                }, 3000);
             }
         })
         .catch(error => {
