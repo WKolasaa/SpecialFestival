@@ -19,7 +19,6 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                 </div>
                 <div class="card-body">
                     <!-- Registration Form -->
-                    <div id="message" class="alert alert-light"></div>
                     <form id="signupForm" action="signup/captcha" method="POST">
                         <div class="form-group">
                         <input type="hidden" id="userId" name="id">
@@ -53,14 +52,21 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
                         </div>
                         <p></p>
 
-                        <div class="g-recaptcha" data-sitekey="<?php echo $sideKey ?>"></div>
-                        <br/>
-                        <input class="btn btn-primary" type="submit" value="Submit">
+
                         <?php
-                        if ($user) {
+                        if (isset($user)) {
                             // If the user is logged in, load the user.js file
+                            echo '<button type="button" class="btn btn-success" id="updateButton" onclick="updateUser()">Update</button>';
+                            echo ' ';
                             echo '<button type="button" class="btn btn-danger btn-block" id="deleteButton">Delete</button>';
                             echo '<script src="js/user.js"></script>';
+                        }
+                        else{
+                            echo '<div class="g-recaptcha" data-sitekey="' . $sideKey .'"></div>';
+                            echo '<br/>';
+                            echo '<input class="btn btn-primary" type="submit" value="Sign in">';
+                            echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+
                         }
                         ?>
                     </form>
@@ -70,8 +76,7 @@ if(isset($_SESSION['user'])){ //checking of the user logged in or not
     </div>
 </div>
 
-<script src="js/signup.js"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
 <!-- <script src="js/signup.js"></script> -->
 
