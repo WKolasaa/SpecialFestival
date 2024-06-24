@@ -97,22 +97,42 @@ function populateForm(data) {
     const reservationDetails = document.createElement('div');
     reservationDetails.classList.add('card', 'mb-3'); // Use the same custom class as for tickets
 
-    reservationDetails.innerHTML = `
-    <div class="card-body">
-        <h5 class="card-title">${data.ticket_name} (Ticket ID: ${data.ticketId})</h5>
-        <p class="card-text">
-            Event Name: ${data.event_name}<br>
-            Location: ${data.location}<br>
-            Description: ${data.description}<br>
-            Price: ${data.price}<br>
-            Start Date: ${new Date(data.start_date.date).toLocaleString()}<br>
-            End Date: ${new Date(data.end_date.date).toLocaleString()}<br>
-            Ticket Type: ${data.ticket_Type}<br>
-            Scanned: ${scanned ? 'Yes' : 'No'} <br>
-        </p>
-    </div>
-`;
+    if(data.ticket_Type === 2){
+        var partsOfDescription = data.description.split('/');
+        reservationDetails.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${data.ticket_name} (Ticket ID: ${data.ticketId})</h5>
+                <p class="card-text">
+                    Event Name: ${data.event_name}<br>
+                    Location: ${data.location}<br>
+                    Normal tickets: ${partsOfDescription[0]}<br>
+                    Kids tickets: ${partsOfDescription[1]}<br>
+                    Special Requests: ${partsOfDescription[2]}<br>
+                    Price: ${data.price}<br>
+                    Start Date: ${new Date(data.start_date.date).toLocaleString()}<br>
+                    End Date: ${new Date(data.end_date.date).toLocaleString()}<br>
+                    Ticket Type: ${data.ticket_Type}<br>
+                    Scanned: ${scanned ? 'Yes' : 'No'} <br>
+                </p>
+            </div>
+        `;
+    } else {
+        reservationDetails.innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title">${data.ticket_name} (Ticket ID: ${data.ticketId})</h5>
+                <p class="card-text">
+                    Event Name: ${data.event_name}<br>
+                    Location: ${data.location}<br>
+                    Description: ${data.description}<br>
+                    Price: ${data.price}<br>
+                    Start Date: ${new Date(data.start_date.date).toLocaleString()}<br>
+                    End Date: ${new Date(data.end_date.date).toLocaleString()}<br>
+                    Ticket Type: ${data.ticket_Type}<br>
+                    Scanned: ${scanned ? 'Yes' : 'No'} <br>
+                </p>
+            </div>
+        `;
+    }
 
     ticketInfoCard.appendChild(reservationDetails);
-
 }

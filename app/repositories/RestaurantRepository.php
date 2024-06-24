@@ -123,65 +123,86 @@ class RestaurantRepository extends Repository
     public function addRestaurant($restaurant)
     {
         $sql = "INSERT INTO restaurants (name, address, type, price, reduced, stars, phoneNumber, email, website, chef) VALUES (:name, :address, :type, :price, :reduced, :stars, :phoneNumber, :email, :website, :chef)";
+
+        $restaurantName = $restaurant->getName();
+        $restaurantAddress = $restaurant->getAddress();
+        $restaurantType = $restaurant->getType();
+        $restaurantPrice = $restaurant->getPrice();
+        $restaurantReduced = $restaurant->getReduced();
+        $restaurantStars = $restaurant->getStars();
+        $restaurantPhoneNumber = $restaurant->getPhoneNumber();
+        $restaurantEmail = $restaurant->getEmail();
+        $restaurantWebsite = $restaurant->getWebsite();
+        $restaurantChef = $restaurant->getChef();
+
         $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':name', $restaurant->getName(), PDO::PARAM_STR);
-        $statement->bindParam(':address', $restaurant->getAddress(), PDO::PARAM_STR);
-        $statement->bindParam(':type', $restaurant->getType(), PDO::PARAM_STR);
-        $statement->bindParam(':price', $restaurant->getPrice(), PDO::PARAM_INT);
-        $statement->bindParam(':reduced', $restaurant->getReduced(), PDO::PARAM_INT);
-        $statement->bindParam(':stars', $restaurant->getStars(), PDO::PARAM_INT);
-        $statement->bindParam(':phoneNumber', $restaurant->getPhoneNumber(), PDO::PARAM_STR);
-        $statement->bindParam(':email', $restaurant->getEmail(), PDO::PARAM_STR);
-        $statement->bindParam(':website', $restaurant->getWebsite(), PDO::PARAM_STR);
-        $statement->bindParam(':chef', $restaurant->getChef(), PDO::PARAM_STR);
+        $statement->bindParam(':name', $restaurantName, PDO::PARAM_STR);
+        $statement->bindParam(':address', $restaurantAddress, PDO::PARAM_STR);
+        $statement->bindParam(':type', $restaurantType, PDO::PARAM_STR);
+        $statement->bindParam(':price', $restaurantPrice, PDO::PARAM_INT);
+        $statement->bindParam(':reduced', $restaurantReduced, PDO::PARAM_INT);
+        $statement->bindParam(':stars', $restaurantStars, PDO::PARAM_INT);
+        $statement->bindParam(':phoneNumber', $restaurantPhoneNumber, PDO::PARAM_STR);
+        $statement->bindParam(':email', $restaurantEmail, PDO::PARAM_STR);
+        $statement->bindParam(':website', $restaurantWebsite, PDO::PARAM_STR);
+        $statement->bindParam(':chef', $restaurantChef, PDO::PARAM_STR);
         $success = $statement->execute();
 
-        if ($success) {
-            return true;
-        } else {
-            return false;
-        }
+        return $success;
     }
 
     public function updateSession($session)
-    { //TODO: Potential SQL Injection
+    {
         $sql = "UPDATE restaurant_events SET restaurant_id = :restaurantId, event_date = :eventDate, event_day = :eventDay, event_time_start = :eventTimeStart, event_time_end = :eventTimeEnd, seats_total = :seatsTotal, seats_left = :seatsLeft WHERE id = :id";
+        //var_dump($session);
+        $restaurantId = $session->getRestaurantId();
+        $eventDate = $session->getEventDate();
+        $eventDay = $session->getEventDay();
+        $eventTimeStart = $session->getEventTimeStart();
+        $eventTimeEnd = $session->getEventTimeEnd();
+        $seatsTotal = $session->getSeatsTotal();
+        $seatsLeft = $session->getSeatsLeft();
+        $id = $session->getId();
+
         $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':restaurantId', $session->getRestaurantId(), PDO::PARAM_INT);
-        $statement->bindParam(':eventDate', $session->getEventDate(), PDO::PARAM_STR);
-        $statement->bindParam(':eventDay', $session->getEventDay(), PDO::PARAM_STR);
-        $statement->bindParam(':eventTimeStart', $session->getEventTimeStart(), PDO::PARAM_STR);
-        $statement->bindParam(':eventTimeEnd', $session->getEventTimeEnd(), PDO::PARAM_STR);
-        $statement->bindParam(':seatsTotal', $session->getSeatsTotal(), PDO::PARAM_INT);
-        $statement->bindParam(':seatsLeft', $session->getSeatsLeft(), PDO::PARAM_INT);
-        $statement->bindParam(':id', $session->getId(), PDO::PARAM_INT);
+
+        $statement->bindParam(':restaurantId', $restaurantId, PDO::PARAM_INT);
+        $statement->bindParam(':eventDate', $eventDate, PDO::PARAM_STR);
+        $statement->bindParam(':eventDay', $eventDay, PDO::PARAM_STR);
+        $statement->bindParam(':eventTimeStart', $eventTimeStart, PDO::PARAM_STR);
+        $statement->bindParam(':eventTimeEnd', $eventTimeEnd, PDO::PARAM_STR);
+        $statement->bindParam(':seatsTotal', $seatsTotal, PDO::PARAM_INT);
+        $statement->bindParam(':seatsLeft', $seatsLeft, PDO::PARAM_INT);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if ($success) {
-            return true;
-        } else {
-            return false;
-        }
+        return $success;
     }
 
     public function addSession($restaurantSession)
     {
         $sql = "INSERT INTO restaurant_events (restaurant_id, event_date, event_day, event_time_start, event_time_end, seats_total, seats_left) VALUES (:restaurantId, :eventDate, :eventDay, :eventTimeStart, :eventTimeEnd, :seatsTotal, :seatsLeft)";
+
+        $restaurantId = $restaurantSession->getRestaurantId();
+        $eventDate = $restaurantSession->getEventDate();
+        $eventDay = $restaurantSession->getEventDay();
+        $eventTimeStart = $restaurantSession->getEventTimeStart();
+        $eventTimeEnd = $restaurantSession->getEventTimeEnd();
+        $seatsTotal = $restaurantSession->getSeatsTotal();
+        $seatsLeft = $restaurantSession->getSeatsLeft();
+
         $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':restaurantId', $restaurantSession->getRestaurantId(), PDO::PARAM_INT);
-        $statement->bindParam(':eventDate', $restaurantSession->getEventDate(), PDO::PARAM_STR);
-        $statement->bindParam(':eventDay', $restaurantSession->getEventDay(), PDO::PARAM_STR);
-        $statement->bindParam(':eventTimeStart', $restaurantSession->getEventTimeStart(), PDO::PARAM_STR);
-        $statement->bindParam(':eventTimeEnd', $restaurantSession->getEventTimeEnd(), PDO::PARAM_STR);
-        $statement->bindParam(':seatsTotal', $restaurantSession->getSeatsTotal(), PDO::PARAM_INT);
-        $statement->bindParam(':seatsLeft', $restaurantSession->getSeatsLeft(), PDO::PARAM_INT);
+        $statement->bindParam(':restaurantId', $restaurantId, PDO::PARAM_INT);
+        $statement->bindParam(':eventDate', $eventDate, PDO::PARAM_STR);
+        $statement->bindParam(':eventDay', $eventDay, PDO::PARAM_STR);
+        $statement->bindParam(':eventTimeStart', $eventTimeStart, PDO::PARAM_STR);
+        $statement->bindParam(':eventTimeEnd', $eventTimeEnd, PDO::PARAM_STR);
+        $statement->bindParam(':seatsTotal', $seatsTotal, PDO::PARAM_INT);
+        $statement->bindParam(':seatsLeft', $seatsLeft, PDO::PARAM_INT);
+
         $success = $statement->execute();
 
-        if ($success) {
-            return true;
-        } else {
-            return false;
-        }
+        return $success;
     }
 
     public function deleteSession($sessionID)
@@ -191,38 +212,43 @@ class RestaurantRepository extends Repository
         $statement->bindParam(':id', $sessionID, PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if ($success) {
-            return true;
-        } else {
-            return false;
-        }
+        return $success;
     }
 
     public function updateRestaurant($restaurant)
     {
         $sql = "UPDATE restaurants SET name = :name, address = :address, type = :type, price = :price, reduced = :reduced, stars = :stars, phoneNumber = :phoneNumber, email = :email, website = :website, chef = :chef WHERE id = :id";
+
+        $restaurantName = $restaurant->getName();
+        $restaurantAddress = $restaurant->getAddress();
+        $restaurantType = $restaurant->getType();
+        $restaurantPrice = $restaurant->getPrice();
+        $restaurantReduced = $restaurant->getReduced();
+        $restaurantStars = $restaurant->getStars();
+        $restaurantPhoneNumber = $restaurant->getPhoneNumber();
+        $restaurantEmail = $restaurant->getEmail();
+        $restaurantWebsite = $restaurant->getWebsite();
+        $restaurantChef = $restaurant->getChef();
+        $restaurantID = $restaurant->getId();
+
         $statement = $this->connection->prepare($sql);
-        $statement->bindParam(':name', $restaurant->getName(), PDO::PARAM_STR);
-        $statement->bindParam(':address', $restaurant->getAddress(), PDO::PARAM_STR);
-        $statement->bindParam(':type', $restaurant->getType(), PDO::PARAM_STR);
-        $statement->bindParam(':price', $restaurant->getPrice(), PDO::PARAM_INT);
-        $statement->bindParam(':reduced', $restaurant->getReduced(), PDO::PARAM_INT);
-        $statement->bindParam(':stars', $restaurant->getStars(), PDO::PARAM_INT);
-        $statement->bindParam(':phoneNumber', $restaurant->getPhoneNumber(), PDO::PARAM_STR);
-        $statement->bindParam(':email', $restaurant->getEmail(), PDO::PARAM_STR);
-        $statement->bindParam(':website', $restaurant->getWebsite(), PDO::PARAM_STR);
-        $statement->bindParam(':chef', $restaurant->getChef(), PDO::PARAM_STR);
-        $statement->bindParam(':id', $restaurant->getId(), PDO::PARAM_INT);
+
+        $statement->bindParam(':name', $restaurantName, PDO::PARAM_STR);
+        $statement->bindParam(':address', $restaurantAddress, PDO::PARAM_STR);
+        $statement->bindParam(':type', $restaurantType, PDO::PARAM_STR);
+        $statement->bindParam(':price', $restaurantPrice, PDO::PARAM_INT);
+        $statement->bindParam(':reduced', $restaurantReduced, PDO::PARAM_INT);
+        $statement->bindParam(':stars', $restaurantStars, PDO::PARAM_INT);
+        $statement->bindParam(':phoneNumber', $restaurantPhoneNumber, PDO::PARAM_STR);
+        $statement->bindParam(':email', $restaurantEmail, PDO::PARAM_STR);
+        $statement->bindParam(':website', $restaurantWebsite, PDO::PARAM_STR);
+        $statement->bindParam(':chef', $restaurantChef, PDO::PARAM_STR);
+        $statement->bindParam(':id', $restaurantID, PDO::PARAM_INT);
         $success = $statement->execute();
 
-        if ($success) {
-            return true;
-        } else {
-            return false;
-        }
+        return $success;
     }
 
-    // TODO: Make method to update images
     public function updateImages($id, $imagePath)
     {
         $sql = "UPDATE restaurant_images SET image_path = :image_path WHERE id = :image_id";
@@ -231,11 +257,7 @@ class RestaurantRepository extends Repository
         $updateStmt->bindParam(':image_path', $imagePath, PDO::PARAM_STR);
         $updateStmt->bindParam(':image_id', $id, PDO::PARAM_STR);
 
-        if ($updateStmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $updateStmt->execute();
     }
 
     public function reserve($reservation)
