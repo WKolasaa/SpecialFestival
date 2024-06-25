@@ -25,10 +25,10 @@ function checkEmailExists(email) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                showMessage('Email has been sent!', 'alert-success');
+                showToast('Email sent successfully. Please check your email for further instructions.', "green");
                 // Add code to initiate the password restoration process
             } else {
-                showMessage('Email does not exist. Please check your email address.', 'alert-danger');
+                showToast('Email does not exist in the system. Please enter a valid email address.', "red");
             }
         })
         .catch(() => {
