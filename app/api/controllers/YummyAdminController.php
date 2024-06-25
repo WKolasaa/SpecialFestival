@@ -178,13 +178,13 @@ class YummyAdminController
 
         if ($jsonData !== null) {
             $restaurantSession = new RestaurantSession();
-            $restaurantSession->setRestaurantId(intval($jsonData['restaurant_id']));
-            $restaurantSession->setEventDate($jsonData['event_date']);
-            $restaurantSession->setEventDay($jsonData['event_day']);
-            $restaurantSession->setEventTimeStart($jsonData['event_time_start']);
-            $restaurantSession->setEventTimeEnd($jsonData['event_time_end']);
-            $restaurantSession->setSeatsTotal(intval($jsonData['seats_total']));
-            $restaurantSession->setSeatsLeft(intval($jsonData['seats_left']));
+            $restaurantSession->setRestaurantId(intval($jsonData['restaurantId']));
+            $restaurantSession->setEventDate($jsonData['eventDate']);
+            $restaurantSession->setEventDay($jsonData['eventDay']);
+            $restaurantSession->setEventTimeStart($jsonData['eventStartTime']);
+            $restaurantSession->setEventTimeEnd($jsonData['eventEndTime']);
+            $restaurantSession->setSeatsTotal(intval($jsonData['eventSeatsTotal']));
+            $restaurantSession->setSeatsLeft(intval($jsonData['eventSeatsAvailable']));
 
             if ($this->restaurantService->addSession($restaurantSession)) {
                 echo "added";
@@ -233,7 +233,7 @@ class YummyAdminController
         $jsonData = json_decode($jsonData, true);
 
         if ($jsonData !== null) {
-            $sessionID = $jsonData['id'];
+            $sessionID = $jsonData['eventId'];
 
             if ($this->restaurantService->deleteSession($sessionID)) {
                 echo json_encode(['success' => 'Event deleted']);

@@ -76,6 +76,11 @@ function validateForm() {
         return false;
     }
 
+    if(regularTickets === 0 && reducedTickets === 0){
+        showToast('Please select at least one ticket.', 'red');
+        return false;
+    }
+
     fetch('/api/YummyReservation/reserve', {
         method: 'POST',
         headers: {

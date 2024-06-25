@@ -6,6 +6,7 @@ use App\Models\Restaurant;
 use App\Models\RestaurantImage;
 use App\Models\RestaurantReservation;
 use App\Models\RestaurantSession;
+use DateTime;
 use PDO;
 
 class RestaurantRepository extends Repository
@@ -190,6 +191,15 @@ class RestaurantRepository extends Repository
         $eventTimeEnd = $restaurantSession->getEventTimeEnd();
         $seatsTotal = $restaurantSession->getSeatsTotal();
         $seatsLeft = $restaurantSession->getSeatsLeft();
+
+        $dateTime = DateTime::createFromFormat('d/m/Y', $eventDate);
+        if ($dateTime) {
+            $eventDate = $dateTime->format('Y-m-d'); // Convert to 'Y-m-d' format
+        } else {
+            throw new Exception('Invalid date format');
+        }
+
+        //var_dump($restaurantSession);
 
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(':restaurantId', $restaurantId, PDO::PARAM_INT);
