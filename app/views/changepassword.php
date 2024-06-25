@@ -4,7 +4,6 @@ include 'header.php';
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div id="message" class="alert alert-light"></div>
             <form id="changePasswordForm" onsubmit="return false;">
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -31,5 +30,7 @@ include 'header.php';
 
 <script src="js/changePassword.js"></script>
 
-<?php include __DIR__ . '/../footer.php'; ?>
+<?php
+include __DIR__ . '/footer.php';
+?>
 

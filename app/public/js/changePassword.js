@@ -4,9 +4,9 @@ function onSubmit() {
     var email = document.getElementById('email').value;
 
     if (newPassword != confirmPassword) {
-        showMessage('Passwords do not match!', 'alert-danger');
+        showToast('Passwords do not match!', 'red');
     } else if (newPassword.length < 8) {
-        showMessage('Password must be at least 8 characters long!', 'alert-danger');
+        showToast('Password must be at least 8 characters long!', 'red');
     } else {
         const bodyData = {
             newPassword: newPassword,
@@ -25,22 +25,17 @@ function onSubmit() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    showMessage('Password has been successfully changed!', 'alert-success');
+                    showToast('Password has been successfully changed!', 'green');
                     setTimeout(function () {
                         window.location.href = "/";
                     }, 2000);
                 } else {
-                    showMessage('Error changing password. Please try again later. TEST', 'alert-danger');
+                    showToast('Error changing password. Please try again later. TEST', 'red');
                 }
             })
             .catch(() => {
-                showMessage('Error changing password. Please try again later. NO TEST', 'alert-danger');
+                showToast('Error changing password. Please try again later. NO TEST', 'red');
             });
     }
     return false;
-}
-
-function showMessage(message, alertClass) {
-    var messageDiv = document.getElementById('message');
-    messageDiv.innerHTML = '<div class="alert ' + alertClass + '">' + message + '</div>';
 }
